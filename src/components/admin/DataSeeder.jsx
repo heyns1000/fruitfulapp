@@ -91,7 +91,7 @@ export default function DataSeeder() {
       </Button>
       
       <p className="text-xs text-gray-500 mt-3">
-        This will populate the database with all banking and agriculture brands with their complete metadata and subnodes.
+        This will populate the database with all {Object.keys(ALL_SECTOR_DATA).length} sectors including Banking ({ALL_SECTOR_DATA.banking.brands.length} brands), Agriculture ({ALL_SECTOR_DATA.agriculture.brands.length} brands), Webless ({ALL_SECTOR_DATA.webless.brands.length} brands), Health ({ALL_SECTOR_DATA.health.brands.length} brands), and AI-Logic ({ALL_SECTOR_DATA['ai-logic'].brands.length} brands) with complete metadata and subnodes.
       </p>
     </div>
   );
