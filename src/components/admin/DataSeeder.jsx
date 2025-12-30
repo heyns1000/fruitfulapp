@@ -16,7 +16,7 @@ export default function DataSeeder() {
     try {
       let totalSeeded = 0;
       
-      for (const [sectorKey, data] of Object.entries(SEED_DATA_CONFIG)) {
+      for (const [sectorKey, data] of Object.entries(ALL_SECTOR_DATA)) {
         const { brands, subNodes } = data;
         
         for (let i = 0; i < Math.min(brands.length, subNodes.length); i++) {
