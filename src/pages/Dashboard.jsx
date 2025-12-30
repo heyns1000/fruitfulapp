@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AdminPanel from '../components/admin/AdminPanel';
+import DataSeeder from '../components/admin/DataSeeder';
 import MetricsCards from '../components/dashboard/MetricsCards';
 import SectorGrid from '../components/sectors/SectorGrid';
 import { Loader2 } from 'lucide-react';
