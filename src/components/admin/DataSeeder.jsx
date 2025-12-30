@@ -3,7 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { Loader2, Database, CheckCircle } from 'lucide-react';
 import { toast } from 'sonner';
-import { SEED_DATA_CONFIG } from '../data/SeedData';
+import { ALL_SECTOR_DATA } from '../data/AllSectorData';
 
 export default function DataSeeder() {
   const [isSeeding, setIsSeeding] = useState(false);
