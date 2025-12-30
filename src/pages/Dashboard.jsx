@@ -125,6 +125,7 @@ export default function Dashboard() {
           </TabsList>
 
           <TabsContent value="admin" className="space-y-6">
+            <DataSeeder />
             <AdminPanel onBrandAdded={handleBrandAdded} />
             
             <div className="bg-white rounded-lg shadow p-6">
