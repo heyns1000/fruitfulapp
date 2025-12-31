@@ -8,6 +8,26 @@ import { ALL_SECTOR_DATA } from '../data/AllSectorData';
 export default function DataSeeder() {
   const [isSeeding, setIsSeeding] = useState(false);
   const [seededCount, setSeededCount] = useState(0);
+  const [autoSeeded, setAutoSeeded] = useState(false);
+
+  // Auto-seed on mount if database is empty
+  React.useEffect(() => {
+    const autoSeed = async () => {
+      if (autoSeeded) return;
+      
+      try {
+        const existingBrands = await base44.entities.Brand.list();
+        if (existingBrands.length === 0) {
+          setAutoSeeded(true);
+          await seedDatabase();
+        }
+      } catch (error) {
+        console.error('Auto-seed check failed:', error);
+      }
+    };
+    
+    autoSeed();
+  }, []);
 
   const seedDatabase = async () => {
     setIsSeeding(true);
