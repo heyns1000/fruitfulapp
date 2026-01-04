@@ -8,7 +8,7 @@ import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow 
 } from '@/components/ui/table';
 import {
-  Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter
+  Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter
 } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Loader2, Pencil, Trash2, Search } from 'lucide-react';
@@ -141,7 +141,6 @@ export default function BrandManager() {
         <span className="text-sm text-gray-500">{filteredBrands.length} brands</span>
       </div>
 
-      {/* Filters */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -165,7 +164,6 @@ export default function BrandManager() {
         </Select>
       </div>
 
-      {/* Brands Table */}
       <div className="border rounded-lg overflow-hidden">
         <div className="max-h-[500px] overflow-y-auto">
           <Table>
@@ -247,7 +245,6 @@ export default function BrandManager() {
         </div>
       </div>
 
-      {/* Edit Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
