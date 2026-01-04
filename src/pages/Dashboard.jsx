@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AdminPanel from '../components/admin/AdminPanel';
 import DataSeeder from '../components/admin/DataSeeder';
+import BrandManager from '../components/admin/BrandManager';
 import MetricsCards from '../components/dashboard/MetricsCards';
 import SectorGrid from '../components/sectors/SectorGrid';
 import { Loader2 } from 'lucide-react';
@@ -127,6 +128,7 @@ export default function Dashboard() {
           <TabsContent value="admin" className="space-y-6">
             <DataSeeder />
             <AdminPanel onBrandAdded={handleBrandAdded} />
+            <BrandManager />
             
             <div className="bg-white rounded-lg shadow p-6">
               <h2 className="text-xl font-bold mb-4 text-indigo-700">📊 All Brands Overview</h2>
