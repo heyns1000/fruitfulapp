@@ -8,17 +8,17 @@ import { ALL_SECTOR_DATA } from '../data/AllSectorData';
 export default function DataSeeder() {
   const [isSeeding, setIsSeeding] = useState(false);
   const [seededCount, setSeededCount] = useState(0);
-  const [autoSeeded, setAutoSeeded] = useState(false);
+  const [hasChecked, setHasChecked] = React.useState(false);
 
   // Auto-seed on mount if database is empty
   React.useEffect(() => {
     const autoSeed = async () => {
-      if (autoSeeded) return;
+      if (hasChecked) return;
+      setHasChecked(true);
       
       try {
         const existingBrands = await base44.entities.Brand.list();
         if (existingBrands.length === 0) {
-          setAutoSeeded(true);
           await seedDatabase();
         }
       } catch (error) {
@@ -34,21 +34,36 @@ export default function DataSeeder() {
     setSeededCount(0);
     
     try {
+      // First, check for existing brands to avoid duplicates
+      const existingBrands = await base44.entities.Brand.list();
+      const existingNames = new Set(existingBrands.map(b => `${b.name}-${b.sector}`));
+      
       let totalSeeded = 0;
+      const brandsToCreate = [];
       
       for (const [sectorKey, data] of Object.entries(ALL_SECTOR_DATA)) {
         const { brands, subNodes } = data;
         
-        for (let i = 0; i < Math.min(brands.length, subNodes.length); i++) {
-          const brand = brands[i];
-          const subnodes = subNodes[i] || [];
+        // Ensure we have the minimum length between brands and subNodes
+        const maxLength = Math.min(brands.length, subNodes.length);
+        
+        for (let i = 0; i < maxLength; i++) {
+          const brandName = brands[i];
+          const brandKey = `${brandName}-${sectorKey}`;
           
-          await base44.entities.Brand.create({
-            name: brand,
+          // Skip if already exists
+          if (existingNames.has(brandKey)) {
+            continue;
+          }
+          
+          const subnodes = Array.isArray(subNodes[i]) ? subNodes[i] : [];
+          
+          brandsToCreate.push({
+            name: brandName,
             sector: sectorKey,
             subnodes: subnodes,
             metadata: {
-              id: `${brand.slice(0, 3).toUpperCase()}-${sectorKey.slice(0, 3).toUpperCase()}-${Math.floor(Math.random() * 9000) + 1000}`,
+              id: `${brandName.slice(0, 3).toUpperCase()}-${sectorKey.slice(0, 3).toUpperCase()}-${Math.floor(Math.random() * 9000) + 1000}`,
               vault: `VAULT-${Math.random().toString(36).substring(2, 6).toUpperCase()}`,
               layer: `Layer ${Math.random() < 0.5 ? 'Alpha' : 'Beta'} v${(Math.random() * 2 + 1).toFixed(1)}`,
               deploymentZone: `Zone ${String.fromCharCode(65 + Math.floor(Math.random() * 5))} ${Math.floor(Math.random() * 10) + 1}`,
@@ -57,13 +72,18 @@ export default function DataSeeder() {
             },
             isSystemBrand: true
           });
-          
-          totalSeeded++;
-          setSeededCount(totalSeeded);
         }
       }
       
-      toast.success(`Successfully seeded ${totalSeeded} brands!`);
+      // Bulk create all brands
+      if (brandsToCreate.length > 0) {
+        await base44.entities.Brand.bulkCreate(brandsToCreate);
+        totalSeeded = brandsToCreate.length;
+        setSeededCount(totalSeeded);
+        toast.success(`Successfully seeded ${totalSeeded} brands across all sectors!`);
+      } else {
+        toast.info('All brands already exist in the database');
+      }
     } catch (error) {
       console.error('Seeding error:', error);
       toast.error('Failed to seed data');
