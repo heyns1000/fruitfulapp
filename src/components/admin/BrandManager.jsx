@@ -92,7 +92,8 @@ export default function BrandManager() {
   const handleEdit = (brand) => {
     setEditingBrand({
       ...brand,
-      subnodes: Array.isArray(brand.subnodes) ? brand.subnodes.join(', ') : ''
+      subnodes: Array.isArray(brand.subnodes) ? brand.subnodes.join(', ') : '',
+      tags: brand.tags || []
     });
     setIsEditDialogOpen(true);
   };
@@ -112,6 +113,7 @@ export default function BrandManager() {
         description: editingBrand.description,
         sector: editingBrand.sector,
         subnodes: subnodesArray,
+        tags: editingBrand.tags || [],
         metadata: editingBrand.metadata
       }
     });
@@ -318,9 +320,10 @@ export default function BrandManager() {
           <Table>
             <TableHeader className="sticky top-0 bg-gray-50 z-10">
               <TableRow>
-                <TableHead className="w-[200px]">Brand Name</TableHead>
-                <TableHead className="w-[150px]">Sector</TableHead>
+                <TableHead className="w-[180px]">Brand Name</TableHead>
+                <TableHead className="w-[140px]">Sector</TableHead>
                 <TableHead>Subnodes</TableHead>
+                <TableHead className="w-[200px]">Tags</TableHead>
                 <TableHead className="w-[100px]">Source</TableHead>
                 <TableHead className="w-[120px] text-right">Actions</TableHead>
               </TableRow>
@@ -328,7 +331,7 @@ export default function BrandManager() {
             <TableBody>
               {filteredBrands.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={5} className="text-center text-gray-500 py-8">
+                  <TableCell colSpan={6} className="text-center text-gray-500 py-8">
                     No brands found matching your criteria
                   </TableCell>
                 </TableRow>
@@ -358,12 +361,32 @@ export default function BrandManager() {
                       </div>
                     </TableCell>
                     <TableCell>
+                      {brand.tags?.length > 0 ? (
+                        <div className="flex flex-wrap gap-1">
+                          {brand.tags.slice(0, 3).map((tag, idx) => (
+                            <span key={idx} className="text-xs px-2 py-0.5 bg-purple-50 text-purple-700 rounded">
+                              #{tag}
+                            </span>
+                          ))}
+                          {brand.tags.length > 3 && (
+                            <span className="text-xs text-gray-500">
+                              +{brand.tags.length - 3}
+                            </span>
+                          )}
+                        </div>
+                      ) : (
+                        <span className="text-xs text-gray-400">No tags</span>
+                      )}
+                    </TableCell>
+                    <TableCell>
                       <span className={`text-xs px-2 py-1 rounded ${
                         brand.isSystemBrand 
                           ? 'bg-blue-100 text-blue-700' 
+                          : brand.aiGenerated
+                          ? 'bg-purple-100 text-purple-700'
                           : 'bg-green-100 text-green-700'
                       }`}>
-                        {brand.isSystemBrand ? 'System' : 'Custom'}
+                        {brand.isSystemBrand ? 'System' : brand.aiGenerated ? 'AI' : 'Manual'}
                       </span>
                     </TableCell>
                     <TableCell className="text-right">
@@ -459,6 +482,44 @@ export default function BrandManager() {
                   onChange={(e) => setEditingBrand({...editingBrand, subnodes: e.target.value})}
                   placeholder="VaultDrop, QRClaim, NodeSync"
                   className="h-20"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium mb-2 block flex items-center gap-2">
+                  <Tag className="w-4 h-4" />
+                  Tags (for searchability)
+                </label>
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {editingBrand.tags?.map((tag, idx) => (
+                    <span
+                      key={idx}
+                      className="px-2 py-1 bg-purple-100 text-purple-800 rounded text-sm flex items-center gap-1 cursor-pointer hover:bg-purple-200"
+                      onClick={() => {
+                        setEditingBrand({
+                          ...editingBrand,
+                          tags: editingBrand.tags.filter((_, i) => i !== idx)
+                        });
+                      }}
+                    >
+                      #{tag} ×
+                    </span>
+                  ))}
+                </div>
+                <Input
+                  placeholder="Add tag and press Enter"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && e.target.value.trim()) {
+                      const newTag = e.target.value.trim().toLowerCase();
+                      if (!editingBrand.tags?.includes(newTag)) {
+                        setEditingBrand({
+                          ...editingBrand,
+                          tags: [...(editingBrand.tags || []), newTag]
+                        });
+                      }
+                      e.target.value = '';
+                    }
+                  }}
                 />
               </div>
 
