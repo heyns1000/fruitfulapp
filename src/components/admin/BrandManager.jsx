@@ -11,7 +11,7 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter
 } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Loader2, Pencil, Trash2, Search } from 'lucide-react';
+import { Loader2, Pencil, Trash2, Search, Sparkles, AlertTriangle } from 'lucide-react';
 import { toast } from 'sonner';
 
 const SECTORS = {
@@ -53,6 +53,10 @@ export default function BrandManager() {
   const [selectedSector, setSelectedSector] = useState('all');
   const [editingBrand, setEditingBrand] = useState(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isGeneratingDesc, setIsGeneratingDesc] = useState(false);
+  const [isGeneratingMeta, setIsGeneratingMeta] = useState(false);
+  const [isDuplicateChecking, setIsDuplicateChecking] = useState(false);
+  const [duplicates, setDuplicates] = useState([]);
   
   const queryClient = useQueryClient();
 
@@ -119,6 +123,109 @@ export default function BrandManager() {
     }
   };
 
+  const generateDescription = async () => {
+    if (!editingBrand) return;
+    
+    setIsGeneratingDesc(true);
+    try {
+      const sectorName = SECTORS[editingBrand.sector];
+      const result = await base44.integrations.Core.InvokeLLM({
+        prompt: `Generate a concise and compelling 50-word description for a brand named "${editingBrand.name}" operating in the "${sectorName}" sector. Focus on its core value proposition and innovation.`,
+      });
+      
+      setEditingBrand({...editingBrand, description: result});
+      toast.success('Description generated successfully');
+    } catch (error) {
+      console.error('Error generating description:', error);
+      toast.error('Failed to generate description');
+    } finally {
+      setIsGeneratingDesc(false);
+    }
+  };
+
+  const generateMetadata = async () => {
+    if (!editingBrand) return;
+    
+    setIsGeneratingMeta(true);
+    try {
+      const sectorName = SECTORS[editingBrand.sector];
+      const result = await base44.integrations.Core.InvokeLLM({
+        prompt: `For a brand named "${editingBrand.name}" in the "${sectorName}" sector, suggest relevant metadata. Return JSON with: deploymentZone (a zone name), securityRating (FAA-SEC A+/A/B+), layer (Alpha or Beta with version), and activeNodes (number between 100-5000).`,
+        response_json_schema: {
+          type: "object",
+          properties: {
+            deploymentZone: { type: "string" },
+            securityRating: { type: "string" },
+            layer: { type: "string" },
+            activeNodes: { type: "number" }
+          }
+        }
+      });
+      
+      setEditingBrand({
+        ...editingBrand,
+        metadata: {
+          ...editingBrand.metadata,
+          deploymentZone: result.deploymentZone,
+          securityRating: result.securityRating,
+          layer: result.layer,
+          activeNodes: result.activeNodes
+        }
+      });
+      toast.success('Metadata generated successfully');
+    } catch (error) {
+      console.error('Error generating metadata:', error);
+      toast.error('Failed to generate metadata');
+    } finally {
+      setIsGeneratingMeta(false);
+    }
+  };
+
+  const checkDuplicates = async () => {
+    setIsDuplicateChecking(true);
+    setDuplicates([]);
+    
+    try {
+      const brandsList = brands.map(b => ({
+        id: b.id,
+        name: b.name,
+        description: b.description || '',
+        sector: b.sector
+      }));
+      
+      const result = await base44.integrations.Core.InvokeLLM({
+        prompt: `Analyze these brands and identify potential duplicates or very similar brands based on name and description. Return an array of duplicate groups, where each group contains the IDs of similar brands. Only include groups with 2 or more brands: ${JSON.stringify(brandsList)}`,
+        response_json_schema: {
+          type: "object",
+          properties: {
+            duplicateGroups: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  brandIds: { type: "array", items: { type: "string" } },
+                  reason: { type: "string" }
+                }
+              }
+            }
+          }
+        }
+      });
+      
+      if (result.duplicateGroups?.length > 0) {
+        setDuplicates(result.duplicateGroups);
+        toast.warning(`Found ${result.duplicateGroups.length} potential duplicate groups`);
+      } else {
+        toast.success('No duplicates detected');
+      }
+    } catch (error) {
+      console.error('Error checking duplicates:', error);
+      toast.error('Failed to check duplicates');
+    } finally {
+      setIsDuplicateChecking(false);
+    }
+  };
+
   const filteredBrands = brands.filter(brand => {
     const matchesSearch = brand.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          brand.subnodes?.some(s => s.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -138,8 +245,50 @@ export default function BrandManager() {
     <div className="bg-white rounded-lg shadow-lg p-6">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-indigo-700">🔧 Brand Management Console</h2>
-        <span className="text-sm text-gray-500">{filteredBrands.length} brands</span>
+        <div className="flex gap-3 items-center">
+          <Button
+            onClick={checkDuplicates}
+            disabled={isDuplicateChecking}
+            variant="outline"
+            size="sm"
+            className="text-orange-600 border-orange-300 hover:bg-orange-50"
+          >
+            {isDuplicateChecking ? (
+              <Loader2 className="w-4 h-4 animate-spin mr-2" />
+            ) : (
+              <AlertTriangle className="w-4 h-4 mr-2" />
+            )}
+            Check Duplicates
+          </Button>
+          <span className="text-sm text-gray-500">{filteredBrands.length} brands</span>
+        </div>
       </div>
+
+      {duplicates.length > 0 && (
+        <div className="mb-6 p-4 bg-orange-50 border border-orange-200 rounded-lg">
+          <div className="flex items-center gap-2 mb-3">
+            <AlertTriangle className="w-5 h-5 text-orange-600" />
+            <h3 className="font-semibold text-orange-900">Potential Duplicates Detected</h3>
+          </div>
+          <div className="space-y-3">
+            {duplicates.map((group, idx) => (
+              <div key={idx} className="bg-white p-3 rounded border border-orange-200">
+                <p className="text-sm text-orange-800 mb-2"><strong>Reason:</strong> {group.reason}</p>
+                <div className="flex flex-wrap gap-2">
+                  {group.brandIds.map(id => {
+                    const brand = brands.find(b => b.id === id);
+                    return brand ? (
+                      <span key={id} className="text-xs px-2 py-1 bg-orange-100 text-orange-900 rounded">
+                        {brand.name} ({SECTORS[brand.sector]?.split(' ')[0]})
+                      </span>
+                    ) : null;
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         <div className="relative">
@@ -268,6 +417,20 @@ export default function BrandManager() {
                   onChange={(e) => setEditingBrand({...editingBrand, description: e.target.value})}
                   className="h-24"
                 />
+                <Button
+                  type="button"
+                  onClick={generateDescription}
+                  disabled={isGeneratingDesc}
+                  className="mt-2 w-full bg-purple-600 hover:bg-purple-700"
+                  size="sm"
+                >
+                  {isGeneratingDesc ? (
+                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                  ) : (
+                    <Sparkles className="w-4 h-4 mr-2" />
+                  )}
+                  Generate AI Description
+                </Button>
               </div>
 
               <div>
@@ -299,46 +462,86 @@ export default function BrandManager() {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-sm font-medium mb-2 block">Product ID</label>
-                  <Input
-                    value={editingBrand.metadata?.id || ''}
-                    onChange={(e) => setEditingBrand({
-                      ...editingBrand,
-                      metadata: {...editingBrand.metadata, id: e.target.value}
-                    })}
-                  />
+              <div>
+                <div className="flex justify-between items-center mb-3">
+                  <label className="text-sm font-medium">Metadata</label>
+                  <Button
+                    type="button"
+                    onClick={generateMetadata}
+                    disabled={isGeneratingMeta}
+                    className="bg-purple-600 hover:bg-purple-700"
+                    size="sm"
+                  >
+                    {isGeneratingMeta ? (
+                      <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                    ) : (
+                      <Sparkles className="w-4 h-4 mr-2" />
+                    )}
+                    AI Generate
+                  </Button>
                 </div>
-                <div>
-                  <label className="text-sm font-medium mb-2 block">Vault ID</label>
-                  <Input
-                    value={editingBrand.metadata?.vault || ''}
-                    onChange={(e) => setEditingBrand({
-                      ...editingBrand,
-                      metadata: {...editingBrand.metadata, vault: e.target.value}
-                    })}
-                  />
-                </div>
-                <div>
-                  <label className="text-sm font-medium mb-2 block">Layer</label>
-                  <Input
-                    value={editingBrand.metadata?.layer || ''}
-                    onChange={(e) => setEditingBrand({
-                      ...editingBrand,
-                      metadata: {...editingBrand.metadata, layer: e.target.value}
-                    })}
-                  />
-                </div>
-                <div>
-                  <label className="text-sm font-medium mb-2 block">Security Rating</label>
-                  <Input
-                    value={editingBrand.metadata?.securityRating || ''}
-                    onChange={(e) => setEditingBrand({
-                      ...editingBrand,
-                      metadata: {...editingBrand.metadata, securityRating: e.target.value}
-                    })}
-                  />
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Product ID</label>
+                    <Input
+                      value={editingBrand.metadata?.id || ''}
+                      onChange={(e) => setEditingBrand({
+                        ...editingBrand,
+                        metadata: {...editingBrand.metadata, id: e.target.value}
+                      })}
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Vault ID</label>
+                    <Input
+                      value={editingBrand.metadata?.vault || ''}
+                      onChange={(e) => setEditingBrand({
+                        ...editingBrand,
+                        metadata: {...editingBrand.metadata, vault: e.target.value}
+                      })}
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Layer</label>
+                    <Input
+                      value={editingBrand.metadata?.layer || ''}
+                      onChange={(e) => setEditingBrand({
+                        ...editingBrand,
+                        metadata: {...editingBrand.metadata, layer: e.target.value}
+                      })}
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Security Rating</label>
+                    <Input
+                      value={editingBrand.metadata?.securityRating || ''}
+                      onChange={(e) => setEditingBrand({
+                        ...editingBrand,
+                        metadata: {...editingBrand.metadata, securityRating: e.target.value}
+                      })}
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Deployment Zone</label>
+                    <Input
+                      value={editingBrand.metadata?.deploymentZone || ''}
+                      onChange={(e) => setEditingBrand({
+                        ...editingBrand,
+                        metadata: {...editingBrand.metadata, deploymentZone: e.target.value}
+                      })}
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Active Nodes</label>
+                    <Input
+                      type="number"
+                      value={editingBrand.metadata?.activeNodes || ''}
+                      onChange={(e) => setEditingBrand({
+                        ...editingBrand,
+                        metadata: {...editingBrand.metadata, activeNodes: parseInt(e.target.value) || 0}
+                      })}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
