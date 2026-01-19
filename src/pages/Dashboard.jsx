@@ -125,6 +125,13 @@ export default function Dashboard() {
             >
               ⚡ Banimal™
             </TabsTrigger>
+            <TabsTrigger 
+              value="vaultmesh" 
+              className="data-[state=active]:bg-emerald-600 data-[state=active]:text-white"
+              onClick={() => window.location.href = '/VaultMesh'}
+            >
+              🔐 VaultMesh™
+            </TabsTrigger>
             {Object.entries(SECTORS).map(([key, label]) => (
               <TabsTrigger
                 key={key}
