@@ -118,6 +118,13 @@ export default function Dashboard() {
             <TabsTrigger value="collaborations" className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white">
               🤝 Collaborations
             </TabsTrigger>
+            <TabsTrigger 
+              value="banimal" 
+              className="data-[state=active]:bg-orange-600 data-[state=active]:text-white"
+              onClick={() => window.location.href = '/Banimal'}
+            >
+              ⚡ Banimal™
+            </TabsTrigger>
             {Object.entries(SECTORS).map(([key, label]) => (
               <TabsTrigger
                 key={key}
