@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PaymentGateway from '../components/payments/PaymentGateway';
 import SubscriptionManager from '../components/payments/SubscriptionManager';
 import TransactionHistory from '../components/payments/TransactionHistory';
+import BackButton from '../components/navigation/BackButton';
 import { Loader2, CreditCard } from 'lucide-react';
 
 export default function Payments() {
@@ -48,6 +49,7 @@ export default function Payments() {
       </header>
 
       <div className="container mx-auto px-6 pb-12">
+        <BackButton />
         <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-6">
           <TabsList className="bg-white p-2 rounded-lg shadow">
             <TabsTrigger value="gateway" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white">

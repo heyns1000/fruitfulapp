@@ -6,6 +6,7 @@ import BrandOrchestrator from '../components/banimal/BrandOrchestrator';
 import BrandCreator from '../components/banimal/BrandCreator';
 import ResourceManager from '../components/banimal/ResourceManager';
 import PerformanceMonitor from '../components/banimal/PerformanceMonitor';
+import BackButton from '../components/navigation/BackButton';
 import { Loader2, Zap } from 'lucide-react';
 
 export default function Banimal() {
@@ -39,6 +40,7 @@ export default function Banimal() {
       </header>
 
       <div className="container mx-auto px-6 pb-12">
+        <BackButton />
         <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-6">
           <TabsList className="bg-white p-2 rounded-lg shadow">
             <TabsTrigger value="orchestrator" className="data-[state=active]:bg-orange-600 data-[state=active]:text-white">

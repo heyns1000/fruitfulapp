@@ -7,6 +7,7 @@ import VaultCreator from '../components/vaultmesh/VaultCreator';
 import AccessControl from '../components/vaultmesh/AccessControl';
 import AuditLog from '../components/vaultmesh/AuditLog';
 import ComplianceAuditor from '../components/vaultmesh/ComplianceAuditor';
+import BackButton from '../components/navigation/BackButton';
 import { Loader2, Shield } from 'lucide-react';
 
 export default function VaultMesh() {
@@ -40,6 +41,7 @@ export default function VaultMesh() {
       </header>
 
       <div className="container mx-auto px-6 pb-12">
+        <BackButton />
         <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-6">
           <TabsList className="bg-white p-2 rounded-lg shadow">
             <TabsTrigger value="manager" className="data-[state=active]:bg-emerald-600 data-[state=active]:text-white">
