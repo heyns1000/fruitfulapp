@@ -132,6 +132,13 @@ export default function Dashboard() {
             >
               🔐 VaultMesh™
             </TabsTrigger>
+            <TabsTrigger 
+              value="payments" 
+              className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+              onClick={() => window.location.href = '/Payments'}
+            >
+              💳 Payments
+            </TabsTrigger>
             {Object.entries(SECTORS).map(([key, label]) => (
               <TabsTrigger
                 key={key}
