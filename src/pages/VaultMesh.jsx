@@ -6,6 +6,7 @@ import VaultManager from '../components/vaultmesh/VaultManager';
 import VaultCreator from '../components/vaultmesh/VaultCreator';
 import AccessControl from '../components/vaultmesh/AccessControl';
 import AuditLog from '../components/vaultmesh/AuditLog';
+import ComplianceAuditor from '../components/vaultmesh/ComplianceAuditor';
 import { Loader2, Shield } from 'lucide-react';
 
 export default function VaultMesh() {
@@ -53,6 +54,9 @@ export default function VaultMesh() {
             <TabsTrigger value="audit" className="data-[state=active]:bg-emerald-600 data-[state=active]:text-white">
               📋 Audit Log
             </TabsTrigger>
+            <TabsTrigger value="compliance" className="data-[state=active]:bg-emerald-600 data-[state=active]:text-white">
+              🛡️ Compliance
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="manager">
@@ -69,6 +73,10 @@ export default function VaultMesh() {
 
           <TabsContent value="audit">
             <AuditLog vaults={vaults} />
+          </TabsContent>
+
+          <TabsContent value="compliance">
+            <ComplianceAuditor vaults={vaults} />
           </TabsContent>
         </Tabs>
       </div>
