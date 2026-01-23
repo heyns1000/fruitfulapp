@@ -10,10 +10,12 @@ import { Loader2, CreditCard, Smartphone, Banknote, QrCode, Shield } from 'lucid
 import { toast } from 'sonner';
 
 const GATEWAYS = {
-  PayFast: { icon: CreditCard, methods: ['card', 'eft', 'instant_eft'], color: 'blue' },
-  Ozow: { icon: Banknote, methods: ['instant_eft'], color: 'green' },
-  Yoco: { icon: Smartphone, methods: ['card', 'qr'], color: 'purple' },
-  PayPal: { icon: CreditCard, methods: ['card'], color: 'indigo' }
+  PayFast: { icon: CreditCard, methods: ['card', 'eft', 'instant_eft'], color: 'blue', regions: ['ZAR', 'USD'] },
+  Ozow: { icon: Banknote, methods: ['instant_eft'], color: 'green', regions: ['ZAR'] },
+  Yoco: { icon: Smartphone, methods: ['card', 'qr'], color: 'purple', regions: ['ZAR', 'USD', 'EUR'] },
+  PayPal: { icon: CreditCard, methods: ['card'], color: 'indigo', regions: ['USD', 'EUR', 'GBP'] },
+  Flutterwave: { icon: CreditCard, methods: ['card', 'mobile_money'], color: 'orange', regions: ['NGN', 'KES', 'GHS', 'UGX', 'TZS', 'ZMW'] },
+  Paystack: { icon: CreditCard, methods: ['card', 'mobile_money', 'bank'], color: 'teal', regions: ['NGN', 'GHS', 'ZAR', 'KES'] }
 };
 
 const METHOD_LABELS = {
@@ -28,9 +30,16 @@ export default function PaymentGateway({ brands }) {
   const [selectedGateway, setSelectedGateway] = useState('PayFast');
   const [selectedMethod, setSelectedMethod] = useState('card');
   const [selectedBrand, setSelectedBrand] = useState('');
+  const [selectedCurrency, setSelectedCurrency] = useState('USD');
   const [amount, setAmount] = useState('');
   const [email, setEmail] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
+
+  const CURRENCY_SYMBOLS = {
+    USD: '$', EUR: '€', GBP: '£', ZAR: 'R', NGN: '₦', KES: 'KSh',
+    GHS: '₵', TZS: 'TSh', UGX: 'USh', ZMW: 'ZK', MWK: 'MK',
+    BRL: 'R$', INR: '₹', CNY: '¥', JPY: '¥'
+  };
 
   const queryClient = useQueryClient();
 
@@ -60,7 +69,7 @@ export default function PaymentGateway({ brands }) {
         brandId: brand.id,
         brandName: brand.name,
         amount: parseFloat(amount),
-        currency: 'ZAR',
+        currency: selectedCurrency,
         gateway: selectedGateway,
         paymentMethod: selectedMethod,
         status: 'completed',
@@ -120,16 +129,33 @@ export default function PaymentGateway({ brands }) {
             </Select>
           </div>
 
-          <div>
-            <label className="text-sm font-medium mb-2 block">Amount (ZAR)</label>
-            <Input
-              type="number"
-              placeholder="0.00"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              min="1"
-              step="0.01"
-            />
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="text-sm font-medium mb-2 block">Currency</label>
+              <Select value={selectedCurrency} onValueChange={setSelectedCurrency}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.keys(CURRENCY_SYMBOLS).map(curr => (
+                    <SelectItem key={curr} value={curr}>
+                      {CURRENCY_SYMBOLS[curr]} {curr}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <label className="text-sm font-medium mb-2 block">Amount</label>
+              <Input
+                type="number"
+                placeholder="0.00"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                min="1"
+                step="0.01"
+              />
+            </div>
           </div>
 
           <div>
@@ -196,7 +222,7 @@ export default function PaymentGateway({ brands }) {
               ) : (
                 <>
                   <CreditCard className="w-5 h-5 mr-2" />
-                  Pay R{amount || '0.00'}
+                  Pay {CURRENCY_SYMBOLS[selectedCurrency]}{amount || '0.00'}
                 </>
               )}
             </Button>

@@ -139,6 +139,13 @@ export default function Dashboard() {
             >
               💳 Payments
             </TabsTrigger>
+            <TabsTrigger 
+              value="marketplace" 
+              className="data-[state=active]:bg-purple-600 data-[state=active]:text-white"
+              onClick={() => window.location.href = '/Marketplace'}
+            >
+              🛍️ Marketplace
+            </TabsTrigger>
             {Object.entries(SECTORS).map(([key, label]) => (
               <TabsTrigger
                 key={key}
