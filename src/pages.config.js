@@ -18,6 +18,6 @@ export const PAGES = {
 }
 
 export const pagesConfig = {
-    mainPage: "Dashboard",
+    mainPage: "Gallery",
     Pages: PAGES,
 };
