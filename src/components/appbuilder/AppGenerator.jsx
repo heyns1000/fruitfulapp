@@ -6,7 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
-import { Loader2, Sparkles, Zap, Globe, Smartphone } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Loader2, Sparkles, Zap, Globe, Smartphone, Shield, Code2, X } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function AppGenerator({ selectedBrands, onAppGenerated }) {
@@ -14,6 +15,9 @@ export default function AppGenerator({ selectedBrands, onAppGenerated }) {
   const [appDescription, setAppDescription] = useState('');
   const [appType, setAppType] = useState('website');
   const [appStyle, setAppStyle] = useState('modern');
+  const [framework, setFramework] = useState('react');
+  const [userRoles, setUserRoles] = useState(['admin', 'user']);
+  const [newRole, setNewRole] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
 
   const generateApp = async () => {
@@ -49,8 +53,9 @@ Generate a complete app structure including:
 4. Cross-pollination features (how brands connect/collaborate)
 5. Color scheme based on sectors
 6. Key interactive features
-7. Recommended tech stack
+7. Recommended tech stack (using ${framework} framework)
 8. Database schema suggestions
+9. User roles and permissions structure for: ${JSON.stringify(userRoles)}
 
 Return comprehensive JSON structure.`,
         response_json_schema: {
@@ -118,6 +123,22 @@ Return comprehensive JSON structure.`,
                   fields: { type: "array", items: { type: "string" } }
                 }
               }
+            },
+            rolePermissions: {
+              type: "object",
+              properties: {
+                roles: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      name: { type: "string" },
+                      permissions: { type: "array", items: { type: "string" } },
+                      description: { type: "string" }
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -129,6 +150,8 @@ Return comprehensive JSON structure.`,
         description: appDescription,
         type: appType,
         style: appStyle,
+        framework: framework,
+        userRoles: userRoles,
         selectedBrands: selectedBrands,
         generatedAt: new Date().toISOString()
       };
@@ -238,6 +261,85 @@ Return comprehensive JSON structure.`,
                     <SelectItem value="corporate">Corporate & Professional</SelectItem>
                   </SelectContent>
                 </Select>
+              </div>
+
+              <div>
+                <Label htmlFor="framework">Export Framework</Label>
+                <Select value={framework} onValueChange={setFramework}>
+                  <SelectTrigger className="mt-2">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="react">
+                      <div className="flex items-center gap-2">
+                        <Code2 className="w-4 h-4" />
+                        React
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="vue">
+                      <div className="flex items-center gap-2">
+                        <Code2 className="w-4 h-4" />
+                        Vue.js
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="nextjs">
+                      <div className="flex items-center gap-2">
+                        <Code2 className="w-4 h-4" />
+                        Next.js
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="angular">
+                      <div className="flex items-center gap-2">
+                        <Code2 className="w-4 h-4" />
+                        Angular
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            {/* User Roles & Permissions */}
+            <div className="border rounded-lg p-4 bg-gray-50">
+              <div className="flex items-center gap-2 mb-3">
+                <Shield className="w-5 h-5 text-indigo-600" />
+                <Label className="text-base">User Roles & Permissions</Label>
+              </div>
+              <div className="flex flex-wrap gap-2 mb-3">
+                {userRoles.map((role, idx) => (
+                  <Badge 
+                    key={idx}
+                    className="bg-indigo-600 text-white px-3 py-1 cursor-pointer hover:bg-indigo-700"
+                    onClick={() => setUserRoles(userRoles.filter((_, i) => i !== idx))}
+                  >
+                    {role} <X className="w-3 h-3 ml-1" />
+                  </Badge>
+                ))}
+              </div>
+              <div className="flex gap-2">
+                <Input
+                  placeholder="Add custom role (e.g., manager, editor)"
+                  value={newRole}
+                  onChange={(e) => setNewRole(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && newRole.trim() && !userRoles.includes(newRole.trim())) {
+                      setUserRoles([...userRoles, newRole.trim()]);
+                      setNewRole('');
+                    }
+                  }}
+                />
+                <Button
+                  type="button"
+                  onClick={() => {
+                    if (newRole.trim() && !userRoles.includes(newRole.trim())) {
+                      setUserRoles([...userRoles, newRole.trim()]);
+                      setNewRole('');
+                    }
+                  }}
+                  variant="outline"
+                >
+                  Add
+                </Button>
               </div>
             </div>
           </div>
