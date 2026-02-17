@@ -181,6 +181,13 @@ export default function Dashboard() {
             >
               🛍️ Marketplace
             </TabsTrigger>
+            <TabsTrigger 
+              value="appbuilder" 
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 data-[state=active]:text-white"
+              onClick={() => window.location.href = '/AppBuilder'}
+            >
+              ⚡ App Builder
+            </TabsTrigger>
             {Object.entries(SECTORS).map(([key, label]) => (
               <TabsTrigger
                 key={key}
