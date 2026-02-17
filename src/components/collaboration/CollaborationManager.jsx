@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -14,6 +15,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Loader2, Sparkles, Users, TrendingUp, MessageSquare, Search } from 'lucide-react';
 import { toast } from 'sonner';
+import AISuggestions from './AISuggestions';
 
 const STATUS_COLORS = {
   pending: 'bg-yellow-100 text-yellow-800',
@@ -187,34 +189,25 @@ export default function CollaborationManager() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-indigo-700 flex items-center gap-2">
-          <Users className="w-6 h-6" />
-          Brand Collaboration Hub
-        </h2>
-        <div className="flex gap-3">
-          <Button
-            onClick={generateAISuggestions}
-            disabled={isGeneratingSuggestions}
-            variant="outline"
-            className="border-purple-300 text-purple-700 hover:bg-purple-50"
-          >
-            {isGeneratingSuggestions ? (
-              <Loader2 className="w-4 h-4 animate-spin mr-2" />
-            ) : (
-              <Sparkles className="w-4 h-4 mr-2" />
-            )}
-            AI Suggest Pairings
-          </Button>
-          <Button onClick={() => setIsDialogOpen(true)} className="bg-indigo-600 hover:bg-indigo-700">
-            <Users className="w-4 h-4 mr-2" />
-            New Collaboration
-          </Button>
-        </div>
-      </div>
+    <Tabs defaultValue="suggestions" className="space-y-6">
+      <TabsList className="bg-white/90 p-2 rounded-xl shadow-lg border-2 border-purple-200">
+        <TabsTrigger value="suggestions" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
+          ✨ AI Suggestions
+        </TabsTrigger>
+        <TabsTrigger value="active" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
+          🤝 Active Collaborations
+        </TabsTrigger>
+        <TabsTrigger value="create" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
+          ➕ Create New
+        </TabsTrigger>
+      </TabsList>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <TabsContent value="suggestions">
+        <AISuggestions brands={brands} />
+      </TabsContent>
+
+      <TabsContent value="active">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
           <Input
@@ -306,6 +299,24 @@ export default function CollaborationManager() {
           ))
         )}
       </div>
+      </TabsContent>
+
+      <TabsContent value="create">
+        <Card className="border-2 border-indigo-200">
+          <CardHeader>
+            <CardTitle className="text-2xl text-indigo-900">Create New Collaboration</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Button
+              onClick={() => setIsDialogOpen(true)}
+              className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-lg py-6"
+            >
+              <Users className="w-5 h-5 mr-2" />
+              Create Manual Collaboration Proposal
+            </Button>
+          </CardContent>
+        </Card>
+      </TabsContent>
 
       {/* Create Collaboration Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -440,6 +451,6 @@ export default function CollaborationManager() {
           </div>
         </DialogContent>
       </Dialog>
-    </div>
+    </Tabs>
   );
 }
