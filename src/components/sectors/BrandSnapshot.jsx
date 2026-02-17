@@ -1,6 +1,40 @@
 import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Copy, Download, Check } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function BrandSnapshot({ brand, sectorKey, sectorName }) {
+  const [copied, setCopied] = React.useState(false);
+
+  const copyToClipboard = (data, label) => {
+    navigator.clipboard.writeText(typeof data === 'object' ? JSON.stringify(data, null, 2) : data);
+    toast.success(`${label} copied to clipboard!`);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const exportBrandData = () => {
+    const exportData = {
+      name: brand.name,
+      sector: sectorName,
+      description: brand.description,
+      subnodes: brand.subnodes,
+      tags: brand.tags,
+      metadata: brand.metadata,
+      created_date: brand.created_date,
+      updated_date: brand.updated_date
+    };
+    
+    const dataStr = JSON.stringify(exportData, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${brand.name}_brand_data.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+    toast.success('Brand data exported successfully!');
+  };
   const getIntroText = () => {
     const intros = [
       `a cutting-edge FAA.ZONE solution designed for the ${sectorName} sector. It seamlessly integrates with the global PulseGrid to deliver unparalleled performance and data integrity.`,
@@ -44,6 +78,29 @@ export default function BrandSnapshot({ brand, sectorKey, sectorName }) {
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-indigo-100">
+      <div className="flex justify-between items-center mb-6 pb-4 border-b-2 border-indigo-100">
+        <h3 className="text-2xl font-bold text-indigo-700">📋 Brand Snapshot</h3>
+        <div className="flex gap-2">
+          <Button
+            onClick={() => copyToClipboard(brand, 'Full brand data')}
+            variant="outline"
+            size="sm"
+            className="text-indigo-600 border-indigo-300 hover:bg-indigo-50"
+          >
+            {copied ? <Check className="w-4 h-4 mr-2" /> : <Copy className="w-4 h-4 mr-2" />}
+            Copy All
+          </Button>
+          <Button
+            onClick={exportBrandData}
+            variant="outline"
+            size="sm"
+            className="text-green-600 border-green-300 hover:bg-green-50"
+          >
+            <Download className="w-4 h-4 mr-2" />
+            Export JSON
+          </Button>
+        </div>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-6">
           <h4 className="text-2xl font-extrabold text-indigo-700">
@@ -89,9 +146,20 @@ export default function BrandSnapshot({ brand, sectorKey, sectorName }) {
         </div>
 
         <div className="space-y-6">
-          <h5 className="text-xl font-semibold text-indigo-700 border-b pb-2 mb-3">
-            🔗 FAA Metadata & Compliance
-          </h5>
+          <div className="flex justify-between items-center border-b pb-2 mb-3">
+            <h5 className="text-xl font-semibold text-indigo-700">
+              🔗 FAA Metadata & Compliance
+            </h5>
+            <Button
+              onClick={() => copyToClipboard(brand.metadata, 'Metadata')}
+              variant="ghost"
+              size="sm"
+              className="text-indigo-600 hover:bg-indigo-50"
+            >
+              <Copy className="w-3 h-3 mr-1" />
+              Copy
+            </Button>
+          </div>
           <ul className="list-disc list-inside ml-4 space-y-2 text-sm text-gray-700">
             <li>
               <strong>Product ID:</strong> <code>{brand.metadata?.id || 'N/A'}</code>
@@ -138,7 +206,18 @@ export default function BrandSnapshot({ brand, sectorKey, sectorName }) {
 
           {brand.subnodes && brand.subnodes.length > 0 && (
             <div className="p-4 bg-gray-50 border border-gray-200 rounded-md text-sm text-gray-700 shadow-inner">
-              <h6 className="font-bold mb-2 text-gray-800">📌 Registered Subnodes:</h6>
+              <div className="flex justify-between items-center mb-2">
+                <h6 className="font-bold text-gray-800">📌 Registered Subnodes:</h6>
+                <Button
+                  onClick={() => copyToClipboard(brand.subnodes.join(', '), 'Subnodes')}
+                  variant="ghost"
+                  size="sm"
+                  className="text-indigo-600 hover:bg-indigo-100 h-6 text-xs"
+                >
+                  <Copy className="w-3 h-3 mr-1" />
+                  Copy
+                </Button>
+              </div>
               <div className="flex flex-wrap gap-2">
                 {brand.subnodes.map((node, i) => (
                   <span

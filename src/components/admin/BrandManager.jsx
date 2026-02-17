@@ -11,7 +11,7 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter
 } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Loader2, Pencil, Trash2, Search, Sparkles, AlertTriangle } from 'lucide-react';
+import { Loader2, Pencil, Trash2, Search, Sparkles, AlertTriangle, Download, FileJson } from 'lucide-react';
 import { toast } from 'sonner';
 
 const SECTORS = {
@@ -183,6 +183,61 @@ export default function BrandManager() {
     }
   };
 
+  const exportAllBrands = () => {
+    const exportData = brands.map(brand => ({
+      name: brand.name,
+      sector: brand.sector,
+      sectorName: SECTORS[brand.sector],
+      description: brand.description,
+      subnodes: brand.subnodes,
+      tags: brand.tags,
+      metadata: brand.metadata,
+      created_date: brand.created_date,
+      updated_date: brand.updated_date,
+      isSystemBrand: brand.isSystemBrand,
+      aiGenerated: brand.aiGenerated
+    }));
+
+    const dataStr = JSON.stringify(exportData, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `omnigrid_all_brands_${new Date().toISOString().split('T')[0]}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+    toast.success(`Exported ${brands.length} brands successfully!`);
+  };
+
+  const exportBySector = () => {
+    const bySector = {};
+    brands.forEach(brand => {
+      if (!bySector[brand.sector]) {
+        bySector[brand.sector] = {
+          sectorName: SECTORS[brand.sector],
+          brands: []
+        };
+      }
+      bySector[brand.sector].brands.push({
+        name: brand.name,
+        description: brand.description,
+        subnodes: brand.subnodes,
+        tags: brand.tags,
+        metadata: brand.metadata
+      });
+    });
+
+    const dataStr = JSON.stringify(bySector, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `omnigrid_brands_by_sector_${new Date().toISOString().split('T')[0]}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+    toast.success('Exported brands by sector successfully!');
+  };
+
   const checkDuplicates = async () => {
     setIsDuplicateChecking(true);
     setDuplicates([]);
@@ -245,9 +300,27 @@ export default function BrandManager() {
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <h2 className="text-2xl font-bold text-indigo-700">🔧 Brand Management Console</h2>
-        <div className="flex gap-3 items-center">
+        <div className="flex flex-wrap gap-2 items-center">
+          <Button
+            onClick={exportAllBrands}
+            variant="outline"
+            size="sm"
+            className="text-green-600 border-green-300 hover:bg-green-50"
+          >
+            <Download className="w-4 h-4 mr-2" />
+            Export All
+          </Button>
+          <Button
+            onClick={exportBySector}
+            variant="outline"
+            size="sm"
+            className="text-blue-600 border-blue-300 hover:bg-blue-50"
+          >
+            <FileJson className="w-4 h-4 mr-2" />
+            By Sector
+          </Button>
           <Button
             onClick={checkDuplicates}
             disabled={isDuplicateChecking}
@@ -262,7 +335,7 @@ export default function BrandManager() {
             )}
             Check Duplicates
           </Button>
-          <span className="text-sm text-gray-500">{filteredBrands.length} brands</span>
+          <span className="text-sm text-gray-500 whitespace-nowrap">{filteredBrands.length} brands</span>
         </div>
       </div>
 

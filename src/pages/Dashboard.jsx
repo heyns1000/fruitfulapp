@@ -8,6 +8,7 @@ import BrandManager from '../components/admin/BrandManager';
 import CollaborationManager from '../components/collaboration/CollaborationManager';
 import MetricsCards from '../components/dashboard/MetricsCards';
 import SectorGrid from '../components/sectors/SectorGrid';
+import DataExporter from '../components/data/DataExporter';
 import { Loader2 } from 'lucide-react';
 
 const SECTORS = {
@@ -192,6 +193,7 @@ export default function Dashboard() {
           </TabsList>
 
           <TabsContent value="admin" className="space-y-6">
+            <DataExporter />
             <DataSeeder />
             <AdminPanel onBrandAdded={handleBrandAdded} />
             <BrandManager />
