@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Download, FileJson, FileCode, Copy, Check, Palette, Database, Zap, Code2, Eye, Shield } from 'lucide-react';
+import { Download, FileJson, FileCode, Copy, Check, Palette, Database, Zap, Code2, Eye, Shield, Globe, Star } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function AppPreview({ appData, selectedBrands }) {
@@ -292,6 +292,7 @@ export class AppComponent {
           <TabsTrigger value="tech">💻 Tech Stack</TabsTrigger>
           <TabsTrigger value="database">🗄️ Database</TabsTrigger>
           <TabsTrigger value="preview">👁️ Live Preview</TabsTrigger>
+          <TabsTrigger value="crosspoll">🔗 Cross-Pollination</TabsTrigger>
           <TabsTrigger value="roles">🛡️ Roles & Permissions</TabsTrigger>
           <TabsTrigger value="export">📦 Export Code</TabsTrigger>
         </TabsList>
@@ -589,6 +590,158 @@ export class AppComponent {
               </div>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        <TabsContent value="crosspoll">
+          <div className="space-y-4">
+            {/* AI Recommendation Engine */}
+            {appData.recommendationEngine && (
+              <Card className="border-2 border-purple-200">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-purple-600" />
+                    AI Recommendation Engine
+                  </CardTitle>
+                  <CardDescription>
+                    Algorithm: {appData.recommendationEngine.algorithm}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {appData.recommendationEngine.recommendationTypes?.map((rec, idx) => (
+                    <div key={idx} className="p-4 bg-purple-50 rounded-lg">
+                      <h3 className="font-bold text-purple-900 mb-2">{rec.type}</h3>
+                      <p className="text-sm text-gray-700 mb-3">{rec.description}</p>
+                      <div className="flex flex-wrap gap-2">
+                        {rec.brandPairs?.map((pair, i) => (
+                          <Badge key={i} variant="outline" className="text-xs">
+                            {pair}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                  <div className="p-3 bg-blue-50 rounded border border-blue-200">
+                    <p className="text-sm text-blue-900">
+                      <strong>Implementation:</strong> {appData.recommendationEngine.implementation}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Unified Support System */}
+            {appData.unifiedSupport && (
+              <Card className="border-2 border-green-200">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Globe className="w-5 h-5 text-green-600" />
+                    Unified Customer Support
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="p-4 bg-green-50 rounded-lg">
+                      <h3 className="font-semibold text-green-900 mb-2">Ticketing System</h3>
+                      <p className="text-sm text-gray-700">{appData.unifiedSupport.ticketingSystem}</p>
+                    </div>
+                    <div className="p-4 bg-green-50 rounded-lg">
+                      <h3 className="font-semibold text-green-900 mb-2">Knowledge Base</h3>
+                      <p className="text-sm text-gray-700">{appData.unifiedSupport.knowledgeBaseIntegration}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="p-4 bg-green-50 rounded-lg">
+                    <h3 className="font-semibold text-green-900 mb-2">AI Chatbot Features</h3>
+                    <div className="grid grid-cols-2 gap-2">
+                      {appData.unifiedSupport.chatbotFeatures?.map((feature, idx) => (
+                        <Badge key={idx} className="bg-green-600 text-white">
+                          {feature}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-green-50 rounded-lg">
+                    <h3 className="font-semibold text-green-900 mb-2">Support Channels</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {appData.unifiedSupport.supportChannels?.map((channel, idx) => (
+                        <Badge key={idx} variant="outline">
+                          {channel}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="p-3 bg-blue-50 rounded border border-blue-200">
+                    <p className="text-sm text-blue-900">
+                      <strong>Escalation Flow:</strong> {appData.unifiedSupport.escalationFlow}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Loyalty Program */}
+            {appData.loyaltyProgram && (
+              <Card className="border-2 border-orange-200">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Star className="w-5 h-5 text-orange-600" />
+                    {appData.loyaltyProgram.programName || 'Integrated Loyalty Program'}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="p-4 bg-orange-50 rounded-lg">
+                    <h3 className="font-semibold text-orange-900 mb-2">Points System</h3>
+                    <p className="text-sm text-gray-700 mb-2">
+                      <strong>Earn Rate:</strong> {appData.loyaltyProgram.pointsSystem?.earnRate}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {appData.loyaltyProgram.pointsSystem?.redemptionOptions?.map((option, idx) => (
+                        <Badge key={idx} className="bg-orange-600 text-white">
+                          {option}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <h3 className="font-semibold text-orange-900">Membership Tiers</h3>
+                    {appData.loyaltyProgram.membershipTiers?.map((tier, idx) => (
+                      <div key={idx} className="p-4 bg-gradient-to-r from-orange-50 to-yellow-50 rounded-lg border border-orange-200">
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="font-bold text-orange-900">{tier.tierName}</h4>
+                          <Badge className="bg-orange-600 text-white">
+                            {tier.requiredPoints} points
+                          </Badge>
+                        </div>
+                        <ul className="text-sm text-gray-700 space-y-1">
+                          {tier.benefits?.map((benefit, i) => (
+                            <li key={i}>✓ {benefit}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="p-4 bg-orange-50 rounded-lg">
+                    <h3 className="font-semibold text-orange-900 mb-2">Cross-Brand Benefits</h3>
+                    <ul className="text-sm text-gray-700 space-y-1">
+                      {appData.loyaltyProgram.crossBrandBenefits?.map((benefit, idx) => (
+                        <li key={idx}>🎁 {benefit}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="p-3 bg-blue-50 rounded border border-blue-200">
+                    <p className="text-sm text-blue-900">
+                      <strong>Referral Program:</strong> {appData.loyaltyProgram.referralProgram}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+          </div>
         </TabsContent>
 
         <TabsContent value="roles">

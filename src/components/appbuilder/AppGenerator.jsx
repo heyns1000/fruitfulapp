@@ -143,8 +143,81 @@ Return a production-ready app structure using ONLY the real brand data provided.
                   brand1: { type: "string" },
                   brand2: { type: "string" },
                   connectionType: { type: "string" },
-                  feature: { type: "string" }
+                  feature: { type: "string" },
+                  synergyScore: { type: "number" }
                 }
+              }
+            },
+            recommendationEngine: {
+              type: "object",
+              properties: {
+                algorithm: { type: "string" },
+                recommendationTypes: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      type: { type: "string" },
+                      description: { type: "string" },
+                      brandPairs: {
+                        type: "array",
+                        items: { type: "string" }
+                      }
+                    }
+                  }
+                },
+                implementation: { type: "string" }
+              }
+            },
+            unifiedSupport: {
+              type: "object",
+              properties: {
+                ticketingSystem: { type: "string" },
+                chatbotFeatures: {
+                  type: "array",
+                  items: { type: "string" }
+                },
+                supportChannels: {
+                  type: "array",
+                  items: { type: "string" }
+                },
+                escalationFlow: { type: "string" },
+                knowledgeBaseIntegration: { type: "string" }
+              }
+            },
+            loyaltyProgram: {
+              type: "object",
+              properties: {
+                programName: { type: "string" },
+                pointsSystem: {
+                  type: "object",
+                  properties: {
+                    earnRate: { type: "string" },
+                    redemptionOptions: {
+                      type: "array",
+                      items: { type: "string" }
+                    }
+                  }
+                },
+                membershipTiers: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      tierName: { type: "string" },
+                      benefits: {
+                        type: "array",
+                        items: { type: "string" }
+                      },
+                      requiredPoints: { type: "number" }
+                    }
+                  }
+                },
+                crossBrandBenefits: {
+                  type: "array",
+                  items: { type: "string" }
+                },
+                referralProgram: { type: "string" }
               }
             },
             techStack: {
