@@ -81,7 +81,7 @@ export default function BrandSelector({ brands, selectedBrands, onBrandsSelected
         <CardHeader>
           <CardTitle className="text-2xl text-indigo-900">🎯 Select Ecosystem Brands</CardTitle>
           <CardDescription>
-            Choose up to 10 brands to include in your generated app. Cross-pollination will automatically connect related brands.
+            Choose up to 10 REAL ecosystem brands with their complete data, subnodes, and metadata. AI will build a working app using actual brand information.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -171,8 +171,18 @@ export default function BrandSelector({ brands, selectedBrands, onBrandsSelected
                       {SECTORS[brand.sector]?.split(' ')[1] || brand.sector}
                     </Badge>
                     {brand.subnodes?.length > 0 && (
-                      <Badge variant="outline" className="text-xs">
+                      <Badge variant="outline" className="text-xs bg-green-50 text-green-700">
                         {brand.subnodes.length} subnodes
+                      </Badge>
+                    )}
+                    {brand.metadata?.activeNodes && (
+                      <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700">
+                        {brand.metadata.activeNodes} nodes
+                      </Badge>
+                    )}
+                    {brand.tags?.length > 0 && (
+                      <Badge variant="outline" className="text-xs bg-purple-50 text-purple-700">
+                        {brand.tags.length} tags
                       </Badge>
                     )}
                   </div>

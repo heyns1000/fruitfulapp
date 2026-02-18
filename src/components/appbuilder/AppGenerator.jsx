@@ -29,35 +29,64 @@ export default function AppGenerator({ selectedBrands, onAppGenerated }) {
     setIsGenerating(true);
     try {
       const brandsSummary = selectedBrands.map(b => ({
+        id: b.id,
         name: b.name,
         sector: b.sector,
         description: b.description,
-        subnodes: b.subnodes,
-        metadata: b.metadata
+        subnodes: b.subnodes || [],
+        tags: b.tags || [],
+        metadata: b.metadata || {},
+        isSystemBrand: b.isSystemBrand,
+        aiGenerated: b.aiGenerated
       }));
 
-      // Generate app structure using AI
+      // Generate app structure using AI with FULL REAL ECOSYSTEM DATA
       const result = await base44.integrations.Core.InvokeLLM({
-        prompt: `You are an expert app/website generator. Generate a comprehensive full-stack ${appType} structure for "${appName}".
+        prompt: `You are an advanced 2026 AI-powered no-code app generator building REAL functional applications from actual ecosystem data.
 
-Description: ${appDescription || 'No description provided'}
+CRITICAL: Use ONLY the provided REAL brand data below. Do NOT invent fake brands or data.
+
+🎯 APP CONFIGURATION:
+Name: "${appName}"
+Description: ${appDescription || 'Cross-pollination ecosystem app'}
+Type: ${appType}
 Style: ${appStyle}
+Framework: ${framework}
+Target Year: 2026 (use latest web standards)
 
-Selected Brands (integrate these into the app with cross-pollination):
+🏢 REAL ECOSYSTEM BRANDS (${selectedBrands.length} brands with full metadata):
 ${JSON.stringify(brandsSummary, null, 2)}
 
-Generate a complete app structure including:
-1. Homepage layout and sections
-2. Navigation structure
-3. Feature pages for each brand
-4. Cross-pollination features (how brands connect/collaborate)
-5. Color scheme based on sectors
-6. Key interactive features
-7. Recommended tech stack (using ${framework} framework)
-8. Database schema suggestions
-9. User roles and permissions structure for: ${JSON.stringify(userRoles)}
+📋 GENERATION REQUIREMENTS:
 
-Return comprehensive JSON structure.`,
+1. **REAL DATA INTEGRATION**: Build using the actual brand names, descriptions, subnodes, and metadata provided
+2. **FUNCTIONAL PAGES**: Generate working page structures for each brand with their real subnodes
+3. **CROSS-POLLINATION ENGINE**: Identify actual synergies between brands based on:
+   - Shared sectors and complementary sectors
+   - Technology compatibility (metadata.layer, metadata.securityRating)
+   - Supply chain connections (subnodes analysis)
+   - Market overlap potential
+
+4. **DATABASE SCHEMA**: Create tables for:
+   - Each brand type with their real fields
+   - Cross-pollination tracking
+   - User interactions
+   - Transaction logs
+
+5. **2026 FEATURES**: Include modern capabilities:
+   - AI-powered search and recommendations
+   - Real-time collaboration tools
+   - WebRTC for communication
+   - Progressive Web App capabilities
+   - Advanced analytics dashboard
+
+6. **USER ROLES**: Define permissions for: ${JSON.stringify(userRoles)}
+
+7. **NAVIGATION**: Create intuitive nav based on actual sectors present
+
+8. **ACTIONABLE FEATURES**: For each brand, generate specific features based on their real subnodes
+
+Return a production-ready app structure using ONLY the real brand data provided.`,
         response_json_schema: {
           type: "object",
           properties: {
@@ -79,7 +108,19 @@ Return comprehensive JSON structure.`,
                   name: { type: "string" },
                   route: { type: "string" },
                   description: { type: "string" },
-                  sections: { type: "array", items: { type: "string" } }
+                  brandId: { type: "string" },
+                  sections: { type: "array", items: { type: "string" } },
+                  components: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        componentName: { type: "string" },
+                        purpose: { type: "string" },
+                        dataSource: { type: "string" }
+                      }
+                    }
+                  }
                 }
               }
             },
@@ -120,7 +161,33 @@ Return comprehensive JSON structure.`,
                 type: "object",
                 properties: {
                   tableName: { type: "string" },
-                  fields: { type: "array", items: { type: "string" } }
+                  fields: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        name: { type: "string" },
+                        type: { type: "string" },
+                        required: { type: "boolean" }
+                      }
+                    }
+                  },
+                  relationships: {
+                    type: "array",
+                    items: { type: "string" }
+                  }
+                }
+              }
+            },
+            apiEndpoints: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  path: { type: "string" },
+                  method: { type: "string" },
+                  description: { type: "string" },
+                  requiredRole: { type: "string" }
                 }
               }
             },
@@ -175,21 +242,39 @@ Return comprehensive JSON structure.`,
             AI App Generator
           </CardTitle>
           <CardDescription>
-            Configure your app and let AI generate a complete structure with cross-pollination features
+            Configure your app and AI will generate a FUNCTIONAL 2026-ready application using your real brand data, complete metadata, and all subnodes
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          {/* Selected Brands Summary */}
-          <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
-            <h3 className="font-semibold text-purple-900 mb-2">
-              Building with {selectedBrands.length} brands:
+          {/* Selected Brands Summary with REAL DATA */}
+          <div className="p-4 bg-purple-50 rounded-lg border-2 border-purple-300">
+            <h3 className="font-semibold text-purple-900 mb-3">
+              Building with {selectedBrands.length} REAL brands:
             </h3>
-            <div className="flex flex-wrap gap-2">
+            <div className="space-y-2">
               {selectedBrands.map(brand => (
-                <span key={brand.id} className="text-sm px-2 py-1 bg-purple-200 text-purple-900 rounded">
-                  {brand.name}™
-                </span>
+                <div key={brand.id} className="flex items-center justify-between p-2 bg-white rounded border">
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold text-purple-900">{brand.name}™</span>
+                    <Badge variant="outline" className="text-xs">{brand.sector}</Badge>
+                  </div>
+                  <div className="flex gap-1">
+                    {brand.subnodes?.length > 0 && (
+                      <Badge className="bg-green-600 text-white text-xs">
+                        {brand.subnodes.length} subnodes
+                      </Badge>
+                    )}
+                    {brand.metadata?.activeNodes && (
+                      <Badge className="bg-blue-600 text-white text-xs">
+                        {brand.metadata.activeNodes} nodes
+                      </Badge>
+                    )}
+                  </div>
+                </div>
               ))}
+            </div>
+            <div className="mt-3 pt-3 border-t border-purple-200 text-sm text-purple-800">
+              <strong>Total Ecosystem Data:</strong> {selectedBrands.reduce((sum, b) => sum + (b.subnodes?.length || 0), 0)} subnodes ready for integration
             </div>
           </div>
 
@@ -372,10 +457,12 @@ Return comprehensive JSON structure.`,
                 <h3 className="font-bold text-purple-900">AI is crafting your app...</h3>
               </div>
               <div className="space-y-2 text-sm text-purple-800">
-                <p>✨ Analyzing your brand ecosystem...</p>
-                <p>🔗 Identifying cross-pollination opportunities...</p>
-                <p>🎨 Designing page layouts and features...</p>
-                <p>🏗️ Generating complete app structure...</p>
+                <p>🔍 Analyzing {selectedBrands.length} real brands with full metadata...</p>
+                <p>🧠 Mapping {selectedBrands.reduce((sum, b) => sum + (b.subnodes?.length || 0), 0)} subnodes across ecosystem...</p>
+                <p>🔗 Calculating cross-pollination synergies...</p>
+                <p>🎨 Designing functional pages with real data integration...</p>
+                <p>🗄️ Building database schemas from brand structures...</p>
+                <p>⚡ Generating 2026-ready {framework} application...</p>
               </div>
             </div>
           )}
