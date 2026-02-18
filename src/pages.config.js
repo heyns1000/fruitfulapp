@@ -47,6 +47,7 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
+import AppBuilder from './pages/AppBuilder';
 import Banimal from './pages/Banimal';
 import Dashboard from './pages/Dashboard';
 import Gallery from './pages/Gallery';
@@ -54,10 +55,11 @@ import Marketplace from './pages/Marketplace';
 import Payments from './pages/Payments';
 import SectorAnalytics from './pages/SectorAnalytics';
 import VaultMesh from './pages/VaultMesh';
-import AppBuilder from './pages/AppBuilder';
+import Checkout from './pages/Checkout';
 
 
 export const PAGES = {
+    "AppBuilder": AppBuilder,
     "Banimal": Banimal,
     "Dashboard": Dashboard,
     "Gallery": Gallery,
@@ -65,7 +67,7 @@ export const PAGES = {
     "Payments": Payments,
     "SectorAnalytics": SectorAnalytics,
     "VaultMesh": VaultMesh,
-    "AppBuilder": AppBuilder,
+    "Checkout": Checkout,
 }
 
 export const pagesConfig = {
