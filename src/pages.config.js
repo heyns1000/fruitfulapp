@@ -56,6 +56,7 @@ import Payments from './pages/Payments';
 import SectorAnalytics from './pages/SectorAnalytics';
 import VaultMesh from './pages/VaultMesh';
 import Checkout from './pages/Checkout';
+import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
@@ -73,4 +74,5 @@ export const PAGES = {
 export const pagesConfig = {
     mainPage: "Dashboard",
     Pages: PAGES,
+    Layout: __Layout,
 };

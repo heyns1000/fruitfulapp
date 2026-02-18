@@ -26,6 +26,7 @@ export default function ServiceListing({ brands }) {
   const [unlimitedInventory, setUnlimitedInventory] = useState(true);
   const [availableInventory, setAvailableInventory] = useState('');
   const [deliveryType, setDeliveryType] = useState('instant');
+  const [productCode, setProductCode] = useState('');
 
   const queryClient = useQueryClient();
 
@@ -41,6 +42,7 @@ export default function ServiceListing({ brands }) {
   const resetForm = () => {
     setServiceName('');
     setDescription('');
+    setProductCode('');
     setPricing({ USD: '', ZAR: '', EUR: '', GBP: '', NGN: '', KES: '' });
     setAvailableInventory('');
   };
@@ -58,11 +60,14 @@ export default function ServiceListing({ brands }) {
       if (pricing[curr]) pricingObj[curr] = parseFloat(pricing[curr]);
     });
 
+    const generatedProductCode = productCode || `PROD-${brand.name.substring(0, 3).toUpperCase()}-${Date.now().toString().slice(-6)}`;
+
     await createServiceMutation.mutateAsync({
       brandId: brand.id,
       brandName: brand.name,
       serviceName,
       description,
+      productCode: generatedProductCode,
       category,
       pricing: pricingObj,
       currency: 'USD',
@@ -119,6 +124,18 @@ export default function ServiceListing({ brands }) {
             onChange={(e) => setDescription(e.target.value)}
             className="h-24"
           />
+        </div>
+
+        <div>
+          <label className="text-sm font-medium mb-2 block">Product Code (Paystack)</label>
+          <Input
+            placeholder="Auto-generated if left blank"
+            value={productCode}
+            onChange={(e) => setProductCode(e.target.value)}
+          />
+          <p className="text-xs text-gray-500 mt-1">
+            Unique code for Paystack integration. Leave blank to auto-generate.
+          </p>
         </div>
 
         <div>

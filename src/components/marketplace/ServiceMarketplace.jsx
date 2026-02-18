@@ -7,8 +7,9 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
-import { Search, ShoppingCart, Star, Globe, Package, Zap, Loader2 } from 'lucide-react';
+import { Search, ShoppingCart, Star, Globe, Package, Zap, Loader2, Plus } from 'lucide-react';
 import { toast } from 'sonner';
+import { useCart } from '../cart/CartContext';
 
 const CURRENCY_SYMBOLS = {
   USD: '$', EUR: '€', GBP: '£', ZAR: 'R', NGN: '₦', KES: 'KSh',
@@ -28,12 +29,13 @@ const CATEGORY_ICONS = {
 export default function ServiceMarketplace({ services }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [selectedCurrency, setSelectedCurrency] = useState('USD');
+  const [selectedCurrency, setSelectedCurrency] = useState('NGN');
   const [selectedService, setSelectedService] = useState(null);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [buyerEmail, setBuyerEmail] = useState('');
 
+  const { addToCart } = useCart();
   const queryClient = useQueryClient();
 
   const createOrderMutation = useMutation({
@@ -195,13 +197,30 @@ export default function ServiceMarketplace({ services }) {
                     <p className="text-xs text-gray-500">{selectedCurrency}</p>
                   </div>
 
-                  <Button
-                    onClick={() => handlePurchase(service)}
-                    className="w-full bg-purple-600 hover:bg-purple-700"
-                  >
-                    <ShoppingCart className="w-4 h-4 mr-2" />
-                    Purchase
-                  </Button>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Button
+                      onClick={() => addToCart({
+                        id: service.id,
+                        name: service.serviceName,
+                        price: price,
+                        productCode: service.productCode,
+                        imageUrl: service.imageUrl,
+                        brandName: service.brandName
+                      })}
+                      variant="outline"
+                      className="border-purple-300 text-purple-700 hover:bg-purple-50"
+                    >
+                      <Plus className="w-4 h-4 mr-1" />
+                      Add to Cart
+                    </Button>
+                    <Button
+                      onClick={() => handlePurchase(service)}
+                      className="bg-purple-600 hover:bg-purple-700"
+                    >
+                      <ShoppingCart className="w-4 h-4 mr-1" />
+                      Buy Now
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             );
