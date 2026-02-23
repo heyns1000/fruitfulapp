@@ -76,6 +76,15 @@ export default function Layout({ children, currentPageName }) {
                     AI Content
                   </button>
                 </Link>
+                <Link to={createPageUrl('BrandOnboarding')}>
+                  <button className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                    currentPageName === 'BrandOnboarding' 
+                      ? 'bg-teal-600 text-white' 
+                      : 'text-teal-700 hover:bg-teal-50'
+                  }`}>
+                    Onboard Brand
+                  </button>
+                </Link>
                 <CartIcon />
               </div>
             </div>

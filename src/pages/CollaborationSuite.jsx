@@ -6,6 +6,7 @@ import ContentCoCreation from '../components/collaboration/ContentCoCreation';
 import CampaignManager from '../components/collaboration/CampaignManager';
 import CoBrandedSales from '../components/collaboration/CoBrandedSales';
 import SupportCoordination from '../components/collaboration/SupportCoordination';
+import AIProposalEngine from '../components/collaboration/AIProposalEngine';
 
 export default function CollaborationSuite() {
   return (
@@ -59,6 +60,9 @@ export default function CollaborationSuite() {
             </CardContent>
           </Card>
         </div>
+
+        {/* AI Proposal Engine */}
+        <AIProposalEngine />
 
         {/* Main Collaboration Tabs */}
         <Tabs defaultValue="content" className="w-full">

@@ -12,6 +12,7 @@ export default function AppBuilder() {
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [generatedApp, setGeneratedApp] = useState(null);
   const [activeTab, setActiveTab] = useState('select');
+  const [autoGenerating, setAutoGenerating] = useState(false);
 
   const { data: brands = [], isLoading } = useQuery({
     queryKey: ['brands'],
@@ -26,6 +27,14 @@ export default function AppBuilder() {
   const handleAppGenerated = (appData) => {
     setGeneratedApp(appData);
     setActiveTab('preview');
+    setAutoGenerating(false);
+  };
+
+  const handleAutoGenerate = async (brands, appConfig) => {
+    setAutoGenerating(true);
+    setSelectedBrands(brands);
+    setActiveTab('generate');
+    // App generation happens automatically in AppGenerator when autoGenerating is true
   };
 
   if (isLoading) {
@@ -112,6 +121,7 @@ export default function AppBuilder() {
             <AppGenerator 
               selectedBrands={selectedBrands}
               onAppGenerated={handleAppGenerated}
+              autoGenerate={autoGenerating}
             />
           </TabsContent>
 

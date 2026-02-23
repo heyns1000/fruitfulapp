@@ -10,13 +10,20 @@ import { Badge } from '@/components/ui/badge';
 import { Loader2, Sparkles, Zap, Globe, Smartphone, Shield, Code2, X } from 'lucide-react';
 import { toast } from 'sonner';
 
-export default function AppGenerator({ selectedBrands, onAppGenerated }) {
+export default function AppGenerator({ selectedBrands, onAppGenerated, autoGenerate = false }) {
   const [appName, setAppName] = useState('');
   const [appDescription, setAppDescription] = useState('');
   const [appType, setAppType] = useState('website');
   const [appStyle, setAppStyle] = useState('modern');
   const [framework, setFramework] = useState('react');
   const [userRoles, setUserRoles] = useState(['admin', 'user']);
+  
+  // Auto-generate when autoGenerate prop is true
+  React.useEffect(() => {
+    if (autoGenerate && selectedBrands.length > 0 && !generating && !generatedApp) {
+      handleGenerate();
+    }
+  }, [autoGenerate, selectedBrands]);
   const [newRole, setNewRole] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
 
