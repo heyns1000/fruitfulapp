@@ -49,26 +49,30 @@
  */
 import AppBuilder from './pages/AppBuilder';
 import Banimal from './pages/Banimal';
+import Checkout from './pages/Checkout';
 import Dashboard from './pages/Dashboard';
 import Gallery from './pages/Gallery';
 import Marketplace from './pages/Marketplace';
 import Payments from './pages/Payments';
 import SectorAnalytics from './pages/SectorAnalytics';
 import VaultMesh from './pages/VaultMesh';
-import Checkout from './pages/Checkout';
+import CollaborationSuite from './pages/CollaborationSuite';
+import Analytics from './pages/Analytics';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
     "AppBuilder": AppBuilder,
     "Banimal": Banimal,
+    "Checkout": Checkout,
     "Dashboard": Dashboard,
     "Gallery": Gallery,
     "Marketplace": Marketplace,
     "Payments": Payments,
     "SectorAnalytics": SectorAnalytics,
     "VaultMesh": VaultMesh,
-    "Checkout": Checkout,
+    "CollaborationSuite": CollaborationSuite,
+    "Analytics": Analytics,
 }
 
 export const pagesConfig = {

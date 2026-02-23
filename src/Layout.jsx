@@ -49,6 +49,24 @@ export default function Layout({ children, currentPageName }) {
                     Gallery
                   </button>
                 </Link>
+                <Link to={createPageUrl('CollaborationSuite')}>
+                  <button className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                    currentPageName === 'CollaborationSuite' 
+                      ? 'bg-teal-600 text-white' 
+                      : 'text-teal-700 hover:bg-teal-50'
+                  }`}>
+                    Collaboration
+                  </button>
+                </Link>
+                <Link to={createPageUrl('Analytics')}>
+                  <button className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                    currentPageName === 'Analytics' 
+                      ? 'bg-teal-600 text-white' 
+                      : 'text-teal-700 hover:bg-teal-50'
+                  }`}>
+                    Analytics
+                  </button>
+                </Link>
                 <CartIcon />
               </div>
             </div>
