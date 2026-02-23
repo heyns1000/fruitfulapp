@@ -58,6 +58,7 @@ import SectorAnalytics from './pages/SectorAnalytics';
 import VaultMesh from './pages/VaultMesh';
 import CollaborationSuite from './pages/CollaborationSuite';
 import Analytics from './pages/Analytics';
+import ContentGenerator from './pages/ContentGenerator';
 import __Layout from './Layout.jsx';
 
 
@@ -73,6 +74,7 @@ export const PAGES = {
     "VaultMesh": VaultMesh,
     "CollaborationSuite": CollaborationSuite,
     "Analytics": Analytics,
+    "ContentGenerator": ContentGenerator,
 }
 
 export const pagesConfig = {
