@@ -9,6 +9,7 @@ import CollaborationManager from '../components/collaboration/CollaborationManag
 import MetricsCards from '../components/dashboard/MetricsCards';
 import SectorGrid from '../components/sectors/SectorGrid';
 import DataExporter from '../components/data/DataExporter';
+import CompleteDataExporter from '../components/data/CompleteDataExporter';
 import { Loader2 } from 'lucide-react';
 
 const SECTORS = {
@@ -200,6 +201,7 @@ export default function Dashboard() {
           </TabsList>
 
           <TabsContent value="admin" className="space-y-6">
+            <CompleteDataExporter />
             <DataExporter />
             <DataSeeder />
             <AdminPanel onBrandAdded={handleBrandAdded} />
