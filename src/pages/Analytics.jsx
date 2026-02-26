@@ -70,8 +70,12 @@ export default function Analytics() {
         <AIInsights />
 
         {/* Analytics Tabs */}
-        <Tabs defaultValue="crosspoll" className="w-full mt-6">
-          <TabsList className="grid w-full grid-cols-4 mb-6">
+        <Tabs defaultValue="heatmap" className="w-full mt-6">
+          <TabsList className="flex flex-wrap gap-1 h-auto mb-6 bg-white/80 p-2 rounded-xl">
+            <TabsTrigger value="heatmap" className="flex items-center gap-2">
+              <Globe className="w-4 h-4" />
+              Global Heatmap
+            </TabsTrigger>
             <TabsTrigger value="crosspoll" className="flex items-center gap-2">
               <TrendingUp className="w-4 h-4" />
               Cross-Pollination
@@ -89,6 +93,10 @@ export default function Analytics() {
               Support Tickets
             </TabsTrigger>
           </TabsList>
+
+          <TabsContent value="heatmap">
+            <GlobalHeatmap />
+          </TabsContent>
 
           <TabsContent value="crosspoll">
             <CrossPollinationMetrics />
