@@ -47,36 +47,36 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
+import Analytics from './pages/Analytics';
 import AppBuilder from './pages/AppBuilder';
 import Banimal from './pages/Banimal';
+import BrandOnboarding from './pages/BrandOnboarding';
 import Checkout from './pages/Checkout';
+import CollaborationSuite from './pages/CollaborationSuite';
+import ContentGenerator from './pages/ContentGenerator';
 import Dashboard from './pages/Dashboard';
 import Gallery from './pages/Gallery';
 import Marketplace from './pages/Marketplace';
 import Payments from './pages/Payments';
 import SectorAnalytics from './pages/SectorAnalytics';
 import VaultMesh from './pages/VaultMesh';
-import CollaborationSuite from './pages/CollaborationSuite';
-import Analytics from './pages/Analytics';
-import ContentGenerator from './pages/ContentGenerator';
-import BrandOnboarding from './pages/BrandOnboarding';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
+    "Analytics": Analytics,
     "AppBuilder": AppBuilder,
     "Banimal": Banimal,
+    "BrandOnboarding": BrandOnboarding,
     "Checkout": Checkout,
+    "CollaborationSuite": CollaborationSuite,
+    "ContentGenerator": ContentGenerator,
     "Dashboard": Dashboard,
     "Gallery": Gallery,
     "Marketplace": Marketplace,
     "Payments": Payments,
     "SectorAnalytics": SectorAnalytics,
     "VaultMesh": VaultMesh,
-    "CollaborationSuite": CollaborationSuite,
-    "Analytics": Analytics,
-    "ContentGenerator": ContentGenerator,
-    "BrandOnboarding": BrandOnboarding,
 }
 
 export const pagesConfig = {
