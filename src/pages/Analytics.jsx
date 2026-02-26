@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { TrendingUp, Users, Award, Headphones, Sparkles } from 'lucide-react';
+import { TrendingUp, Users, Award, Headphones, Globe } from 'lucide-react';
 import CrossPollinationMetrics from '../components/analytics/CrossPollinationMetrics';
 import CustomerEngagement from '../components/analytics/CustomerEngagement';
 import LoyaltyMetrics from '../components/analytics/LoyaltyMetrics';
 import SupportMetrics from '../components/analytics/SupportMetrics';
 import AIInsights from '../components/analytics/AIInsights';
+import GlobalHeatmap from '../components/analytics/GlobalHeatmap';
 
 export default function Analytics() {
   return (
