@@ -85,6 +85,15 @@ export default function Layout({ children, currentPageName }) {
                     Onboard Brand
                   </button>
                 </Link>
+                <Link to={createPageUrl('LoyaltyProgram')}>
+                  <button className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                    currentPageName === 'LoyaltyProgram' 
+                      ? 'bg-teal-600 text-white' 
+                      : 'text-teal-700 hover:bg-teal-50'
+                  }`}>
+                    🏆 Loyalty
+                  </button>
+                </Link>
                 <CartIcon />
               </div>
             </div>
