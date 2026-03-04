@@ -61,6 +61,8 @@ import Payments from './pages/Payments';
 import SectorAnalytics from './pages/SectorAnalytics';
 import VaultMesh from './pages/VaultMesh';
 import LoyaltyProgram from './pages/LoyaltyProgram';
+import MySubscriptions from './pages/MySubscriptions';
+import ArtisanProfile from './pages/ArtisanProfile';
 import __Layout from './Layout.jsx';
 
 
@@ -79,6 +81,8 @@ export const PAGES = {
     "SectorAnalytics": SectorAnalytics,
     "VaultMesh": VaultMesh,
     "LoyaltyProgram": LoyaltyProgram,
+    "MySubscriptions": MySubscriptions,
+    "ArtisanProfile": ArtisanProfile,
 }
 
 export const pagesConfig = {
