@@ -176,6 +176,11 @@ export default function ArtisanProfile() {
           </div>
         )}
 
+        {/* AI Enrichment */}
+        {(!artisan.tools?.length || !artisan.signatureTechniques?.length) && (
+          <AIProfileEnricher artisan={artisan} onSave={() => window.location.reload()} />
+        )}
+
         {/* Artisan's Tools */}
         {artisan.tools?.length > 0 && (
           <div className="space-y-4">
