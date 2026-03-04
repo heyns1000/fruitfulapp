@@ -19,6 +19,7 @@ const NAV_LINKS = [
   { label: '🎨 My Shop', page: 'ArtisanDashboard' },
   { label: '📦 Orders', page: 'OrderHistory' },
   { label: '❤️ Wishlist', page: 'Wishlist' },
+  { label: '📦 Sub Boxes', page: 'SubscriptionBoxes' },
 ];
 
 export default function Layout({ children, currentPageName }) {
