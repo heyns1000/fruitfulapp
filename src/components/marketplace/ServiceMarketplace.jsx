@@ -8,11 +8,12 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Slider } from '@/components/ui/slider';
-import { Search, ShoppingCart, Star, Package, Loader2, Plus, X, SlidersHorizontal, MapPin, Tag } from 'lucide-react';
+import { Search, ShoppingCart, Star, Package, Loader2, Plus, X, SlidersHorizontal, MapPin, Tag, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { toast } from 'sonner';
 import { useCart } from '../cart/CartContext';
+import { useWishlist } from '../wishlist/WishlistContext';
 import FruitfulThankYou from '../common/FruitfulThankYou';
 
 const CURRENCY_SYMBOLS = {
@@ -36,6 +37,7 @@ export default function ServiceMarketplace({ services }) {
   const [showThankYou, setShowThankYou] = useState(false);
 
   const { addToCart } = useCart();
+  const { toggleWishlist, isInWishlist } = useWishlist();
   const queryClient = useQueryClient();
 
   const createOrderMutation = useMutation({
@@ -254,11 +256,17 @@ export default function ServiceMarketplace({ services }) {
                       Only {service.inventory.available} left
                     </div>
                   )}
-                  <div className="absolute top-2 right-2">
+                  <div className="absolute top-2 right-2 flex flex-col gap-2">
                     <Badge className="bg-white/90 text-gray-700 text-xs capitalize shadow">
                       {service.category?.replace('_', ' ')}
                     </Badge>
                   </div>
+                  <button
+                    onClick={() => toggleWishlist(service)}
+                    className="absolute top-2 left-2 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center shadow hover:scale-110 transition-all"
+                  >
+                    <Heart className={`w-4 h-4 transition-colors ${isInWishlist(service.id) ? 'fill-red-500 text-red-500' : 'text-gray-400'}`} />
+                  </button>
                 </div>
 
                 <CardContent className="p-4 flex flex-col flex-1 gap-2">
