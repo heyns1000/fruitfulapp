@@ -222,95 +222,22 @@ export default function ServiceMarketplace({ services }) {
       {/* Results count */}
       <p className="text-sm text-gray-500">{filteredServices.length} product{filteredServices.length !== 1 ? 's' : ''} found</p>
 
-      {/* Product Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {filteredServices.length === 0 ? (
-          <div className="col-span-full flex flex-col items-center py-16 text-gray-400 gap-3">
-            <Package className="w-12 h-12 opacity-30" />
-            <p className="text-lg">No products match your filters</p>
-            <Button variant="outline" onClick={clearAll}>Clear Filters</Button>
-          </div>
-        ) : (
-          filteredServices.map(service => {
-            const price = service.pricing?.[selectedCurrency] || service.pricing?.USD || 0;
-            const sym = CURRENCY_SYMBOLS[selectedCurrency] || '$';
-            return (
-              <Card key={service.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col">
-                {/* Product Image — always visible */}
-                <div className="relative bg-gray-100 aspect-square overflow-hidden">
-                  {service.imageUrl ? (
-                    <img
-                      src={service.imageUrl}
-                      alt={service.serviceName}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <Package className="w-16 h-16 text-gray-300" />
-                    </div>
-                  )}
-                  {service.inventory?.available <= 5 && service.inventory?.available > 0 && (
-                    <div className="absolute top-2 left-2 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                      Only {service.inventory.available} left
-                    </div>
-                  )}
-                  <div className="absolute top-2 right-2">
-                    <Badge className="bg-white/90 text-gray-700 text-xs capitalize shadow">
-                      {service.category?.replace('_', ' ')}
-                    </Badge>
-                  </div>
-                </div>
-
-                <CardContent className="p-4 flex flex-col flex-1 gap-2">
-                  <div>
-                    <h3 className="font-bold text-gray-900 text-sm leading-snug line-clamp-2">{service.serviceName}</h3>
-                    <Link to={createPageUrl(`ArtisanProfile?brandName=${encodeURIComponent(service.brandName)}`)}
-                      className="text-xs text-purple-600 hover:underline font-medium mt-0.5 block">
-                      {service.brandName}™
-                    </Link>
-                  </div>
-
-                  <p className="text-xs text-gray-500 line-clamp-2 flex-1">{service.description}</p>
-
-                  {service.rating > 0 && (
-                    <div className="flex items-center gap-1 text-xs text-gray-500">
-                      <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
-                      <span className="font-semibold text-gray-700">{service.rating.toFixed(1)}</span>
-                      <span>({service.reviewCount} reviews)</span>
-                    </div>
-                  )}
-
-                  <div className="flex flex-wrap gap-1">
-                    {service.tags?.slice(0, 3).map((tag, idx) => (
-                      <button key={idx} onClick={() => { toggleTag(tag); if (!showFilters) setShowFilters(true); }}
-                        className="text-xs bg-gray-100 hover:bg-purple-100 text-gray-600 hover:text-purple-700 px-2 py-0.5 rounded-full transition-colors">
-                        #{tag}
-                      </button>
-                    ))}
-                  </div>
-
-                  <div className="mt-auto pt-3 border-t flex items-center justify-between gap-2">
-                    <div>
-                      <p className="text-xl font-extrabold text-purple-700">{sym}{price.toLocaleString()}</p>
-                      <p className="text-xs text-gray-400">{selectedCurrency}</p>
-                    </div>
-                    <div className="flex gap-1">
-                      <Button size="sm" variant="outline" onClick={() => addToCart({ id: service.id, name: service.serviceName, price, productCode: service.productCode, imageUrl: service.imageUrl, brandName: service.brandName })}
-                        className="border-purple-300 text-purple-700 hover:bg-purple-50 px-2">
-                        <Plus className="w-4 h-4" />
-                      </Button>
-                      <Button size="sm" onClick={() => { setSelectedService(service); setIsCheckoutOpen(true); }}
-                        className="bg-purple-600 hover:bg-purple-700 text-white px-3">
-                        Buy
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })
-        )}
-      </div>
+      {filteredServices.length === 0 ? (
+        <div className="flex flex-col items-center py-16 text-gray-400 gap-3">
+          <Package className="w-12 h-12 opacity-30" />
+          <p className="text-lg">No products match your filters</p>
+          <Button variant="outline" onClick={clearAll}>Clear Filters</Button>
+        </div>
+      ) : (
+        <ProductSections
+          services={filteredServices}
+          selectedCurrency={selectedCurrency}
+          addToCart={addToCart}
+          onBuy={(svc) => { setSelectedService(svc); setIsCheckoutOpen(true); }}
+          toggleTag={(tag) => { toggleTag(tag); if (!showFilters) setShowFilters(true); }}
+          CURRENCY_SYMBOLS={CURRENCY_SYMBOLS}
+        />
+      )}
 
       {/* Checkout Dialog */}
       <Dialog open={isCheckoutOpen} onOpenChange={setIsCheckoutOpen}>
