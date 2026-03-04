@@ -94,6 +94,15 @@ export default function Layout({ children, currentPageName }) {
                     🏆 Loyalty
                   </button>
                 </Link>
+                <Link to={createPageUrl('MySubscriptions')}>
+                  <button className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                    currentPageName === 'MySubscriptions' 
+                      ? 'bg-teal-600 text-white' 
+                      : 'text-teal-700 hover:bg-teal-50'
+                  }`}>
+                    💳 My Plans
+                  </button>
+                </Link>
                 <CartIcon />
               </div>
             </div>
