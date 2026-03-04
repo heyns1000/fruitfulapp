@@ -3,13 +3,14 @@ import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Star, MapPin, ArrowLeft, Loader2, Package, ShieldCheck, Hammer, Sparkles } from 'lucide-react';
+import { Star, MapPin, ArrowLeft, Loader2, Package, Hammer, Sparkles, Lightbulb, BookOpen, Quote } from 'lucide-react';
 import { createPageUrl } from '@/utils';
 import { Link } from 'react-router-dom';
 import AIProfileEnricher from '../components/artisan/AIProfileEnricher';
 import ArtisanGallery from '../components/artisan/ArtisanGallery';
 import ArtisanSocialLinks from '../components/artisan/ArtisanSocialLinks';
 import ArtisanMaterialsCerts from '../components/artisan/ArtisanMaterialsCerts';
+import FollowArtisan from '../components/artisan/FollowArtisan';
 
 const FRUITFUL_ORANGE = '#E85D26';
 const FRUITFUL_DARK = '#1A1208';
