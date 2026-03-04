@@ -6,6 +6,7 @@ import CartIcon from './components/cart/CartIcon';
 import { Menu, X } from 'lucide-react';
 
 const NAV_LINKS = [
+  { label: '🌿 Home', page: 'Landing' },
   { label: 'Dashboard', page: 'Dashboard' },
   { label: 'Marketplace', page: 'Marketplace' },
   { label: 'Gallery', page: 'Gallery' },
