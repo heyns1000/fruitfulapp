@@ -46,11 +46,11 @@ export default function ServiceMarketplace({ services }) {
     mutationFn: (data) => base44.entities.Order.create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['orders'] });
-      toast.success('Order placed successfully!');
       setIsCheckoutOpen(false);
       setSelectedService(null);
       setBuyerEmail('');
       setQuantity(1);
+      setShowThankYou(true);
     }
   });
 
