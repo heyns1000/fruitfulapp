@@ -183,6 +183,38 @@ export default function ArtisanProfile() {
           </div>
         </div>
 
+        {/* INSPIRATION + BACKGROUND narrative */}
+        {(artisan.origin || artisan.craftsmanship) && (
+          <div className="grid md:grid-cols-2 gap-6">
+            {artisan.origin && (
+              <div className="bg-gradient-to-br from-stone-900 to-stone-800 border border-stone-700 rounded-2xl p-7">
+                <div className="flex items-center gap-2 mb-4">
+                  <Lightbulb className="w-5 h-5 text-orange-500" />
+                  <p className="text-xs text-orange-400 font-bold uppercase tracking-widest">Inspiration & Origin</p>
+                </div>
+                <p className="text-stone-300 leading-relaxed">{artisan.origin}</p>
+              </div>
+            )}
+            {artisan.craftsmanship && (
+              <div className="bg-gradient-to-br from-stone-900 to-stone-800 border border-stone-700 rounded-2xl p-7">
+                <div className="flex items-center gap-2 mb-4">
+                  <BookOpen className="w-5 h-5 text-orange-500" />
+                  <p className="text-xs text-orange-400 font-bold uppercase tracking-widest">The Craft</p>
+                </div>
+                <p className="text-stone-300 leading-relaxed">{artisan.craftsmanship}</p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* SYMBOLISM PULL QUOTE */}
+        {artisan.symbolism && (
+          <div className="border-l-4 border-orange-500 pl-8 py-2">
+            <Quote className="w-8 h-8 text-orange-600 mb-3 opacity-60" />
+            <p className="text-2xl text-stone-200 italic font-light leading-relaxed">{artisan.symbolism}</p>
+          </div>
+        )}
+
         {/* PRODUCTS */}
         {services.length > 0 && (
           <div className="space-y-6">
