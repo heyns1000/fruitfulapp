@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { CartProvider } from './components/cart/CartContext';
+import { WishlistProvider } from './components/wishlist/WishlistContext';
 import CartIcon from './components/cart/CartIcon';
 import { Menu, X } from 'lucide-react';
 
@@ -17,12 +18,14 @@ const NAV_LINKS = [
   { label: '💳 My Plans', page: 'MySubscriptions' },
   { label: '🎨 My Shop', page: 'ArtisanDashboard' },
   { label: '📦 Orders', page: 'OrderHistory' },
+  { label: '❤️ Wishlist', page: 'Wishlist' },
 ];
 
 export default function Layout({ children, currentPageName }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
+    <WishlistProvider>
     <CartProvider>
       <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-teal-50 to-green-50">
         {/* Top Navigation Bar */}
@@ -100,5 +103,6 @@ export default function Layout({ children, currentPageName }) {
         </footer>
       </div>
     </CartProvider>
+    </WishlistProvider>
   );
 }
