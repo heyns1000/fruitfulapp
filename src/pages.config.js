@@ -60,6 +60,7 @@ import Marketplace from './pages/Marketplace';
 import Payments from './pages/Payments';
 import SectorAnalytics from './pages/SectorAnalytics';
 import VaultMesh from './pages/VaultMesh';
+import LoyaltyProgram from './pages/LoyaltyProgram';
 import __Layout from './Layout.jsx';
 
 
@@ -77,6 +78,7 @@ export const PAGES = {
     "Payments": Payments,
     "SectorAnalytics": SectorAnalytics,
     "VaultMesh": VaultMesh,
+    "LoyaltyProgram": LoyaltyProgram,
 }
 
 export const pagesConfig = {
