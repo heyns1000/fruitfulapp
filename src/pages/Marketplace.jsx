@@ -28,6 +28,11 @@ export default function Marketplace() {
     queryFn: () => base44.entities.Brand.list()
   });
 
+  const { data: artisans = [] } = useQuery({
+    queryKey: ['artisans'],
+    queryFn: () => base44.entities.ArtisanProfile.list()
+  });
+
   if (servicesLoading || ordersLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -66,7 +71,7 @@ export default function Marketplace() {
           </TabsList>
 
           <TabsContent value="browse">
-            <MarketplaceAIAssistant services={services} artisans={[]} />
+            <MarketplaceAIAssistant services={services} artisans={artisans} />
             <FeaturedArtisans services={services} />
             <ServiceMarketplace services={services} />
           </TabsContent>
