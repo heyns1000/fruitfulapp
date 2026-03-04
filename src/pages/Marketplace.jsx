@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ServiceMarketplace from '../components/marketplace/ServiceMarketplace';
 import ServiceListing from '../components/marketplace/ServiceListing';
 import OrderManagement from '../components/marketplace/OrderManagement';
+import FeaturedArtisans from '../components/marketplace/FeaturedArtisans';
 import BackButton from '../components/navigation/BackButton';
 import { Loader2, Store } from 'lucide-react';
 

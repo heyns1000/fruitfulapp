@@ -175,6 +175,47 @@ export default function ArtisanProfile() {
           </div>
         )}
 
+        {/* Artisan's Tools */}
+        {artisan.tools?.length > 0 && (
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold text-amber-900 border-b border-amber-200 pb-2">🔨 Artisan's Tools</h2>
+            <div className="flex flex-wrap gap-3">
+              {artisan.tools.map((tool, i) => (
+                <span key={i} className="bg-amber-100 text-amber-900 border border-amber-300 rounded-full px-4 py-1.5 text-sm font-medium">
+                  {tool}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Signature Techniques */}
+        {artisan.signatureTechniques?.length > 0 && (
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold text-amber-900 border-b border-amber-200 pb-2">✦ Signature Techniques</h2>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {artisan.signatureTechniques.map((tech, i) => (
+                <div key={i} className="bg-orange-50 border border-orange-200 rounded-xl px-4 py-3 flex items-start gap-2">
+                  <span className="text-orange-500 font-bold mt-0.5">0{i + 1}</span>
+                  <p className="text-gray-800 text-sm">{tech}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Cultural Significance */}
+        {artisan.culturalSignificance && (
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold text-amber-900 border-b border-amber-200 pb-2">🌍 Cultural Significance</h2>
+            <Card className="border-amber-200 bg-gradient-to-br from-amber-50 to-yellow-50">
+              <CardContent className="pt-5">
+                <p className="text-gray-700 leading-relaxed whitespace-pre-line">{artisan.culturalSignificance}</p>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
         {/* Testimonials */}
         {artisan.testimonials?.length > 0 && (
           <div className="space-y-4">
