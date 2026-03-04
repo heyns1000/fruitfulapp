@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { toast } from 'sonner';
 import { useCart } from '../cart/CartContext';
+import FruitfulThankYou from '../common/FruitfulThankYou';
 
 const CURRENCY_SYMBOLS = {
   USD: '$', EUR: '€', GBP: '£', ZAR: 'R', NGN: '₦', KES: 'KSh',
