@@ -75,7 +75,7 @@ export default function MySubscriptions() {
   const updatePaymentMutation = useMutation({
     mutationFn: async (sub) => {
       // Redirect to Paystack to update payment method
-      const paystackKey = 'pk_test_placeholder'; // Paystack public key (configure in env)
+      const paystackKey = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
       const ref = `UPDATE-${sub.id}-${Date.now()}`;
       const amount = sub.amount * 100; // kobo / cents
 

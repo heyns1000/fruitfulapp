@@ -43,7 +43,7 @@ export default function Checkout() {
 
       // Initialize Paystack payment
       const handler = window.PaystackPop.setup({
-        key: 'pk_test_YOUR_PUBLIC_KEY', // Replace with actual Paystack public key
+        key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
         email: email,
         amount: totalAmount,
         currency: 'NGN',
