@@ -534,6 +534,9 @@ export default function ArtisanProfile() {
 
       </div>
 
+      {/* ─ WISHLIST SECTION ─ */}
+      <ArtisanWishlistSection artisanName={artisan.artisanName} brandId={artisan.brandId} />
+
       {/* ── FOOTER CTA ── */}
       <div className="border-t border-stone-800 bg-stone-900">
         <div className="max-w-6xl mx-auto px-8 py-14 flex flex-col md:flex-row items-center justify-between gap-6">
