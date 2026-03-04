@@ -65,6 +65,7 @@ export default function Marketplace() {
           </TabsList>
 
           <TabsContent value="browse">
+            <FeaturedArtisans services={services} />
             <ServiceMarketplace services={services} />
           </TabsContent>
 
