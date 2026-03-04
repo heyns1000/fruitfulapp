@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent } from '@/components/ui/card';
@@ -8,6 +8,9 @@ import { Star, MapPin, Quote, Package, ArrowLeft, Loader2 } from 'lucide-react';
 import { createPageUrl } from '@/utils';
 import { Link } from 'react-router-dom';
 import AIProfileEnricher from '../components/artisan/AIProfileEnricher';
+import ArtisanGallery from '../components/artisan/ArtisanGallery';
+import ArtisanSocialLinks from '../components/artisan/ArtisanSocialLinks';
+import ArtisanMaterialsCerts from '../components/artisan/ArtisanMaterialsCerts';
 
 export default function ArtisanProfile() {
   const params = new URLSearchParams(window.location.search);
