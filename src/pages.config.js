@@ -49,9 +49,11 @@
  */
 import Analytics from './pages/Analytics';
 import AppBuilder from './pages/AppBuilder';
+import ArtisanDashboard from './pages/ArtisanDashboard';
 import ArtisanProfile from './pages/ArtisanProfile';
 import Banimal from './pages/Banimal';
 import BrandOnboarding from './pages/BrandOnboarding';
+import Checkout from './pages/Checkout';
 import CollaborationSuite from './pages/CollaborationSuite';
 import ContentGenerator from './pages/ContentGenerator';
 import Dashboard from './pages/Dashboard';
@@ -59,22 +61,23 @@ import Gallery from './pages/Gallery';
 import LoyaltyProgram from './pages/LoyaltyProgram';
 import Marketplace from './pages/Marketplace';
 import MySubscriptions from './pages/MySubscriptions';
+import OrderHistory from './pages/OrderHistory';
 import Payments from './pages/Payments';
 import SectorAnalytics from './pages/SectorAnalytics';
 import VaultMesh from './pages/VaultMesh';
-import Checkout from './pages/Checkout';
-import ArtisanDashboard from './pages/ArtisanDashboard';
-import OrderHistory from './pages/OrderHistory';
 import Wishlist from './pages/Wishlist';
+import SubscriptionBoxes from './pages/SubscriptionBoxes';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
     "Analytics": Analytics,
     "AppBuilder": AppBuilder,
+    "ArtisanDashboard": ArtisanDashboard,
     "ArtisanProfile": ArtisanProfile,
     "Banimal": Banimal,
     "BrandOnboarding": BrandOnboarding,
+    "Checkout": Checkout,
     "CollaborationSuite": CollaborationSuite,
     "ContentGenerator": ContentGenerator,
     "Dashboard": Dashboard,
@@ -82,13 +85,12 @@ export const PAGES = {
     "LoyaltyProgram": LoyaltyProgram,
     "Marketplace": Marketplace,
     "MySubscriptions": MySubscriptions,
+    "OrderHistory": OrderHistory,
     "Payments": Payments,
     "SectorAnalytics": SectorAnalytics,
     "VaultMesh": VaultMesh,
-    "Checkout": Checkout,
-    "ArtisanDashboard": ArtisanDashboard,
-    "OrderHistory": OrderHistory,
     "Wishlist": Wishlist,
+    "SubscriptionBoxes": SubscriptionBoxes,
 }
 
 export const pagesConfig = {
