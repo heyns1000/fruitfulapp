@@ -15,6 +15,7 @@ const NAV_LINKS = [
   { label: 'Onboard Brand', page: 'BrandOnboarding' },
   { label: '🏆 Loyalty', page: 'LoyaltyProgram' },
   { label: '💳 My Plans', page: 'MySubscriptions' },
+  { label: '📦 My Orders', page: 'OrderHistory' },
 ];
 
 export default function Layout({ children, currentPageName }) {
