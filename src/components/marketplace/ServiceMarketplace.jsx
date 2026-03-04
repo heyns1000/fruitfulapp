@@ -167,7 +167,9 @@ export default function ServiceMarketplace({ services }) {
                     <Badge>{service.category.replace('_', ' ')}</Badge>
                   </div>
                   <CardTitle className="text-lg">{service.serviceName}</CardTitle>
-                  <p className="text-sm text-gray-500">{service.brandName}™</p>
+                  <Link to={createPageUrl(`ArtisanProfile?brandName=${encodeURIComponent(service.brandName)}`)} className="text-sm text-purple-600 hover:underline font-medium">
+                    {service.brandName}™ · View Artisan
+                  </Link>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <p className="text-sm text-gray-600 line-clamp-3">{service.description}</p>
