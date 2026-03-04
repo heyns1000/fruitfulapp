@@ -64,9 +64,9 @@ import MySubscriptions from './pages/MySubscriptions';
 import OrderHistory from './pages/OrderHistory';
 import Payments from './pages/Payments';
 import SectorAnalytics from './pages/SectorAnalytics';
+import SubscriptionBoxes from './pages/SubscriptionBoxes';
 import VaultMesh from './pages/VaultMesh';
 import Wishlist from './pages/Wishlist';
-import SubscriptionBoxes from './pages/SubscriptionBoxes';
 import __Layout from './Layout.jsx';
 
 
@@ -88,9 +88,9 @@ export const PAGES = {
     "OrderHistory": OrderHistory,
     "Payments": Payments,
     "SectorAnalytics": SectorAnalytics,
+    "SubscriptionBoxes": SubscriptionBoxes,
     "VaultMesh": VaultMesh,
     "Wishlist": Wishlist,
-    "SubscriptionBoxes": SubscriptionBoxes,
 }
 
 export const pagesConfig = {

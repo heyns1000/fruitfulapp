@@ -14,6 +14,7 @@ import ArtisanGallery from '../components/artisan/ArtisanGallery';
 import ArtisanSocialLinks from '../components/artisan/ArtisanSocialLinks';
 import ArtisanMaterialsCerts from '../components/artisan/ArtisanMaterialsCerts';
 import FollowArtisan from '../components/artisan/FollowArtisan';
+import ArtisanWishlistSection from '../components/artisan/ArtisanWishlistSection';
 
 const SECTIONS = [
   { id: 'story', label: 'Story' },
