@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Star, MapPin, Quote, Package, ArrowLeft, Loader2 } from 'lucide-react';
 import { createPageUrl } from '@/utils';
 import { Link } from 'react-router-dom';
+import AIProfileEnricher from '../components/artisan/AIProfileEnricher';
 
 export default function ArtisanProfile() {
   const params = new URLSearchParams(window.location.search);
