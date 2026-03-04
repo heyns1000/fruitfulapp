@@ -103,6 +103,7 @@ export default function ServiceMarketplace({ services }) {
 
   return (
     <div className="space-y-6">
+      <FruitfulThankYou show={showThankYou} onClose={() => setShowThankYou(false)} message="Your order supports real artisans. Fruitful. Changing. Seeds." />
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
