@@ -65,6 +65,7 @@ import VaultMesh from './pages/VaultMesh';
 import Checkout from './pages/Checkout';
 import ArtisanDashboard from './pages/ArtisanDashboard';
 import OrderHistory from './pages/OrderHistory';
+import Wishlist from './pages/Wishlist';
 import __Layout from './Layout.jsx';
 
 
@@ -87,6 +88,7 @@ export const PAGES = {
     "Checkout": Checkout,
     "ArtisanDashboard": ArtisanDashboard,
     "OrderHistory": OrderHistory,
+    "Wishlist": Wishlist,
 }
 
 export const pagesConfig = {
