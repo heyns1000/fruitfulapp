@@ -52,7 +52,6 @@ import AppBuilder from './pages/AppBuilder';
 import ArtisanProfile from './pages/ArtisanProfile';
 import Banimal from './pages/Banimal';
 import BrandOnboarding from './pages/BrandOnboarding';
-import Checkout from './pages/Checkout';
 import CollaborationSuite from './pages/CollaborationSuite';
 import ContentGenerator from './pages/ContentGenerator';
 import Dashboard from './pages/Dashboard';
@@ -63,6 +62,9 @@ import MySubscriptions from './pages/MySubscriptions';
 import Payments from './pages/Payments';
 import SectorAnalytics from './pages/SectorAnalytics';
 import VaultMesh from './pages/VaultMesh';
+import Checkout from './pages/Checkout';
+import ArtisanDashboard from './pages/ArtisanDashboard';
+import OrderHistory from './pages/OrderHistory';
 import __Layout from './Layout.jsx';
 
 
@@ -72,7 +74,6 @@ export const PAGES = {
     "ArtisanProfile": ArtisanProfile,
     "Banimal": Banimal,
     "BrandOnboarding": BrandOnboarding,
-    "Checkout": Checkout,
     "CollaborationSuite": CollaborationSuite,
     "ContentGenerator": ContentGenerator,
     "Dashboard": Dashboard,
@@ -83,6 +84,9 @@ export const PAGES = {
     "Payments": Payments,
     "SectorAnalytics": SectorAnalytics,
     "VaultMesh": VaultMesh,
+    "Checkout": Checkout,
+    "ArtisanDashboard": ArtisanDashboard,
+    "OrderHistory": OrderHistory,
 }
 
 export const pagesConfig = {
