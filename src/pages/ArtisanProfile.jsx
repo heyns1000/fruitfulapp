@@ -329,26 +329,69 @@ export default function ArtisanProfile() {
         {/* TESTIMONIALS */}
         {artisan.testimonials?.length > 0 && (
           <div className="space-y-6">
-            <div className="border-b border-stone-700 pb-4">
-              <h2 className="text-xs font-bold tracking-widest uppercase text-orange-500 mb-1">Community</h2>
-              <h3 className="text-3xl font-black text-white">Customer Testimonials</h3>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {artisan.testimonials.map((t, i) => (
-                <div key={i} className="bg-stone-900 border border-stone-700 rounded-2xl p-6 space-y-3 hover:border-orange-600 transition-colors">
-                  <div className="flex items-center gap-1">
-                    {[...Array(5)].map((_, s) => (
-                      <Star key={s} className={`w-4 h-4 ${s < t.rating ? 'fill-orange-400 text-orange-400' : 'text-stone-700'}`} />
-                    ))}
-                  </div>
-                  <p className="text-stone-300 italic leading-relaxed">"{t.comment}"</p>
-                  <div className="pt-2 border-t border-stone-700 flex items-center justify-between text-sm">
-                    <span className="font-bold text-white">— {t.customerName}</span>
-                    {t.productPurchased && <span className="text-orange-400 text-xs">{t.productPurchased}</span>}
+            <div className="border-b border-stone-700 pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+              <div>
+                <h2 className="text-xs font-bold tracking-widest uppercase text-orange-500 mb-1">Community</h2>
+                <h3 className="text-3xl font-black text-white">What Customers Say</h3>
+              </div>
+              {avgRating && (
+                <div className="flex items-center gap-3 bg-stone-900 border border-stone-700 rounded-xl px-5 py-3">
+                  <span className="text-4xl font-black text-orange-400">{avgRating}</span>
+                  <div>
+                    <div className="flex gap-0.5 mb-1">
+                      {[...Array(5)].map((_, s) => (
+                        <Star key={s} className={`w-4 h-4 ${s < Math.round(parseFloat(avgRating)) ? 'fill-orange-400 text-orange-400' : 'text-stone-700'}`} />
+                      ))}
+                    </div>
+                    <p className="text-stone-400 text-xs">{artisan.testimonials.length} verified reviews</p>
                   </div>
                 </div>
-              ))}
+              )}
             </div>
+
+            {/* Featured large testimonial */}
+            {artisan.testimonials[0] && (
+              <div className="bg-gradient-to-br from-orange-950/40 to-stone-900 border border-orange-800/40 rounded-2xl p-8 relative overflow-hidden">
+                <Quote className="absolute top-4 right-6 w-16 h-16 text-orange-900/40" />
+                <div className="flex gap-1 mb-4">
+                  {[...Array(5)].map((_, s) => (
+                    <Star key={s} className={`w-5 h-5 ${s < artisan.testimonials[0].rating ? 'fill-orange-400 text-orange-400' : 'text-stone-700'}`} />
+                  ))}
+                </div>
+                <p className="text-xl text-stone-200 italic leading-relaxed mb-5">"{artisan.testimonials[0].comment}"</p>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-bold text-white text-lg">— {artisan.testimonials[0].customerName}</p>
+                    {artisan.testimonials[0].date && <p className="text-stone-500 text-sm">{artisan.testimonials[0].date}</p>}
+                  </div>
+                  {artisan.testimonials[0].productPurchased && (
+                    <Badge className="bg-orange-600/30 text-orange-300 border border-orange-700 text-xs px-3">
+                      {artisan.testimonials[0].productPurchased}
+                    </Badge>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Remaining testimonials grid */}
+            {artisan.testimonials.length > 1 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {artisan.testimonials.slice(1).map((t, i) => (
+                  <div key={i} className="bg-stone-900 border border-stone-700 rounded-2xl p-6 space-y-3 hover:border-orange-600 transition-colors">
+                    <div className="flex items-center gap-1">
+                      {[...Array(5)].map((_, s) => (
+                        <Star key={s} className={`w-4 h-4 ${s < t.rating ? 'fill-orange-400 text-orange-400' : 'text-stone-700'}`} />
+                      ))}
+                    </div>
+                    <p className="text-stone-300 italic leading-relaxed">"{t.comment}"</p>
+                    <div className="pt-2 border-t border-stone-700 flex items-center justify-between text-sm">
+                      <span className="font-bold text-white">— {t.customerName}</span>
+                      {t.productPurchased && <span className="text-orange-400 text-xs">{t.productPurchased}</span>}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>
