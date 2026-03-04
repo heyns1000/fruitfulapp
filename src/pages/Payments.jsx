@@ -78,6 +78,10 @@ export default function Payments() {
           <TabsContent value="history">
             <TransactionHistory payments={payments} />
           </TabsContent>
+
+          <TabsContent value="paystack">
+            <PaystackSettings />
+          </TabsContent>
         </Tabs>
       </div>
     </div>
