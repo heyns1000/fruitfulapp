@@ -165,18 +165,18 @@ export default function ArtisanProfile() {
               </div>
             )}
 
-            {/* Craft stats row */}
+            {/* Quick bio stats */}
             <div className="grid grid-cols-2 gap-4">
-              {artisan.craftsmanship && (
+              {artisan.dateOfBirth && (
                 <div className="bg-stone-900 border border-stone-700 rounded-xl p-4">
-                  <p className="text-xs text-orange-400 font-bold uppercase tracking-wider mb-1">Craft</p>
-                  <p className="text-stone-200 text-sm">{artisan.craftsmanship}</p>
+                  <p className="text-xs text-orange-400 font-bold uppercase tracking-wider mb-1">Born</p>
+                  <p className="text-stone-200 text-sm">{new Date(artisan.dateOfBirth).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
                 </div>
               )}
-              {artisan.symbolism && (
+              {artisan.location && (
                 <div className="bg-stone-900 border border-stone-700 rounded-xl p-4">
-                  <p className="text-xs text-orange-400 font-bold uppercase tracking-wider mb-1">Symbolism</p>
-                  <p className="text-stone-200 text-sm">{artisan.symbolism}</p>
+                  <p className="text-xs text-orange-400 font-bold uppercase tracking-wider mb-1">Based In</p>
+                  <p className="text-stone-200 text-sm">{artisan.location}</p>
                 </div>
               )}
             </div>
