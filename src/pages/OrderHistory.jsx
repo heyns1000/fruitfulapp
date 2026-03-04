@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
+import { useCart } from '../components/cart/CartContext';
 
 const STATUS_CONFIG = {
   pending:   { icon: Clock,         color: 'bg-yellow-900/50 text-yellow-300 border-yellow-700', dot: 'bg-yellow-400' },
@@ -107,9 +108,7 @@ export default function OrderHistory() {
   const qc = useQueryClient();
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
-  const { addToCart } = (() => {
-    try { return require('../components/cart/CartContext').useCart(); } catch { return { addToCart: () => {} }; }
-  })();
+  const { addToCart } = useCart();
 
   const { data: orders = [], isLoading } = useQuery({
     queryKey: ['order-history'],

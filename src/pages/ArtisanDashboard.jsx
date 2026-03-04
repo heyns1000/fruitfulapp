@@ -11,17 +11,19 @@ import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
-const STAT_CARD = ({ icon: Icon, label, value, color }) => (
-  <div className={`bg-stone-900 border border-stone-700 rounded-2xl p-6 flex items-center gap-4`}>
-    <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${color}`}>
-      <Icon className="w-6 h-6 text-white" />
+function StatCard({ icon: Icon, label, value, color }) {
+  return (
+    <div className="bg-stone-900 border border-stone-700 rounded-2xl p-6 flex items-center gap-4">
+      <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${color}`}>
+        <Icon className="w-6 h-6 text-white" />
+      </div>
+      <div>
+        <p className="text-stone-400 text-sm">{label}</p>
+        <p className="text-white text-2xl font-black">{value}</p>
+      </div>
     </div>
-    <div>
-      <p className="text-stone-400 text-sm">{label}</p>
-      <p className="text-white text-2xl font-black">{value}</p>
-    </div>
-  </div>
-);
+  );
+}
 
 export default function ArtisanDashboard() {
   const qc = useQueryClient();
@@ -119,10 +121,10 @@ export default function ArtisanDashboard() {
       <div className="max-w-6xl mx-auto px-6 py-8 space-y-8">
         {/* Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <STAT_CARD icon={Package} label="Total Products" value={services.length} color="bg-orange-600" />
-          <STAT_CARD icon={ShoppingBag} label="Total Orders" value={myOrders.length} color="bg-blue-600" />
-          <STAT_CARD icon={TrendingUp} label="Revenue (USD)" value={`$${revenue.toLocaleString()}`} color="bg-green-600" />
-          <STAT_CARD icon={Star} label="Avg Rating" value={avgRating} color="bg-purple-600" />
+          <StatCard icon={Package} label="Total Products" value={services.length} color="bg-orange-600" />
+          <StatCard icon={ShoppingBag} label="Total Orders" value={myOrders.length} color="bg-blue-600" />
+          <StatCard icon={TrendingUp} label="Revenue (USD)" value={`$${revenue.toLocaleString()}`} color="bg-green-600" />
+          <StatCard icon={Star} label="Avg Rating" value={avgRating} color="bg-purple-600" />
         </div>
 
         <Tabs defaultValue="products">
