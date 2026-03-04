@@ -65,6 +65,7 @@ import SectorAnalytics from './pages/SectorAnalytics';
 import VaultMesh from './pages/VaultMesh';
 import ArtisanDashboard from './pages/ArtisanDashboard';
 import OrderHistory from './pages/OrderHistory';
+import Landing from './pages/Landing';
 import __Layout from './Layout.jsx';
 
 
@@ -87,6 +88,7 @@ export const PAGES = {
     "VaultMesh": VaultMesh,
     "ArtisanDashboard": ArtisanDashboard,
     "OrderHistory": OrderHistory,
+    "Landing": Landing,
 }
 
 export const pagesConfig = {
