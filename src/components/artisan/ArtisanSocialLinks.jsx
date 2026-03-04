@@ -16,7 +16,10 @@ export default function ArtisanSocialLinks({ socialMedia = {} }) {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-2xl font-bold text-amber-900 border-b border-amber-200 pb-2">🔗 Connect with This Artisan</h2>
+      <div className="border-b border-stone-700 pb-3">
+        <p className="text-xs font-bold tracking-widest uppercase text-orange-500 mb-1">Follow</p>
+        <h2 className="text-2xl font-black text-white">🔗 Connect with This Artisan</h2>
+      </div>
       <div className="flex flex-wrap gap-3">
         {links.map(({ key, label, icon: Icon, color, prefix }) => {
           const handle = socialMedia[key];

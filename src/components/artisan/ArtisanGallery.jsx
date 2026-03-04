@@ -17,7 +17,7 @@ export default function ArtisanGallery({ images = [] }) {
           <button
             key={idx}
             onClick={() => setLightboxIdx(idx)}
-            className="aspect-square overflow-hidden rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="aspect-square overflow-hidden rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-orange-500 border border-stone-700 hover:border-orange-500"
           >
             <img src={url} alt={`Gallery ${idx + 1}`} className="w-full h-full object-cover" />
           </button>

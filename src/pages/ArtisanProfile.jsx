@@ -1,16 +1,18 @@
 import React from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
-import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Star, MapPin, Quote, Package, ArrowLeft, Loader2 } from 'lucide-react';
+import { Star, MapPin, ArrowLeft, Loader2, Package, ShieldCheck, Hammer, Sparkles } from 'lucide-react';
 import { createPageUrl } from '@/utils';
 import { Link } from 'react-router-dom';
 import AIProfileEnricher from '../components/artisan/AIProfileEnricher';
 import ArtisanGallery from '../components/artisan/ArtisanGallery';
 import ArtisanSocialLinks from '../components/artisan/ArtisanSocialLinks';
 import ArtisanMaterialsCerts from '../components/artisan/ArtisanMaterialsCerts';
+
+const FRUITFUL_ORANGE = '#E85D26';
+const FRUITFUL_DARK = '#1A1208';
 
 export default function ArtisanProfile() {
   const params = new URLSearchParams(window.location.search);
@@ -34,19 +36,21 @@ export default function ArtisanProfile() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loader2 className="w-8 h-8 animate-spin text-amber-600" />
+      <div className="flex items-center justify-center min-h-screen bg-stone-950">
+        <Loader2 className="w-10 h-10 animate-spin text-orange-500" />
       </div>
     );
   }
 
   if (!artisan) {
     return (
-      <div className="min-h-screen flex items-center justify-center flex-col gap-4 text-gray-500">
+      <div className="min-h-screen flex items-center justify-center flex-col gap-4 bg-stone-950 text-stone-400">
         <Package className="w-12 h-12 opacity-30" />
         <p>Artisan profile not found.</p>
         <Link to={createPageUrl('Marketplace')}>
-          <Button variant="outline"><ArrowLeft className="w-4 h-4 mr-2" /> Back to Marketplace</Button>
+          <Button variant="outline" className="border-orange-500 text-orange-400">
+            <ArrowLeft className="w-4 h-4 mr-2" /> Back to Marketplace
+          </Button>
         </Link>
       </div>
     );
@@ -57,122 +61,161 @@ export default function ArtisanProfile() {
     : null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
+    <div className="min-h-screen bg-stone-950 text-white">
 
-      {/* Hero Banner */}
-      <div className="relative h-64 md:h-80 overflow-hidden">
+      {/* FULL-BLEED HERO */}
+      <div className="relative h-[70vh] min-h-[500px] overflow-hidden">
         <img
-          src={artisan.workshopImageUrl || 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=1200&q=80'}
+          src={artisan.workshopImageUrl || 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=1400&q=90'}
           alt="Workshop"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-top"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-        <div className="absolute bottom-6 left-6 text-white">
-          <p className="text-sm font-medium opacity-80 mb-1">✦ {artisan.initiation || 'Master Artisan'}</p>
-          <h1 className="text-4xl font-extrabold drop-shadow-lg">{artisan.artisanName}</h1>
-          <p className="text-lg opacity-90">{artisan.title}</p>
-        </div>
-        <Link to={createPageUrl('Marketplace')} className="absolute top-4 left-4">
-          <Button variant="outline" size="sm" className="bg-white/80 backdrop-blur-sm">
+        {/* Multi-layer dramatic overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-stone-950/80 via-transparent to-transparent" />
+
+        {/* Back button */}
+        <Link to={createPageUrl('Marketplace')} className="absolute top-6 left-6 z-10">
+          <Button size="sm" className="bg-black/50 backdrop-blur-md border border-white/20 text-white hover:bg-orange-600 hover:border-orange-600 transition-all">
             <ArrowLeft className="w-4 h-4 mr-1" /> Marketplace
           </Button>
         </Link>
+
+        {/* Hero text — bottom left */}
+        <div className="absolute bottom-0 left-0 right-0 p-8 md:p-14">
+          <div className="max-w-4xl">
+            <div className="flex items-center gap-3 mb-3">
+              <span className="text-orange-400 text-sm font-bold tracking-widest uppercase">
+                ✦ {artisan.initiation || 'Master Artisan'}
+              </span>
+              {artisan.featured && (
+                <Badge className="bg-orange-600 text-white text-xs px-3 py-1 border-0">Featured</Badge>
+              )}
+            </div>
+            <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-none mb-3" style={{ fontFamily: 'Georgia, serif' }}>
+              {artisan.artisanName}
+            </h1>
+            <p className="text-xl md:text-2xl text-stone-300 font-light mb-5">{artisan.title}</p>
+
+            <div className="flex flex-wrap items-center gap-4 text-sm text-stone-400">
+              {artisan.location && (
+                <span className="flex items-center gap-1.5">
+                  <MapPin className="w-4 h-4 text-orange-500" />
+                  {artisan.location}
+                </span>
+              )}
+              {avgRating && (
+                <span className="flex items-center gap-1.5">
+                  <Star className="w-4 h-4 fill-orange-400 text-orange-400" />
+                  <span className="text-white font-semibold">{avgRating}</span>
+                  <span>({artisan.testimonials.length} reviews)</span>
+                </span>
+              )}
+              <Badge className="bg-stone-800 text-stone-200 border border-stone-600 text-xs">{artisan.brandName}</Badge>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="container mx-auto px-6 py-8 space-y-10">
-
-        {/* Profile + Quick Info */}
-        <div className="grid md:grid-cols-3 gap-8">
-          {/* Left: Portrait & Bio Stats */}
-          <div className="space-y-4">
-            {artisan.profileImageUrl && (
-              <img
-                src={artisan.profileImageUrl}
-                alt={artisan.artisanName}
-                className="w-full rounded-2xl shadow-xl object-cover max-h-72"
-              />
-            )}
-            <Card className="border-amber-200 bg-amber-50">
-              <CardContent className="pt-5 space-y-3 text-sm">
-                {artisan.location && (
-                  <div className="flex items-center gap-2 text-amber-800">
-                    <MapPin className="w-4 h-4" /> <span>{artisan.location}</span>
-                  </div>
-                )}
-                {artisan.dateOfBirth && (
-                  <div className="text-amber-700">
-                    🎂 Born: {new Date(artisan.dateOfBirth).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
-                  </div>
-                )}
-                {artisan.origin && (
-                  <div className="text-amber-700">🌍 Origin: {artisan.origin}</div>
-                )}
-                {artisan.craftsmanship && (
-                  <div className="text-amber-700">🎨 Craft: {artisan.craftsmanship}</div>
-                )}
-                {artisan.symbolism && (
-                  <div className="text-amber-700">🔮 Symbolism: {artisan.symbolism}</div>
-                )}
-                {avgRating && (
-                  <div className="flex items-center gap-1 text-amber-700">
-                    <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
-                    <span className="font-semibold">{avgRating}</span>
-                    <span className="text-amber-600">({artisan.testimonials.length} reviews)</span>
-                  </div>
-                )}
-                <Badge className="bg-amber-200 text-amber-900 border-amber-400">{artisan.brandName}</Badge>
-              </CardContent>
-            </Card>
+      {/* SOUL MESSAGE — full width orange band */}
+      {artisan.soulMessage && (
+        <div className="bg-orange-600 px-8 md:px-14 py-8">
+          <div className="max-w-5xl mx-auto">
+            <p className="text-2xl md:text-3xl font-bold italic text-white leading-relaxed">
+              "{artisan.soulMessage}"
+            </p>
           </div>
+        </div>
+      )}
 
-          {/* Right: Biography + Soul Message */}
-          <div className="md:col-span-2 space-y-6">
-            {artisan.soulMessage && (
-              <div className="bg-gradient-to-r from-amber-700 to-orange-600 text-white p-6 rounded-2xl shadow-lg">
-                <Quote className="w-8 h-8 opacity-60 mb-2" />
-                <p className="text-xl italic font-medium leading-relaxed">"{artisan.soulMessage}"</p>
+      {/* MAIN CONTENT */}
+      <div className="max-w-6xl mx-auto px-6 md:px-10 py-14 space-y-20">
+
+        {/* ABOUT + PORTRAIT */}
+        <div className="grid md:grid-cols-5 gap-12 items-start">
+          {/* Portrait */}
+          {artisan.profileImageUrl && (
+            <div className="md:col-span-2">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[3/4]">
+                <img
+                  src={artisan.profileImageUrl}
+                  alt={artisan.artisanName}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-5">
+                  <div className="space-y-1 text-sm text-stone-300">
+                    {artisan.origin && <p>🌍 {artisan.origin}</p>}
+                    {artisan.dateOfBirth && (
+                      <p>🎂 Born {new Date(artisan.dateOfBirth).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Story + Bio Stats */}
+          <div className="md:col-span-3 space-y-8">
+            {artisan.biography && (
+              <div>
+                <h2 className="text-xs font-bold tracking-widest uppercase text-orange-500 mb-3">About Us — The Story</h2>
+                <p className="text-stone-300 leading-relaxed text-lg whitespace-pre-line">{artisan.biography}</p>
               </div>
             )}
 
-            {artisan.biography && (
-              <Card className="border-amber-200">
-                <CardContent className="pt-5">
-                  <h2 className="text-xl font-bold text-amber-900 mb-3">The Story</h2>
-                  <p className="text-gray-700 leading-relaxed whitespace-pre-line">{artisan.biography}</p>
-                </CardContent>
-              </Card>
-            )}
+            {/* Craft stats row */}
+            <div className="grid grid-cols-2 gap-4">
+              {artisan.craftsmanship && (
+                <div className="bg-stone-900 border border-stone-700 rounded-xl p-4">
+                  <p className="text-xs text-orange-400 font-bold uppercase tracking-wider mb-1">Craft</p>
+                  <p className="text-stone-200 text-sm">{artisan.craftsmanship}</p>
+                </div>
+              )}
+              {artisan.symbolism && (
+                <div className="bg-stone-900 border border-stone-700 rounded-xl p-4">
+                  <p className="text-xs text-orange-400 font-bold uppercase tracking-wider mb-1">Symbolism</p>
+                  <p className="text-stone-200 text-sm">{artisan.symbolism}</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
-        {/* Products / Services */}
+        {/* PRODUCTS */}
         {services.length > 0 && (
-          <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-amber-900 border-b border-amber-200 pb-2">
-              🛍️ Products by {artisan.artisanName}
-            </h2>
+          <div className="space-y-6">
+            <div className="border-b border-stone-700 pb-4">
+              <h2 className="text-xs font-bold tracking-widest uppercase text-orange-500 mb-1">Shop</h2>
+              <h3 className="text-3xl font-black text-white">Products by {artisan.artisanName.split(' ')[0]}</h3>
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {services.map(service => {
                 const price = service.pricing?.USD || service.pricing?.ZAR || 0;
-                const currency = service.pricing?.USD ? 'USD' : 'ZAR';
+                const currency = service.pricing?.USD ? '$' : 'R';
                 return (
-                  <Card key={service.id} className="hover:shadow-xl transition-shadow border-amber-200 overflow-hidden">
-                    {service.imageUrl && (
-                      <img src={service.imageUrl} alt={service.serviceName} className="w-full h-40 object-cover" />
-                    )}
-                    <CardContent className="pt-4 space-y-2">
-                      <h3 className="font-bold text-gray-800">{service.serviceName}</h3>
-                      <p className="text-sm text-gray-500 line-clamp-2">{service.description}</p>
+                  <div key={service.id} className="group bg-stone-900 border border-stone-700 rounded-2xl overflow-hidden hover:border-orange-500 transition-all duration-300 hover:shadow-2xl hover:shadow-orange-900/30">
+                    <div className="aspect-square overflow-hidden bg-stone-800">
+                      {service.imageUrl ? (
+                        <img src={service.imageUrl} alt={service.serviceName} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <Package className="w-16 h-16 text-stone-600" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-5 space-y-3">
+                      <h3 className="font-bold text-white text-lg leading-tight">{service.serviceName}</h3>
+                      <p className="text-stone-400 text-sm line-clamp-2">{service.description}</p>
                       <div className="flex items-center justify-between pt-2">
-                        <span className="text-lg font-extrabold text-amber-700">{currency === 'USD' ? '$' : 'R'}{price}</span>
+                        <span className="text-2xl font-black text-orange-400">{currency}{price}</span>
                         <Link to={createPageUrl('Marketplace')}>
-                          <Button size="sm" className="bg-amber-600 hover:bg-amber-700 text-white">
+                          <Button size="sm" className="bg-orange-600 hover:bg-orange-500 text-white font-bold px-4">
                             Buy Now
                           </Button>
                         </Link>
                       </div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
                 );
               })}
             </div>
@@ -184,13 +227,29 @@ export default function ArtisanProfile() {
           <AIProfileEnricher artisan={artisan} onSave={() => window.location.reload()} />
         )}
 
-        {/* Artisan's Tools */}
+        {/* CULTURAL SIGNIFICANCE */}
+        {artisan.culturalSignificance && (
+          <div className="space-y-5">
+            <div className="border-b border-stone-700 pb-4">
+              <h2 className="text-xs font-bold tracking-widest uppercase text-orange-500 mb-1">Heritage</h2>
+              <h3 className="text-3xl font-black text-white">Cultural Significance</h3>
+            </div>
+            <div className="bg-gradient-to-br from-stone-900 to-stone-800 border border-stone-700 rounded-2xl p-8">
+              <p className="text-stone-300 leading-relaxed text-lg whitespace-pre-line">{artisan.culturalSignificance}</p>
+            </div>
+          </div>
+        )}
+
+        {/* TOOLS */}
         {artisan.tools?.length > 0 && (
-          <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-amber-900 border-b border-amber-200 pb-2">🔨 Artisan's Tools</h2>
+          <div className="space-y-5">
+            <div className="border-b border-stone-700 pb-4">
+              <h2 className="text-xs font-bold tracking-widest uppercase text-orange-500 mb-1">Craft</h2>
+              <h3 className="text-3xl font-black text-white flex items-center gap-2"><Hammer className="w-7 h-7 text-orange-500" /> Artisan's Tools</h3>
+            </div>
             <div className="flex flex-wrap gap-3">
               {artisan.tools.map((tool, i) => (
-                <span key={i} className="bg-amber-100 text-amber-900 border border-amber-300 rounded-full px-4 py-1.5 text-sm font-medium">
+                <span key={i} className="bg-stone-800 border border-stone-600 text-stone-200 rounded-full px-5 py-2 text-sm font-medium hover:border-orange-500 hover:text-orange-300 transition-colors">
                   {tool}
                 </span>
               ))}
@@ -198,64 +257,62 @@ export default function ArtisanProfile() {
           </div>
         )}
 
-        {/* Signature Techniques */}
+        {/* SIGNATURE TECHNIQUES */}
         {artisan.signatureTechniques?.length > 0 && (
-          <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-amber-900 border-b border-amber-200 pb-2">✦ Signature Techniques</h2>
-            <div className="grid sm:grid-cols-2 gap-3">
+          <div className="space-y-5">
+            <div className="border-b border-stone-700 pb-4">
+              <h2 className="text-xs font-bold tracking-widest uppercase text-orange-500 mb-1">Mastery</h2>
+              <h3 className="text-3xl font-black text-white flex items-center gap-2"><Sparkles className="w-7 h-7 text-orange-500" /> Signature Techniques</h3>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-4">
               {artisan.signatureTechniques.map((tech, i) => (
-                <div key={i} className="bg-orange-50 border border-orange-200 rounded-xl px-4 py-3 flex items-start gap-2">
-                  <span className="text-orange-500 font-bold mt-0.5">0{i + 1}</span>
-                  <p className="text-gray-800 text-sm">{tech}</p>
+                <div key={i} className="bg-stone-900 border border-stone-700 rounded-xl px-5 py-4 flex items-start gap-4 hover:border-orange-600 transition-colors">
+                  <span className="text-orange-500 font-black text-xl mt-0.5 tabular-nums">{String(i + 1).padStart(2, '0')}</span>
+                  <p className="text-stone-300 text-sm leading-relaxed">{tech}</p>
                 </div>
               ))}
             </div>
           </div>
         )}
 
-        {/* Cultural Significance */}
-        {artisan.culturalSignificance && (
-          <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-amber-900 border-b border-amber-200 pb-2">🌍 Cultural Significance</h2>
-            <Card className="border-amber-200 bg-gradient-to-br from-amber-50 to-yellow-50">
-              <CardContent className="pt-5">
-                <p className="text-gray-700 leading-relaxed whitespace-pre-line">{artisan.culturalSignificance}</p>
-              </CardContent>
-            </Card>
+        {/* GALLERY */}
+        {(artisan.galleryImages?.length > 0) && (
+          <div className="space-y-5">
+            <div className="border-b border-stone-700 pb-4">
+              <h2 className="text-xs font-bold tracking-widest uppercase text-orange-500 mb-1">Portfolio</h2>
+              <h3 className="text-3xl font-black text-white">Gallery of Featured Work</h3>
+            </div>
+            <ArtisanGallery images={artisan.galleryImages} />
           </div>
         )}
 
-        {/* Gallery */}
-        <ArtisanGallery images={artisan.galleryImages || []} />
-
-        {/* Materials & Certifications */}
+        {/* MATERIALS & CERTS */}
         <ArtisanMaterialsCerts materials={artisan.materials || []} certifications={artisan.certifications || []} />
 
-        {/* Social Media */}
+        {/* SOCIAL */}
         <ArtisanSocialLinks socialMedia={artisan.socialMedia || {}} />
 
-        {/* Testimonials */}
+        {/* TESTIMONIALS */}
         {artisan.testimonials?.length > 0 && (
-          <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-amber-900 border-b border-amber-200 pb-2">
-              💬 Customer Testimonials
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-6">
+            <div className="border-b border-stone-700 pb-4">
+              <h2 className="text-xs font-bold tracking-widest uppercase text-orange-500 mb-1">Community</h2>
+              <h3 className="text-3xl font-black text-white">Customer Testimonials</h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {artisan.testimonials.map((t, i) => (
-                <Card key={i} className="bg-white border-amber-100 shadow-sm">
-                  <CardContent className="pt-5 space-y-2">
-                    <div className="flex items-center gap-1">
-                      {[...Array(5)].map((_, s) => (
-                        <Star key={s} className={`w-4 h-4 ${s < t.rating ? 'fill-amber-500 text-amber-500' : 'text-gray-300'}`} />
-                      ))}
-                    </div>
-                    <p className="text-gray-700 italic">"{t.comment}"</p>
-                    <div className="flex items-center justify-between text-sm text-gray-500 pt-1">
-                      <span className="font-semibold text-gray-800">— {t.customerName}</span>
-                      <span>{t.productPurchased}</span>
-                    </div>
-                  </CardContent>
-                </Card>
+                <div key={i} className="bg-stone-900 border border-stone-700 rounded-2xl p-6 space-y-3 hover:border-orange-600 transition-colors">
+                  <div className="flex items-center gap-1">
+                    {[...Array(5)].map((_, s) => (
+                      <Star key={s} className={`w-4 h-4 ${s < t.rating ? 'fill-orange-400 text-orange-400' : 'text-stone-700'}`} />
+                    ))}
+                  </div>
+                  <p className="text-stone-300 italic leading-relaxed">"{t.comment}"</p>
+                  <div className="pt-2 border-t border-stone-700 flex items-center justify-between text-sm">
+                    <span className="font-bold text-white">— {t.customerName}</span>
+                    {t.productPurchased && <span className="text-orange-400 text-xs">{t.productPurchased}</span>}
+                  </div>
+                </div>
               ))}
             </div>
           </div>
