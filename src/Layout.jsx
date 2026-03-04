@@ -6,7 +6,6 @@ import CartIcon from './components/cart/CartIcon';
 import { Menu, X } from 'lucide-react';
 
 const NAV_LINKS = [
-  { label: '🌿 Home', page: 'Landing' },
   { label: 'Dashboard', page: 'Dashboard' },
   { label: 'Marketplace', page: 'Marketplace' },
   { label: 'Gallery', page: 'Gallery' },
@@ -16,7 +15,6 @@ const NAV_LINKS = [
   { label: 'Onboard Brand', page: 'BrandOnboarding' },
   { label: '🏆 Loyalty', page: 'LoyaltyProgram' },
   { label: '💳 My Plans', page: 'MySubscriptions' },
-  { label: '📦 My Orders', page: 'OrderHistory' },
 ];
 
 export default function Layout({ children, currentPageName }) {
