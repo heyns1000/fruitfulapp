@@ -62,6 +62,9 @@ export default function Payments() {
             <TabsTrigger value="history" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white">
               📊 Transaction History
             </TabsTrigger>
+            <TabsTrigger value="paystack" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white">
+              ⚙️ Paystack Setup
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="gateway">
