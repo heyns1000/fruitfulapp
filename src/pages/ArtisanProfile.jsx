@@ -225,6 +225,15 @@ export default function ArtisanProfile() {
           </div>
         )}
 
+        {/* Gallery */}
+        <ArtisanGallery images={artisan.galleryImages || []} />
+
+        {/* Materials & Certifications */}
+        <ArtisanMaterialsCerts materials={artisan.materials || []} certifications={artisan.certifications || []} />
+
+        {/* Social Media */}
+        <ArtisanSocialLinks socialMedia={artisan.socialMedia || {}} />
+
         {/* Testimonials */}
         {artisan.testimonials?.length > 0 && (
           <div className="space-y-4">
