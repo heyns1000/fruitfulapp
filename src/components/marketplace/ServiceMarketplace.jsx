@@ -37,6 +37,7 @@ export default function ServiceMarketplace({ services }) {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [buyerEmail, setBuyerEmail] = useState('');
+  const [showThankYou, setShowThankYou] = useState(false);
 
   const { addToCart } = useCart();
   const queryClient = useQueryClient();
