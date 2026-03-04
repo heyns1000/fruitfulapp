@@ -98,7 +98,7 @@ export default function ArtisanProfile() {
             </h1>
             <p className="text-xl md:text-2xl text-stone-300 font-light mb-5">{artisan.title}</p>
 
-            <div className="flex flex-wrap items-center gap-4 text-sm text-stone-400">
+            <div className="flex flex-wrap items-center gap-4 text-sm text-stone-400 mb-6">
               {artisan.location && (
                 <span className="flex items-center gap-1.5">
                   <MapPin className="w-4 h-4 text-orange-500" />
@@ -114,6 +114,7 @@ export default function ArtisanProfile() {
               )}
               <Badge className="bg-stone-800 text-stone-200 border border-stone-600 text-xs">{artisan.brandName}</Badge>
             </div>
+            <FollowArtisan artisanId={artisan.id} artisanName={artisan.artisanName} />
           </div>
         </div>
       </div>
