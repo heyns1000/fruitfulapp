@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PaymentGateway from '../components/payments/PaymentGateway';
 import SubscriptionManager from '../components/payments/SubscriptionManager';
 import TransactionHistory from '../components/payments/TransactionHistory';
+import PaystackSettings from '../components/payments/PaystackSettings';
 import BackButton from '../components/navigation/BackButton';
 import { Loader2, CreditCard } from 'lucide-react';
 

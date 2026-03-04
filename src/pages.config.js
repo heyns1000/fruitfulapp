@@ -49,6 +49,7 @@
  */
 import Analytics from './pages/Analytics';
 import AppBuilder from './pages/AppBuilder';
+import ArtisanProfile from './pages/ArtisanProfile';
 import Banimal from './pages/Banimal';
 import BrandOnboarding from './pages/BrandOnboarding';
 import Checkout from './pages/Checkout';
@@ -56,19 +57,19 @@ import CollaborationSuite from './pages/CollaborationSuite';
 import ContentGenerator from './pages/ContentGenerator';
 import Dashboard from './pages/Dashboard';
 import Gallery from './pages/Gallery';
+import LoyaltyProgram from './pages/LoyaltyProgram';
 import Marketplace from './pages/Marketplace';
+import MySubscriptions from './pages/MySubscriptions';
 import Payments from './pages/Payments';
 import SectorAnalytics from './pages/SectorAnalytics';
 import VaultMesh from './pages/VaultMesh';
-import LoyaltyProgram from './pages/LoyaltyProgram';
-import MySubscriptions from './pages/MySubscriptions';
-import ArtisanProfile from './pages/ArtisanProfile';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
     "Analytics": Analytics,
     "AppBuilder": AppBuilder,
+    "ArtisanProfile": ArtisanProfile,
     "Banimal": Banimal,
     "BrandOnboarding": BrandOnboarding,
     "Checkout": Checkout,
@@ -76,13 +77,12 @@ export const PAGES = {
     "ContentGenerator": ContentGenerator,
     "Dashboard": Dashboard,
     "Gallery": Gallery,
+    "LoyaltyProgram": LoyaltyProgram,
     "Marketplace": Marketplace,
+    "MySubscriptions": MySubscriptions,
     "Payments": Payments,
     "SectorAnalytics": SectorAnalytics,
     "VaultMesh": VaultMesh,
-    "LoyaltyProgram": LoyaltyProgram,
-    "MySubscriptions": MySubscriptions,
-    "ArtisanProfile": ArtisanProfile,
 }
 
 export const pagesConfig = {
