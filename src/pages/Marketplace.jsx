@@ -6,6 +6,7 @@ import ServiceMarketplace from '../components/marketplace/ServiceMarketplace';
 import ServiceListing from '../components/marketplace/ServiceListing';
 import OrderManagement from '../components/marketplace/OrderManagement';
 import FeaturedArtisans from '../components/marketplace/FeaturedArtisans';
+import MarketplaceAIAssistant from '../components/marketplace/MarketplaceAIAssistant';
 import BackButton from '../components/navigation/BackButton';
 import { Loader2, Store } from 'lucide-react';
 
