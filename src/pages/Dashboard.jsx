@@ -215,6 +215,7 @@ export default function Dashboard() {
           </TabsList>
 
           <TabsContent value="admin" className="space-y-6">
+            <BrandHealthAudit />
             <BulkOperations />
             <ZeroWasteExporter />
             <CompleteDataExporter />
