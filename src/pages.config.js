@@ -68,6 +68,8 @@ import SectorAnalytics from './pages/SectorAnalytics';
 import SubscriptionBoxes from './pages/SubscriptionBoxes';
 import VaultMesh from './pages/VaultMesh';
 import Wishlist from './pages/Wishlist';
+import DiscoveryEngine from './pages/DiscoveryEngine';
+import GlobalBrandMap from './pages/GlobalBrandMap';
 import __Layout from './Layout.jsx';
 
 
@@ -93,6 +95,8 @@ export const PAGES = {
     "SubscriptionBoxes": SubscriptionBoxes,
     "VaultMesh": VaultMesh,
     "Wishlist": Wishlist,
+    "DiscoveryEngine": DiscoveryEngine,
+    "GlobalBrandMap": GlobalBrandMap,
 }
 
 export const pagesConfig = {
