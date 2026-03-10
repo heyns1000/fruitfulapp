@@ -11,17 +11,22 @@ import AIProposalEngine from '../components/collaboration/AIProposalEngine';
 
 export default function CollaborationSuite() {
   return (
-    <div className="min-h-screen p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-teal-900 mb-2">
-            Collaboration Suite
-          </h1>
-          <p className="text-gray-600">
-            AI-powered tools for brands to co-create, manage campaigns, track sales, and coordinate support
-          </p>
+    <div className="min-h-screen bg-gradient-to-br from-violet-50 to-purple-50">
+      <header className="bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-700 text-white py-8 shadow-xl mb-6">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <Users className="w-9 h-9 drop-shadow-lg" />
+              <div>
+                <h1 className="text-3xl sm:text-4xl font-extrabold drop-shadow-lg">Collaboration Suite</h1>
+                <p className="opacity-90 mt-1 text-sm sm:text-base">AI-powered tools for brands to co-create, campaign & coordinate</p>
+              </div>
+            </div>
+            <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6953a072de46207f94f2b9d2/52acd159d_Chief_02_1753263376705.png" alt="FAA" className="w-10 h-10 object-contain opacity-90" />
+          </div>
         </div>
+      </header>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-12">
 
         <CrossAppLinks
           title="🔗 Navigate FAA.ZONE"
@@ -72,7 +77,7 @@ export default function CollaborationSuite() {
 
         {/* Main Collaboration Tabs */}
         <Tabs defaultValue="content" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 mb-6">
+          <TabsList className="flex flex-wrap gap-1 h-auto w-full mb-6 bg-white/80 p-2 rounded-xl">
             <TabsTrigger value="content" className="flex items-center gap-2">
               <FileEdit className="w-4 h-4" />
               Content Co-Creation
@@ -107,6 +112,7 @@ export default function CollaborationSuite() {
             <SupportCoordination />
           </TabsContent>
         </Tabs>
+        </div>
       </div>
     </div>
   );

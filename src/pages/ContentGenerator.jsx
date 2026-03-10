@@ -119,17 +119,22 @@ Generate content that showcases the brand's complete ecosystem and capabilities.
   };
 
   return (
-    <div className="min-h-screen p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-teal-900 mb-2">
-            AI Content Generator
-          </h1>
-          <p className="text-gray-600">
-            Generate marketing copy, product descriptions, and social media content using complete brand data
-          </p>
+    <div className="min-h-screen bg-gradient-to-br from-fuchsia-50 to-purple-50">
+      <header className="bg-gradient-to-r from-fuchsia-600 via-purple-600 to-violet-700 text-white py-8 shadow-xl mb-6">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <Sparkles className="w-9 h-9 drop-shadow-lg" />
+              <div>
+                <h1 className="text-3xl sm:text-4xl font-extrabold drop-shadow-lg">AI Content Generator</h1>
+                <p className="opacity-90 mt-1 text-sm sm:text-base">Generate marketing copy, social media & campaigns using brand data</p>
+              </div>
+            </div>
+            <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6953a072de46207f94f2b9d2/52acd159d_Chief_02_1753263376705.png" alt="FAA" className="w-10 h-10 object-contain opacity-90" />
+          </div>
         </div>
+      </header>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-12">
 
         <CrossAppLinks
           title="🔗 Navigate FAA.ZONE"
@@ -346,6 +351,7 @@ Generate content that showcases the brand's complete ecosystem and capabilities.
             </p>
           </CardContent>
         </Card>
+        </div>
       </div>
     </div>
   );

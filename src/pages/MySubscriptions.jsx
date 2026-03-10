@@ -130,14 +130,17 @@ export default function MySubscriptions() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-purple-50">
-      <header className="bg-gradient-to-r from-purple-700 to-pink-600 text-white py-8 shadow-xl">
+      <header className="bg-gradient-to-r from-purple-700 via-indigo-700 to-blue-700 text-white py-8 shadow-xl">
         <div className="container mx-auto px-6">
-          <div className="flex items-center gap-3">
-            <CreditCard className="w-10 h-10" />
-            <div>
-              <h1 className="text-4xl font-extrabold drop-shadow-lg">My Subscriptions</h1>
-              <p className="opacity-90 mt-1">Manage your active plans, renewals & payment methods</p>
+          <div className="flex items-center justify-between gap-4 flex-wrap">
+            <div className="flex items-center gap-3">
+              <CreditCard className="w-10 h-10 drop-shadow-lg" />
+              <div>
+                <h1 className="text-3xl sm:text-4xl font-extrabold drop-shadow-lg">My Subscriptions</h1>
+                <p className="opacity-90 mt-1 text-sm sm:text-base">Manage your active plans, renewals & payment methods</p>
+              </div>
             </div>
+            <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6953a072de46207f94f2b9d2/52acd159d_Chief_02_1753263376705.png" alt="FAA" className="w-10 h-10 object-contain opacity-90" />
           </div>
         </div>
       </header>
