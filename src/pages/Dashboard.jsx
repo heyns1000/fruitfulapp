@@ -147,6 +147,9 @@ export default function Dashboard() {
         {/* Metrics Cards */}
         <MetricsCards metrics={metrics} />
 
+        {/* License Value Projection */}
+        <LicenseProjection />
+
         {/* Main Tabs */}
         <Tabs value={selectedSector} onValueChange={setSelectedSector} className="space-y-6">
           <TabsList className="flex flex-wrap gap-2 h-auto bg-white/90 backdrop-blur-sm p-4 rounded-xl shadow-xl border-2 border-teal-200">
