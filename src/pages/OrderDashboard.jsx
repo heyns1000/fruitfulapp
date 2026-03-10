@@ -317,14 +317,11 @@ export default function OrderDashboard() {
                             </div>
                           )}
 
-                          {/* Tracking */}
-                          {(order.trackingNumber || order.carrier) && (
+                          {/* Shipment Tracker */}
+                          {order.trackingNumber && (
                             <div>
-                              <h4 className="text-xs text-orange-400 uppercase tracking-wider font-bold mb-2">Shipping</h4>
-                              <div className="bg-stone-800 rounded-xl p-3 space-y-1 text-sm">
-                                {order.carrier && <p className="text-stone-400">Carrier: <span className="text-white">{order.carrier}</span></p>}
-                                {order.trackingNumber && <p className="text-stone-400">Tracking: <code className="text-orange-300">{order.trackingNumber}</code></p>}
-                              </div>
+                              <h4 className="text-xs text-orange-400 uppercase tracking-wider font-bold mb-3">Live Shipment Tracking</h4>
+                              <ShipmentTracker order={order} />
                             </div>
                           )}
 
