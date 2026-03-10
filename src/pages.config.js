@@ -73,6 +73,7 @@ import GlobalBrandMap from './pages/GlobalBrandMap';
 import MarketIntelligence from './pages/MarketIntelligence';
 import AutomationEngine from './pages/AutomationEngine';
 import VideoScriptStudio from './pages/VideoScriptStudio';
+import AssetLibrary from './pages/AssetLibrary';
 import __Layout from './Layout.jsx';
 
 
@@ -103,6 +104,7 @@ export const PAGES = {
     "MarketIntelligence": MarketIntelligence,
     "AutomationEngine": AutomationEngine,
     "VideoScriptStudio": VideoScriptStudio,
+    "AssetLibrary": AssetLibrary,
 }
 
 export const pagesConfig = {
