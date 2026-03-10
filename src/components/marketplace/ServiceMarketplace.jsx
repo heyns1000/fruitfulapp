@@ -87,14 +87,10 @@ export default function ServiceMarketplace({ services }) {
 
   const toggleTag = (tag) => setActiveTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]);
 
-  const processOrder = async () => {
-    if (!buyerEmail || !selectedService) { toast.error('Please provide your email'); return; }
-    const price = selectedService.pricing?.[selectedCurrency] || selectedService.pricing?.USD || 0;
-    const orderNumber = `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    await createOrderMutation.mutateAsync({
-      orderNumber, items: [{ serviceId: selectedService.id, serviceName: selectedService.serviceName, productCode: selectedService.productCode, quantity, unitPrice: price, imageUrl: selectedService.imageUrl }],
-      buyerEmail, totalAmount: price * quantity, currency: selectedCurrency, status: 'confirmed', paymentStatus: 'paid',
-    });
+  const buyNow = (service) => {
+    const price = service.pricing?.[selectedCurrency] || service.pricing?.USD || 0;
+    addToCart({ id: service.id, name: service.serviceName, price, productCode: service.productCode, imageUrl: service.imageUrl, brandName: service.brandName });
+    navigate(createPageUrl('Checkout'));
   };
 
   return (
