@@ -77,8 +77,8 @@ export default function EcosystemExplorer() {
         {/* Network map view */}
         {view === 'network' && <NetworkMap />}
 
-        {/* Sector filter chips */}
-        <div className="bg-[#2d3748] border border-[#4a5568] rounded-xl p-5">
+        {/* Sector filter chips — hidden in network view */}
+        {view === 'grid' && <div className="bg-[#2d3748] border border-[#4a5568] rounded-xl p-5">
           <p className="text-sm font-bold text-[#90cdf4] uppercase tracking-widest mb-4">Select Sector</p>
           <div className="flex flex-wrap gap-2">
             {allSectors.map(k => {
