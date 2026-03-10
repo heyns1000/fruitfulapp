@@ -144,6 +144,10 @@ export default function MySubscriptions() {
 
       <div className="container mx-auto px-6 py-8 space-y-8">
         <BackButton />
+        <CrossAppLinks
+          title="🔗 Explore FAA.ZONE"
+          pages={['Dashboard', 'LoyaltyProgram', 'OrderHistory', 'SubscriptionBoxes', 'Marketplace', 'Wishlist', 'Analytics']}
+        />
 
         {/* Summary Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

@@ -23,6 +23,11 @@ export default function CollaborationSuite() {
           </p>
         </div>
 
+        <CrossAppLinks
+          title="🔗 Navigate FAA.ZONE"
+          pages={['Dashboard', 'Analytics', 'ContentGenerator', 'EcosystemExplorer', 'Marketplace', 'MySubscriptions']}
+        />
+
         {/* Collaboration Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
           <Card className="bg-gradient-to-br from-purple-50 to-purple-100">

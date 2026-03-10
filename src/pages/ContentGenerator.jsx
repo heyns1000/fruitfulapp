@@ -131,6 +131,11 @@ Generate content that showcases the brand's complete ecosystem and capabilities.
           </p>
         </div>
 
+        <CrossAppLinks
+          title="🔗 Navigate FAA.ZONE"
+          pages={['Dashboard', 'Analytics', 'CollaborationSuite', 'Marketplace', 'EcosystemExplorer', 'ArtisanDashboard']}
+        />
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Input Panel */}
           <Card>

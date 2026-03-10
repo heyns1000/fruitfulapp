@@ -91,7 +91,10 @@ export default function LoyaltyProgram() {
 
       <div className="container mx-auto px-6 py-8 space-y-8">
         <BackButton />
-
+        <CrossAppLinks
+          title="🔗 Explore FAA.ZONE"
+          pages={['Dashboard', 'MySubscriptions', 'Marketplace', 'OrderHistory', 'SubscriptionBoxes', 'ArtisanDashboard', 'Wishlist']}
+        />
         <PointsOverview account={account} />
 
         <Tabs defaultValue="offers" className="space-y-6">

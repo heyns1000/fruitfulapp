@@ -78,6 +78,12 @@ export default function Gallery() {
 
       <div className="container mx-auto px-4 sm:px-6 pb-12 relative z-10">
         <BackButton />
+        <div className="mb-6">
+          <CrossAppLinks
+            title="🔗 Explore FAA.ZONE"
+            pages={['Dashboard', 'Marketplace', 'ArtisanDashboard', 'Wishlist', 'SubscriptionBoxes', 'LoyaltyProgram']}
+          />
+        </div>
         <ArtworkGallery />
 
         {/* Artist Spotlight */}
