@@ -26,6 +26,7 @@ const NAV_LINKS = [
   { label: '⚡ Automation', page: 'AutomationEngine' },
   { label: '🗺️ Global Map', page: 'GlobalBrandMap' },
   { label: '🎬 Video Studio', page: 'VideoScriptStudio' },
+  { label: '🖼️ Asset Library', page: 'AssetLibrary' },
 ];
 
 export default function Layout({ children, currentPageName }) {
