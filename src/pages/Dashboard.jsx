@@ -7,6 +7,7 @@ import DataSeeder from '../components/admin/DataSeeder';
 import BrandManager from '../components/admin/BrandManager';
 import CollaborationManager from '../components/collaboration/CollaborationManager';
 import MetricsCards from '../components/dashboard/MetricsCards';
+import LicenseProjection from '../components/dashboard/LicenseProjection';
 import SectorGrid from '../components/sectors/SectorGrid';
 import DataExporter from '../components/data/DataExporter';
 import CompleteDataExporter from '../components/data/CompleteDataExporter';
