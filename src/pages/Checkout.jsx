@@ -407,13 +407,19 @@ export default function Checkout() {
               )}
 
               {/* Step 3: Payment */}
-              {step === 3 && (
-                <div>
-                  <h2 className={`text-xl font-black ${T.text} mb-4`}>{t.paymentTitle}</h2>
-                  {[
-                    { val: 'paystack', label: 'Paystack', desc: 'Card, EFT, Mobile Money', icon: '💳' },
-                    { val: 'bank', label: 'Bank Transfer', desc: 'Direct bank transfer (manual)', icon: '🏦' },
-                  ].map(m => (
+               {step === 3 && (
+                 <div>
+                   <h2 className={`text-xl font-black ${T.text} mb-4`}>{t.paymentTitle}</h2>
+                   {!import.meta.env.VITE_PAYSTACK_PUBLIC_KEY && (
+                     <div className="mb-4 p-3 bg-amber-500/20 border border-amber-500/40 rounded-xl text-amber-300 text-sm flex items-start gap-2">
+                       <span className="text-lg shrink-0">⚠️</span>
+                       <span><strong>Demo Mode:</strong> No Paystack key configured. Orders will be created instantly without real payment processing.</span>
+                     </div>
+                   )}
+                   {[
+                     { val: 'paystack', label: 'Paystack', desc: 'Card, EFT, Mobile Money', icon: '💳' },
+                     { val: 'bank', label: 'Bank Transfer', desc: 'Direct bank transfer (manual)', icon: '🏦' },
+                   ].map(m => (
                     <button key={m.val} onClick={() => setPaymentMethod(m.val)}
                       className={`w-full flex items-center gap-4 p-5 rounded-2xl border text-left transition-all mb-3 ${paymentMethod === m.val ? 'border-green-500 bg-green-500/10' : `${T.card} hover:border-green-700`}`}>
                       <span className="text-2xl">{m.icon}</span>
