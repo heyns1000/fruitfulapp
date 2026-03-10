@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { SECTOR_LIST, ECOSYSTEM_DATA, licensePrice } from '../components/data/ecosystemData';
+import React, { useState, useMemo } from 'react';
+import { SECTOR_LIST, ECOSYSTEM_DATA } from '../components/data/ecosystemData';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Search, ChevronDown, ChevronUp, Globe, DollarSign, Layers, Cpu } from 'lucide-react';
