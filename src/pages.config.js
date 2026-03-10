@@ -76,6 +76,7 @@ import VaultMesh from './pages/VaultMesh';
 import VideoScriptStudio from './pages/VideoScriptStudio';
 import Wishlist from './pages/Wishlist';
 import Messages from './pages/Messages';
+import ArtisanFinancials from './pages/ArtisanFinancials';
 import __Layout from './Layout.jsx';
 
 
@@ -109,6 +110,7 @@ export const PAGES = {
     "VideoScriptStudio": VideoScriptStudio,
     "Wishlist": Wishlist,
     "Messages": Messages,
+    "ArtisanFinancials": ArtisanFinancials,
 }
 
 export const pagesConfig = {
