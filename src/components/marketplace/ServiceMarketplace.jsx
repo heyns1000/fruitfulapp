@@ -29,27 +29,9 @@ export default function ServiceMarketplace({ services }) {
   const [activeTags, setActiveTags] = useState([]);
   const [showFilters, setShowFilters] = useState(false);
 
-  const [selectedService, setSelectedService] = useState(null);
-  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
-  const [quantity, setQuantity] = useState(1);
-  const [buyerEmail, setBuyerEmail] = useState('');
-  const [showThankYou, setShowThankYou] = useState(false);
-
   const { addToCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
-  const queryClient = useQueryClient();
-
-  const createOrderMutation = useMutation({
-    mutationFn: (data) => base44.entities.Order.create(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['orders'] });
-      setIsCheckoutOpen(false);
-      setSelectedService(null);
-      setBuyerEmail('');
-      setQuantity(1);
-      setShowThankYou(true);
-    }
-  });
+  const navigate = useNavigate();
 
   const activeServices = services.filter(s => s.status === 'active');
 
