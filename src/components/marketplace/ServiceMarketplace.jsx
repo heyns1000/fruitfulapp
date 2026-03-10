@@ -95,7 +95,6 @@ export default function ServiceMarketplace({ services }) {
 
   return (
     <div className="space-y-6">
-      <FruitfulThankYou show={showThankYou} onClose={() => setShowThankYou(false)} message="Your order supports real artisans. Fruitful. Changing. Seeds." />
 
       {/* Search bar + toggle filters */}
       <div className="flex gap-3">
