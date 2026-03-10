@@ -101,7 +101,7 @@ export default function EcosystemExplorer() {
               );
             })}
           </div>
-        </div>
+        </div>}
 
         {/* Stats row — grid view only */}
         {view === 'grid' && <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
