@@ -11,6 +11,7 @@ import LicenseProjection from '../components/dashboard/LicenseProjection';
 import SectorGrid from '../components/sectors/SectorGrid';
 import DataExporter from '../components/data/DataExporter';
 import CompleteDataExporter from '../components/data/CompleteDataExporter';
+import BulkOperations from '../components/admin/BulkOperations';
 import ZeroWasteExporter from '../components/data/ZeroWasteExporter';
 import { Loader2 } from 'lucide-react';
 
