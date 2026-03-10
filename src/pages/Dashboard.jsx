@@ -216,10 +216,6 @@ export default function Dashboard() {
             <AdminPanel onBrandAdded={handleBrandAdded} />
             <BrandManager />
 
-          <TabsContent value="collaborations" className="space-y-6">
-            <CollaborationManager />
-          </TabsContent>
-            
             <div className="bg-white rounded-lg shadow p-6">
               <h2 className="text-xl font-bold mb-4 text-indigo-700">📊 All Brands Overview</h2>
               {brands.length === 0 ? (
@@ -249,6 +245,10 @@ export default function Dashboard() {
                 </div>
               )}
             </div>
+          </TabsContent>
+
+          <TabsContent value="collaborations" className="space-y-6">
+            <CollaborationManager />
           </TabsContent>
 
           {Object.entries(SECTORS).map(([sectorKey, sectorName]) => (
