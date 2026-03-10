@@ -453,85 +453,9 @@ export default function ArtisanProfile() {
         )}
 
         {/* ─ REVIEWS ─ */}
-        {artisan.testimonials?.length > 0 && (
-          <section id="reviews" ref={el => sectionRefs.current['reviews'] = el} className="scroll-mt-16 space-y-8">
-            <div className="border-b border-stone-800 pb-5 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-              <div>
-                <p className="text-xs font-bold tracking-[0.25em] uppercase text-orange-500 mb-1">Community</p>
-                <h2 className="text-4xl font-black text-white">What Customers Say</h2>
-              </div>
-              {avgRating && (
-                <div className="flex items-center gap-4 bg-stone-900 border border-stone-700 rounded-2xl px-6 py-4">
-                  <div>
-                    <p className="text-5xl font-black text-orange-400 leading-none">{avgRating}</p>
-                    <p className="text-stone-500 text-xs mt-1">{artisan.testimonials.length} reviews</p>
-                  </div>
-                  <div>
-                    <div className="flex gap-0.5 mb-1">
-                      {[...Array(5)].map((_, s) => (
-                        <Star key={s} className={`w-5 h-5 ${s < Math.round(parseFloat(avgRating)) ? 'fill-orange-400 text-orange-400' : 'text-stone-700'}`} />
-                      ))}
-                    </div>
-                    <p className="text-stone-400 text-xs">Verified purchases</p>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Hero testimonial */}
-            <div className="relative bg-gradient-to-br from-orange-950/50 to-stone-900 border border-orange-800/40 rounded-3xl p-10 overflow-hidden">
-              <Quote className="absolute -top-2 -right-2 w-32 h-32 text-orange-900/20" />
-              <div className="relative">
-                <div className="flex gap-1 mb-5">
-                  {[...Array(5)].map((_, s) => (
-                    <Star key={s} className={`w-5 h-5 ${s < artisan.testimonials[0].rating ? 'fill-orange-400 text-orange-400' : 'text-stone-700'}`} />
-                  ))}
-                </div>
-                <p className="text-2xl md:text-3xl text-stone-100 italic font-light leading-relaxed mb-7">
-                  "{artisan.testimonials[0].comment}"
-                </p>
-                <div className="flex flex-wrap items-center justify-between gap-4">
-                  <div>
-                    <p className="font-bold text-white text-lg">— {artisan.testimonials[0].customerName}</p>
-                    {artisan.testimonials[0].date && (
-                      <p className="text-stone-500 text-sm">{artisan.testimonials[0].date}</p>
-                    )}
-                  </div>
-                  {artisan.testimonials[0].productPurchased && (
-                    <Badge className="bg-orange-600/30 text-orange-300 border border-orange-700 text-sm px-4 py-1.5">
-                      Purchased: {artisan.testimonials[0].productPurchased}
-                    </Badge>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* Review grid */}
-            {artisan.testimonials.length > 1 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {artisan.testimonials.slice(1).map((t, i) => (
-                  <div key={i} className="group bg-stone-900 border border-stone-700 rounded-2xl p-6 space-y-4 hover:border-orange-600 transition-all hover:-translate-y-0.5">
-                    <div className="flex items-center justify-between">
-                      <div className="flex gap-0.5">
-                        {[...Array(5)].map((_, s) => (
-                          <Star key={s} className={`w-3.5 h-3.5 ${s < t.rating ? 'fill-orange-400 text-orange-400' : 'text-stone-700'}`} />
-                        ))}
-                      </div>
-                      {t.productPurchased && (
-                        <span className="text-orange-400 text-xs bg-orange-950/50 px-2.5 py-1 rounded-full">{t.productPurchased}</span>
-                      )}
-                    </div>
-                    <p className="text-stone-300 italic leading-relaxed text-sm">"{t.comment}"</p>
-                    <div className="flex items-center justify-between border-t border-stone-800 pt-4 text-sm">
-                      <span className="font-bold text-white">{t.customerName}</span>
-                      {t.date && <span className="text-stone-600 text-xs">{t.date}</span>}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </section>
-        )}
+        <section id="reviews" ref={el => sectionRefs.current['reviews'] = el} className="scroll-mt-16">
+          <ReviewsSection artisan={artisan} services={services} />
+        </section>
 
       </div>
 
