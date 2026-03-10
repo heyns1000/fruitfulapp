@@ -284,7 +284,7 @@ export default function ArtisanDashboard() {
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent className="bg-stone-800 border-stone-600">
-                            {['pending','confirmed','processing','shipped','delivered','cancelled'].map(s => (
+                            {['pending','confirmed','processing','crafted','shipped','delivered','cancelled'].map(s => (
                               <SelectItem key={s} value={s} className="text-white capitalize">{s}</SelectItem>
                             ))}
                           </SelectContent>
