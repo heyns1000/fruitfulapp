@@ -19,6 +19,7 @@ const NAV_LINKS = [
   { label: '🎨 My Shop', page: 'ArtisanDashboard' },
   { label: '📦 Orders', page: 'OrderHistory' },
   { label: '🚚 Order Dashboard', page: 'OrderDashboard' },
+  { label: '💬 Messages', page: 'Messages' },
   { label: '❤️ Wishlist', page: 'Wishlist' },
   { label: '📦 Sub Boxes', page: 'SubscriptionBoxes' },
   { label: '🌐 Ecosystem', page: 'EcosystemExplorer' },

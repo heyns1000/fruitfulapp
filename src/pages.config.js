@@ -51,30 +51,31 @@ import Analytics from './pages/Analytics';
 import AppBuilder from './pages/AppBuilder';
 import ArtisanDashboard from './pages/ArtisanDashboard';
 import ArtisanProfile from './pages/ArtisanProfile';
+import AssetLibrary from './pages/AssetLibrary';
+import AutomationEngine from './pages/AutomationEngine';
 import Banimal from './pages/Banimal';
 import BrandOnboarding from './pages/BrandOnboarding';
 import Checkout from './pages/Checkout';
 import CollaborationSuite from './pages/CollaborationSuite';
 import ContentGenerator from './pages/ContentGenerator';
 import Dashboard from './pages/Dashboard';
+import DiscoveryEngine from './pages/DiscoveryEngine';
 import EcosystemExplorer from './pages/EcosystemExplorer';
 import Gallery from './pages/Gallery';
+import GlobalBrandMap from './pages/GlobalBrandMap';
 import LoyaltyProgram from './pages/LoyaltyProgram';
+import MarketIntelligence from './pages/MarketIntelligence';
 import Marketplace from './pages/Marketplace';
 import MySubscriptions from './pages/MySubscriptions';
+import OrderDashboard from './pages/OrderDashboard';
 import OrderHistory from './pages/OrderHistory';
 import Payments from './pages/Payments';
 import SectorAnalytics from './pages/SectorAnalytics';
 import SubscriptionBoxes from './pages/SubscriptionBoxes';
 import VaultMesh from './pages/VaultMesh';
-import Wishlist from './pages/Wishlist';
-import DiscoveryEngine from './pages/DiscoveryEngine';
-import GlobalBrandMap from './pages/GlobalBrandMap';
-import MarketIntelligence from './pages/MarketIntelligence';
-import AutomationEngine from './pages/AutomationEngine';
 import VideoScriptStudio from './pages/VideoScriptStudio';
-import AssetLibrary from './pages/AssetLibrary';
-import OrderDashboard from './pages/OrderDashboard';
+import Wishlist from './pages/Wishlist';
+import Messages from './pages/Messages';
 import __Layout from './Layout.jsx';
 
 
@@ -83,30 +84,31 @@ export const PAGES = {
     "AppBuilder": AppBuilder,
     "ArtisanDashboard": ArtisanDashboard,
     "ArtisanProfile": ArtisanProfile,
+    "AssetLibrary": AssetLibrary,
+    "AutomationEngine": AutomationEngine,
     "Banimal": Banimal,
     "BrandOnboarding": BrandOnboarding,
     "Checkout": Checkout,
     "CollaborationSuite": CollaborationSuite,
     "ContentGenerator": ContentGenerator,
     "Dashboard": Dashboard,
+    "DiscoveryEngine": DiscoveryEngine,
     "EcosystemExplorer": EcosystemExplorer,
     "Gallery": Gallery,
+    "GlobalBrandMap": GlobalBrandMap,
     "LoyaltyProgram": LoyaltyProgram,
+    "MarketIntelligence": MarketIntelligence,
     "Marketplace": Marketplace,
     "MySubscriptions": MySubscriptions,
+    "OrderDashboard": OrderDashboard,
     "OrderHistory": OrderHistory,
     "Payments": Payments,
     "SectorAnalytics": SectorAnalytics,
     "SubscriptionBoxes": SubscriptionBoxes,
     "VaultMesh": VaultMesh,
-    "Wishlist": Wishlist,
-    "DiscoveryEngine": DiscoveryEngine,
-    "GlobalBrandMap": GlobalBrandMap,
-    "MarketIntelligence": MarketIntelligence,
-    "AutomationEngine": AutomationEngine,
     "VideoScriptStudio": VideoScriptStudio,
-    "AssetLibrary": AssetLibrary,
-    "OrderDashboard": OrderDashboard,
+    "Wishlist": Wishlist,
+    "Messages": Messages,
 }
 
 export const pagesConfig = {
