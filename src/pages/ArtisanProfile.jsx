@@ -437,16 +437,16 @@ export default function ArtisanProfile() {
           </section>
         )}
 
-        {/* ─ GALLERY ─ */}
-        {artisan.galleryImages?.length > 0 && (
-          <section id="gallery" ref={el => sectionRefs.current['gallery'] = el} className="scroll-mt-16 space-y-8">
-            <div className="border-b border-stone-800 pb-5">
+        {/* ─ GALLERY / PORTFOLIO ─ */}
+        <section id="gallery" ref={el => sectionRefs.current['gallery'] = el} className="scroll-mt-16 space-y-8">
+          <div className="border-b border-stone-800 pb-5 flex items-end justify-between flex-wrap gap-3">
+            <div>
               <p className="text-xs font-bold tracking-[0.25em] uppercase text-orange-500 mb-1">Portfolio</p>
-              <h2 className="text-4xl font-black text-white">Gallery of Featured Work</h2>
+              <h2 className="text-4xl font-black text-white">Work &amp; Projects</h2>
             </div>
-            <ArtisanGallery images={artisan.galleryImages} />
-          </section>
-        )}
+          </div>
+          <PortfolioGallery artisan={artisan} fallbackImages={artisan.galleryImages || []} />
+        </section>
 
         {/* ─ SOCIAL ─ */}
         {artisan.socialMedia && Object.values(artisan.socialMedia).some(Boolean) && (
