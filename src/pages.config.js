@@ -74,6 +74,7 @@ import MarketIntelligence from './pages/MarketIntelligence';
 import AutomationEngine from './pages/AutomationEngine';
 import VideoScriptStudio from './pages/VideoScriptStudio';
 import AssetLibrary from './pages/AssetLibrary';
+import OrderDashboard from './pages/OrderDashboard';
 import __Layout from './Layout.jsx';
 
 
@@ -105,6 +106,7 @@ export const PAGES = {
     "AutomationEngine": AutomationEngine,
     "VideoScriptStudio": VideoScriptStudio,
     "AssetLibrary": AssetLibrary,
+    "OrderDashboard": OrderDashboard,
 }
 
 export const pagesConfig = {
