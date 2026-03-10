@@ -71,6 +71,7 @@ import Wishlist from './pages/Wishlist';
 import DiscoveryEngine from './pages/DiscoveryEngine';
 import GlobalBrandMap from './pages/GlobalBrandMap';
 import MarketIntelligence from './pages/MarketIntelligence';
+import AutomationEngine from './pages/AutomationEngine';
 import __Layout from './Layout.jsx';
 
 
@@ -99,6 +100,7 @@ export const PAGES = {
     "DiscoveryEngine": DiscoveryEngine,
     "GlobalBrandMap": GlobalBrandMap,
     "MarketIntelligence": MarketIntelligence,
+    "AutomationEngine": AutomationEngine,
 }
 
 export const pagesConfig = {

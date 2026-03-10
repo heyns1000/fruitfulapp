@@ -23,6 +23,7 @@ const NAV_LINKS = [
   { label: '🌐 Ecosystem', page: 'EcosystemExplorer' },
   { label: '🔍 Discovery', page: 'DiscoveryEngine' },
   { label: '📊 Intelligence', page: 'MarketIntelligence' },
+  { label: '⚡ Automation', page: 'AutomationEngine' },
   { label: '🗺️ Global Map', page: 'GlobalBrandMap' },
 ];
 
