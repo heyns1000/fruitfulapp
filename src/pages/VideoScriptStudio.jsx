@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { base44 } from '@/api/base44Client';
+import { useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Film, Sparkles, Send, Download, Copy, RefreshCw, Wand2, Play, Clock, Mic, Music, Camera } from 'lucide-react';
+import { Film, Sparkles, Send, Download, Copy, RefreshCw, Wand2, Play, Clock, Mic, Music, Camera, Layers, ExternalLink } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import { createPageUrl } from '@/utils';
 
 const PROMPT_PRESETS = [
   { label: '🚀 Epic Launch', prompt: 'Generate a 60-second Pixar-level epic launch video script for @Fruitful@ FAA.ZONE — bold, cinematic, African futurism. Show the full ecosystem: artisans, brands, marketplace, collaboration, AI. End with a powerful CTA.' },
@@ -41,6 +41,36 @@ export default function VideoScriptStudio() {
   const [copiedScript, setCopiedScript] = useState(false);
   const bottomRef = useRef(null);
   const inputRef = useRef(null);
+
+  const { data: assets = [] } = useQuery({
+    queryKey: ['assets'],
+    queryFn: () => base44.entities.AssetLibrary.list('-created_date', 100),
+  });
+
+  const buildAssetContext = () => {
+    if (!assets.length) return '';
+    const logos = assets.filter(a => a.assetType === 'logo');
+    const photos = assets.filter(a => a.assetType === 'product_photo');
+    const palettes = assets.filter(a => a.assetType === 'color_palette');
+    let ctx = '\n\n---\n🎨 AVAILABLE BRAND ASSETS (incorporate these into the script):\n';
+    if (logos.length) {
+      ctx += `\nBRAND LOGOS (${logos.length}):\n`;
+      logos.forEach(l => { ctx += `- "${l.name}"${l.brandName ? ` (${l.brandName})` : ''}${l.description ? `: ${l.description}` : ''}\n`; });
+    }
+    if (photos.length) {
+      ctx += `\nPRODUCT PHOTOS (${photos.length}):\n`;
+      photos.forEach(p => { ctx += `- "${p.name}"${p.brandName ? ` (${p.brandName})` : ''}${p.description ? `: ${p.description}` : ''}\n`; });
+    }
+    if (palettes.length) {
+      ctx += `\nCOLOR PALETTES (${palettes.length}):\n`;
+      palettes.forEach(pal => {
+        const colors = pal.colorValues?.map(c => `${c.name || ''} ${c.hex}`).join(', ') || '';
+        ctx += `- "${pal.name}"${pal.brandName ? ` (${pal.brandName})` : ''}: [${colors}]${pal.description ? ` — ${pal.description}` : ''}\n`;
+      });
+    }
+    ctx += '---';
+    return ctx;
+  };
 
   useEffect(() => {
     initConversation();
