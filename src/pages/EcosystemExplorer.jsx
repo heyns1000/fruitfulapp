@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from 'react';
-import React, { useState, useMemo } from 'react';
 import { SECTOR_LIST, ECOSYSTEM_DATA } from '../components/data/ecosystemData';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
