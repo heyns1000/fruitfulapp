@@ -8,13 +8,12 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Slider } from '@/components/ui/slider';
-import { Search, ShoppingCart, Star, Package, Loader2, Plus, X, SlidersHorizontal, MapPin, Tag, Heart } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Search, ShoppingCart, Star, Package, Plus, X, SlidersHorizontal, MapPin, Tag, Heart, Zap } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { toast } from 'sonner';
 import { useCart } from '../cart/CartContext';
 import { useWishlist } from '../wishlist/WishlistContext';
-import FruitfulThankYou from '../common/FruitfulThankYou';
 
 const CURRENCY_SYMBOLS = {
   USD: '$', EUR: '€', GBP: '£', ZAR: 'R', NGN: '₦', KES: 'KSh',
