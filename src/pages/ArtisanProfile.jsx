@@ -10,7 +10,7 @@ import {
 import { createPageUrl } from '@/utils';
 import { Link } from 'react-router-dom';
 import AIProfileEnricher from '../components/artisan/AIProfileEnricher';
-import ArtisanGallery from '../components/artisan/ArtisanGallery';
+import PortfolioGallery from '../components/artisan/PortfolioGallery';
 import ArtisanSocialLinks from '../components/artisan/ArtisanSocialLinks';
 import ArtisanMaterialsCerts from '../components/artisan/ArtisanMaterialsCerts';
 import FollowArtisan from '../components/artisan/FollowArtisan';
