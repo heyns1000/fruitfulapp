@@ -103,8 +103,8 @@ export default function EcosystemExplorer() {
           </div>
         </div>
 
-        {/* Stats row */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        {/* Stats row — grid view only */}
+        {view === 'grid' && <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {[
             { label: 'Brands in Sector', value: sectorBrands.length, color: 'text-[#6ee7b7]' },
             { label: 'Total Subnodes', value: totalSubnodes, color: 'text-[#90cdf4]' },
@@ -116,10 +116,10 @@ export default function EcosystemExplorer() {
               <p className="text-xs text-[#a0aec0] mt-1">{s.label}</p>
             </div>
           ))}
-        </div>
+        </div>}
 
-        {/* Search + Brand Grid */}
-        <div className="bg-[#2d3748] border border-[#4a5568] rounded-xl p-5">
+        {/* Search + Brand Grid — grid view only */}
+        {view === 'grid' && <div className="bg-[#2d3748] border border-[#4a5568] rounded-xl p-5">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
             <div>
               <h2 className="text-2xl font-black text-[#90cdf4]">{SECTOR_LIST[selectedSector]}</h2>
