@@ -102,11 +102,14 @@ export default function VideoScriptStudio() {
   };
 
   const handlePreset = (preset) => {
-    const enriched = `${preset.prompt}\n\nTarget duration: ${duration} seconds. Animation style: ${STYLE_OPTIONS.find(s => s.value === style)?.label || style}.`;
+    const enriched = `${preset.prompt}\n\nTarget duration: ${duration} seconds. Animation style: ${STYLE_OPTIONS.find(s => s.value === style)?.label || style}.${buildAssetContext()}`;
     sendMessage(enriched);
   };
 
-  const handleSend = () => sendMessage(input);
+  const handleSend = () => {
+    const enriched = `${input}\n\nTarget duration: ${duration} seconds. Animation style: ${STYLE_OPTIONS.find(s => s.value === style)?.label || style}.${buildAssetContext()}`;
+    sendMessage(enriched);
+  };
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }
