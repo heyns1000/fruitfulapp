@@ -6,48 +6,49 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, CreditCard, Smartphone, Banknote, QrCode, Shield } from 'lucide-react';
+import { Loader2, CreditCard, Smartphone, Banknote, QrCode, Shield, ExternalLink } from 'lucide-react';
 import { toast } from 'sonner';
 
-const GATEWAYS = {
-  PayFast: { icon: CreditCard, methods: ['card', 'eft', 'instant_eft'], color: 'blue', regions: ['ZAR', 'USD'] },
-  Ozow: { icon: Banknote, methods: ['instant_eft'], color: 'green', regions: ['ZAR'] },
-  Yoco: { icon: Smartphone, methods: ['card', 'qr'], color: 'purple', regions: ['ZAR', 'USD', 'EUR'] },
-  PayPal: { icon: CreditCard, methods: ['card'], color: 'indigo', regions: ['USD', 'EUR', 'GBP'] },
-  Flutterwave: { icon: CreditCard, methods: ['card', 'mobile_money'], color: 'orange', regions: ['NGN', 'KES', 'GHS', 'UGX', 'TZS', 'ZMW'] },
-  Paystack: { icon: CreditCard, methods: ['card', 'mobile_money', 'bank'], color: 'teal', regions: ['NGN', 'GHS', 'ZAR', 'KES'] }
+// Paystack supported currencies only
+const PAYSTACK_CURRENCIES = {
+  NGN: { symbol: '₦', name: 'Nigerian Naira', subunit: 'kobo' },
+  GHS: { symbol: '₵', name: 'Ghanaian Cedi', subunit: 'pesewa' },
+  ZAR: { symbol: 'R', name: 'South African Rand', subunit: 'cent' },
+  USD: { symbol: '$', name: 'US Dollar', subunit: 'cent' },
+  KES: { symbol: 'KSh', name: 'Kenyan Shilling', subunit: 'cent' },
+  EGP: { symbol: 'E£', name: 'Egyptian Pound', subunit: 'piastre' },
 };
 
-const METHOD_LABELS = {
-  card: '💳 Credit/Debit Card',
-  eft: '🏦 EFT',
-  instant_eft: '⚡ Instant EFT',
-  qr: '📱 QR Code',
-  bnpl: '📅 Buy Now Pay Later'
-};
+// Paystack channels — matches Paystack's `channels` parameter exactly
+const PAYSTACK_CHANNELS = [
+  { key: 'card',          label: '💳 Card',              desc: 'Visa, Mastercard, Verve' },
+  { key: 'bank',          label: '🏦 Bank',              desc: 'Select your bank' },
+  { key: 'ussd',          label: '📱 USSD',              desc: 'Dial *737# (NGN only)' },
+  { key: 'qr',            label: '📷 QR Code',           desc: 'Scan to pay' },
+  { key: 'mobile_money',  label: '📲 Mobile Money',      desc: 'MTN, Vodafone (GHS/KES)' },
+  { key: 'bank_transfer', label: '🔁 Bank Transfer',     desc: 'Real-time bank transfer' },
+];
 
 export default function PaymentGateway({ brands }) {
-  const [selectedGateway, setSelectedGateway] = useState('PayFast');
-  const [selectedMethod, setSelectedMethod] = useState('card');
   const [selectedBrand, setSelectedBrand] = useState('');
-  const [selectedCurrency, setSelectedCurrency] = useState('USD');
+  const [selectedCurrency, setSelectedCurrency] = useState('NGN');
+  const [selectedChannels, setSelectedChannels] = useState(['card']);
   const [amount, setAmount] = useState('');
   const [email, setEmail] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const CURRENCY_SYMBOLS = {
-    USD: '$', EUR: '€', GBP: '£', ZAR: 'R', NGN: '₦', KES: 'KSh',
-    GHS: '₵', TZS: 'TSh', UGX: 'USh', ZMW: 'ZK', MWK: 'MK',
-    BRL: 'R$', INR: '₹', CNY: '¥', JPY: '¥'
+  const queryClient = useQueryClient();
+  const currencyMeta = PAYSTACK_CURRENCIES[selectedCurrency];
+
+  const toggleChannel = (key) => {
+    setSelectedChannels(prev =>
+      prev.includes(key) ? prev.filter(c => c !== key) : [...prev, key]
+    );
   };
 
-  const queryClient = useQueryClient();
-
-  const createPaymentMutation = useMutation({
+  const createPaymentRecord = useMutation({
     mutationFn: (data) => base44.entities.Payment.create(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['payments'] });
-    }
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['payments'] }),
   });
 
   const processPayment = async () => {
@@ -55,76 +56,100 @@ export default function PaymentGateway({ brands }) {
       toast.error('Please fill in all required fields');
       return;
     }
+    if (selectedChannels.length === 0) {
+      toast.error('Select at least one payment channel');
+      return;
+    }
 
     const brand = brands.find(b => b.id === selectedBrand);
+    const amountFloat = parseFloat(amount);
+    // Paystack requires amount in smallest currency unit (kobo, pesewa, cent)
+    const amountInSubunit = Math.round(amountFloat * 100);
+    const ref = `TXN-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+
     setIsProcessing(true);
 
-    try {
-      // Simulate payment gateway integration
-      const transactionId = `TXN-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-      
-      // Create payment record
-      await createPaymentMutation.mutateAsync({
-        transactionId,
-        brandId: brand.id,
-        brandName: brand.name,
-        amount: parseFloat(amount),
+    const paystackKey = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
+
+    if (paystackKey && paystackKey !== 'undefined' && typeof window.PaystackPop !== 'undefined') {
+      window.PaystackPop.setup({
+        key: paystackKey,
+        email,
+        amount: amountInSubunit,
         currency: selectedCurrency,
-        gateway: selectedGateway,
-        paymentMethod: selectedMethod,
+        ref,
+        channels: selectedChannels,
+        metadata: {
+          custom_fields: [
+            { display_name: 'Brand', variable_name: 'brand_id', value: brand?.id || '' },
+            { display_name: 'Brand Name', variable_name: 'brand_name', value: brand?.name || '' },
+          ]
+        },
+        callback: async (response) => {
+          // response.status === 'success' on Paystack
+          await createPaymentRecord.mutateAsync({
+            transactionId: response.reference,
+            brandId: brand?.id,
+            brandName: brand?.name,
+            amount: amountFloat,
+            currency: selectedCurrency,
+            gateway: 'Paystack',
+            paymentMethod: response.channel || selectedChannels[0],
+            status: response.status === 'success' ? 'completed' : 'failed',
+            type: 'one_time',
+            customerEmail: email,
+            metadata: { pciCompliant: true, tokenized: true, gatewayResponse: response },
+          });
+          toast.success(`Payment of ${currencyMeta.symbol}${amount} successful!`);
+          setAmount(''); setEmail(''); setSelectedBrand('');
+          setIsProcessing(false);
+        },
+        onClose: () => {
+          toast.info('Payment window closed');
+          setIsProcessing(false);
+        },
+      }).openIframe();
+    } else {
+      // Demo / sandbox fallback
+      toast.info('Demo mode — Paystack key not configured. Simulating payment…');
+      await new Promise(r => setTimeout(r, 1500));
+      await createPaymentRecord.mutateAsync({
+        transactionId: ref,
+        brandId: brand?.id,
+        brandName: brand?.name,
+        amount: amountFloat,
+        currency: selectedCurrency,
+        gateway: 'Paystack',
+        paymentMethod: selectedChannels[0],
         status: 'completed',
         type: 'one_time',
         customerEmail: email,
-        metadata: {
-          pciCompliant: true,
-          tokenized: true,
-          gatewayResponse: {
-            timestamp: new Date().toISOString(),
-            reference: transactionId
-          }
-        }
+        metadata: { pciCompliant: true, tokenized: true, gatewayResponse: { reference: ref, status: 'success', demo: true } },
       });
-
-      toast.success(`Payment of R${amount} processed successfully via ${selectedGateway}`);
-      
-      // Reset form
-      setAmount('');
-      setEmail('');
-      setSelectedBrand('');
-
-    } catch (error) {
-      console.error('Payment error:', error);
-      toast.error('Payment processing failed');
-    } finally {
+      toast.success(`Demo payment of ${currencyMeta.symbol}${amount} recorded`);
+      setAmount(''); setEmail(''); setSelectedBrand('');
       setIsProcessing(false);
     }
   };
 
-  const GatewayIcon = GATEWAYS[selectedGateway].icon;
-  const availableMethods = GATEWAYS[selectedGateway].methods;
-
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* Left — payment form */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <CreditCard className="w-5 h-5" />
-            Payment Details
+            <CreditCard className="w-5 h-5 text-teal-600" />
+            Paystack Payment
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
+
           <div>
             <label className="text-sm font-medium mb-2 block">Select Brand</label>
             <Select value={selectedBrand} onValueChange={setSelectedBrand}>
-              <SelectTrigger>
-                <SelectValue placeholder="Choose brand to pay for" />
-              </SelectTrigger>
+              <SelectTrigger><SelectValue placeholder="Choose brand" /></SelectTrigger>
               <SelectContent>
-                {brands.map(brand => (
-                  <SelectItem key={brand.id} value={brand.id}>
-                    {brand.name}™ - {brand.sector}
-                  </SelectItem>
-                ))}
+                {brands.map(b => <SelectItem key={b.id} value={b.id}>{b.name}™ — {b.sector}</SelectItem>)}
               </SelectContent>
             </Select>
           </div>
@@ -133,156 +158,116 @@ export default function PaymentGateway({ brands }) {
             <div>
               <label className="text-sm font-medium mb-2 block">Currency</label>
               <Select value={selectedCurrency} onValueChange={setSelectedCurrency}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
+                <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
-                  {Object.keys(CURRENCY_SYMBOLS).map(curr => (
-                    <SelectItem key={curr} value={curr}>
-                      {CURRENCY_SYMBOLS[curr]} {curr}
-                    </SelectItem>
+                  {Object.entries(PAYSTACK_CURRENCIES).map(([code, meta]) => (
+                    <SelectItem key={code} value={code}>{meta.symbol} {code} — {meta.name}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
             <div>
-              <label className="text-sm font-medium mb-2 block">Amount</label>
-              <Input
-                type="number"
-                placeholder="0.00"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                min="1"
-                step="0.01"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="text-sm font-medium mb-2 block">Email Address</label>
-            <Input
-              type="email"
-              placeholder="customer@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-
-          <div>
-            <label className="text-sm font-medium mb-2 block">Payment Gateway</label>
-            <div className="grid grid-cols-2 gap-2">
-              {Object.keys(GATEWAYS).map(gateway => {
-                const Icon = GATEWAYS[gateway].icon;
-                return (
-                  <Button
-                    key={gateway}
-                    variant={selectedGateway === gateway ? 'default' : 'outline'}
-                    onClick={() => {
-                      setSelectedGateway(gateway);
-                      setSelectedMethod(GATEWAYS[gateway].methods[0]);
-                    }}
-                    className={selectedGateway === gateway ? `bg-${GATEWAYS[gateway].color}-600` : ''}
-                  >
-                    <Icon className="w-4 h-4 mr-2" />
-                    {gateway}
-                  </Button>
-                );
-              })}
-            </div>
-          </div>
-
-          <div>
-            <label className="text-sm font-medium mb-2 block">Payment Method</label>
-            <Select value={selectedMethod} onValueChange={setSelectedMethod}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {availableMethods.map(method => (
-                  <SelectItem key={method} value={method}>
-                    {METHOD_LABELS[method]}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="pt-4">
-            <Button
-              onClick={processPayment}
-              disabled={isProcessing}
-              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
-              size="lg"
-            >
-              {isProcessing ? (
-                <>
-                  <Loader2 className="w-5 h-5 animate-spin mr-2" />
-                  Processing Payment...
-                </>
-              ) : (
-                <>
-                  <CreditCard className="w-5 h-5 mr-2" />
-                  Pay {CURRENCY_SYMBOLS[selectedCurrency]}{amount || '0.00'}
-                </>
+              <label className="text-sm font-medium mb-2 block">
+                Amount ({currencyMeta.symbol})
+              </label>
+              <Input type="number" placeholder="0.00" value={amount}
+                onChange={e => setAmount(e.target.value)} min="1" step="0.01" />
+              {amount && (
+                <p className="text-xs text-gray-400 mt-1">
+                  = {Math.round(parseFloat(amount) * 100).toLocaleString()} {currencyMeta.subunit}
+                </p>
               )}
-            </Button>
+            </div>
           </div>
+
+          <div>
+            <label className="text-sm font-medium mb-2 block">Customer Email</label>
+            <Input type="email" placeholder="customer@example.com" value={email}
+              onChange={e => setEmail(e.target.value)} />
+          </div>
+
+          <div>
+            <label className="text-sm font-medium mb-2 block">
+              Payment Channels <span className="text-gray-400 text-xs">(select allowed methods)</span>
+            </label>
+            <div className="grid grid-cols-2 gap-2">
+              {PAYSTACK_CHANNELS.map(ch => (
+                <button key={ch.key} type="button" onClick={() => toggleChannel(ch.key)}
+                  className={`flex items-start gap-2 p-3 rounded-lg border text-left text-sm transition-all ${
+                    selectedChannels.includes(ch.key)
+                      ? 'border-teal-500 bg-teal-50'
+                      : 'border-gray-200 hover:border-gray-300'
+                  }`}>
+                  <span className="leading-tight">{ch.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <Button onClick={processPayment} disabled={isProcessing} size="lg"
+            className="w-full bg-teal-600 hover:bg-teal-700 text-white">
+            {isProcessing
+              ? <><Loader2 className="w-5 h-5 animate-spin mr-2" /> Processing…</>
+              : <><CreditCard className="w-5 h-5 mr-2" /> Pay {currencyMeta.symbol}{amount || '0.00'}</>
+            }
+          </Button>
 
           <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
             <Shield className="w-4 h-4 text-green-600" />
-            <span>PCI-DSS Compliant • Encrypted • Secure</span>
+            PCI-DSS Compliant · 3D Secure · End-to-end encrypted
           </div>
         </CardContent>
       </Card>
 
-      <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200">
+      {/* Right — Paystack info */}
+      <Card className="bg-gradient-to-br from-teal-50 to-green-50 border-teal-200">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <GatewayIcon className="w-5 h-5 text-blue-600" />
-            {selectedGateway} Gateway
+          <CardTitle className="flex items-center gap-2 text-teal-700">
+            <img src="https://website-v3-assets.s3.amazonaws.com/assets/img/hero/Paystack-mark-white-twitter.png"
+              alt="Paystack" className="w-6 h-6 rounded bg-teal-600 p-0.5 object-contain"
+              onError={e => e.currentTarget.style.display = 'none'} />
+            Paystack Gateway
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="p-4 bg-white rounded-lg border border-blue-200">
-            <h3 className="font-semibold mb-2">Supported Methods</h3>
-            <div className="flex flex-wrap gap-2">
-              {availableMethods.map(method => (
-                <Badge key={method} variant="outline" className="bg-blue-50">
-                  {METHOD_LABELS[method]}
+
+          <div className="p-4 bg-white rounded-lg border border-teal-200">
+            <h3 className="font-semibold text-sm mb-2 text-teal-800">Supported Channels</h3>
+            <div className="space-y-1.5">
+              {PAYSTACK_CHANNELS.map(ch => (
+                <div key={ch.key} className="flex items-center justify-between text-sm">
+                  <span>{ch.label}</span>
+                  <span className="text-gray-400 text-xs">{ch.desc}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="p-4 bg-white rounded-lg border border-teal-200">
+            <h3 className="font-semibold text-sm mb-2 text-teal-800">Supported Currencies</h3>
+            <div className="flex flex-wrap gap-1.5">
+              {Object.entries(PAYSTACK_CURRENCIES).map(([code, meta]) => (
+                <Badge key={code} variant="outline" className="border-teal-300 text-teal-700">
+                  {meta.symbol} {code}
                 </Badge>
               ))}
             </div>
           </div>
 
-          <div className="p-4 bg-white rounded-lg border border-blue-200">
-            <h3 className="font-semibold mb-2">Security Features</h3>
-            <ul className="space-y-2 text-sm">
-              <li className="flex items-center gap-2">
-                <Shield className="w-4 h-4 text-green-600" />
-                Tokenized payment data (no card storage)
-              </li>
-              <li className="flex items-center gap-2">
-                <Shield className="w-4 h-4 text-green-600" />
-                PCI-DSS Level 1 compliant
-              </li>
-              <li className="flex items-center gap-2">
-                <Shield className="w-4 h-4 text-green-600" />
-                3D Secure authentication
-              </li>
-              <li className="flex items-center gap-2">
-                <Shield className="w-4 h-4 text-green-600" />
-                End-to-end encryption
-              </li>
-            </ul>
+          <div className="p-4 bg-white rounded-lg border border-teal-200 space-y-2 text-sm">
+            <h3 className="font-semibold text-teal-800">Security</h3>
+            {['PCI-DSS Level 1 compliant','3D Secure card authentication','Tokenized — no card data stored','Real-time fraud detection','HTTPS enforced'].map(s => (
+              <div key={s} className="flex items-center gap-2 text-gray-600">
+                <Shield className="w-3.5 h-3.5 text-green-600 shrink-0" /> {s}
+              </div>
+            ))}
           </div>
 
-          <div className="p-4 bg-white rounded-lg border border-green-200">
-            <h3 className="font-semibold mb-2 text-green-900">Local Payment Support</h3>
-            <p className="text-sm text-gray-600">
-              Optimized for South African payments with support for all major banks, 
-              instant EFT, and compliance with POPIA regulations.
-            </p>
-          </div>
+          <a href="https://dashboard.paystack.com" target="_blank" rel="noopener noreferrer">
+            <Button variant="outline" className="w-full border-teal-300 text-teal-700 hover:bg-teal-50 gap-2">
+              <ExternalLink className="w-4 h-4" /> Open Paystack Dashboard
+            </Button>
+          </a>
         </CardContent>
       </Card>
     </div>
