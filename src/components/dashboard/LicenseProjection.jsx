@@ -139,11 +139,11 @@ export default function LicenseProjection() {
       {/* KPI Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: 'Current Portfolio', value: fmt(totalValue), icon: DollarSign, color: 'text-[#22d3ee]' },
-          { label: `${months}mo Projected (Base)`, value: fmt(finalPoint?.base || 0), icon: TrendingUp, color: 'text-[#4ade80]' },
-          { label: 'Projected Growth', value: `+${growthPct.toFixed(1)}%`, icon: BarChart2, color: 'text-[#f59e0b]' },
-          { label: 'Monthly Rate (Base)', value: `${(monthlyRate * 100).toFixed(2)}%/mo`, icon: Layers, color: 'text-[#c084fc]' },
-        ].map(({ label, value, icon: Icon, color }) => (
+          { label: 'Current Portfolio', value: fmt(totalValue), Icon: DollarSign, color: 'text-[#22d3ee]' },
+          { label: `${months}mo Projected (Base)`, value: fmt(finalPoint?.base || 0), Icon: TrendingUp, color: 'text-[#4ade80]' },
+          { label: 'Projected Growth', value: `+${growthPct.toFixed(1)}%`, Icon: BarChart2, color: 'text-[#f59e0b]' },
+          { label: 'Monthly Rate (Base)', value: `${(monthlyRate * 100).toFixed(2)}%/mo`, Icon: Layers, color: 'text-[#c084fc]' },
+        ].map(({ label, value, Icon, color }) => (
           <div key={label} className="bg-[#1e293b] border border-[#334155] rounded-xl p-4 text-center">
             <Icon className={`w-4 h-4 mx-auto mb-1 ${color}`} />
             <p className={`text-lg font-black ${color}`}>{value}</p>
