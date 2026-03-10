@@ -17,6 +17,7 @@ import { toast } from 'sonner';
 import { useCart } from '../components/cart/CartContext';
 import OrderTimeline from '../components/orders/OrderTimeline';
 import DeliveryCountdown from '../components/orders/DeliveryCountdown';
+import ShipmentTracker from '../components/orders/ShipmentTracker';
 
 const STATUS_CONFIG = {
   pending:    { color: 'bg-yellow-900/40 text-yellow-300 border-yellow-700',  icon: Clock,         label: 'Pending' },
