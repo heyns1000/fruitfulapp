@@ -214,6 +214,7 @@ export default function Dashboard() {
           </TabsList>
 
           <TabsContent value="admin" className="space-y-6">
+            <BulkOperations />
             <ZeroWasteExporter />
             <CompleteDataExporter />
             <DataExporter />
