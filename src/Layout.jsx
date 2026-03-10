@@ -25,6 +25,7 @@ const NAV_LINKS = [
   { label: '📊 Intelligence', page: 'MarketIntelligence' },
   { label: '⚡ Automation', page: 'AutomationEngine' },
   { label: '🗺️ Global Map', page: 'GlobalBrandMap' },
+  { label: '🎬 Video Studio', page: 'VideoScriptStudio' },
 ];
 
 export default function Layout({ children, currentPageName }) {
