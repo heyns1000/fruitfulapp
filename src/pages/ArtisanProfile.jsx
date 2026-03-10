@@ -89,6 +89,7 @@ export default function ArtisanProfile() {
   const avgRating = artisan.testimonials?.length
     ? (artisan.testimonials.reduce((s, t) => s + (t.rating || 0), 0) / artisan.testimonials.length).toFixed(1)
     : null;
+  // avgRating used in hero stats pill
 
   return (
     <div className="min-h-screen bg-stone-950 text-white">
