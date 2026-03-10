@@ -18,6 +18,7 @@ const NAV_LINKS = [
   { label: '💳 My Plans', page: 'MySubscriptions' },
   { label: '🎨 My Shop', page: 'ArtisanDashboard' },
   { label: '📦 Orders', page: 'OrderHistory' },
+  { label: '🚚 Order Dashboard', page: 'OrderDashboard' },
   { label: '❤️ Wishlist', page: 'Wishlist' },
   { label: '📦 Sub Boxes', page: 'SubscriptionBoxes' },
   { label: '🌐 Ecosystem', page: 'EcosystemExplorer' },
