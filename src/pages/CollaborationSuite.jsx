@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Users, FileEdit, Megaphone, DollarSign, Headphones } from 'lucide-react';
+import { Users, FileEdit, Megaphone, DollarSign, Headphones, Scale } from 'lucide-react';
 import CrossAppLinks from '../components/common/CrossAppLinks';
 import ContentCoCreation from '../components/collaboration/ContentCoCreation';
 import CampaignManager from '../components/collaboration/CampaignManager';
 import CoBrandedSales from '../components/collaboration/CoBrandedSales';
 import SupportCoordination from '../components/collaboration/SupportCoordination';
 import AIProposalEngine from '../components/collaboration/AIProposalEngine';
+import NegotiationChat from '../components/collaboration/NegotiationChat';
 
 export default function CollaborationSuite() {
   return (
@@ -94,6 +95,10 @@ export default function CollaborationSuite() {
               <Headphones className="w-4 h-4" />
               Support Coordination
             </TabsTrigger>
+            <TabsTrigger value="negotiate" className="flex items-center gap-2">
+              <Scale className="w-4 h-4" />
+              Negotiation Advisor
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="content">
@@ -110,6 +115,9 @@ export default function CollaborationSuite() {
 
           <TabsContent value="support">
             <SupportCoordination />
+          </TabsContent>
+          <TabsContent value="negotiate">
+            <NegotiationChat />
           </TabsContent>
         </Tabs>
       </div>
