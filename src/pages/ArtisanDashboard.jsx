@@ -138,6 +138,7 @@ export default function ArtisanDashboard() {
               { val: 'products', label: 'Products', icon: <Package className="w-4 h-4" /> },
               { val: 'orders', label: 'Orders', icon: <ShoppingCart className="w-4 h-4" /> },
               { val: 'feedback', label: 'Feedback', icon: <MessageSquare className="w-4 h-4" /> },
+              { val: 'notifications', label: unreadCount > 0 ? `Notifications (${unreadCount})` : 'Notifications', icon: <Bell className="w-4 h-4" /> },
               { val: 'settings', label: 'Settings', icon: <Settings className="w-4 h-4" /> },
             ].map(t => (
               <TabsTrigger key={t.val} value={t.val}
@@ -344,6 +345,48 @@ export default function ArtisanDashboard() {
               </>
             ) : (
               <div className="text-center py-20 text-stone-500">No customer feedback yet</div>
+            )}
+          </TabsContent>
+
+          {/* NOTIFICATIONS */}
+          <TabsContent value="notifications" className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-black flex items-center gap-2">
+                <Bell className="w-6 h-6 text-orange-400" /> Notifications
+                {unreadCount > 0 && <span className="bg-orange-600 text-white text-xs rounded-full px-2 py-0.5">{unreadCount} new</span>}
+              </h2>
+            </div>
+            {notifications.length === 0 ? (
+              <div className="text-center py-16 text-stone-500">
+                <Bell className="w-10 h-10 mx-auto mb-3 opacity-20" />
+                <p>No notifications yet</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {notifications.map(n => (
+                  <div key={n.id} onClick={() => !n.read && markReadMutation.mutate(n.id)}
+                    className={`flex items-start gap-4 rounded-2xl p-5 border cursor-pointer transition-all ${
+                      n.read ? 'bg-stone-900 border-stone-800 opacity-70' : 'bg-orange-950/20 border-orange-800/40 hover:border-orange-600'
+                    }`}>
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+                      n.type === 'package_received' ? 'bg-green-500/20 border border-green-600' : 'bg-orange-500/20 border border-orange-600'
+                    }`}>
+                      {n.type === 'package_received' ? <Truck className="w-5 h-5 text-green-400" /> : <Bell className="w-5 h-5 text-orange-400" />}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-2">
+                        <p className="font-bold text-white text-sm">{n.title}</p>
+                        {!n.read && <span className="w-2 h-2 rounded-full bg-orange-400 shrink-0" />}
+                      </div>
+                      <p className="text-stone-400 text-sm mt-0.5">{n.message}</p>
+                      <p className="text-stone-600 text-xs mt-1">
+                        {new Date(n.created_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                        {!n.read && <span className="text-orange-500 ml-2">· Click to mark read</span>}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             )}
           </TabsContent>
 
