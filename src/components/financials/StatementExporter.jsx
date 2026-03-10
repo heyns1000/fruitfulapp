@@ -23,14 +23,15 @@ export default function StatementExporter({ orders, artisanName }) {
   const exportCSV = () => {
     const rows = getFiltered();
     if (!rows.length) { toast.error('No paid orders for this period'); return; }
-    const header = ['Order Number', 'Date', 'Buyer', 'Items', 'Amount', 'Currency', 'Status'];
+    const header = ['Order Number', 'Paystack Reference', 'Date', 'Buyer', 'Items', 'Amount', 'Currency', 'Status'];
     const lines = rows.map(o => [
       o.orderNumber || o.id.slice(-8),
+      o.paystackReference || '',
       format(parseISO(o.created_date), 'yyyy-MM-dd'),
       o.buyerEmail,
       o.items?.map(i => i.serviceName).join('; ') || '',
       o.totalAmount,
-      o.currency || 'USD',
+      o.currency || 'NGN',
       o.paymentStatus,
     ]);
     const csv = [header, ...lines].map(r => r.map(c => `"${c}"`).join(',')).join('\n');
@@ -80,10 +81,11 @@ export default function StatementExporter({ orders, artisanName }) {
     doc.setFontSize(9);
     doc.setFont('helvetica', 'bold');
     doc.text('Order #', 16, y);
-    doc.text('Date', 55, y);
-    doc.text('Buyer', 88, y);
+    doc.text('Paystack Ref', 50, y);
+    doc.text('Date', 95, y);
+    doc.text('Buyer', 118, y);
     doc.text('Amount', 162, y);
-    doc.text('Currency', 178, y);
+    doc.text('CCY', 184, y);
 
     y += 8;
     rows.forEach((o, i) => {
@@ -93,15 +95,16 @@ export default function StatementExporter({ orders, artisanName }) {
       doc.setTextColor(220, 220, 220);
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(8.5);
-      doc.text((o.orderNumber || o.id.slice(-8)).slice(0, 14), 16, y);
-      doc.text(format(parseISO(o.created_date), 'dd MMM yy'), 55, y);
-      doc.text((o.buyerEmail || '').slice(0, 20), 88, y);
+      doc.text((o.orderNumber || o.id.slice(-8)).slice(0, 12), 16, y);
+      doc.text((o.paystackReference || '—').slice(0, 14), 50, y);
+      doc.text(format(parseISO(o.created_date), 'dd MMM yy'), 95, y);
+      doc.text((o.buyerEmail || '').slice(0, 16), 118, y);
       doc.setTextColor(249, 115, 22);
       doc.setFont('helvetica', 'bold');
       doc.text(`$${(o.totalAmount || 0).toFixed(2)}`, 162, y);
       doc.setTextColor(180, 180, 180);
       doc.setFont('helvetica', 'normal');
-      doc.text(o.currency || 'USD', 184, y);
+      doc.text(o.currency || 'NGN', 184, y);
       y += 9;
     });
 
@@ -112,7 +115,7 @@ export default function StatementExporter({ orders, artisanName }) {
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(10);
     doc.text('TOTAL', 16, y + 10);
-    doc.text(`$${total.toFixed(2)}`, 162, y + 10);
+    doc.text(`${total.toFixed(2)}`, 162, y + 10);
 
     doc.save(`statement_${year}_${MONTHS[month]}.pdf`);
     setExporting(false);

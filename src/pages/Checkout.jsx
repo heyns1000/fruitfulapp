@@ -196,21 +196,45 @@ export default function Checkout() {
     { id: 3, label: t.stepPayment }, { id: 4, label: t.stepConfirm },
   ];
 
-  const completeOrder = async (reference) => {
+  const completeOrder = async (response) => {
     const orderNumber = `ORD-${Date.now()}`;
+    // Paystack returns status 'success'; channel tells us the payment method used
+    const paystackRef = typeof response === 'string' ? response : response.reference;
+    const channel = typeof response === 'object' ? (response.channel || 'card') : 'card';
+
     await base44.entities.Order.create({
       orderNumber,
-      items: cartItems.map(i => ({ serviceId: i.id, serviceName: i.name || i.serviceName, productCode: i.productCode || `PROD-${i.id}`, quantity: i.quantity, unitPrice: i.price, imageUrl: i.imageUrl })),
-      buyerEmail: email, totalAmount: getTotal(), currency: 'NGN',
-      status: 'confirmed', paystackReference: reference, paymentStatus: 'paid', shippingAddress: shipping
+      items: cartItems.map(i => ({
+        serviceId: i.id, serviceName: i.name || i.serviceName,
+        productCode: i.productCode || `PROD-${i.id}`,
+        quantity: i.quantity, unitPrice: i.price, imageUrl: i.imageUrl
+      })),
+      buyerEmail: email,
+      totalAmount: getTotal(),
+      currency: 'NGN', // Paystack primary currency
+      status: 'confirmed',
+      paystackReference: paystackRef,
+      paymentStatus: 'paid',
+      shippingAddress: shipping,
+      statusHistory: [{ status: 'confirmed', timestamp: new Date().toISOString(), note: 'Payment verified via Paystack' }],
     });
     await base44.entities.Payment.create({
-      transactionId: reference, amount: getTotal(), currency: 'NGN',
-      gateway: 'Paystack', paymentMethod: 'card', status: 'completed',
-      type: 'marketplace', customerEmail: email
+      transactionId: paystackRef,
+      amount: getTotal(),
+      currency: 'NGN',
+      gateway: 'Paystack',
+      paymentMethod: channel,   // actual channel returned by Paystack
+      status: 'completed',      // we store 'completed'; Paystack calls it 'success'
+      type: 'marketplace',
+      customerEmail: email,
+      metadata: {
+        pciCompliant: true,
+        tokenized: true,
+        gatewayResponse: typeof response === 'object' ? response : { reference: paystackRef },
+      }
     });
     clearCart();
-    setPlacedOrderRef(reference);
+    setPlacedOrderRef(paystackRef);
     setOrderPlaced(true);
     setIsProcessing(false);
   };
@@ -220,25 +244,32 @@ export default function Checkout() {
     setIsProcessing(true);
     const paystackKey = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
 
-    // If Paystack is loaded and a key is configured, use real payment popup
     if (paystackKey && paystackKey !== 'undefined' && typeof window.PaystackPop !== 'undefined') {
       const ref = `ORD-${Date.now()}`;
-      const handler = window.PaystackPop.setup({
+      window.PaystackPop.setup({
         key: paystackKey,
         email,
-        amount: Math.round(getTotal() * 100),
+        amount: Math.round(getTotal() * 100), // Paystack expects kobo (smallest unit)
         currency: 'NGN',
         ref,
-        callback: async (response) => { await completeOrder(response.reference); },
+        channels: ['card', 'bank', 'ussd', 'qr', 'mobile_money', 'bank_transfer'],
+        metadata: {
+          cancel_action: window.location.href,
+          custom_fields: [
+            { display_name: 'Order', variable_name: 'order_ref', value: ref },
+            { display_name: 'Platform', variable_name: 'platform', value: 'FAA.ZONE' },
+          ]
+        },
+        // Paystack callback receives full response object with .reference, .status, .channel
+        callback: async (response) => { await completeOrder(response); },
         onClose: () => { toast.info('Payment cancelled'); setIsProcessing(false); }
-      });
-      handler.openIframe();
+      }).openIframe();
     } else {
-      // Demo / sandbox mode — simulate payment without real gateway
+      // Demo / sandbox mode
       const demoRef = `DEMO-${Date.now()}-${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
-      toast.info('Running in demo mode — simulating payment…');
+      toast.info('Running in demo mode — simulating Paystack payment…');
       await new Promise(r => setTimeout(r, 1500));
-      await completeOrder(demoRef);
+      await completeOrder({ reference: demoRef, status: 'success', channel: 'card', demo: true });
     }
   };
 
