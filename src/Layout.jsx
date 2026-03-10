@@ -20,6 +20,7 @@ const NAV_LINKS = [
   { label: '📦 Orders', page: 'OrderHistory' },
   { label: '❤️ Wishlist', page: 'Wishlist' },
   { label: '📦 Sub Boxes', page: 'SubscriptionBoxes' },
+  { label: '🌐 Ecosystem', page: 'EcosystemExplorer' },
 ];
 
 export default function Layout({ children, currentPageName }) {

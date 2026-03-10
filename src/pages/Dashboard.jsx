@@ -190,6 +190,13 @@ export default function Dashboard() {
             >
               ⚡ App Builder
             </TabsTrigger>
+            <TabsTrigger 
+              value="ecosystem" 
+              className="data-[state=active]:bg-teal-600 data-[state=active]:text-white"
+              onClick={() => window.location.href = '/EcosystemExplorer'}
+            >
+              🌐 Ecosystem Explorer
+            </TabsTrigger>
             {Object.entries(SECTORS).map(([key, label]) => (
               <TabsTrigger
                 key={key}
