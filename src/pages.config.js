@@ -67,6 +67,7 @@ import SectorAnalytics from './pages/SectorAnalytics';
 import SubscriptionBoxes from './pages/SubscriptionBoxes';
 import VaultMesh from './pages/VaultMesh';
 import Wishlist from './pages/Wishlist';
+import EcosystemExplorer from './pages/EcosystemExplorer';
 import __Layout from './Layout.jsx';
 
 
@@ -91,6 +92,7 @@ export const PAGES = {
     "SubscriptionBoxes": SubscriptionBoxes,
     "VaultMesh": VaultMesh,
     "Wishlist": Wishlist,
+    "EcosystemExplorer": EcosystemExplorer,
 }
 
 export const pagesConfig = {
