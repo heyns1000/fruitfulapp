@@ -296,42 +296,6 @@ export default function ServiceMarketplace({ services }) {
         )}
       </div>
 
-      {/* Checkout Dialog */}
-      <Dialog open={isCheckoutOpen} onOpenChange={setIsCheckoutOpen}>
-        <DialogContent className="max-w-md">
-          <DialogHeader><DialogTitle>Complete Purchase</DialogTitle></DialogHeader>
-          {selectedService && (
-            <div className="space-y-4 py-2">
-              {selectedService.imageUrl && (
-                <img src={selectedService.imageUrl} alt={selectedService.serviceName} className="w-full h-48 object-cover rounded-lg" />
-              )}
-              <div className="p-3 bg-gray-50 rounded-lg">
-                <p className="font-semibold">{selectedService.serviceName}</p>
-                <p className="text-sm text-gray-500">{selectedService.brandName}™</p>
-              </div>
-              <div>
-                <label className="text-sm font-medium mb-1 block">Your Email</label>
-                <Input type="email" placeholder="buyer@example.com" value={buyerEmail} onChange={e => setBuyerEmail(e.target.value)} />
-              </div>
-              <div>
-                <label className="text-sm font-medium mb-1 block">Quantity</label>
-                <Input type="number" min="1" value={quantity} onChange={e => setQuantity(parseInt(e.target.value) || 1)} />
-              </div>
-              <div className="p-3 bg-purple-50 rounded-lg flex justify-between font-semibold">
-                <span>Total:</span>
-                <span>{CURRENCY_SYMBOLS[selectedCurrency]}{((selectedService.pricing?.[selectedCurrency] || selectedService.pricing?.USD || 0) * quantity).toLocaleString()}</span>
-              </div>
-            </div>
-          )}
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setIsCheckoutOpen(false)}>Cancel</Button>
-            <Button onClick={processOrder} disabled={createOrderMutation.isPending} className="bg-purple-600 hover:bg-purple-700">
-              {createOrderMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <ShoppingCart className="w-4 h-4 mr-2" />}
-              Confirm Order
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }
