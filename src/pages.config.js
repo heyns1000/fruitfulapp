@@ -57,6 +57,7 @@ import Checkout from './pages/Checkout';
 import CollaborationSuite from './pages/CollaborationSuite';
 import ContentGenerator from './pages/ContentGenerator';
 import Dashboard from './pages/Dashboard';
+import EcosystemExplorer from './pages/EcosystemExplorer';
 import Gallery from './pages/Gallery';
 import LoyaltyProgram from './pages/LoyaltyProgram';
 import Marketplace from './pages/Marketplace';
@@ -67,7 +68,6 @@ import SectorAnalytics from './pages/SectorAnalytics';
 import SubscriptionBoxes from './pages/SubscriptionBoxes';
 import VaultMesh from './pages/VaultMesh';
 import Wishlist from './pages/Wishlist';
-import EcosystemExplorer from './pages/EcosystemExplorer';
 import __Layout from './Layout.jsx';
 
 
@@ -82,6 +82,7 @@ export const PAGES = {
     "CollaborationSuite": CollaborationSuite,
     "ContentGenerator": ContentGenerator,
     "Dashboard": Dashboard,
+    "EcosystemExplorer": EcosystemExplorer,
     "Gallery": Gallery,
     "LoyaltyProgram": LoyaltyProgram,
     "Marketplace": Marketplace,
@@ -92,7 +93,6 @@ export const PAGES = {
     "SubscriptionBoxes": SubscriptionBoxes,
     "VaultMesh": VaultMesh,
     "Wishlist": Wishlist,
-    "EcosystemExplorer": EcosystemExplorer,
 }
 
 export const pagesConfig = {

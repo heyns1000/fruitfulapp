@@ -12,6 +12,7 @@ import SectorGrid from '../components/sectors/SectorGrid';
 import DataExporter from '../components/data/DataExporter';
 import CompleteDataExporter from '../components/data/CompleteDataExporter';
 import BulkOperations from '../components/admin/BulkOperations';
+import BrandHealthAudit from '../components/admin/BrandHealthAudit';
 import ZeroWasteExporter from '../components/data/ZeroWasteExporter';
 import { Loader2 } from 'lucide-react';
 
