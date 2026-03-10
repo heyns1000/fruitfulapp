@@ -70,6 +70,7 @@ import VaultMesh from './pages/VaultMesh';
 import Wishlist from './pages/Wishlist';
 import DiscoveryEngine from './pages/DiscoveryEngine';
 import GlobalBrandMap from './pages/GlobalBrandMap';
+import MarketIntelligence from './pages/MarketIntelligence';
 import __Layout from './Layout.jsx';
 
 
@@ -97,6 +98,7 @@ export const PAGES = {
     "Wishlist": Wishlist,
     "DiscoveryEngine": DiscoveryEngine,
     "GlobalBrandMap": GlobalBrandMap,
+    "MarketIntelligence": MarketIntelligence,
 }
 
 export const pagesConfig = {

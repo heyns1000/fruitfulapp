@@ -22,6 +22,7 @@ const NAV_LINKS = [
   { label: '📦 Sub Boxes', page: 'SubscriptionBoxes' },
   { label: '🌐 Ecosystem', page: 'EcosystemExplorer' },
   { label: '🔍 Discovery', page: 'DiscoveryEngine' },
+  { label: '📊 Intelligence', page: 'MarketIntelligence' },
   { label: '🗺️ Global Map', page: 'GlobalBrandMap' },
 ];
 
