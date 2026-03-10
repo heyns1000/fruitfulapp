@@ -196,28 +196,50 @@ export default function Checkout() {
     { id: 3, label: t.stepPayment }, { id: 4, label: t.stepConfirm },
   ];
 
+  const completeOrder = async (reference) => {
+    const orderNumber = `ORD-${Date.now()}`;
+    await base44.entities.Order.create({
+      orderNumber,
+      items: cartItems.map(i => ({ serviceId: i.id, serviceName: i.name || i.serviceName, productCode: i.productCode || `PROD-${i.id}`, quantity: i.quantity, unitPrice: i.price, imageUrl: i.imageUrl })),
+      buyerEmail: email, totalAmount: getTotal(), currency: 'NGN',
+      status: 'confirmed', paystackReference: reference, paymentStatus: 'paid', shippingAddress: shipping
+    });
+    await base44.entities.Payment.create({
+      transactionId: reference, amount: getTotal(), currency: 'NGN',
+      gateway: 'Paystack', paymentMethod: 'card', status: 'completed',
+      type: 'marketplace', customerEmail: email
+    });
+    clearCart();
+    setPlacedOrderRef(reference);
+    setOrderPlaced(true);
+    setIsProcessing(false);
+  };
+
   const handlePay = async () => {
     if (!email) { toast.error('Please enter your email'); return; }
     setIsProcessing(true);
-    const orderNumber = `ORD-${Date.now()}`;
-    try {
+    const paystackKey = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
+
+    // If Paystack is loaded and a key is configured, use real payment popup
+    if (paystackKey && paystackKey !== 'undefined' && typeof window.PaystackPop !== 'undefined') {
+      const ref = `ORD-${Date.now()}`;
       const handler = window.PaystackPop.setup({
-        key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
-        email, amount: getTotal() * 100, currency: 'NGN', ref: orderNumber,
-        callback: async (response) => {
-          await base44.entities.Order.create({
-            orderNumber,
-            items: cartItems.map(i => ({ serviceId: i.id, serviceName: i.name || i.serviceName, productCode: i.productCode || `PROD-${i.id}`, quantity: i.quantity, unitPrice: i.price, imageUrl: i.imageUrl })),
-            buyerEmail: email, totalAmount: getTotal(), currency: 'NGN',
-            status: 'confirmed', paystackReference: response.reference, paymentStatus: 'paid', shippingAddress: shipping
-          });
-          await base44.entities.Payment.create({ transactionId: response.reference, amount: getTotal(), currency: 'NGN', gateway: 'Paystack', paymentMethod: 'card', status: 'completed', type: 'marketplace', customerEmail: email });
-          clearCart(); setPlacedOrderRef(response.reference); setOrderPlaced(true); setIsProcessing(false);
-        },
+        key: paystackKey,
+        email,
+        amount: Math.round(getTotal() * 100),
+        currency: 'NGN',
+        ref,
+        callback: async (response) => { await completeOrder(response.reference); },
         onClose: () => { toast.info('Payment cancelled'); setIsProcessing(false); }
       });
       handler.openIframe();
-    } catch (e) { toast.error('Failed to initialize payment'); setIsProcessing(false); }
+    } else {
+      // Demo / sandbox mode — simulate payment without real gateway
+      const demoRef = `DEMO-${Date.now()}-${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
+      toast.info('Running in demo mode — simulating payment…');
+      await new Promise(r => setTimeout(r, 1500));
+      await completeOrder(demoRef);
+    }
   };
 
   // ── Planet pulse ─────────────────────────────────────────────────────────
