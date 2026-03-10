@@ -8,16 +8,17 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Loader2, BarChart2, Package, ShoppingCart, MessageSquare, Settings, Plus, Pencil, Trash2, Star, Eye, TrendingUp, Users, DollarSign, AlertCircle, CheckCircle2, Clock, Truck } from 'lucide-react';
+import { Loader2, BarChart2, Package, ShoppingCart, MessageSquare, Settings, Plus, Pencil, Trash2, Star, Eye, TrendingUp, Users, DollarSign, AlertCircle, CheckCircle2, Clock, Truck, Bell, Hammer } from 'lucide-react';
 import { toast } from 'sonner';
 
 const STATUS_COLORS = {
-  pending: 'bg-yellow-900/40 text-yellow-300 border-yellow-700',
-  confirmed: 'bg-blue-900/40 text-blue-300 border-blue-700',
+  pending:    'bg-yellow-900/40 text-yellow-300 border-yellow-700',
+  confirmed:  'bg-blue-900/40 text-blue-300 border-blue-700',
   processing: 'bg-purple-900/40 text-purple-300 border-purple-700',
-  shipped: 'bg-cyan-900/40 text-cyan-300 border-cyan-700',
-  delivered: 'bg-green-900/40 text-green-300 border-green-700',
-  cancelled: 'bg-red-900/40 text-red-300 border-red-700',
+  crafted:    'bg-amber-900/40 text-amber-300 border-amber-700',
+  shipped:    'bg-cyan-900/40 text-cyan-300 border-cyan-700',
+  delivered:  'bg-green-900/40 text-green-300 border-green-700',
+  cancelled:  'bg-red-900/40 text-red-300 border-red-700',
 };
 
 const STATUS_ICONS = {
@@ -56,6 +57,19 @@ export default function ArtisanDashboard() {
     queryKey: ['artisan-orders'],
     queryFn: () => base44.entities.Order.list('-created_date', 100)
   });
+
+  const { data: notifications = [] } = useQuery({
+    queryKey: ['artisan-notifications', artisan?.id],
+    queryFn: () => base44.entities.ArtisanNotification.list('-created_date', 50),
+    enabled: !!artisan,
+  });
+
+  const markReadMutation = useMutation({
+    mutationFn: (id) => base44.entities.ArtisanNotification.update(id, { read: true }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['artisan-notifications'] }),
+  });
+
+  const unreadCount = notifications.filter(n => !n.read).length;
 
   const saveMutation = useMutation({
     mutationFn: (data) => editingProduct
