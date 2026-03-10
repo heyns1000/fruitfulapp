@@ -72,6 +72,7 @@ import DiscoveryEngine from './pages/DiscoveryEngine';
 import GlobalBrandMap from './pages/GlobalBrandMap';
 import MarketIntelligence from './pages/MarketIntelligence';
 import AutomationEngine from './pages/AutomationEngine';
+import VideoScriptStudio from './pages/VideoScriptStudio';
 import __Layout from './Layout.jsx';
 
 
@@ -101,6 +102,7 @@ export const PAGES = {
     "GlobalBrandMap": GlobalBrandMap,
     "MarketIntelligence": MarketIntelligence,
     "AutomationEngine": AutomationEngine,
+    "VideoScriptStudio": VideoScriptStudio,
 }
 
 export const pagesConfig = {
