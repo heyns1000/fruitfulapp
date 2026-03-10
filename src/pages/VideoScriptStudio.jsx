@@ -188,6 +188,27 @@ export default function VideoScriptStudio() {
 
       <div className="container mx-auto px-4 py-6 max-w-5xl flex flex-col gap-6">
 
+        {/* Asset Context Banner */}
+        {assets.length > 0 ? (
+          <div className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-teal-500/10 border border-teal-500/20 text-sm">
+            <span className="flex items-center gap-2 text-teal-300">
+              <Layers className="w-4 h-4" />
+              <strong>{assets.length} brand assets</strong> will be woven into your script automatically
+              <span className="text-teal-500 text-xs">({assets.filter(a=>a.assetType==='logo').length} logos · {assets.filter(a=>a.assetType==='product_photo').length} photos · {assets.filter(a=>a.assetType==='color_palette').length} palettes)</span>
+            </span>
+            <a href={createPageUrl('AssetLibrary')} className="text-xs text-teal-400 hover:text-teal-300 flex items-center gap-1">
+              Manage <ExternalLink className="w-3 h-3" />
+            </a>
+          </div>
+        ) : (
+          <div className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-white/3 border border-white/8 text-sm">
+            <span className="text-white/30 flex items-center gap-2"><Layers className="w-4 h-4" />No brand assets uploaded yet — scripts will use generic visuals</span>
+            <a href={createPageUrl('AssetLibrary')} className="text-xs text-amber-400 hover:text-amber-300 flex items-center gap-1">
+              Add Assets <ExternalLink className="w-3 h-3" />
+            </a>
+          </div>
+        )}
+
         {/* Controls Row */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div className="flex flex-col gap-1">
