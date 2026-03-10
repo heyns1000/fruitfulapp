@@ -112,7 +112,6 @@ export default function CollaborationSuite() {
             <SupportCoordination />
           </TabsContent>
         </Tabs>
-        </div>
       </div>
     </div>
   );

@@ -351,7 +351,6 @@ Generate content that showcases the brand's complete ecosystem and capabilities.
             </p>
           </CardContent>
         </Card>
-        </div>
       </div>
     </div>
   );
