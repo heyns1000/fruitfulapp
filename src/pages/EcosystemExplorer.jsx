@@ -2,7 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { SECTOR_LIST, ECOSYSTEM_DATA } from '../components/data/ecosystemData';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { Search, ChevronDown, ChevronUp, Globe, DollarSign, Layers, Cpu } from 'lucide-react';
+import { Search, ChevronDown, ChevronUp, Globe, DollarSign, Layers, Cpu, Network, LayoutGrid } from 'lucide-react';
+import NetworkMap from '../components/ecosystem/NetworkMap';
 
 const SECTOR_ICONS = Object.fromEntries(
   Object.entries(SECTOR_LIST).map(([k, v]) => [k, v.split(' ')[0]])
