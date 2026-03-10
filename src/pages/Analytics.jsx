@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { TrendingUp, Users, Award, Headphones, Globe } from 'lucide-react';
+import CrossAppLinks from '../components/common/CrossAppLinks';
 import CrossPollinationMetrics from '../components/analytics/CrossPollinationMetrics';
 import CustomerEngagement from '../components/analytics/CustomerEngagement';
 import LoyaltyMetrics from '../components/analytics/LoyaltyMetrics';

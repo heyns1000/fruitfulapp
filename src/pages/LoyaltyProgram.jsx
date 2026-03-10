@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Loader2, Award } from 'lucide-react';
 import BackButton from '../components/navigation/BackButton';
+import CrossAppLinks from '../components/common/CrossAppLinks';
 import PointsOverview from '../components/loyalty/PointsOverview';
 import TierBenefits from '../components/loyalty/TierBenefits';
 import RewardOffers from '../components/loyalty/RewardOffers';

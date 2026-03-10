@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Loader2, CreditCard, Calendar, RefreshCw, XCircle, AlertTriangle, CheckCircle2, Clock } from 'lucide-react';
 import { format, differenceInDays } from 'date-fns';
 import BackButton from '../components/navigation/BackButton';
+import CrossAppLinks from '../components/common/CrossAppLinks';
 import { toast } from 'sonner';
 
 const STATUS_COLORS = {

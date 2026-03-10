@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Users, FileEdit, Megaphone, DollarSign, Headphones } from 'lucide-react';
+import CrossAppLinks from '../components/common/CrossAppLinks';
 import ContentCoCreation from '../components/collaboration/ContentCoCreation';
 import CampaignManager from '../components/collaboration/CampaignManager';
 import CoBrandedSales from '../components/collaboration/CoBrandedSales';

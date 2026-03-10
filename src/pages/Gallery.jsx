@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import BackButton from '../components/navigation/BackButton';
+import CrossAppLinks from '../components/common/CrossAppLinks';
 import ArtworkGallery from '../components/ui/artwork-gallery';
 import { Sparkles } from 'lucide-react';
 
