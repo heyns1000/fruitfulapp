@@ -194,7 +194,7 @@ export default function EcosystemExplorer() {
               })}
             </div>
           )}
-        </div>
+        </div>}
 
         {/* Footer */}
         <footer className="border-t border-[#4a5568] pt-8 pb-4 text-center text-[#a0aec0] text-sm space-y-3">
