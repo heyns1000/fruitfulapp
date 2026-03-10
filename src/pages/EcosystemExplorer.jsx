@@ -13,6 +13,7 @@ export default function EcosystemExplorer() {
   const [selectedSector, setSelectedSector] = useState('banking');
   const [search, setSearch] = useState('');
   const [expandedBrand, setExpandedBrand] = useState(null);
+  const [view, setView] = useState('grid');
 
   const sectorBrands = useMemo(() => {
     const raw = ECOSYSTEM_DATA[selectedSector] || [];
@@ -62,6 +63,19 @@ export default function EcosystemExplorer() {
       </header>
 
       <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
+
+        {/* View toggle */}
+        <div className="flex justify-end gap-2">
+          <button onClick={() => setView('grid')} className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold border transition-all ${view === 'grid' ? 'bg-[#4299e1] border-[#4299e1] text-white' : 'border-[#4a5568] text-[#a0aec0] hover:border-[#63b3ed]'}`}>
+            <LayoutGrid className="w-4 h-4" /> Grid
+          </button>
+          <button onClick={() => setView('network')} className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold border transition-all ${view === 'network' ? 'bg-[#4299e1] border-[#4299e1] text-white' : 'border-[#4a5568] text-[#a0aec0] hover:border-[#63b3ed]'}`}>
+            <Network className="w-4 h-4" /> Network Map
+          </button>
+        </div>
+
+        {/* Network map view */}
+        {view === 'network' && <NetworkMap />}
 
         {/* Sector filter chips */}
         <div className="bg-[#2d3748] border border-[#4a5568] rounded-xl p-5">
