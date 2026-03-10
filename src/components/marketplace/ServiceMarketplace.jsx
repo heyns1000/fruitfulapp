@@ -277,13 +277,15 @@ export default function ServiceMarketplace({ services }) {
                       <p className="text-xs text-gray-400">{selectedCurrency}</p>
                     </div>
                     <div className="flex gap-1">
-                      <Button size="sm" variant="outline" onClick={() => addToCart({ id: service.id, name: service.serviceName, price, productCode: service.productCode, imageUrl: service.imageUrl, brandName: service.brandName })}
-                        className="border-purple-300 text-purple-700 hover:bg-purple-50 px-2">
+                      <Button size="sm" variant="outline"
+                        onClick={() => addToCart({ id: service.id, name: service.serviceName, price, productCode: service.productCode, imageUrl: service.imageUrl, brandName: service.brandName })}
+                        className="border-purple-300 text-purple-700 hover:bg-purple-50 px-2"
+                        title="Add to cart">
                         <Plus className="w-4 h-4" />
                       </Button>
-                      <Button size="sm" onClick={() => { setSelectedService(service); setIsCheckoutOpen(true); }}
-                        className="bg-purple-600 hover:bg-purple-700 text-white px-3">
-                        Buy
+                      <Button size="sm" onClick={() => buyNow(service)}
+                        className="bg-purple-600 hover:bg-purple-700 text-white px-3 gap-1">
+                        <Zap className="w-3 h-3" />Buy
                       </Button>
                     </div>
                   </div>
