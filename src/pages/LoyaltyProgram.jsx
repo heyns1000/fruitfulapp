@@ -2,22 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Loader2, Award } from 'lucide-react';
-import BackButton from '../components/navigation/BackButton';
+import { Loader2, Award, Gift, Trophy, ClipboardList } from 'lucide-react';
 import CrossAppLinks from '../components/common/CrossAppLinks';
 import PointsOverview from '../components/loyalty/PointsOverview';
 import TierBenefits from '../components/loyalty/TierBenefits';
 import RewardOffers from '../components/loyalty/RewardOffers';
 import PointsHistory from '../components/loyalty/PointsHistory';
 
-const TIER_THRESHOLDS = { bronze: 0, silver: 500, gold: 1500, platinum: 5000 };
-
-function computeTier(totalPoints) {
-  if (totalPoints >= 5000) return 'platinum';
-  if (totalPoints >= 1500) return 'gold';
-  if (totalPoints >= 500) return 'silver';
-  return 'bronze';
-}
+const TIER_COLORS = {
+  bronze: 'from-amber-700 to-amber-600',
+  silver: 'from-stone-400 to-stone-300',
+  gold:   'from-yellow-500 to-amber-400',
+  platinum: 'from-cyan-400 to-teal-400',
+};
 
 export default function LoyaltyProgram() {
   const queryClient = useQueryClient();
@@ -60,67 +57,82 @@ export default function LoyaltyProgram() {
 
   if (!user || isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loader2 className="w-8 h-8 animate-spin text-purple-600" />
+      <div className="min-h-screen bg-stone-950 flex items-center justify-center">
+        <Loader2 className="w-10 h-10 animate-spin text-orange-500" />
       </div>
     );
   }
 
   if (!account) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loader2 className="w-8 h-8 animate-spin text-purple-600" />
-        <span className="ml-2 text-gray-500">Setting up your loyalty account...</span>
+      <div className="min-h-screen bg-stone-950 flex items-center justify-center gap-3">
+        <Loader2 className="w-8 h-8 animate-spin text-orange-500" />
+        <span className="text-stone-400">Setting up your loyalty account…</span>
       </div>
     );
   }
 
+  const tier = account.tier || 'bronze';
+  const tierGradient = TIER_COLORS[tier] || TIER_COLORS.bronze;
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50">
-      <header className="bg-gradient-to-r from-amber-500 via-orange-500 to-pink-600 text-white py-8 shadow-xl">
-        <div className="container mx-auto px-6">
-          <div className="flex items-center justify-between gap-4 flex-wrap">
-            <div className="flex items-center gap-3">
-              <Award className="w-10 h-10 drop-shadow-lg" />
-              <div>
-                <h1 className="text-3xl sm:text-4xl font-extrabold drop-shadow-lg">FAA Loyalty Program</h1>
-                <p className="text-sm sm:text-lg opacity-90 mt-1">Earn points. Unlock tiers. Get exclusive artisan rewards.</p>
-              </div>
-            </div>
-            <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6953a072de46207f94f2b9d2/52acd159d_Chief_02_1753263376705.png" alt="FAA" className="w-10 h-10 object-contain opacity-90" />
+    <div className="min-h-screen bg-stone-950 text-white">
+
+      {/* ── HERO HEADER ── */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-stone-900 via-orange-950/30 to-stone-900 border-b border-stone-800 px-8 md:px-16 py-16">
+        <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #e85d26 1px, transparent 0)', backgroundSize: '36px 36px' }} />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="max-w-6xl mx-auto relative flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+          <div>
+            <p className="text-orange-400 text-xs font-bold tracking-[0.3em] uppercase mb-4">✦ @Fruitful@ Rewards</p>
+            <h1 className="text-5xl md:text-6xl font-black tracking-tight leading-none mb-3" style={{ fontFamily: 'Georgia, serif' }}>
+              FAA Loyalty<br /><span className="text-orange-500">Program</span>
+            </h1>
+            <p className="text-stone-300 text-lg leading-relaxed max-w-xl">
+              Earn points. Unlock tiers. Get exclusive artisan rewards delivered to your door.
+            </p>
+          </div>
+
+          {/* Tier badge */}
+          <div className={`shrink-0 w-36 h-36 rounded-3xl bg-gradient-to-br ${tierGradient} flex flex-col items-center justify-center shadow-2xl`}>
+            <Award className="w-10 h-10 text-white mb-1 drop-shadow-md" />
+            <p className="text-white font-black text-lg capitalize drop-shadow-md">{tier}</p>
+            <p className="text-white/70 text-xs">Tier</p>
           </div>
         </div>
-      </header>
+      </div>
 
-      <div className="container mx-auto px-6 py-8 space-y-8">
-        <BackButton />
+      <div className="max-w-6xl mx-auto px-4 md:px-10 py-10 space-y-8">
         <CrossAppLinks
-          title="🔗 Explore FAA.ZONE"
+          title="Explore FAA.ZONE"
           pages={['Dashboard', 'MySubscriptions', 'Marketplace', 'OrderHistory', 'SubscriptionBoxes', 'ArtisanDashboard', 'Wishlist']}
         />
+
         <PointsOverview account={account} />
 
         <Tabs defaultValue="offers" className="space-y-6">
-          <TabsList className="bg-white shadow rounded-lg p-1">
-            <TabsTrigger value="offers" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
-              🎁 Reward Offers
-            </TabsTrigger>
-            <TabsTrigger value="tiers" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
-              🏆 Tier Benefits
-            </TabsTrigger>
-            <TabsTrigger value="history" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
-              📋 Points History
-            </TabsTrigger>
+          <TabsList className="bg-stone-900 border border-stone-700 p-1 rounded-xl gap-1">
+            {[
+              { val: 'offers', label: 'Reward Offers', icon: Gift },
+              { val: 'tiers', label: 'Tier Benefits', icon: Trophy },
+              { val: 'history', label: 'Points History', icon: ClipboardList },
+            ].map(t => {
+              const Icon = t.icon;
+              return (
+                <TabsTrigger key={t.val} value={t.val}
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-stone-400 data-[state=active]:bg-orange-600 data-[state=active]:text-white font-semibold transition-all whitespace-nowrap">
+                  <Icon className="w-4 h-4" /> {t.label}
+                </TabsTrigger>
+              );
+            })}
           </TabsList>
 
           <TabsContent value="offers">
             <RewardOffers account={account} />
           </TabsContent>
-
           <TabsContent value="tiers">
-            <TierBenefits currentTier={account.tier || 'bronze'} />
+            <TierBenefits currentTier={tier} />
           </TabsContent>
-
           <TabsContent value="history">
             <PointsHistory account={account} />
           </TabsContent>

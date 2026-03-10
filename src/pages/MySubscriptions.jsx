@@ -1,28 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { Loader2, CreditCard, Calendar, RefreshCw, XCircle, AlertTriangle, CheckCircle2, Clock } from 'lucide-react';
+import {
+  Loader2, CreditCard, Calendar, RefreshCw, XCircle,
+  AlertTriangle, CheckCircle2, Clock, Package, Zap
+} from 'lucide-react';
 import { format, differenceInDays } from 'date-fns';
-import BackButton from '../components/navigation/BackButton';
 import CrossAppLinks from '../components/common/CrossAppLinks';
 import { toast } from 'sonner';
 
-const STATUS_COLORS = {
-  active: 'bg-green-100 text-green-800 border-green-300',
-  paused: 'bg-yellow-100 text-yellow-800 border-yellow-300',
-  cancelled: 'bg-red-100 text-red-800 border-red-300',
-  expired: 'bg-gray-100 text-gray-700 border-gray-300'
+const STATUS_CONFIG = {
+  active:    { color: 'bg-green-900/40 text-green-300 border-green-700',   label: 'Active' },
+  paused:    { color: 'bg-yellow-900/40 text-yellow-300 border-yellow-700', label: 'Paused' },
+  cancelled: { color: 'bg-red-900/40 text-red-300 border-red-700',          label: 'Cancelled' },
+  expired:   { color: 'bg-stone-700 text-stone-400 border-stone-600',        label: 'Expired' },
 };
 
-const PLAN_COLORS = {
-  starter: 'from-blue-500 to-cyan-500',
-  professional: 'from-purple-500 to-pink-500',
-  enterprise: 'from-orange-500 to-red-500'
+const PLAN_GRADIENTS = {
+  starter:      'from-blue-700 to-cyan-700',
+  professional: 'from-orange-700 to-amber-700',
+  enterprise:   'from-stone-600 to-stone-500',
 };
 
 export default function MySubscriptions() {
@@ -75,11 +76,9 @@ export default function MySubscriptions() {
 
   const updatePaymentMutation = useMutation({
     mutationFn: async (sub) => {
-      // Redirect to Paystack to update payment method
       const paystackKey = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
       const ref = `UPDATE-${sub.id}-${Date.now()}`;
-      const amount = sub.amount * 100; // kobo / cents
-
+      const amount = sub.amount * 100;
       return new Promise((resolve, reject) => {
         if (typeof window !== 'undefined' && window.PaystackPop) {
           const handler = window.PaystackPop.setup({
@@ -101,9 +100,8 @@ export default function MySubscriptions() {
           });
           handler.openIframe();
         } else {
-          // Fallback: just record the intent
           resolve({ simulated: true });
-          toast.info('Paystack not loaded in this environment. Payment method update recorded.');
+          toast.info('Paystack not loaded. Payment update recorded.');
         }
       });
     },
@@ -118,121 +116,108 @@ export default function MySubscriptions() {
   });
 
   const activeCount = subscriptions.filter(s => s.status === 'active').length;
+  const renewingSoon = subscriptions.filter(s => s.status === 'active' && s.nextBillingDate && differenceInDays(new Date(s.nextBillingDate), new Date()) <= 7).length;
   const recentOrders = orders.slice(0, 5);
 
   if (!user || isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loader2 className="w-8 h-8 animate-spin text-purple-600" />
+      <div className="min-h-screen bg-stone-950 flex items-center justify-center">
+        <Loader2 className="w-10 h-10 animate-spin text-orange-500" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-purple-50">
-      <header className="bg-gradient-to-r from-purple-700 via-indigo-700 to-blue-700 text-white py-8 shadow-xl">
-        <div className="container mx-auto px-6">
-          <div className="flex items-center justify-between gap-4 flex-wrap">
-            <div className="flex items-center gap-3">
-              <CreditCard className="w-10 h-10 drop-shadow-lg" />
-              <div>
-                <h1 className="text-3xl sm:text-4xl font-extrabold drop-shadow-lg">My Subscriptions</h1>
-                <p className="opacity-90 mt-1 text-sm sm:text-base">Manage your active plans, renewals & payment methods</p>
-              </div>
-            </div>
-            <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6953a072de46207f94f2b9d2/52acd159d_Chief_02_1753263376705.png" alt="FAA" className="w-10 h-10 object-contain opacity-90" />
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-stone-950 text-white">
 
-      <div className="container mx-auto px-6 py-8 space-y-8">
-        <BackButton />
+      {/* ── HERO HEADER ── */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-stone-900 via-orange-950/30 to-stone-900 border-b border-stone-800 px-8 md:px-16 py-16">
+        <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #e85d26 1px, transparent 0)', backgroundSize: '36px 36px' }} />
+        <div className="max-w-6xl mx-auto relative">
+          <p className="text-orange-400 text-xs font-bold tracking-[0.3em] uppercase mb-4">✦ @Fruitful@ Account</p>
+          <h1 className="text-5xl md:text-6xl font-black tracking-tight leading-none mb-3" style={{ fontFamily: 'Georgia, serif' }}>
+            My <span className="text-orange-500">Subscriptions</span>
+          </h1>
+          <p className="text-stone-300 text-lg max-w-xl">Manage your active plans, renewals &amp; payment methods.</p>
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4 md:px-10 py-10 space-y-8">
         <CrossAppLinks
-          title="🔗 Explore FAA.ZONE"
+          title="Explore FAA.ZONE"
           pages={['Dashboard', 'LoyaltyProgram', 'OrderHistory', 'SubscriptionBoxes', 'Marketplace', 'Wishlist', 'Analytics']}
         />
 
-        {/* Summary Cards */}
+        {/* Summary Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <Card className="bg-green-50 border-green-200">
-            <CardContent className="pt-5 flex items-center gap-3">
-              <CheckCircle2 className="w-8 h-8 text-green-600" />
-              <div>
-                <p className="text-2xl font-bold text-green-800">{activeCount}</p>
-                <p className="text-sm text-green-700">Active Plans</p>
+          {[
+            { label: 'Active Plans', value: activeCount, sub: 'currently running', icon: CheckCircle2, color: 'text-green-400', border: 'border-green-800/30', glow: 'from-green-950/20' },
+            { label: 'Renewing Soon', value: renewingSoon, sub: 'within 7 days', icon: Calendar, color: 'text-amber-400', border: 'border-amber-800/30', glow: 'from-amber-950/20' },
+            { label: 'Total Orders', value: orders.length, sub: 'all time', icon: Package, color: 'text-blue-400', border: 'border-blue-800/30', glow: 'from-blue-950/20' },
+          ].map(s => {
+            const Icon = s.icon;
+            return (
+              <div key={s.label} className={`bg-gradient-to-br ${s.glow} to-stone-900 border ${s.border} rounded-2xl p-5`}>
+                <div className={`w-9 h-9 rounded-xl bg-stone-800 flex items-center justify-center mb-3 ${s.color}`}>
+                  <Icon className="w-5 h-5" />
+                </div>
+                <p className={`text-3xl font-black ${s.color}`}>{s.value}</p>
+                <p className="text-white text-sm font-semibold mt-1">{s.label}</p>
+                <p className="text-stone-600 text-xs mt-0.5">{s.sub}</p>
               </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-blue-50 border-blue-200">
-            <CardContent className="pt-5 flex items-center gap-3">
-              <Calendar className="w-8 h-8 text-blue-600" />
-              <div>
-                <p className="text-2xl font-bold text-blue-800">
-                  {subscriptions.filter(s => s.status === 'active' && differenceInDays(new Date(s.nextBillingDate), new Date()) <= 7).length}
-                </p>
-                <p className="text-sm text-blue-700">Renewing in 7 days</p>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-purple-50 border-purple-200">
-            <CardContent className="pt-5 flex items-center gap-3">
-              <RefreshCw className="w-8 h-8 text-purple-600" />
-              <div>
-                <p className="text-2xl font-bold text-purple-800">{orders.length}</p>
-                <p className="text-sm text-purple-700">Total Orders</p>
-              </div>
-            </CardContent>
-          </Card>
+            );
+          })}
         </div>
 
-        {/* Subscriptions */}
+        {/* Subscriptions list */}
         <div className="space-y-4">
-          <h2 className="text-xl font-bold text-gray-800">Your Subscriptions</h2>
+          <h2 className="text-xl font-black text-white">Your Subscriptions</h2>
           {subscriptions.length === 0 ? (
-            <Card className="text-center py-12 text-gray-500">
-              <CreditCard className="w-10 h-10 mx-auto mb-2 opacity-30" />
-              <p>No subscriptions yet. Visit the Marketplace to subscribe to a plan.</p>
-            </Card>
+            <div className="bg-stone-900 border border-stone-700 rounded-2xl text-center py-16 space-y-3">
+              <CreditCard className="w-12 h-12 text-stone-600 mx-auto" />
+              <p className="text-stone-400 font-semibold">No subscriptions yet</p>
+              <p className="text-stone-600 text-sm">Visit the Marketplace to subscribe to a plan.</p>
+            </div>
           ) : (
             subscriptions.map(sub => {
-              const daysUntilRenewal = sub.nextBillingDate
-                ? differenceInDays(new Date(sub.nextBillingDate), new Date())
-                : null;
+              const daysUntilRenewal = sub.nextBillingDate ? differenceInDays(new Date(sub.nextBillingDate), new Date()) : null;
               const isRenewingSoon = daysUntilRenewal !== null && daysUntilRenewal <= 7 && sub.status === 'active';
+              const statusCfg = STATUS_CONFIG[sub.status] || STATUS_CONFIG.expired;
+              const planGrad = PLAN_GRADIENTS[sub.plan] || 'from-stone-600 to-stone-500';
 
               return (
-                <Card key={sub.id} className={`border-2 ${isRenewingSoon ? 'border-amber-400' : 'border-gray-200'}`}>
-                  <CardContent className="pt-5">
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                      {/* Plan Info */}
+                <div key={sub.id} className={`bg-stone-900 border rounded-2xl overflow-hidden transition-colors ${isRenewingSoon ? 'border-amber-700/60' : 'border-stone-700 hover:border-stone-600'}`}>
+                  {isRenewingSoon && <div className="h-0.5 w-full bg-gradient-to-r from-amber-600 to-orange-600" />}
+                  <div className="p-6">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
+
+                      {/* Plan info */}
                       <div className="flex items-center gap-4">
-                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${PLAN_COLORS[sub.plan] || 'from-gray-400 to-gray-600'} flex items-center justify-center text-white font-bold text-lg`}>
-                          {sub.plan?.[0]?.toUpperCase()}
+                        <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${planGrad} flex items-center justify-center text-white font-black text-xl shrink-0 shadow-lg`}>
+                          {sub.plan?.[0]?.toUpperCase() || '?'}
                         </div>
                         <div>
-                          <p className="font-bold text-gray-900 text-lg">{sub.brandName}</p>
-                          <p className="text-sm text-gray-500 capitalize">{sub.plan} · {sub.billingCycle}</p>
-                          <p className="text-sm font-semibold text-purple-700">
+                          <p className="font-black text-white text-lg">{sub.brandName}</p>
+                          <p className="text-stone-400 text-sm capitalize">{sub.plan} · {sub.billingCycle}</p>
+                          <p className="text-orange-400 font-bold text-sm">
                             {sub.currency || 'ZAR'} {sub.amount?.toLocaleString()}/{sub.billingCycle === 'monthly' ? 'mo' : sub.billingCycle === 'quarterly' ? 'qtr' : 'yr'}
                           </p>
                         </div>
                       </div>
 
-                      {/* Status & Renewal */}
+                      {/* Status & renewal */}
                       <div className="space-y-2 text-sm">
-                        <Badge className={`border ${STATUS_COLORS[sub.status] || 'bg-gray-100'}`}>
-                          {sub.status}
-                        </Badge>
+                        <Badge className={`border ${statusCfg.color}`}>{statusCfg.label}</Badge>
                         {sub.nextBillingDate && sub.status === 'active' && (
-                          <div className={`flex items-center gap-1 ${isRenewingSoon ? 'text-amber-600 font-semibold' : 'text-gray-500'}`}>
+                          <div className={`flex items-center gap-1.5 ${isRenewingSoon ? 'text-amber-400 font-semibold' : 'text-stone-500'}`}>
                             {isRenewingSoon && <AlertTriangle className="w-3 h-3" />}
                             <Clock className="w-3 h-3" />
                             <span>Renews {format(new Date(sub.nextBillingDate), 'dd MMM yyyy')}</span>
-                            {isRenewingSoon && <span>({daysUntilRenewal}d)</span>}
+                            {isRenewingSoon && <span className="text-amber-500">({daysUntilRenewal}d)</span>}
                           </div>
                         )}
                         {sub.startDate && (
-                          <p className="text-gray-400">Started {format(new Date(sub.startDate), 'dd MMM yyyy')}</p>
+                          <p className="text-stone-600 text-xs">Started {format(new Date(sub.startDate), 'dd MMM yyyy')}</p>
                         )}
                       </div>
 
@@ -240,40 +225,29 @@ export default function MySubscriptions() {
                       <div className="flex flex-wrap gap-2">
                         {sub.status === 'active' && (
                           <>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="border-blue-300 text-blue-700"
-                              onClick={() => { setUpdatePaymentDialog(sub); setNewCardEmail(user?.email || ''); }}
-                            >
-                              <CreditCard className="w-3 h-3 mr-1" /> Update Payment
+                            <Button size="sm" variant="outline"
+                              className="border-stone-600 text-stone-300 hover:border-blue-500 hover:text-blue-300 gap-1.5"
+                              onClick={() => { setUpdatePaymentDialog(sub); setNewCardEmail(user?.email || ''); }}>
+                              <CreditCard className="w-3.5 h-3.5" /> Update Card
                             </Button>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="border-yellow-400 text-yellow-700"
+                            <Button size="sm" variant="outline"
+                              className="border-stone-600 text-yellow-400 hover:border-yellow-600 gap-1.5"
                               onClick={() => pauseMutation.mutate(sub.id)}
-                              disabled={pauseMutation.isPending}
-                            >
+                              disabled={pauseMutation.isPending}>
                               Pause
                             </Button>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="border-red-300 text-red-600"
-                              onClick={() => setCancelDialog(sub)}
-                            >
-                              <XCircle className="w-3 h-3 mr-1" /> Cancel
+                            <Button size="sm" variant="outline"
+                              className="border-red-800/60 text-red-400 hover:border-red-600 gap-1.5"
+                              onClick={() => setCancelDialog(sub)}>
+                              <XCircle className="w-3.5 h-3.5" /> Cancel
                             </Button>
                           </>
                         )}
                         {sub.status === 'paused' && (
-                          <Button
-                            size="sm"
-                            className="bg-green-600 hover:bg-green-700 text-white"
-                            onClick={() => resumeMutation.mutate(sub.id)}
-                          >
-                            <RefreshCw className="w-3 h-3 mr-1" /> Resume
+                          <Button size="sm"
+                            className="bg-green-700 hover:bg-green-600 text-white gap-1.5"
+                            onClick={() => resumeMutation.mutate(sub.id)}>
+                            <RefreshCw className="w-3.5 h-3.5" /> Resume
                           </Button>
                         )}
                       </div>
@@ -281,14 +255,16 @@ export default function MySubscriptions() {
 
                     {/* Features */}
                     {sub.features?.length > 0 && (
-                      <div className="mt-4 pt-4 border-t flex flex-wrap gap-2">
+                      <div className="mt-5 pt-4 border-t border-stone-800 flex flex-wrap gap-2">
                         {sub.features.map((f, i) => (
-                          <span key={i} className="text-xs bg-gray-100 text-gray-600 rounded-full px-3 py-1">✓ {f}</span>
+                          <span key={i} className="text-xs bg-stone-800 border border-stone-700 text-stone-300 rounded-full px-3 py-1 flex items-center gap-1">
+                            <Zap className="w-3 h-3 text-orange-500" /> {f}
+                          </span>
                         ))}
                       </div>
                     )}
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               );
             })
           )}
@@ -296,59 +272,54 @@ export default function MySubscriptions() {
 
         {/* Recent Orders */}
         <div className="space-y-4">
-          <h2 className="text-xl font-bold text-gray-800">Recent Orders</h2>
-          <Card>
-            <CardContent className="pt-4 divide-y">
-              {recentOrders.length === 0 ? (
-                <p className="text-center text-gray-400 py-8">No orders yet.</p>
-              ) : (
-                recentOrders.map(order => (
-                  <div key={order.id} className="py-3 flex items-center justify-between">
-                    <div>
-                      <p className="font-medium text-gray-800">{order.orderNumber || `Order #${order.id?.slice(-6)}`}</p>
-                      <p className="text-sm text-gray-500">{order.items?.length || 0} item(s) · {order.currency} {order.totalAmount?.toLocaleString()}</p>
-                      <p className="text-xs text-gray-400">{order.created_date ? format(new Date(order.created_date), 'dd MMM yyyy') : ''}</p>
-                    </div>
-                    <div className="flex flex-col items-end gap-1">
-                      <Badge className={
-                        order.status === 'delivered' ? 'bg-green-100 text-green-700' :
-                        order.status === 'confirmed' ? 'bg-blue-100 text-blue-700' :
-                        order.status === 'cancelled' ? 'bg-red-100 text-red-700' :
-                        'bg-gray-100 text-gray-600'
-                      }>
-                        {order.status}
-                      </Badge>
-                      <Badge variant="outline" className={order.paymentStatus === 'paid' ? 'text-green-600 border-green-300' : 'text-gray-500'}>
-                        {order.paymentStatus}
-                      </Badge>
-                    </div>
-                  </div>
-                ))
-              )}
-            </CardContent>
-          </Card>
+          <h2 className="text-xl font-black text-white">Recent Orders</h2>
+          <div className="bg-stone-900 border border-stone-700 rounded-2xl overflow-hidden divide-y divide-stone-800">
+            {recentOrders.length === 0 ? (
+              <div className="text-center py-12 text-stone-600">
+                <Package className="w-10 h-10 mx-auto mb-2 opacity-30" />
+                <p>No orders yet.</p>
+              </div>
+            ) : recentOrders.map(order => (
+              <div key={order.id} className="px-5 py-4 flex items-center justify-between gap-4">
+                <div>
+                  <p className="font-bold text-white text-sm">{order.orderNumber || `Order #${order.id?.slice(-6)}`}</p>
+                  <p className="text-stone-500 text-xs">{order.items?.length || 0} item(s) · {order.currency} {order.totalAmount?.toLocaleString()}</p>
+                  <p className="text-stone-700 text-xs">{order.created_date ? format(new Date(order.created_date), 'dd MMM yyyy') : ''}</p>
+                </div>
+                <div className="flex flex-col items-end gap-1.5">
+                  <Badge className={
+                    order.status === 'delivered' ? 'bg-green-900/40 text-green-300 border border-green-700 text-xs' :
+                    order.status === 'confirmed' ? 'bg-blue-900/40 text-blue-300 border border-blue-700 text-xs' :
+                    order.status === 'cancelled' ? 'bg-red-900/40 text-red-300 border border-red-700 text-xs' :
+                    'bg-stone-700 text-stone-300 border border-stone-600 text-xs'
+                  }>
+                    {order.status}
+                  </Badge>
+                  <Badge variant="outline" className={`text-xs ${order.paymentStatus === 'paid' ? 'text-green-400 border-green-700' : 'text-stone-500 border-stone-700'}`}>
+                    {order.paymentStatus}
+                  </Badge>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* Cancel Confirm Dialog */}
       <Dialog open={!!cancelDialog} onOpenChange={() => setCancelDialog(null)}>
-        <DialogContent>
+        <DialogContent className="bg-stone-900 border-stone-700 text-white">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-red-600">
-              <XCircle className="w-5 h-5" /> Cancel Subscription
+            <DialogTitle className="text-white flex items-center gap-2">
+              <XCircle className="w-5 h-5 text-red-400" /> Cancel Subscription
             </DialogTitle>
           </DialogHeader>
-          <div className="py-4 space-y-2">
-            <p>Are you sure you want to cancel <strong>{cancelDialog?.brandName} {cancelDialog?.plan}</strong>?</p>
-            <p className="text-sm text-gray-500">You'll lose access at the end of your current billing period ({cancelDialog?.nextBillingDate ? format(new Date(cancelDialog.nextBillingDate), 'dd MMM yyyy') : 'N/A'}).</p>
+          <div className="py-4 space-y-3">
+            <p className="text-stone-300">Are you sure you want to cancel <strong className="text-white">{cancelDialog?.brandName} {cancelDialog?.plan}</strong>?</p>
+            <p className="text-sm text-stone-500">You'll lose access at the end of your billing period ({cancelDialog?.nextBillingDate ? format(new Date(cancelDialog.nextBillingDate), 'dd MMM yyyy') : 'N/A'}).</p>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setCancelDialog(null)}>Keep Subscription</Button>
-            <Button
-              className="bg-red-600 hover:bg-red-700 text-white"
-              onClick={() => cancelMutation.mutate(cancelDialog.id)}
-              disabled={cancelMutation.isPending}
-            >
+            <Button variant="outline" onClick={() => setCancelDialog(null)} className="border-stone-600 text-stone-300">Keep Subscription</Button>
+            <Button className="bg-red-700 hover:bg-red-600 text-white" onClick={() => cancelMutation.mutate(cancelDialog.id)} disabled={cancelMutation.isPending}>
               {cancelMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
               Yes, Cancel
             </Button>
@@ -358,34 +329,26 @@ export default function MySubscriptions() {
 
       {/* Update Payment Dialog */}
       <Dialog open={!!updatePaymentDialog} onOpenChange={() => setUpdatePaymentDialog(null)}>
-        <DialogContent>
+        <DialogContent className="bg-stone-900 border-stone-700 text-white">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-blue-600">
-              <CreditCard className="w-5 h-5" /> Update Payment Method
+            <DialogTitle className="text-white flex items-center gap-2">
+              <CreditCard className="w-5 h-5 text-blue-400" /> Update Payment Method
             </DialogTitle>
           </DialogHeader>
           <div className="py-4 space-y-4">
-            <p className="text-sm text-gray-600">
-              You'll be redirected to Paystack to securely update your payment card for <strong>{updatePaymentDialog?.brandName}</strong>.
+            <p className="text-stone-400 text-sm">
+              You'll be redirected to Paystack to securely update your payment card for <strong className="text-white">{updatePaymentDialog?.brandName}</strong>.
             </p>
             <div>
-              <label className="text-sm font-medium mb-1 block">Email for payment</label>
-              <Input
-                type="email"
-                value={newCardEmail}
-                onChange={(e) => setNewCardEmail(e.target.value)}
-                placeholder="your@email.com"
-              />
+              <label className="text-xs text-orange-400 uppercase tracking-wider mb-1 block">Email for payment</label>
+              <Input type="email" value={newCardEmail} onChange={e => setNewCardEmail(e.target.value)}
+                placeholder="your@email.com" className="bg-stone-800 border-stone-600 text-white" />
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setUpdatePaymentDialog(null)}>Cancel</Button>
-            <Button
-              className="bg-blue-600 hover:bg-blue-700 text-white"
-              onClick={() => updatePaymentMutation.mutate(updatePaymentDialog)}
-              disabled={updatePaymentMutation.isPending}
-            >
-              {updatePaymentMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <CreditCard className="w-4 h-4 mr-2" />}
+            <Button variant="outline" onClick={() => setUpdatePaymentDialog(null)} className="border-stone-600 text-stone-300">Cancel</Button>
+            <Button className="bg-blue-700 hover:bg-blue-600 text-white gap-2" onClick={() => updatePaymentMutation.mutate(updatePaymentDialog)} disabled={updatePaymentMutation.isPending}>
+              {updatePaymentMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <CreditCard className="w-4 h-4" />}
               Update via Paystack
             </Button>
           </DialogFooter>
