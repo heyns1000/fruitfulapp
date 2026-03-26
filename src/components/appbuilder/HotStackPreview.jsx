@@ -148,16 +148,16 @@ export default App;
         </div>
       </div>
 
-      <Tabs defaultValue="overview" className="space-y-5">
+      <Tabs defaultValue="visualise" className="space-y-5">
         <TabsList className="bg-stone-900 border border-stone-800 p-1.5 rounded-xl flex-wrap gap-1 h-auto">
           {[
+            ['visualise', '👁️ Live Preview'],
             ['overview', '📊 Overview'],
             ['pages', '📄 Pages'],
             ['features', '⚡ Features'],
             ['crosspoll', '🔗 Cross-Poll'],
             ['database', '🗄️ Schema'],
             ['roles', '🛡️ Roles'],
-            ['visualise', '👁️ Visualise'],
           ].map(([val, label]) => (
             <TabsTrigger key={val} value={val} className="data-[state=active]:bg-orange-500 data-[state=active]:text-black text-stone-400 text-xs font-bold rounded-lg px-3 py-1.5 transition-all">
               {label}
@@ -318,35 +318,162 @@ export default App;
           </div>
         </TabsContent>
 
-        {/* Visualise */}
+        {/* ── LIVE PREVIEW ── */}
         <TabsContent value="visualise">
-          <div
-            className="rounded-2xl p-8 min-h-[500px] border-2"
-            style={{
-              borderColor: appData.colorScheme?.primary || '#f97316',
-              background: `linear-gradient(135deg, ${appData.colorScheme?.primary || '#f97316'}08, ${appData.colorScheme?.secondary || '#1c1917'}30)`,
-            }}
-          >
-            {/* Simulated app nav */}
-            <div className="rounded-xl p-5 mb-6 text-white shadow-2xl" style={{ backgroundColor: appData.colorScheme?.primary || '#f97316' }}>
-              <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-black">{appData.appName}</h2>
-                <div className="flex gap-2 flex-wrap">
-                  {appData.pages?.slice(0, 5).map((p, i) => (
-                    <span key={i} className="px-3 py-1 bg-white/20 rounded-lg text-xs font-bold hover:bg-white/30 cursor-pointer transition-all">{p.name}</span>
+          <div className="rounded-2xl overflow-hidden border border-stone-700 shadow-2xl bg-stone-950">
+            {/* Browser chrome */}
+            <div className="bg-stone-800 px-4 py-2.5 flex items-center gap-3 border-b border-stone-700">
+              <div className="flex gap-1.5">
+                <div className="w-3 h-3 rounded-full bg-red-500/70" />
+                <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
+                <div className="w-3 h-3 rounded-full bg-green-500/70" />
+              </div>
+              <div className="flex-1 bg-stone-700 rounded-md px-3 py-1 text-xs text-stone-400 font-mono">
+                app.{appData.appName?.toLowerCase().replace(/\s+/g, '-') || 'hotstack'}.dev
+              </div>
+              <div className="flex items-center gap-1.5 text-xs text-green-400">
+                <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" /> Live
+              </div>
+            </div>
+
+            {/* App shell */}
+            <div className="flex min-h-[700px]">
+
+              {/* Sidebar */}
+              <div className="w-56 shrink-0 border-r border-stone-800 flex flex-col" style={{ background: appData.colorScheme?.secondary || '#1c1917' }}>
+                {/* Brand */}
+                <div className="px-5 py-5 border-b border-white/10">
+                  <p className="text-white font-black text-lg leading-tight">{appData.appName}</p>
+                  <p className="text-white/50 text-xs mt-0.5">{appData.tagline?.slice(0, 40)}</p>
+                </div>
+                {/* Nav items */}
+                <nav className="flex-1 p-3 space-y-0.5">
+                  {appData.pages?.slice(0, 10).map((page, i) => (
+                    <div
+                      key={i}
+                      className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold cursor-pointer transition-all ${
+                        i === 0
+                          ? 'text-white'
+                          : 'text-white/50 hover:text-white/80 hover:bg-white/5'
+                      }`}
+                      style={i === 0 ? { backgroundColor: appData.colorScheme?.primary || '#f97316' } : {}}
+                    >
+                      <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: i === 0 ? '#fff' : (appData.colorScheme?.accent || '#f59e0b') }} />
+                      {page.name}
+                    </div>
+                  ))}
+                </nav>
+                {/* Brand pills */}
+                <div className="p-3 border-t border-white/10 space-y-1">
+                  <p className="text-white/30 text-[10px] uppercase tracking-widest font-bold px-2 mb-2">Brands</p>
+                  {selectedBrands.slice(0, 4).map(b => (
+                    <div key={b.id} className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5">
+                      <div className="w-2 h-2 rounded-full" style={{ backgroundColor: appData.colorScheme?.accent || '#f59e0b' }} />
+                      <span className="text-white/60 text-[10px] font-bold">{b.name}™</span>
+                    </div>
                   ))}
                 </div>
               </div>
-              <p className="text-white/80 text-sm mt-2">{appData.tagline}</p>
-            </div>
-            {/* Feature cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              {appData.features?.slice(0, 6).map((f, idx) => (
-                <div key={idx} className="bg-white/90 rounded-xl p-5 shadow-md border-t-4" style={{ borderColor: appData.colorScheme?.accent || '#f59e0b' }}>
-                  <h4 className="font-black text-gray-900 text-sm">{f.name}</h4>
-                  <p className="text-gray-500 text-xs mt-1">{f.description?.slice(0, 80)}…</p>
+
+              {/* Main content */}
+              <div className="flex-1 overflow-hidden flex flex-col bg-stone-950">
+                {/* Top bar */}
+                <div className="flex items-center justify-between px-6 py-3.5 border-b border-stone-800 bg-stone-900">
+                  <div>
+                    <h2 className="text-white font-black text-base">{appData.pages?.[0]?.name || 'Dashboard'}</h2>
+                    <p className="text-stone-500 text-xs">{appData.pages?.[0]?.description?.slice(0, 60)}</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-full bg-stone-700 border border-stone-600 flex items-center justify-center text-xs text-stone-400">A</div>
+                    <Badge className="text-[10px] border" style={{ borderColor: appData.colorScheme?.primary, color: appData.colorScheme?.primary, background: 'transparent' }}>
+                      {appData.userRoles?.[0] || 'admin'}
+                    </Badge>
+                  </div>
                 </div>
-              ))}
+
+                {/* KPI row */}
+                <div className="grid grid-cols-4 gap-3 px-6 py-4 border-b border-stone-800">
+                  {[
+                    { label: 'Pages', val: appData.pages?.length || 0, sub: 'generated' },
+                    { label: 'Features', val: appData.features?.length || 0, sub: 'active' },
+                    { label: 'Brands', val: selectedBrands.length, sub: 'integrated' },
+                    { label: 'Subnodes', val: selectedBrands.reduce((s, b) => s + (b.subnodes?.length || 0), 0), sub: 'mapped' },
+                  ].map(k => (
+                    <div key={k.label} className="bg-stone-900 border border-stone-800 rounded-xl p-3">
+                      <p className="font-black text-xl" style={{ color: appData.colorScheme?.primary || '#f97316' }}>{k.val}</p>
+                      <p className="text-white text-xs font-semibold mt-0.5">{k.label}</p>
+                      <p className="text-stone-600 text-[10px]">{k.sub}</p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Feature cards + cross-poll */}
+                <div className="flex-1 overflow-auto px-6 py-4 space-y-4">
+                  {/* Feature grid */}
+                  <div>
+                    <p className="text-stone-400 text-xs font-bold uppercase tracking-widest mb-3">Key Features</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
+                      {appData.features?.slice(0, 6).map((f, idx) => (
+                        <div key={idx} className="bg-stone-900 border border-stone-800 rounded-xl p-4 group hover:border-stone-600 transition-all cursor-default">
+                          <div className="w-7 h-7 rounded-lg mb-3 flex items-center justify-center" style={{ backgroundColor: (appData.colorScheme?.primary || '#f97316') + '20', border: '1px solid ' + (appData.colorScheme?.primary || '#f97316') + '40' }}>
+                            <Zap className="w-3.5 h-3.5" style={{ color: appData.colorScheme?.primary || '#f97316' }} />
+                          </div>
+                          <h4 className="text-white font-black text-xs mb-1">{f.name}</h4>
+                          <p className="text-stone-500 text-[10px] leading-relaxed">{f.description?.slice(0, 70)}…</p>
+                          {f.relatedBrands?.slice(0, 2).map((b, i) => (
+                            <span key={i} className="inline-block mt-2 mr-1 text-[9px] bg-stone-800 text-stone-400 px-2 py-0.5 rounded-full">{b}</span>
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Cross-pollination stream */}
+                  {appData.crossPollination?.length > 0 && (
+                    <div>
+                      <p className="text-stone-400 text-xs font-bold uppercase tracking-widest mb-3">Cross-Pollination Engine</p>
+                      <div className="space-y-2">
+                        {appData.crossPollination.slice(0, 5).map((cp, idx) => (
+                          <div key={idx} className="flex items-center gap-3 bg-stone-900 border border-purple-900/30 rounded-xl px-4 py-3">
+                            <span className="text-purple-300 text-xs font-black shrink-0">{cp.brand1}</span>
+                            <div className="h-px flex-1 bg-gradient-to-r from-purple-700/50 to-orange-700/50" />
+                            <span className="text-orange-300 text-xs font-black shrink-0">{cp.brand2}</span>
+                            <span className="text-stone-600 text-[10px] ml-2 shrink-0">{cp.connectionType}</span>
+                            {cp.synergyScore && (
+                              <span className="text-xs font-black ml-1 shrink-0" style={{ color: appData.colorScheme?.accent || '#f59e0b' }}>{cp.synergyScore}%</span>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* DB tables preview */}
+                  {appData.databaseSchema?.length > 0 && (
+                    <div>
+                      <p className="text-stone-400 text-xs font-bold uppercase tracking-widest mb-3">Data Schema</p>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        {appData.databaseSchema.slice(0, 6).map((tbl, idx) => (
+                          <div key={idx} className="bg-stone-900 border border-stone-800 rounded-xl overflow-hidden">
+                            <div className="px-3 py-2 bg-stone-800/80 border-b border-stone-700 flex items-center gap-1.5">
+                              <Database className="w-3 h-3 text-teal-400" />
+                              <span className="text-white font-black text-[10px] font-mono">{tbl.tableName}</span>
+                            </div>
+                            <div className="px-3 py-2">
+                              {tbl.fields?.slice(0, 3).map((f, i) => (
+                                <p key={i} className="text-stone-600 text-[9px] font-mono">— {f}</p>
+                              ))}
+                              {(tbl.fields?.length || 0) > 3 && (
+                                <p className="text-stone-700 text-[9px]">+{tbl.fields.length - 3} more</p>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </TabsContent>
