@@ -12,6 +12,7 @@ const NAV_LINKS = [
   { label: 'Gallery', page: 'Gallery' },
   { label: 'Collaboration', page: 'CollaborationSuite' },
   { label: 'Analytics', page: 'Analytics' },
+  { label: 'Sector Analytics', page: 'SectorAnalytics' },
   { label: 'AI Content', page: 'ContentGenerator' },
   { label: 'Onboard Brand', page: 'BrandOnboarding' },
   { label: '🏆 Loyalty', page: 'LoyaltyProgram' },
@@ -30,6 +31,10 @@ const NAV_LINKS = [
   { label: '🗺️ Global Map', page: 'GlobalBrandMap' },
   { label: '🎬 Video Studio', page: 'VideoScriptStudio' },
   { label: '🖼️ Asset Library', page: 'AssetLibrary' },
+  { label: '💵 Payments', page: 'Payments' },
+  { label: '🔐 Vault Mesh', page: 'VaultMesh' },
+  { label: '🐾 Banimal', page: 'Banimal' },
+  { label: '🛠️ App Builder', page: 'AppBuilder' },
 ];
 
 export default function Layout({ children, currentPageName }) {
