@@ -8,6 +8,7 @@ import AccessControl from '../components/vaultmesh/AccessControl';
 import AuditLog from '../components/vaultmesh/AuditLog';
 import ComplianceAuditor from '../components/vaultmesh/ComplianceAuditor';
 import BackButton from '../components/navigation/BackButton';
+import StorageGrid40D from '../components/vaultmesh/StorageGrid40D';
 import { Loader2, Shield } from 'lucide-react';
 
 export default function VaultMesh() {
@@ -56,6 +57,9 @@ export default function VaultMesh() {
             <TabsTrigger value="audit" className="data-[state=active]:bg-emerald-600 data-[state=active]:text-white">
               📋 Audit Log
             </TabsTrigger>
+            <TabsTrigger value="grid" className="data-[state=active]:bg-emerald-600 data-[state=active]:text-white">
+              📦 40D Grid
+            </TabsTrigger>
             <TabsTrigger value="compliance" className="data-[state=active]:bg-emerald-600 data-[state=active]:text-white">
               🛡️ Compliance
             </TabsTrigger>
@@ -79,6 +83,13 @@ export default function VaultMesh() {
 
           <TabsContent value="compliance">
             <ComplianceAuditor vaults={vaults} />
+          </TabsContent>
+
+          <TabsContent value="grid">
+            <div className="bg-white rounded-xl shadow p-6">
+              <h2 className="text-xl font-bold text-emerald-700 mb-6">📦 40D Storage Grid — Treaty & Ownership Inspector</h2>
+              <StorageGrid40D vaults={vaults} />
+            </div>
           </TabsContent>
         </Tabs>
       </div>

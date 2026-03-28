@@ -34,13 +34,11 @@ export const CartProvider = ({ children }) => {
       const existing = prev.find(i => i.id === item.id);
       if (existing) {
         toast.success(`Updated ${item.name} quantity`);
-        return prev.map(i => 
-          i.id === item.id 
-            ? { ...i, quantity: i.quantity + (item.quantity || 1) }
-            : i
-        );
+        return prev.map(i => i.id === item.id ? { ...i, quantity: i.quantity + (item.quantity || 1) } : i);
       } else {
         toast.success(`${item.name} added to cart`);
+        // Cross-pollinate: fire Shanana panel for every add-to-cart
+        window.dispatchEvent(new CustomEvent('shanana:purchase', { detail: { amount: item.price || 0, itemName: item.name } }));
         return [...prev, { ...item, quantity: item.quantity || 1 }];
       }
     });
