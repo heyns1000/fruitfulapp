@@ -35,6 +35,7 @@ const NAV_LINKS = [
   { label: '🔐 Vault Mesh', page: 'VaultMesh' },
   { label: '🐾 Banimal', page: 'Banimal' },
   { label: '🛠️ App Builder', page: 'AppBuilder' },
+  { label: '🐘 Shanana™', page: 'ShananaCheckout' },
 ];
 
 export default function Layout({ children, currentPageName }) {
