@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { CartProvider } from './components/cart/CartContext';
 import ShananaCheckoutPanel from './components/shanana/ShananaCheckoutPanel';
+import TreatyMonitor from './components/vaultmesh/TreatyMonitor';
 import { WishlistProvider } from './components/wishlist/WishlistContext';
 import CartIcon from './components/cart/CartIcon';
 import { Menu, X } from 'lucide-react';
@@ -37,6 +38,7 @@ const NAV_LINKS = [
   { label: '🐾 Banimal', page: 'Banimal' },
   { label: '🛠️ App Builder', page: 'AppBuilder' },
   { label: '🐘 Shanana™', page: 'ShananaCheckout' },
+  { label: '🖤 Care Grains Map', page: 'CareGrainsMap' },
   { label: '⚡ PulseTrade', page: 'PulseTradeAnalytics' },
 ];
 
@@ -47,6 +49,7 @@ export default function Layout({ children, currentPageName }) {
     <WishlistProvider>
     <CartProvider>
       <ShananaCheckoutPanel />
+      <TreatyMonitor />
       <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-teal-50 to-green-50">
         {/* Top Navigation Bar */}
         <nav className="bg-white shadow-md border-b-2 border-teal-200">
