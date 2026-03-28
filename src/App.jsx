@@ -61,7 +61,7 @@ const AuthenticatedApp = () => {
         />
       ))}
       <Route path="/ShananaCheckout" element={<LayoutWrapper currentPageName="ShananaCheckout"><ShananaCheckout /></LayoutWrapper>} />
-      <Route path="/PulseTradeAnalytics" element={<LayoutWrapper currentPageName="PulseTradeAnalytics"><PulseTradeAnalytics /></LayoutWrapper>} /> element={<LayoutWrapper currentPageName="ShananaCheckout"><ShananaCheckout /></LayoutWrapper>} />
+      <Route path="/PulseTradeAnalytics" element={<LayoutWrapper currentPageName="PulseTradeAnalytics"><PulseTradeAnalytics /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
