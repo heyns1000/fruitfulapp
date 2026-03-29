@@ -4,6 +4,7 @@ import { queryClientInstance } from '@/lib/query-client'
 import NavigationTracker from '@/lib/NavigationTracker'
 import { pagesConfig } from './pages.config'
 import ShananaCheckout from './pages/ShananaCheckout'
+import HomemartListing from './pages/HomemartListing'
 import CareGrainsMap from './pages/CareGrainsMap'
 import PulseTradeAnalytics from './pages/PulseTradeAnalytics'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -64,6 +65,7 @@ const AuthenticatedApp = () => {
       <Route path="/ShananaCheckout" element={<LayoutWrapper currentPageName="ShananaCheckout"><ShananaCheckout /></LayoutWrapper>} />
       <Route path="/PulseTradeAnalytics" element={<LayoutWrapper currentPageName="PulseTradeAnalytics"><PulseTradeAnalytics /></LayoutWrapper>} />
       <Route path="/CareGrainsMap" element={<LayoutWrapper currentPageName="CareGrainsMap"><CareGrainsMap /></LayoutWrapper>} />
+      <Route path="/HomemartListing" element={<LayoutWrapper currentPageName="HomemartListing"><HomemartListing /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
