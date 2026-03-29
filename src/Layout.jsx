@@ -117,12 +117,29 @@ export default function Layout({ children, currentPageName }) {
           {children}
         </main>
 
-        {/* Footer */}
-        <footer className="bg-gray-900 text-gray-300 py-8 mt-12">
-          <div className="container mx-auto px-4 text-center">
-            <p className="text-sm">© 2025 FAA.ZONE™ · Financial Allocation Architecture</p>
-            <p className="text-xs text-gray-500 mt-2">Powered by Paystack · Secure Payments</p>
+        {/* Footer — Global Footer Repository: DO NOT MODIFY */}
+        <footer className="py-8 px-6 md:px-12 text-center border-t" style={{ background: '#f5f5f7', color: '#6b7280', borderColor: '#e8e8ed' }}>
+          <div className="flex flex-wrap justify-center mb-4 text-sm">
+            {[
+              ['Privacy', 'privacy.html'],
+              ['Terms', 'terms.html'],
+              ['Contact', 'contact.html'],
+              ['Copyright', 'copyright.html'],
+              ['Developers', 'developers.html'],
+              ['VaultMesh', 'vaultmesh.html'],
+              ['Fruitful', 'fruitful.html'],
+              ['FAA.Zone', 'faa.zone.html'],
+              ['About', 'about.html'],
+              ['Accessibility', 'accessibility.html'],
+            ].map(([label, file]) => (
+              <a key={label} href={`https://footer.global.repo.seedwave.faa.zone/${file}`}
+                className="hover:text-gray-900 transition-colors mx-2 my-1 text-sm">
+                {label}
+              </a>
+            ))}
           </div>
+          <span>© 2025 FAA™ Treaty System™. All Rights Reserved.</span>{' '}
+          <span>Powered by 🦍 glyphs + Vault API. Synced with Seedwave™.</span>
         </footer>
       </div>
     </CartProvider>
