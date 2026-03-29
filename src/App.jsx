@@ -63,7 +63,7 @@ const AuthenticatedApp = () => {
       ))}
       <Route path="/ShananaCheckout" element={<LayoutWrapper currentPageName="ShananaCheckout"><ShananaCheckout /></LayoutWrapper>} />
       <Route path="/PulseTradeAnalytics" element={<LayoutWrapper currentPageName="PulseTradeAnalytics"><PulseTradeAnalytics /></LayoutWrapper>} />
-      <Route path="/CareGrainsMap" element={<LayoutWrapper currentPageName="CareGrainsMap"><CareGrainsMap /></LayoutWrapper>} /> element={<LayoutWrapper currentPageName="PulseTradeAnalytics"><PulseTradeAnalytics /></LayoutWrapper>} />
+      <Route path="/CareGrainsMap" element={<LayoutWrapper currentPageName="CareGrainsMap"><CareGrainsMap /></LayoutWrapper>} /> element={<LayoutWrapper currentPageName="CareGrainsMap"><CareGrainsMap /></LayoutWrapper>} /> element={<LayoutWrapper currentPageName="PulseTradeAnalytics"><PulseTradeAnalytics /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
