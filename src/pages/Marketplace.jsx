@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ServiceMarketplace from '../components/marketplace/ServiceMarketplace';
+import HomemartListing from './HomemartListing';
 import ServiceListing from '../components/marketplace/ServiceListing';
 import OrderManagement from '../components/marketplace/OrderManagement';
 import FeaturedArtisans from '../components/marketplace/FeaturedArtisans';
@@ -42,6 +43,7 @@ export default function Marketplace() {
 
   const TABS = [
     { val: 'browse', label: 'Browse', icon: Store },
+    { val: 'homemart', label: '🛍️ Homemart Bibs', icon: Package },
     { val: 'list', label: 'List a Service', icon: Plus },
     { val: 'orders', label: 'Orders', icon: Package },
   ];
@@ -97,11 +99,11 @@ export default function Marketplace() {
             <ServiceMarketplace services={services} />
           </TabsContent>
 
-          <TabsContent value="list">
-            <ServiceListing brands={brands} />
+          <TabsContent value="homemart">
+            <HomemartListing embedded />
           </TabsContent>
 
-          <TabsContent value="orders">
+          <TabsContent value="list">
             <OrderManagement orders={orders} />
           </TabsContent>
         </Tabs>

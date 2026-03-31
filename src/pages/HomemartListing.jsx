@@ -11,7 +11,7 @@ import { Search, RefreshCw, Package, Store, AlertTriangle } from 'lucide-react';
 
 const CATS = ['All', 'Bibs', 'Bandanna', 'Round'];
 
-export default function HomemartListing() {
+export default function HomemartListing({ embedded = false }) {
   const [search, setSearch] = useState('');
   const [cat, setCat] = useState('All');
   const [selected, setSelected] = useState(null);
@@ -42,10 +42,10 @@ export default function HomemartListing() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-950 text-white">
+    <div className={embedded ? 'text-white' : 'min-h-screen bg-stone-950 text-white'}>
       <HomemartStockSync />
 
-      {/* Header */}
+      {!embedded && (
       <div className="bg-gradient-to-br from-stone-900 via-orange-950/20 to-stone-900 border-b border-stone-800 px-6 md:px-12 py-12">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-2 mb-3">
@@ -74,6 +74,7 @@ export default function HomemartListing() {
           </div>
         </div>
       </div>
+      )}
 
       <div className="max-w-6xl mx-auto px-4 md:px-10 py-8">
         {/* Filters */}

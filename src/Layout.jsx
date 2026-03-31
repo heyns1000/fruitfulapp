@@ -40,7 +40,6 @@ const NAV_LINKS = [
   { label: '🐘 Shanana™', page: 'ShananaCheckout' },
   { label: '🖤 Care Grains Map', page: 'CareGrainsMap' },
   { label: '⚡ PulseTrade', page: 'PulseTradeAnalytics' },
-  { label: '🛍️ Homemart Bibs', page: 'HomemartListing' },
 ];
 
 export default function Layout({ children, currentPageName }) {
