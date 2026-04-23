@@ -23,6 +23,7 @@ const NAV_LINKS = [
   { label: '💰 Financials', page: 'ArtisanFinancials' },
   { label: '📦 Orders', page: 'OrderHistory' },
   { label: '🚚 Order Dashboard', page: 'OrderDashboard' },
+  { label: '📋 Fulfillment', page: 'OrderFulfillment' },
   { label: '💬 Messages', page: 'Messages' },
   { label: '❤️ Wishlist', page: 'Wishlist' },
   { label: '📦 Sub Boxes', page: 'SubscriptionBoxes' },

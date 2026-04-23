@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -19,9 +19,9 @@ export default function AppGenerator({ selectedBrands, onAppGenerated, autoGener
   const [userRoles, setUserRoles] = useState(['admin', 'user']);
   
   // Auto-generate when autoGenerate prop is true
-  React.useEffect(() => {
-    if (autoGenerate && selectedBrands.length > 0 && !generating && !generatedApp) {
-      handleGenerate();
+  useEffect(() => {
+    if (autoGenerate && selectedBrands.length > 0) {
+      generateApp();
     }
   }, [autoGenerate, selectedBrands]);
   const [newRole, setNewRole] = useState('');

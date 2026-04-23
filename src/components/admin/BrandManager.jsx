@@ -11,7 +11,7 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter
 } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Loader2, Pencil, Trash2, Search, Sparkles, AlertTriangle, Download, FileJson } from 'lucide-react';
+import { Loader2, Pencil, Trash2, Search, Sparkles, AlertTriangle, Download, FileJson, Tag } from 'lucide-react';
 import { toast } from 'sonner';
 
 const SECTORS = {
