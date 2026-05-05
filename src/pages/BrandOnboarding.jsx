@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,6 +10,7 @@ import { Sparkles, CheckCircle, AlertCircle, Lightbulb, ArrowRight, Download } f
 import { base44 } from '@/api/base44Client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import FileUploadButton from '../components/common/FileUploadButton';
 
 const SECTORS = {
   agriculture: '🌱 Agriculture & Biotech',
@@ -60,6 +61,7 @@ export default function BrandOnboarding() {
   const [completionScore, setCompletionScore] = useState(0);
   const [newSubnode, setNewSubnode] = useState('');
   const [newTag, setNewTag] = useState('');
+  const [logoUrl, setLogoUrl] = useState('');
 
   const queryClient = useQueryClient();
 
@@ -173,7 +175,8 @@ Return structured suggestions that will bring this brand to 100% ecosystem readi
     createBrandMutation.mutate({
       ...brandData,
       isSystemBrand: false,
-      aiGenerated: true
+      aiGenerated: true,
+      ...(logoUrl ? { metadata: { ...brandData.metadata, logoUrl } } : {})
     });
   };
 
@@ -273,6 +276,23 @@ Return structured suggestions that will bring this brand to 100% ecosystem readi
                   onChange={(e) => setBrandData(prev => ({ ...prev, description: e.target.value }))}
                   rows={4}
                 />
+              </div>
+
+              {/* Brand Logo Upload */}
+              <div>
+                <label className="text-sm font-medium mb-2 block">Brand Logo (optional)</label>
+                <FileUploadButton
+                  label="Upload Brand Logo"
+                  currentUrl={logoUrl}
+                  onUploaded={setLogoUrl}
+                  variant="dropzone"
+                />
+                {logoUrl && (
+                  <div className="mt-2 flex items-center gap-2">
+                    <img src={logoUrl} alt="Logo" className="w-12 h-12 rounded-lg object-contain border border-gray-200 bg-gray-50" />
+                    <span className="text-xs text-green-600 font-medium">✓ Logo uploaded</span>
+                  </div>
+                )}
               </div>
 
               <Button 

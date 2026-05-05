@@ -4,9 +4,10 @@ import { useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Film, Sparkles, Send, Download, Copy, RefreshCw, Wand2, Play, Clock, Mic, Music, Camera, Layers, ExternalLink } from 'lucide-react';
+import { Film, Sparkles, Send, Download, Copy, RefreshCw, Wand2, Play, Clock, Mic, Music, Camera, Layers, ExternalLink, Paperclip, X } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { createPageUrl } from '@/utils';
+import FileUploadButton from '../components/common/FileUploadButton';
 
 const PROMPT_PRESETS = [
   { label: '🚀 Epic Launch', prompt: 'Generate a 60-second Pixar-level epic launch video script for @Fruitful@ FAA.ZONE — bold, cinematic, African futurism. Show the full ecosystem: artisans, brands, marketplace, collaboration, AI. End with a powerful CTA.' },
@@ -39,6 +40,7 @@ export default function VideoScriptStudio() {
   const [duration, setDuration] = useState('60');
   const [style, setStyle] = useState('pixar');
   const [copiedScript, setCopiedScript] = useState(false);
+  const [attachedImageUrl, setAttachedImageUrl] = useState('');
   const bottomRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -96,7 +98,12 @@ export default function VideoScriptStudio() {
     if (!text.trim() || !conversation || sending) return;
     setSending(true);
     setInput('');
-    await base44.agents.addMessage(conversation, { role: 'user', content: text });
+    const msgPayload = { role: 'user', content: text };
+    if (attachedImageUrl) {
+      msgPayload.file_urls = [attachedImageUrl];
+      setAttachedImageUrl('');
+    }
+    await base44.agents.addMessage(conversation, msgPayload);
     setSending(false);
     inputRef.current?.focus();
   };
@@ -333,7 +340,22 @@ export default function VideoScriptStudio() {
 
         {/* Input */}
         <div className="sticky bottom-4 bg-gray-950/80 backdrop-blur-md border border-white/10 rounded-2xl p-3 shadow-2xl">
+          {attachedImageUrl && (
+            <div className="flex items-center gap-2 mb-2 px-1">
+              <img src={attachedImageUrl} alt="attached" className="w-10 h-10 rounded-lg object-cover border border-amber-500/40" />
+              <span className="text-xs text-amber-300 font-medium">Image attached</span>
+              <button onClick={() => setAttachedImageUrl('')} className="text-white/30 hover:text-red-400 ml-auto">
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
           <div className="flex gap-3 items-end">
+            <FileUploadButton
+              label=""
+              onUploaded={setAttachedImageUrl}
+              className="shrink-0"
+              variant="button"
+            />
             <Textarea
               ref={inputRef}
               value={input}
@@ -348,7 +370,7 @@ export default function VideoScriptStudio() {
               {sending ? <Sparkles className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
             </Button>
           </div>
-          <p className="text-xs text-white/20 mt-1.5 px-1">Press Enter to send · Shift+Enter for new line</p>
+          <p className="text-xs text-white/20 mt-1.5 px-1">Press Enter to send · Shift+Enter for new line · 📎 Attach reference image</p>
         </div>
 
       </div>

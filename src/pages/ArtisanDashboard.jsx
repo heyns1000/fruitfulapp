@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Loader2, BarChart2, Package, ShoppingCart, MessageSquare, Settings, Plus, Pencil, Trash2, Star, Eye, TrendingUp, Users, DollarSign, AlertCircle, CheckCircle2, Clock, Truck, Bell, Hammer } from 'lucide-react';
 import { toast } from 'sonner';
+import FileUploadButton from '../components/common/FileUploadButton';
 
 const STATUS_COLORS = {
   pending:    'bg-yellow-900/40 text-yellow-300 border-yellow-700',
@@ -435,9 +436,16 @@ export default function ArtisanDashboard() {
               </div>
             </div>
             <div>
-              <label className="text-xs text-stone-400 uppercase tracking-wider mb-1 block">Image URL</label>
+              <label className="text-xs text-stone-400 uppercase tracking-wider mb-1 block">Product Image</label>
+              <FileUploadButton
+                label="Upload Image"
+                currentUrl={productForm.imageUrl}
+                onUploaded={url => setProductForm(f => ({ ...f, imageUrl: url }))}
+                variant="dropzone"
+                className="mb-2"
+              />
               <Input value={productForm.imageUrl} onChange={e => setProductForm(f => ({...f, imageUrl: e.target.value}))}
-                className="bg-stone-800 border-stone-600 text-white" placeholder="https://..." />
+                className="bg-stone-800 border-stone-600 text-white text-xs" placeholder="or paste URL…" />
             </div>
             <div className="flex gap-3 pt-2">
               <Button variant="outline" onClick={() => setShowProductForm(false)} className="flex-1 border-stone-600 text-stone-300">Cancel</Button>
@@ -462,6 +470,8 @@ function ArtisanSettingsForm({ artisan, onSave }) {
     location: artisan.location || '',
     soulMessage: artisan.soulMessage || '',
     biography: artisan.biography || '',
+    profileImageUrl: artisan.profileImageUrl || '',
+    workshopImageUrl: artisan.workshopImageUrl || '',
   });
 
   const mut = useMutation({
@@ -492,6 +502,32 @@ function ArtisanSettingsForm({ artisan, onSave }) {
         <Textarea value={form.biography} onChange={e => setForm(p => ({...p, biography: e.target.value}))}
           className="bg-stone-800 border-stone-600 text-white" rows={5} />
       </div>
+      {/* Profile Image */}
+      <div>
+        <label className="text-xs text-orange-400 uppercase tracking-wider mb-2 block">Profile Photo</label>
+        <FileUploadButton
+          label="Upload Profile Photo"
+          currentUrl={form.profileImageUrl}
+          onUploaded={url => setForm(p => ({ ...p, profileImageUrl: url }))}
+          variant="dropzone"
+        />
+        <Input value={form.profileImageUrl} onChange={e => setForm(p => ({...p, profileImageUrl: e.target.value}))}
+          className="bg-stone-800 border-stone-600 text-white mt-2 text-xs" placeholder="or paste URL…" />
+      </div>
+
+      {/* Workshop Image */}
+      <div>
+        <label className="text-xs text-orange-400 uppercase tracking-wider mb-2 block">Workshop / Hero Image</label>
+        <FileUploadButton
+          label="Upload Workshop Image"
+          currentUrl={form.workshopImageUrl}
+          onUploaded={url => setForm(p => ({ ...p, workshopImageUrl: url }))}
+          variant="dropzone"
+        />
+        <Input value={form.workshopImageUrl} onChange={e => setForm(p => ({...p, workshopImageUrl: e.target.value}))}
+          className="bg-stone-800 border-stone-600 text-white mt-2 text-xs" placeholder="or paste URL…" />
+      </div>
+
       <Button onClick={() => mut.mutate()} disabled={mut.isPending} className="bg-orange-600 hover:bg-orange-500 text-white px-8">
         {mut.isPending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null} Save Settings
       </Button>
