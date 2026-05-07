@@ -7,6 +7,7 @@ import SubscriptionManager from '../components/payments/SubscriptionManager';
 import TransactionHistory from '../components/payments/TransactionHistory';
 import PaystackSettings from '../components/payments/PaystackSettings';
 import ChildNodeIntegration from '../components/payments/ChildNodeIntegration';
+import XeroIntegrationGuide from '../components/payments/XeroIntegrationGuide';
 import BackButton from '../components/navigation/BackButton';
 import { Loader2, CreditCard } from 'lucide-react';
 
@@ -69,6 +70,9 @@ export default function Payments() {
             <TabsTrigger value="childnode" className="data-[state=active]:bg-teal-700 data-[state=active]:text-white">
               🌐 Child Node Integration
             </TabsTrigger>
+            <TabsTrigger value="xero" className="data-[state=active]:bg-indigo-700 data-[state=active]:text-white">
+              📒 Xero Setup
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="gateway">
@@ -89,6 +93,10 @@ export default function Payments() {
 
           <TabsContent value="childnode">
             <ChildNodeIntegration />
+          </TabsContent>
+
+          <TabsContent value="xero">
+            <XeroIntegrationGuide />
           </TabsContent>
         </Tabs>
       </div>
