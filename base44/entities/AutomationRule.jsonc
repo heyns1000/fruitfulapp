@@ -1,0 +1,99 @@
+{
+  "name": "AutomationRule",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Workflow rule name"
+    },
+    "description": {
+      "type": "string"
+    },
+    "brandId": {
+      "type": "string"
+    },
+    "brandName": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "paused",
+        "draft"
+      ],
+      "default": "active"
+    },
+    "trigger": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field": {
+                "type": "string"
+              },
+              "operator": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "config": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "runCount": {
+      "type": "number",
+      "default": 0
+    },
+    "lastRunAt": {
+      "type": "string"
+    },
+    "lastRunStatus": {
+      "type": "string",
+      "enum": [
+        "success",
+        "failed",
+        "pending"
+      ]
+    }
+  },
+  "required": [
+    "name",
+    "trigger",
+    "actions"
+  ]
+}

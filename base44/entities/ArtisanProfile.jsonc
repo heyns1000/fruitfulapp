@@ -1,0 +1,168 @@
+{
+  "name": "ArtisanProfile",
+  "type": "object",
+  "properties": {
+    "brandId": {
+      "type": "string",
+      "description": "Linked brand ID"
+    },
+    "brandName": {
+      "type": "string"
+    },
+    "artisanName": {
+      "type": "string",
+      "description": "Full artisan name"
+    },
+    "title": {
+      "type": "string",
+      "description": "e.g. Master Potter, Hat Craftsman"
+    },
+    "dateOfBirth": {
+      "type": "string",
+      "format": "date"
+    },
+    "location": {
+      "type": "string",
+      "description": "City, Province / Country"
+    },
+    "soulMessage": {
+      "type": "string",
+      "description": "Artisan's personal philosophy or quote"
+    },
+    "biography": {
+      "type": "string",
+      "description": "Full artisan story / biography"
+    },
+    "symbolism": {
+      "type": "string",
+      "description": "Symbolic meaning behind their work"
+    },
+    "craftsmanship": {
+      "type": "string",
+      "description": "Description of craft techniques"
+    },
+    "origin": {
+      "type": "string",
+      "description": "Cultural / geographic origin of materials"
+    },
+    "tools": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Traditional and modern tools used"
+    },
+    "signatureTechniques": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Unique techniques this artisan is known for"
+    },
+    "culturalSignificance": {
+      "type": "string",
+      "description": "Cultural, historical or spiritual significance"
+    },
+    "profileImageUrl": {
+      "type": "string"
+    },
+    "workshopImageUrl": {
+      "type": "string"
+    },
+    "galleryImages": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "URLs of featured work gallery images"
+    },
+    "materials": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Available materials the artisan works with"
+    },
+    "certifications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "issuedBy": {
+            "type": "string"
+          },
+          "year": {
+            "type": "string"
+          },
+          "badgeUrl": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Artisan certifications and awards"
+    },
+    "socialMedia": {
+      "type": "object",
+      "properties": {
+        "instagram": {
+          "type": "string"
+        },
+        "facebook": {
+          "type": "string"
+        },
+        "tiktok": {
+          "type": "string"
+        },
+        "youtube": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "twitter": {
+          "type": "string"
+        }
+      },
+      "description": "Social media profile links"
+    },
+    "testimonials": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "customerName": {
+            "type": "string"
+          },
+          "rating": {
+            "type": "number"
+          },
+          "comment": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "productPurchased": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Highlight this artisan on the marketplace homepage"
+    },
+    "initiation": {
+      "type": "string",
+      "description": "Traditional title or initiation name"
+    }
+  },
+  "required": [
+    "artisanName",
+    "brandName"
+  ]
+}

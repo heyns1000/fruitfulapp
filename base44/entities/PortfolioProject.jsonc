@@ -1,0 +1,118 @@
+{
+  "name": "PortfolioProject",
+  "type": "object",
+  "properties": {
+    "artisanId": {
+      "type": "string"
+    },
+    "artisanName": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "description": "Project title"
+    },
+    "description": {
+      "type": "string",
+      "description": "What the piece is, the story behind it"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "pottery",
+        "weaving",
+        "jewellery",
+        "sculpture",
+        "painting",
+        "textiles",
+        "woodwork",
+        "leatherwork",
+        "metalwork",
+        "mixed_media",
+        "custom"
+      ],
+      "description": "Craft category"
+    },
+    "imageUrls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Project image URLs"
+    },
+    "coverImageUrl": {
+      "type": "string",
+      "description": "Primary cover image"
+    },
+    "techniques": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Signature techniques used in this piece"
+    },
+    "materials": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Materials used"
+    },
+    "year": {
+      "type": "number",
+      "description": "Year completed"
+    },
+    "completionDays": {
+      "type": "number",
+      "description": "How many days to complete"
+    },
+    "projectType": {
+      "type": "string",
+      "enum": [
+        "original",
+        "commissioned",
+        "collaboration",
+        "exhibition"
+      ],
+      "default": "original"
+    },
+    "clientName": {
+      "type": "string",
+      "description": "Client name if commissioned (optional)"
+    },
+    "isCommissionable": {
+      "type": "boolean",
+      "default": true,
+      "description": "Artisan is open to similar commissions"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Pin to top of portfolio"
+    },
+    "sold": {
+      "type": "boolean",
+      "default": false
+    },
+    "priceRange": {
+      "type": "string",
+      "enum": [
+        "under_500",
+        "500_2000",
+        "2000_5000",
+        "5000_plus",
+        "on_request"
+      ],
+      "description": "Indicative commission price range"
+    },
+    "exhibitionName": {
+      "type": "string",
+      "description": "Exhibition or show it was featured in"
+    }
+  },
+  "required": [
+    "artisanId",
+    "title",
+    "category"
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "name": "Vault",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Vault name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Vault description"
+    },
+    "vaultType": {
+      "type": "string",
+      "enum": [
+        "secrets",
+        "documents",
+        "keys",
+        "certificates",
+        "general"
+      ],
+      "default": "general",
+      "description": "Type of vault"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "locked",
+        "archived"
+      ],
+      "default": "active",
+      "description": "Vault status"
+    },
+    "encryptionLevel": {
+      "type": "string",
+      "enum": [
+        "AES-256",
+        "AES-512",
+        "SGX"
+      ],
+      "default": "AES-256",
+      "description": "Encryption level"
+    },
+    "accessLevel": {
+      "type": "string",
+      "enum": [
+        "public",
+        "private",
+        "restricted"
+      ],
+      "default": "private",
+      "description": "Access level"
+    },
+    "brandId": {
+      "type": "string",
+      "description": "Associated brand ID"
+    },
+    "brandName": {
+      "type": "string",
+      "description": "Associated brand name"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "itemCount": {
+          "type": "number",
+          "default": 0
+        },
+        "sizeBytes": {
+          "type": "number",
+          "default": 0
+        },
+        "lastAccessed": {
+          "type": "string"
+        },
+        "region": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [
+    "name",
+    "vaultType"
+  ]
+}

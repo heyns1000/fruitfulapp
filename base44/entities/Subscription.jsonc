@@ -1,0 +1,100 @@
+{
+  "name": "Subscription",
+  "type": "object",
+  "properties": {
+    "brandId": {
+      "type": "string",
+      "description": "Brand this subscription is for"
+    },
+    "brandName": {
+      "type": "string",
+      "description": "Brand name"
+    },
+    "plan": {
+      "type": "string",
+      "enum": [
+        "starter",
+        "professional",
+        "enterprise"
+      ],
+      "description": "Subscription plan"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "paused",
+        "cancelled",
+        "expired"
+      ],
+      "default": "active",
+      "description": "Subscription status"
+    },
+    "billingCycle": {
+      "type": "string",
+      "enum": [
+        "monthly",
+        "quarterly",
+        "annual"
+      ],
+      "default": "monthly",
+      "description": "Billing frequency"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Subscription amount per cycle"
+    },
+    "currency": {
+      "type": "string",
+      "default": "ZAR"
+    },
+    "startDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Subscription start date"
+    },
+    "nextBillingDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Next billing date"
+    },
+    "gateway": {
+      "type": "string",
+      "enum": [
+        "PayFast",
+        "Ozow",
+        "Yoco",
+        "PayPal"
+      ]
+    },
+    "paymentToken": {
+      "type": "string",
+      "description": "Tokenized payment method"
+    },
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Enabled features"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "autoRenew": {
+          "type": "boolean",
+          "default": true
+        },
+        "trialEndsAt": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [
+    "plan",
+    "amount",
+    "billingCycle",
+    "gateway"
+  ]
+}

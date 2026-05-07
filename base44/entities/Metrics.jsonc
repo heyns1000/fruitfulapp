@@ -1,0 +1,42 @@
+{
+  "name": "Metrics",
+  "type": "object",
+  "properties": {
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When these metrics were recorded"
+    },
+    "activeNodes": {
+      "type": "number",
+      "description": "Number of active nodes"
+    },
+    "licensesActive": {
+      "type": "number",
+      "description": "Number of active licenses"
+    },
+    "vaultDeployments": {
+      "type": "number",
+      "description": "Number of vault deployments"
+    },
+    "syncLogs": {
+      "type": "number",
+      "description": "Number of sync logs"
+    },
+    "auditsRunning": {
+      "type": "number",
+      "description": "Number of running audits"
+    },
+    "signalZones": {
+      "type": "number",
+      "description": "Number of signal zones"
+    },
+    "scrollGridIndex": {
+      "type": "number",
+      "description": "Scroll grid index count"
+    }
+  },
+  "required": [
+    "timestamp"
+  ]
+}

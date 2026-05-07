@@ -1,0 +1,185 @@
+{
+  "name": "Order",
+  "type": "object",
+  "properties": {
+    "orderNumber": {
+      "type": "string",
+      "description": "Unique order number"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "serviceId": {
+            "type": "string"
+          },
+          "serviceName": {
+            "type": "string"
+          },
+          "productCode": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "unitPrice": {
+            "type": "number"
+          },
+          "imageUrl": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "buyerEmail": {
+      "type": "string"
+    },
+    "totalAmount": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "confirmed",
+        "processing",
+        "crafted",
+        "shipped",
+        "delivered",
+        "cancelled",
+        "refunded"
+      ],
+      "default": "pending"
+    },
+    "paymentId": {
+      "type": "string"
+    },
+    "paystackReference": {
+      "type": "string"
+    },
+    "paymentStatus": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "paid",
+        "failed"
+      ],
+      "default": "pending"
+    },
+    "artisanId": {
+      "type": "string"
+    },
+    "artisanName": {
+      "type": "string"
+    },
+    "artisanEmail": {
+      "type": "string"
+    },
+    "trackingNumber": {
+      "type": "string",
+      "description": "Shipping tracking number"
+    },
+    "carrier": {
+      "type": "string",
+      "description": "Shipping carrier name"
+    },
+    "estimatedDelivery": {
+      "type": "string",
+      "format": "date",
+      "description": "Estimated delivery date"
+    },
+    "statusHistory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Timeline of order status changes"
+    },
+    "trackingEvents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string"
+          },
+          "tag": {
+            "type": "string",
+            "description": "AfterShip tag: InTransit, OutForDelivery, Delivered, Exception, etc."
+          },
+          "message": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Live carrier checkpoint events from AfterShip"
+    },
+    "lastTrackingUpdate": {
+      "type": "string",
+      "description": "ISO timestamp of last successful carrier API poll"
+    },
+    "aftershipSlug": {
+      "type": "string",
+      "description": "AfterShip carrier slug e.g. dhl, fedex, ups"
+    },
+    "shippingAddress": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "addressLine1": {
+          "type": "string"
+        },
+        "addressLine2": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "postalCode": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        }
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "items",
+    "buyerEmail",
+    "totalAmount",
+    "currency"
+  ]
+}

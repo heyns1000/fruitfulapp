@@ -6,6 +6,7 @@ import PaymentGateway from '../components/payments/PaymentGateway';
 import SubscriptionManager from '../components/payments/SubscriptionManager';
 import TransactionHistory from '../components/payments/TransactionHistory';
 import PaystackSettings from '../components/payments/PaystackSettings';
+import ChildNodeIntegration from '../components/payments/ChildNodeIntegration';
 import BackButton from '../components/navigation/BackButton';
 import { Loader2, CreditCard } from 'lucide-react';
 
@@ -65,6 +66,9 @@ export default function Payments() {
             <TabsTrigger value="paystack" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white">
               ⚙️ Paystack Setup
             </TabsTrigger>
+            <TabsTrigger value="childnode" className="data-[state=active]:bg-teal-700 data-[state=active]:text-white">
+              🌐 Child Node Integration
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="gateway">
@@ -81,6 +85,10 @@ export default function Payments() {
 
           <TabsContent value="paystack">
             <PaystackSettings />
+          </TabsContent>
+
+          <TabsContent value="childnode">
+            <ChildNodeIntegration />
           </TabsContent>
         </Tabs>
       </div>

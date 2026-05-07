@@ -1,0 +1,64 @@
+{
+  "name": "VaultItem",
+  "type": "object",
+  "properties": {
+    "vaultId": {
+      "type": "string",
+      "description": "Parent vault ID"
+    },
+    "itemType": {
+      "type": "string",
+      "enum": [
+        "secret",
+        "document",
+        "key",
+        "certificate",
+        "config"
+      ],
+      "description": "Type of item stored"
+    },
+    "name": {
+      "type": "string",
+      "description": "Item name/key"
+    },
+    "encryptedValue": {
+      "type": "string",
+      "description": "Encrypted value (never plain text)"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "sizeBytes": {
+          "type": "number"
+        },
+        "mimeType": {
+          "type": "string"
+        },
+        "expiresAt": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "accessCount": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of times accessed"
+    },
+    "lastAccessed": {
+      "type": "string",
+      "description": "Last access timestamp"
+    }
+  },
+  "required": [
+    "vaultId",
+    "itemType",
+    "name",
+    "encryptedValue"
+  ]
+}

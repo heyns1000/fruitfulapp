@@ -1,0 +1,103 @@
+{
+  "name": "Brand",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Brand name"
+    },
+    "description": {
+      "type": "string",
+      "description": "AI-generated or manual brand description"
+    },
+    "sector": {
+      "type": "string",
+      "description": "Sector key (agriculture, banking, etc.)",
+      "enum": [
+        "agriculture",
+        "fsf",
+        "banking",
+        "creative",
+        "logistics",
+        "education-ip",
+        "fashion",
+        "gaming",
+        "health",
+        "housing",
+        "justice",
+        "knowledge",
+        "micromesh",
+        "media",
+        "nutrition",
+        "ai-logic",
+        "packaging",
+        "quantum",
+        "ritual",
+        "saas",
+        "trade",
+        "utilities",
+        "voice",
+        "webless",
+        "nft",
+        "education-youth",
+        "zerowaste",
+        "professional",
+        "payroll-mining",
+        "mining",
+        "wildlife"
+      ]
+    },
+    "subnodes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of subnodes for this brand"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "AI-generated tags for categorization and searchability"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "vault": {
+          "type": "string"
+        },
+        "layer": {
+          "type": "string"
+        },
+        "deploymentZone": {
+          "type": "string"
+        },
+        "securityRating": {
+          "type": "string"
+        },
+        "activeNodes": {
+          "type": "number"
+        }
+      }
+    },
+    "isSystemBrand": {
+      "type": "boolean",
+      "description": "True if this is a pre-loaded system brand",
+      "default": false
+    },
+    "aiGenerated": {
+      "type": "boolean",
+      "description": "True if metadata/description was AI-generated",
+      "default": false
+    }
+  },
+  "required": [
+    "name",
+    "sector",
+    "subnodes"
+  ]
+}

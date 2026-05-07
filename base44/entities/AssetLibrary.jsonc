@@ -1,0 +1,61 @@
+{
+  "name": "AssetLibrary",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Asset name / label"
+    },
+    "assetType": {
+      "type": "string",
+      "enum": [
+        "logo",
+        "product_photo",
+        "color_palette"
+      ],
+      "description": "Type of asset"
+    },
+    "brandId": {
+      "type": "string",
+      "description": "Associated brand ID"
+    },
+    "brandName": {
+      "type": "string",
+      "description": "Associated brand name"
+    },
+    "fileUrl": {
+      "type": "string",
+      "description": "Uploaded file URL (for logos and product photos)"
+    },
+    "description": {
+      "type": "string",
+      "description": "Short description of the asset for AI context"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Searchable tags"
+    },
+    "colorValues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "hex": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Color swatches for color_palette type"
+    }
+  },
+  "required": [
+    "name",
+    "assetType"
+  ]
+}

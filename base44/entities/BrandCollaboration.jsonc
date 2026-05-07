@@ -1,0 +1,80 @@
+{
+  "name": "BrandCollaboration",
+  "type": "object",
+  "properties": {
+    "brand1Id": {
+      "type": "string",
+      "description": "ID of the first brand"
+    },
+    "brand1Name": {
+      "type": "string",
+      "description": "Name of the first brand"
+    },
+    "brand2Id": {
+      "type": "string",
+      "description": "ID of the second brand"
+    },
+    "brand2Name": {
+      "type": "string",
+      "description": "Name of the second brand"
+    },
+    "proposalTitle": {
+      "type": "string",
+      "description": "Title of the collaboration proposal"
+    },
+    "proposalDescription": {
+      "type": "string",
+      "description": "Detailed description of the collaboration"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "in_progress",
+        "completed"
+      ],
+      "default": "pending",
+      "description": "Current status of the collaboration"
+    },
+    "aiSuggested": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this was AI-suggested"
+    },
+    "synergyScore": {
+      "type": "number",
+      "description": "AI-calculated synergy score (0-100)"
+    },
+    "synergyReason": {
+      "type": "string",
+      "description": "AI explanation of synergy potential"
+    },
+    "communications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Communication thread for this collaboration"
+    }
+  },
+  "required": [
+    "brand1Id",
+    "brand1Name",
+    "brand2Id",
+    "brand2Name",
+    "proposalTitle"
+  ]
+}

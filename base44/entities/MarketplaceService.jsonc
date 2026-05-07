@@ -1,0 +1,144 @@
+{
+  "name": "MarketplaceService",
+  "type": "object",
+  "properties": {
+    "brandId": {
+      "type": "string",
+      "description": "Brand offering this service"
+    },
+    "brandName": {
+      "type": "string",
+      "description": "Brand name"
+    },
+    "serviceName": {
+      "type": "string",
+      "description": "Service/Product name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description"
+    },
+    "productCode": {
+      "type": "string",
+      "description": "Unique product code for Paystack integration (e.g., PROD-BRD-001)"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "digital_service",
+        "physical_product",
+        "subscription",
+        "consulting",
+        "license",
+        "data_access"
+      ],
+      "description": "Service category"
+    },
+    "pricing": {
+      "type": "object",
+      "properties": {
+        "USD": {
+          "type": "number"
+        },
+        "ZAR": {
+          "type": "number"
+        },
+        "EUR": {
+          "type": "number"
+        },
+        "GBP": {
+          "type": "number"
+        },
+        "NGN": {
+          "type": "number"
+        },
+        "KES": {
+          "type": "number"
+        }
+      }
+    },
+    "currency": {
+      "type": "string",
+      "default": "USD",
+      "description": "Primary currency"
+    },
+    "paystackProductId": {
+      "type": "string",
+      "description": "Paystack product ID after creation"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "paused",
+        "archived"
+      ],
+      "default": "draft"
+    },
+    "inventory": {
+      "type": "object",
+      "properties": {
+        "available": {
+          "type": "number"
+        },
+        "unlimited": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "delivery": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "instant",
+            "digital",
+            "physical",
+            "scheduled"
+          ]
+        },
+        "estimatedDays": {
+          "type": "number"
+        },
+        "regions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "imageUrl": {
+      "type": "string",
+      "description": "Service image URL"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "totalSales": {
+      "type": "number",
+      "default": 0
+    },
+    "rating": {
+      "type": "number",
+      "default": 0
+    },
+    "reviewCount": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "brandId",
+    "brandName",
+    "serviceName",
+    "category",
+    "productCode"
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "name": "BoxSubscription",
+  "type": "object",
+  "properties": {
+    "boxId": {
+      "type": "string",
+      "description": "SubscriptionBox ID"
+    },
+    "boxName": {
+      "type": "string"
+    },
+    "subscriberEmail": {
+      "type": "string"
+    },
+    "subscriberName": {
+      "type": "string"
+    },
+    "billingCycle": {
+      "type": "string",
+      "enum": [
+        "monthly",
+        "quarterly",
+        "annual"
+      ],
+      "default": "monthly"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string",
+      "default": "USD"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "paused",
+        "cancelled",
+        "pending"
+      ],
+      "default": "pending"
+    },
+    "customizations": {
+      "type": "object",
+      "description": "User's selected customization preferences"
+    },
+    "shippingAddress": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "addressLine1": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "postalCode": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        }
+      }
+    },
+    "nextBillingDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "startDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "boxesShipped": {
+      "type": "number",
+      "default": 0
+    },
+    "paystackReference": {
+      "type": "string"
+    },
+    "isGift": {
+      "type": "boolean",
+      "default": false
+    },
+    "giftMessage": {
+      "type": "string"
+    },
+    "giftDetails": {
+      "type": "object",
+      "description": "Full gift details if isGift is true",
+      "properties": {
+        "recipientName": {
+          "type": "string"
+        },
+        "recipientEmail": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "wrapping": {
+          "type": "string",
+          "enum": [
+            "none",
+            "standard",
+            "premium",
+            "eco"
+          ],
+          "default": "none"
+        },
+        "deliveryDate": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    }
+  },
+  "required": [
+    "boxId",
+    "boxName",
+    "subscriberEmail",
+    "billingCycle",
+    "amount"
+  ]
+}

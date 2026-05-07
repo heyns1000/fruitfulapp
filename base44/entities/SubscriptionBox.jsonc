@@ -1,0 +1,139 @@
+{
+  "name": "SubscriptionBox",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Box name"
+    },
+    "tagline": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "theme": {
+      "type": "string",
+      "enum": [
+        "heritage_craft",
+        "modern_art",
+        "pottery_earth",
+        "textile_weave",
+        "jewellery",
+        "mixed_curated",
+        "seasonal"
+      ],
+      "description": "Box theme"
+    },
+    "artisanId": {
+      "type": "string",
+      "description": "Specific artisan if artisan-curated"
+    },
+    "artisanName": {
+      "type": "string"
+    },
+    "brandId": {
+      "type": "string"
+    },
+    "brandName": {
+      "type": "string"
+    },
+    "curationType": {
+      "type": "string",
+      "enum": [
+        "artisan_curated",
+        "category_curated",
+        "mixed"
+      ],
+      "default": "mixed"
+    },
+    "pricing": {
+      "type": "object",
+      "properties": {
+        "monthly": {
+          "type": "number"
+        },
+        "quarterly": {
+          "type": "number"
+        },
+        "annual": {
+          "type": "number"
+        }
+      }
+    },
+    "currency": {
+      "type": "string",
+      "default": "USD"
+    },
+    "itemsPerBox": {
+      "type": "number",
+      "default": 3
+    },
+    "imageUrl": {
+      "type": "string"
+    },
+    "galleryImages": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "customizationOptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "paused",
+        "sold_out",
+        "coming_soon"
+      ],
+      "default": "active"
+    },
+    "subscriberCount": {
+      "type": "number",
+      "default": 0
+    },
+    "rating": {
+      "type": "number",
+      "default": 0
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "nextShipDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "name",
+    "theme",
+    "pricing"
+  ]
+}

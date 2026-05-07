@@ -1,0 +1,95 @@
+{
+  "name": "LoyaltyAccount",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string",
+      "description": "The user this account belongs to"
+    },
+    "userEmail": {
+      "type": "string",
+      "description": "User email"
+    },
+    "userName": {
+      "type": "string",
+      "description": "User display name"
+    },
+    "totalPoints": {
+      "type": "number",
+      "default": 0,
+      "description": "Total accumulated points"
+    },
+    "availablePoints": {
+      "type": "number",
+      "default": 0,
+      "description": "Points available to redeem"
+    },
+    "tier": {
+      "type": "string",
+      "enum": [
+        "bronze",
+        "silver",
+        "gold",
+        "platinum"
+      ],
+      "default": "bronze",
+      "description": "Current membership tier"
+    },
+    "totalSpend": {
+      "type": "number",
+      "default": 0,
+      "description": "Lifetime total spend in USD"
+    },
+    "purchaseCount": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of purchases made"
+    },
+    "pointsHistory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "points": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          },
+          "orderId": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Log of all points transactions"
+    },
+    "redeemedOffers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "IDs of redeemed reward offers"
+    },
+    "preferences": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Inferred product/sector preferences from purchase history"
+    },
+    "lastActivityDate": {
+      "type": "string",
+      "description": "Date of last points-earning activity"
+    }
+  },
+  "required": [
+    "userId",
+    "userEmail"
+  ]
+}

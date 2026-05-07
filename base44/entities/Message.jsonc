@@ -1,0 +1,50 @@
+{
+  "name": "Message",
+  "type": "object",
+  "properties": {
+    "threadId": {
+      "type": "string"
+    },
+    "senderEmail": {
+      "type": "string"
+    },
+    "senderName": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "fileUrls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "fileNames": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "messageType": {
+      "type": "string",
+      "enum": [
+        "text",
+        "commission_request",
+        "commission_accepted",
+        "commission_rejected",
+        "system"
+      ],
+      "default": "text"
+    },
+    "read": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "threadId",
+    "senderEmail",
+    "content"
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "name": "RewardOffer",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Offer title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed offer description"
+    },
+    "offerType": {
+      "type": "string",
+      "enum": [
+        "discount",
+        "free_item",
+        "bonus_points",
+        "early_access",
+        "exclusive_product"
+      ],
+      "description": "Type of reward offer"
+    },
+    "pointsCost": {
+      "type": "number",
+      "default": 0,
+      "description": "Points required to redeem this offer"
+    },
+    "discountPercent": {
+      "type": "number",
+      "description": "Discount percentage if offerType is discount"
+    },
+    "minimumTier": {
+      "type": "string",
+      "enum": [
+        "bronze",
+        "silver",
+        "gold",
+        "platinum"
+      ],
+      "default": "bronze",
+      "description": "Minimum tier required to access this offer"
+    },
+    "applicableSectors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Sectors this offer applies to (empty = all)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "expired",
+        "coming_soon"
+      ],
+      "default": "active"
+    },
+    "expiryDate": {
+      "type": "string",
+      "format": "date",
+      "description": "When the offer expires"
+    },
+    "imageUrl": {
+      "type": "string",
+      "description": "Offer image"
+    },
+    "usageLimit": {
+      "type": "number",
+      "description": "Max number of times this offer can be redeemed globally"
+    },
+    "timesRedeemed": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "title",
+    "offerType",
+    "minimumTier"
+  ]
+}

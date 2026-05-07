@@ -1,0 +1,91 @@
+{
+  "name": "MessageThread",
+  "type": "object",
+  "properties": {
+    "subject": {
+      "type": "string"
+    },
+    "artisanId": {
+      "type": "string"
+    },
+    "artisanName": {
+      "type": "string"
+    },
+    "artisanEmail": {
+      "type": "string"
+    },
+    "buyerEmail": {
+      "type": "string"
+    },
+    "buyerName": {
+      "type": "string"
+    },
+    "lastMessage": {
+      "type": "string"
+    },
+    "lastMessageAt": {
+      "type": "string"
+    },
+    "unreadBuyer": {
+      "type": "number",
+      "default": 0
+    },
+    "unreadArtisan": {
+      "type": "number",
+      "default": 0
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "archived",
+        "commission_pending",
+        "commission_accepted",
+        "commission_rejected"
+      ],
+      "default": "active"
+    },
+    "commissionRequest": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "number"
+        },
+        "currency": {
+          "type": "string"
+        },
+        "timelineDays": {
+          "type": "number"
+        },
+        "deliverables": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "proposedBy": {
+          "type": "string"
+        },
+        "respondedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "orderId": {
+      "type": "string",
+      "description": "Order created from accepted commission"
+    }
+  },
+  "required": [
+    "artisanName",
+    "buyerEmail"
+  ]
+}

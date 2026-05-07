@@ -1,0 +1,119 @@
+{
+  "name": "Payment",
+  "type": "object",
+  "properties": {
+    "transactionId": {
+      "type": "string",
+      "description": "Unique transaction ID from gateway"
+    },
+    "brandId": {
+      "type": "string",
+      "description": "Brand this payment is for"
+    },
+    "brandName": {
+      "type": "string",
+      "description": "Brand name"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Payment amount"
+    },
+    "currency": {
+      "type": "string",
+      "enum": [
+        "ZAR",
+        "USD",
+        "EUR",
+        "GBP",
+        "NGN",
+        "KES",
+        "GHS",
+        "TZS",
+        "UGX",
+        "ZMW",
+        "MWK",
+        "BRL",
+        "INR",
+        "CNY",
+        "JPY"
+      ],
+      "default": "USD",
+      "description": "Currency code"
+    },
+    "gateway": {
+      "type": "string",
+      "enum": [
+        "PayFast",
+        "Ozow",
+        "Yoco",
+        "PayPal",
+        "Flutterwave",
+        "Paystack"
+      ],
+      "description": "Payment gateway used"
+    },
+    "paymentMethod": {
+      "type": "string",
+      "enum": [
+        "card",
+        "eft",
+        "instant_eft",
+        "qr",
+        "bnpl",
+        "mobile_money",
+        "bank"
+      ],
+      "description": "Payment method"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "processing",
+        "completed",
+        "failed",
+        "refunded"
+      ],
+      "default": "pending",
+      "description": "Payment status"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "subscription",
+        "one_time",
+        "marketplace"
+      ],
+      "description": "Payment type"
+    },
+    "subscriptionId": {
+      "type": "string",
+      "description": "Related subscription ID if applicable"
+    },
+    "customerEmail": {
+      "type": "string",
+      "description": "Customer email"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "gatewayResponse": {
+          "type": "object"
+        },
+        "pciCompliant": {
+          "type": "boolean",
+          "default": true
+        },
+        "tokenized": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "required": [
+    "amount",
+    "gateway",
+    "status",
+    "type"
+  ]
+}
