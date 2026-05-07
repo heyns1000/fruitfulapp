@@ -8,6 +8,7 @@ import HomemartListing from './pages/HomemartListing'
 import OrderFulfillment from './pages/OrderFulfillment'
 import CareGrainsMap from './pages/CareGrainsMap'
 import PulseTradeAnalytics from './pages/PulseTradeAnalytics'
+import BrandNodeExplorer from './pages/BrandNodeExplorer'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
@@ -68,6 +69,7 @@ const AuthenticatedApp = () => {
       <Route path="/CareGrainsMap" element={<LayoutWrapper currentPageName="CareGrainsMap"><CareGrainsMap /></LayoutWrapper>} />
       <Route path="/HomemartListing" element={<LayoutWrapper currentPageName="HomemartListing"><HomemartListing /></LayoutWrapper>} />
       <Route path="/OrderFulfillment" element={<LayoutWrapper currentPageName="OrderFulfillment"><OrderFulfillment /></LayoutWrapper>} />
+      <Route path="/BrandNodeExplorer" element={<LayoutWrapper currentPageName="BrandNodeExplorer"><BrandNodeExplorer /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

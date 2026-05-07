@@ -41,6 +41,7 @@ const NAV_LINKS = [
   { label: '🐘 Shanana™', page: 'ShananaCheckout' },
   { label: '🖤 Care Grains Map', page: 'CareGrainsMap' },
   { label: '⚡ PulseTrade', page: 'PulseTradeAnalytics' },
+  { label: '🌐 Brand Explorer', page: 'BrandNodeExplorer' },
 ];
 
 export default function Layout({ children, currentPageName }) {
