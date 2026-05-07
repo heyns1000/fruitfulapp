@@ -42,6 +42,7 @@ const NAV_LINKS = [
   { label: '🖤 Care Grains Map', page: 'CareGrainsMap' },
   { label: '⚡ PulseTrade', page: 'PulseTradeAnalytics' },
   { label: '🌐 Brand Explorer', page: 'BrandNodeExplorer' },
+  { label: '🎨 Grand Mashadlela', page: 'GrandMashadlelaCollection' },
 ];
 
 export default function Layout({ children, currentPageName }) {
