@@ -10,6 +10,7 @@ import CareGrainsMap from './pages/CareGrainsMap'
 import PulseTradeAnalytics from './pages/PulseTradeAnalytics'
 import BrandNodeExplorer from './pages/BrandNodeExplorer'
 import GrandMashadlelaCollection from './pages/GrandMashadlelaCollection'
+import SubscriptionShop from './pages/SubscriptionShop'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
@@ -72,6 +73,7 @@ const AuthenticatedApp = () => {
       <Route path="/OrderFulfillment" element={<LayoutWrapper currentPageName="OrderFulfillment"><OrderFulfillment /></LayoutWrapper>} />
       <Route path="/BrandNodeExplorer" element={<LayoutWrapper currentPageName="BrandNodeExplorer"><BrandNodeExplorer /></LayoutWrapper>} />
       <Route path="/GrandMashadlelaCollection" element={<LayoutWrapper currentPageName="GrandMashadlelaCollection"><GrandMashadlelaCollection /></LayoutWrapper>} />
+      <Route path="/SubscriptionShop" element={<LayoutWrapper currentPageName="SubscriptionShop"><SubscriptionShop /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

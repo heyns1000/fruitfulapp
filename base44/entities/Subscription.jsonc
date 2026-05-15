@@ -17,7 +17,7 @@
         "professional",
         "enterprise"
       ],
-      "description": "Subscription plan"
+      "description": "Subscription plan tier"
     },
     "status": {
       "type": "string",
@@ -27,8 +27,7 @@
         "cancelled",
         "expired"
       ],
-      "default": "active",
-      "description": "Subscription status"
+      "default": "active"
     },
     "billingCycle": {
       "type": "string",
@@ -37,12 +36,11 @@
         "quarterly",
         "annual"
       ],
-      "default": "monthly",
-      "description": "Billing frequency"
+      "default": "monthly"
     },
     "amount": {
       "type": "number",
-      "description": "Subscription amount per cycle"
+      "description": "Subscription amount per cycle (ZAR)"
     },
     "currency": {
       "type": "string",
@@ -50,13 +48,11 @@
     },
     "startDate": {
       "type": "string",
-      "format": "date",
-      "description": "Subscription start date"
+      "format": "date"
     },
     "nextBillingDate": {
       "type": "string",
-      "format": "date",
-      "description": "Next billing date"
+      "format": "date"
     },
     "gateway": {
       "type": "string",
@@ -64,19 +60,91 @@
         "PayFast",
         "Ozow",
         "Yoco",
-        "PayPal"
+        "PayPal",
+        "Paystack"
       ]
     },
     "paymentToken": {
-      "type": "string",
-      "description": "Tokenized payment method"
+      "type": "string"
     },
     "features": {
       "type": "array",
       "items": {
         "type": "string"
+      }
+    },
+    "sector": {
+      "type": "string",
+      "description": "Linked sector key (e.g. creative, fashion)"
+    },
+    "subnodes": {
+      "type": "array",
+      "items": {
+        "type": "string"
       },
-      "description": "Enabled features"
+      "description": "Linked brand subnodes included in this subscription"
+    },
+    "linkedProductIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "MarketplaceService IDs bundled with this subscription tier"
+    },
+    "pricingFormula": {
+      "type": "object",
+      "description": "Cost-price-linked pricing formula (ZAR ex-works basis)",
+      "properties": {
+        "costPriceZAR": {
+          "type": "number",
+          "description": "Ex-works cost price in ZAR"
+        },
+        "wholesaleMarkupPct": {
+          "type": "number",
+          "description": "Wholesale markup % above cost",
+          "default": 40
+        },
+        "retailMarkupPct": {
+          "type": "number",
+          "description": "Retail markup % above wholesale",
+          "default": 80
+        },
+        "onlineMarkupPct": {
+          "type": "number",
+          "description": "Online/subscription markup % above cost",
+          "default": 60
+        },
+        "vatPct": {
+          "type": "number",
+          "description": "VAT %",
+          "default": 15
+        },
+        "shippingZAR": {
+          "type": "number",
+          "description": "Fixed shipping cost ZAR",
+          "default": 0
+        }
+      }
+    },
+    "tierLimits": {
+      "type": "object",
+      "description": "What is included per tier",
+      "properties": {
+        "maxProducts": {
+          "type": "number"
+        },
+        "maxOrdersPerMonth": {
+          "type": "number"
+        },
+        "discountPct": {
+          "type": "number",
+          "description": "Subscriber discount on products"
+        },
+        "freeShipping": {
+          "type": "boolean",
+          "default": false
+        }
+      }
     },
     "metadata": {
       "type": "object",

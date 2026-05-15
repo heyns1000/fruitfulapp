@@ -19,6 +19,7 @@ const NAV_LINKS = [
   { label: 'Onboard Brand', page: 'BrandOnboarding' },
   { label: '🏆 Loyalty', page: 'LoyaltyProgram' },
   { label: '💳 My Plans', page: 'MySubscriptions' },
+  { label: '🛍️ Sub Shop', page: 'SubscriptionShop' },
   { label: '🎨 My Shop', page: 'ArtisanDashboard' },
   { label: '💰 Financials', page: 'ArtisanFinancials' },
   { label: '📦 Orders', page: 'OrderHistory' },
