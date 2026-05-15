@@ -1,47 +1,34 @@
 import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SECTORS, generateBrands, TIER_COLORS } from '../components/explorer/SectorData';
+import { SECTORS, TIER_COLORS } from '../components/explorer/SectorData';
 import SectorCard from '../components/explorer/SectorCard';
-import BrandNodeCard from '../components/explorer/BrandNodeCard';
+import SectorLandingPage from '../components/explorer/SectorLandingPage';
 import { Badge } from '@/components/ui/badge';
-import { ChevronLeft, Zap, Globe, Search, X } from 'lucide-react';
+import { Zap, Globe, Search, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 
 const TOTAL_BRANDS = 27426;
 
 export default function BrandNodeExplorer() {
   const [selectedSector, setSelectedSector] = useState(null);
-  const [brands, setBrands] = useState([]);
   const [sectorPulses, setSectorPulses] = useState({});
   const [totalPulse, setTotalPulse] = useState(0);
   const [search, setSearch] = useState('');
 
   const handleSelectSector = useCallback((sector) => {
     setSelectedSector(sector);
-    setBrands(generateBrands(sector, 24));
+    setSectorPulses(prev => ({ ...prev, [sector.key]: (prev[sector.key] || 0) + 1 }));
+    setTotalPulse(p => p + 1);
     setSearch('');
   }, []);
 
-  const handleVisit = useCallback((brand) => {
-    setSectorPulses(prev => ({
-      ...prev,
-      [selectedSector.key]: (prev[selectedSector.key] || 0) + 1,
-    }));
-    setTotalPulse(p => p + 1);
-  }, [selectedSector]);
-
   const handleBack = () => {
     setSelectedSector(null);
-    setBrands([]);
     setSearch('');
   };
 
   const filteredSectors = SECTORS.filter(s =>
     search === '' || s.label.toLowerCase().includes(search.toLowerCase()) || s.key.includes(search.toLowerCase())
-  );
-
-  const filteredBrands = brands.filter(b =>
-    search === '' || b.name.toLowerCase().includes(search.toLowerCase()) || b.code.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -51,14 +38,6 @@ export default function BrandNodeExplorer() {
       <div className="sticky top-0 z-30 bg-black/40 backdrop-blur-md border-b border-teal-700/50">
         <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center gap-3 justify-between">
           <div className="flex items-center gap-3">
-            {selectedSector && (
-              <button
-                onClick={handleBack}
-                className="flex items-center gap-1 text-teal-300 hover:text-white transition-colors text-sm font-semibold"
-              >
-                <ChevronLeft className="w-4 h-4" /> All Sectors
-              </button>
-            )}
             <div className="flex items-center gap-2">
               <span className="text-2xl">ᠮ</span>
               <div>
@@ -109,7 +88,7 @@ export default function BrandNodeExplorer() {
             /* Sector Grid */
             <motion.div key="sectors" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <p className="text-teal-300 text-sm mb-4 font-semibold">
-                {filteredSectors.length} of 31 sectors · Select a sector to drill into brand nodes
+                {filteredSectors.length} of 31 sectors · Select a sector for a full immersive experience
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
                 {filteredSectors.map((sector, i) => (
@@ -167,45 +146,13 @@ export default function BrandNodeExplorer() {
               </div>
             </motion.div>
           ) : (
-            /* Brand Node Grid */
-            <motion.div key="brands" initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -40 }}>
-              <div className="flex items-center gap-3 mb-4 flex-wrap">
-                <span className="text-4xl">{selectedSector.glyph}</span>
-                <div>
-                  <h2 className="text-white font-extrabold text-xl">{selectedSector.label}</h2>
-                  <p className="text-teal-400 text-sm">{selectedSector.region} · ${selectedSector.monthly}/mo · ${selectedSector.annual}/yr</p>
-                </div>
-              </div>
-              <p className="text-teal-400 text-sm mb-4">
-                Showing {filteredBrands.length} brand nodes · Tap to fire Audit Pulse
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                {filteredBrands.map((brand, i) => (
-                  <motion.div
-                    key={brand.id}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: i * 0.04, type: 'spring', stiffness: 260, damping: 18 }}
-                  >
-                    <BrandNodeCard brand={brand} sector={selectedSector} onVisit={handleVisit} />
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Sector info strip */}
-              <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-                {[
-                  { label: 'Payout Tier', value: selectedSector.tier },
-                  { label: 'Monthly Fee', value: `$${selectedSector.monthly}` },
-                  { label: 'Annual Fee', value: `$${selectedSector.annual}` },
-                  { label: 'Pulses Fired', value: (sectorPulses[selectedSector.key] || 0).toString() },
-                ].map(stat => (
-                  <div key={stat.label} className="bg-white/10 border border-teal-700/40 rounded-2xl p-4 text-center">
-                    <p className="text-teal-400 text-xs font-semibold">{stat.label}</p>
-                    <p className="text-white text-2xl font-extrabold mt-1">{stat.value}</p>
-                  </div>
-                ))}
-              </div>
+            /* Full Sector Landing Page */
+            <motion.div key="sector-landing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+              <SectorLandingPage
+                sector={selectedSector}
+                onBack={handleBack}
+                sectorPulseCount={sectorPulses[selectedSector.key] || 0}
+              />
             </motion.div>
           )}
         </AnimatePresence>
