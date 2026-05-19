@@ -245,7 +245,7 @@ export default function ServiceMarketplace({ services }) {
                 <CardContent className="p-4 flex flex-col flex-1 gap-2">
                   <div>
                     <h3 className="font-bold text-gray-900 text-sm leading-snug line-clamp-2">{service.serviceName}</h3>
-                    <Link to={createPageUrl(`ArtisanProfile?brandName=${encodeURIComponent(service.brandName)}`)}
+                    <Link to={createPageUrl(`ArtisanShop?brandName=${encodeURIComponent(service.brandName)}`)}
                       className="text-xs text-purple-600 hover:underline font-medium mt-0.5 block">
                       {service.brandName}™
                     </Link>
