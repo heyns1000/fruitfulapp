@@ -89,7 +89,8 @@ export default function ShananaCheckout() {
     if (document.getElementById('paypal-sdk')) { initPayPal(); return; }
     const script = document.createElement('script');
     script.id = 'paypal-sdk';
-    script.src = 'https://www.paypal.com/sdk/js?client-id=AdxUHld6pPPeobbVsje0UVdCOu1aJuSvwZk-xXE_TuNKGVmN8Z3COhVP-jz4GpN0TRJsqQYfbVOVsKiJ&currency=USD&disable-funding=credit,card';
+    const ppClientId = import.meta.env.VITE_PAYPAL_CLIENT_ID || '';
+    script.src = `https://www.paypal.com/sdk/js?client-id=${ppClientId}&currency=USD&disable-funding=credit,card`;
     script.setAttribute('data-sdk-integration-source', 'button-factory');
     script.onload = initPayPal;
     script.onerror = () => setPpError(true);
@@ -234,7 +235,6 @@ export default function ShananaCheckout() {
 
         <footer style={{ textAlign: 'center', marginTop: '30px', paddingTop: '20px', borderTop: '1px solid #e2e8f0', color: '#a0aec0', fontSize: '12px' }}>
           Fruitful Global Planet | Pretoria, South Africa<br />
-          Cloudflare Account: ad41fcfe1a84b27c62cc5cc9d590720e<br />
           Every grain counted. Zero waste tolerated.
         </footer>
       </div>

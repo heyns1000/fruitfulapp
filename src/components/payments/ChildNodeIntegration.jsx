@@ -41,7 +41,7 @@ const childCode = `import React from 'react';
 
 const ChildPaymentWrapper = ({ cartItems, totalAmount, userEmail }) => {
   const MASTER_NODE = "${MASTER_NODE}";
-  const PAYSTACK_PUBLIC_KEY = "pk_test_492187d58d9a9e19fa2c1..."; // Shared key from Motherload
+  const PAYSTACK_PUBLIC_KEY = process.env.PAYSTACK_PUBLIC_KEY; // Set via App Secrets
 
   const handlePayment = () => {
     const metadata = {
