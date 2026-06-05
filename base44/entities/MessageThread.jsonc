@@ -87,43 +87,5 @@
   "required": [
     "artisanName",
     "buyerEmail"
-  ],
-  "rls": {
-    "create": {},
-    "read": {
-      "$or": [
-        {
-          "data.buyerEmail": "{{user.email}}"
-        },
-        {
-          "data.artisanEmail": "{{user.email}}"
-        },
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        }
-      ]
-    },
-    "update": {
-      "$or": [
-        {
-          "data.buyerEmail": "{{user.email}}"
-        },
-        {
-          "data.artisanEmail": "{{user.email}}"
-        },
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        }
-      ]
-    },
-    "delete": {
-      "user_condition": {
-        "role": "admin"
-      }
-    }
-  }
+  ]
 }
