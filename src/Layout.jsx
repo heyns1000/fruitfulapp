@@ -44,6 +44,7 @@ const NAV_LINKS = [
   { label: '⚡ PulseTrade', page: 'PulseTradeAnalytics' },
   { label: '🌐 Brand Explorer', page: 'BrandNodeExplorer' },
   { label: '🎨 Grand Mashadlela', page: 'GrandMashadlelaCollection' },
+  { label: '🛡️ Seedwave Admin', page: 'AdminSeedwave' },
 ];
 
 export default function Layout({ children, currentPageName }) {

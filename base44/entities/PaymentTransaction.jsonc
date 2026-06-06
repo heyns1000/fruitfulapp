@@ -1,0 +1,63 @@
+{
+  "name": "PaymentTransaction",
+  "type": "object",
+  "properties": {
+    "reference": {
+      "type": "string",
+      "description": "Paystack payment reference"
+    },
+    "brandId": {
+      "type": "string",
+      "description": "Brand this payment is tagged to"
+    },
+    "brandName": {
+      "type": "string"
+    },
+    "sectorKey": {
+      "type": "string",
+      "description": "Sector of the brand"
+    },
+    "email": {
+      "type": "string",
+      "description": "Payer email"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Amount in kobo/cents (smallest unit)"
+    },
+    "currency": {
+      "type": "string",
+      "default": "ZAR"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "success",
+        "failed",
+        "abandoned"
+      ],
+      "default": "pending"
+    },
+    "channel": {
+      "type": "string",
+      "description": "card, bank, ussd, etc."
+    },
+    "paystackData": {
+      "type": "object",
+      "description": "Raw Paystack callback data"
+    },
+    "description": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "reference",
+    "email",
+    "amount",
+    "currency"
+  ]
+}
