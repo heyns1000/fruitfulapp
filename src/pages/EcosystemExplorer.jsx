@@ -1,8 +1,10 @@
 import React, { useState, useMemo } from 'react';
-import { SECTOR_LIST, ECOSYSTEM_DATA } from '../components/data/ecosystemData';
+import { SECTOR_LIST } from '../components/data/ecosystemData';
+import { base44 } from '@/api/base44Client';
+import { useQuery } from '@tanstack/react-query';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { Search, ChevronDown, ChevronUp, Globe, DollarSign, Layers, Cpu, Network, LayoutGrid } from 'lucide-react';
+import { Search, ChevronDown, ChevronUp, Globe, DollarSign, Layers, Cpu, Network, LayoutGrid, Loader2 } from 'lucide-react';
 import NetworkMap from '../components/ecosystem/NetworkMap';
 
 const SECTOR_ICONS = Object.fromEntries(
@@ -15,23 +17,31 @@ export default function EcosystemExplorer() {
   const [expandedBrand, setExpandedBrand] = useState(null);
   const [view, setView] = useState('grid');
 
+  const { data: allBrands = [], isLoading } = useQuery({
+    queryKey: ['ecosystem-brands'],
+    queryFn: () => base44.entities.Brand.list(),
+  });
+
   const sectorBrands = useMemo(() => {
-    const raw = ECOSYSTEM_DATA[selectedSector] || [];
+    const raw = allBrands.filter(b => b.sector === selectedSector);
     if (!search.trim()) return raw;
     const q = search.toLowerCase();
     return raw.filter(b =>
       b.name.toLowerCase().includes(q) ||
-      b.subNodes.some(s => s.toLowerCase().includes(q))
+      b.subnodes?.some(s => s.toLowerCase().includes(q))
     );
-  }, [selectedSector, search]);
-
-  const totalLicenseValue = useMemo(() =>
-    sectorBrands.reduce((sum, b) => sum + b.masterLicensePrice, 0),
-  [sectorBrands]);
+  }, [allBrands, selectedSector, search]);
 
   const totalSubnodes = useMemo(() =>
-    sectorBrands.reduce((sum, b) => sum + b.subNodes.length, 0),
+    sectorBrands.reduce((sum, b) => sum + (b.subnodes?.length || 0), 0),
   [sectorBrands]);
+
+  // Count brands per sector from real data
+  const sectorCounts = useMemo(() => {
+    const counts = {};
+    allBrands.forEach(b => { counts[b.sector] = (counts[b.sector] || 0) + 1; });
+    return counts;
+  }, [allBrands]);
 
   const allSectors = Object.keys(SECTOR_LIST);
 
@@ -53,11 +63,11 @@ export default function EcosystemExplorer() {
           </div>
           <div className="flex items-center gap-2 bg-[#2d3748] border border-[#4a5568] px-4 py-2 rounded-xl">
             <Layers className="w-4 h-4 text-[#6ee7b7]" />
-            <span className="text-[#a0aec0]">{Object.values(ECOSYSTEM_DATA).reduce((s,arr) => s + arr.length, 0)} Core Brands</span>
+            <span className="text-[#a0aec0]">{allBrands.length} Core Brands</span>
           </div>
           <div className="flex items-center gap-2 bg-[#2d3748] border border-[#4a5568] px-4 py-2 rounded-xl">
             <Cpu className="w-4 h-4 text-[#fbd38d]" />
-            <span className="text-[#a0aec0]">{Object.values(ECOSYSTEM_DATA).reduce((s,arr) => s + arr.reduce((ss,b) => ss + b.subNodes.length, 0), 0)} Subnodes</span>
+            <span className="text-[#a0aec0]">{allBrands.reduce((s, b) => s + (b.subnodes?.length || 0), 0)} Subnodes</span>
           </div>
         </div>
       </header>
@@ -82,7 +92,6 @@ export default function EcosystemExplorer() {
           <p className="text-sm font-bold text-[#90cdf4] uppercase tracking-widest mb-4">Select Sector</p>
           <div className="flex flex-wrap gap-2">
             {allSectors.map(k => {
-              const hasData = ECOSYSTEM_DATA[k]?.length > 0;
               return (
                 <button
                   key={k}
@@ -90,13 +99,13 @@ export default function EcosystemExplorer() {
                   className={`px-3 py-1.5 rounded-lg text-sm font-medium border transition-all ${
                     selectedSector === k
                       ? 'bg-[#4299e1] border-[#4299e1] text-white shadow-lg'
-                      : hasData
+                      : sectorCounts[k]
                       ? 'border-[#4a5568] text-[#a0aec0] hover:border-[#63b3ed] hover:text-[#90cdf4]'
                       : 'border-[#2d3748] text-[#4a5568] cursor-default'
                   }`}
                 >
                   {SECTOR_LIST[k]}
-                  {hasData && <span className="ml-1 text-[10px] opacity-70">({ECOSYSTEM_DATA[k].length})</span>}
+                  {sectorCounts[k] && <span className="ml-1 text-[10px] opacity-70">({sectorCounts[k]})</span>}
                 </button>
               );
             })}
@@ -104,12 +113,11 @@ export default function EcosystemExplorer() {
         </div>}
 
         {/* Stats row — grid view only */}
-        {view === 'grid' && <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        {view === 'grid' && <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
           {[
-            { label: 'Brands in Sector', value: sectorBrands.length, color: 'text-[#6ee7b7]' },
-            { label: 'Total Subnodes', value: totalSubnodes, color: 'text-[#90cdf4]' },
-            { label: 'Avg License', value: `$${Math.round(totalLicenseValue / (sectorBrands.length || 1)).toLocaleString()}`, color: 'text-[#fbd38d]' },
-            { label: 'Total License Value', value: `$${totalLicenseValue.toLocaleString()}`, color: 'text-[#fc8181]' },
+            { label: 'Brands in Sector', value: isLoading ? '…' : sectorBrands.length, color: 'text-[#6ee7b7]' },
+            { label: 'Total Subnodes', value: isLoading ? '…' : totalSubnodes, color: 'text-[#90cdf4]' },
+            { label: 'AI-Generated', value: isLoading ? '…' : sectorBrands.filter(b => b.aiGenerated).length, color: 'text-[#fbd38d]' },
           ].map(s => (
             <div key={s.label} className="bg-[#2d3748] border border-[#4a5568] rounded-xl p-4 text-center">
               <p className={`text-2xl font-black ${s.color}`}>{s.value}</p>
@@ -138,49 +146,51 @@ export default function EcosystemExplorer() {
             </div>
           </div>
 
-          {sectorBrands.length === 0 ? (
+          {isLoading ? (
+            <div className="flex justify-center py-16">
+              <Loader2 className="w-8 h-8 animate-spin text-[#4299e1]" />
+            </div>
+          ) : sectorBrands.length === 0 ? (
             <div className="text-center py-16 text-[#4a5568]">
               <Globe className="w-12 h-12 mx-auto mb-3 opacity-40" />
               <p className="text-lg">No brands found{search ? ` for "${search}"` : ' in this sector yet'}.</p>
-              <p className="text-sm mt-1">Data will populate as brands are seeded from the ecosystem.</p>
+              <p className="text-sm mt-1">Add brands via Brand Onboarding to populate this sector.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {sectorBrands.map((brand, idx) => {
                 const isOpen = expandedBrand === idx;
+                const subnodes = brand.subnodes || [];
                 return (
                   <div
-                    key={brand.name + idx}
+                    key={brand.id || brand.name + idx}
                     className="bg-[#1a202c] border border-[#4a5568] rounded-xl overflow-hidden hover:border-[#63b3ed] hover:-translate-y-1 transition-all duration-300 cursor-pointer group"
                     onClick={() => setExpandedBrand(isOpen ? null : idx)}
                   >
-                    {/* Gradient overlay on hover */}
                     <div className="p-5">
                       <div className="text-4xl mb-3 leading-none">{SECTOR_ICONS[selectedSector] || '🔷'}</div>
                       <h3 className="text-lg font-black text-[#a7f3d0] group-hover:text-[#6ee7b7] transition-colors">
                         {brand.name}™
                       </h3>
-                      <p className="text-xs text-[#a0aec0] mt-1">{SECTOR_LIST[selectedSector]?.split(' ').slice(1).join(' ')}</p>
-                      <div className="flex items-center gap-1 mt-3">
-                        <DollarSign className="w-3.5 h-3.5 text-[#6ee7b7]" />
-                        <span className="text-[#6ee7b7] font-bold text-sm">${brand.masterLicensePrice.toLocaleString()}</span>
-                        <span className="text-[#4a5568] text-xs ml-1">/ master license</span>
-                      </div>
-                      {brand.subNodes.length > 0 && (
-                        <div className="flex items-center gap-1 mt-1.5 text-xs text-[#a0aec0]">
+                      <p className="text-xs text-[#a0aec0] mt-1 line-clamp-2">{brand.description || SECTOR_LIST[selectedSector]?.split(' ').slice(1).join(' ')}</p>
+                      {brand.aiGenerated && (
+                        <Badge className="mt-2 bg-[#2d3748] text-[#90cdf4] border border-[#4a5568] text-[10px]">AI Generated</Badge>
+                      )}
+                      {subnodes.length > 0 && (
+                        <div className="flex items-center gap-1 mt-3 text-xs text-[#a0aec0]">
                           <Layers className="w-3 h-3" />
-                          {brand.subNodes.length} subnodes
+                          {subnodes.length} subnodes
                           {isOpen ? <ChevronUp className="w-3 h-3 ml-auto text-[#90cdf4]" /> : <ChevronDown className="w-3 h-3 ml-auto text-[#4a5568]" />}
                         </div>
                       )}
                     </div>
 
                     {/* Subnodes (expanded) */}
-                    {isOpen && brand.subNodes.length > 0 && (
+                    {isOpen && subnodes.length > 0 && (
                       <div className="border-t border-[#4a5568] px-5 pb-4 pt-3 bg-[#171e2b]">
                         <p className="text-[10px] font-bold tracking-widest text-[#90cdf4] uppercase mb-2">Subnodes</p>
                         <ul className="space-y-1">
-                          {brand.subNodes.map((node, ni) => (
+                          {subnodes.map((node, ni) => (
                             <li key={ni} className="flex items-center gap-2 text-xs text-[#a0aec0]">
                               <span className="text-[#6ee7b7] font-bold">•</span>
                               {node}
