@@ -8,7 +8,8 @@ import ServiceListing from '../components/marketplace/ServiceListing';
 import OrderManagement from '../components/marketplace/OrderManagement';
 import FeaturedArtisans from '../components/marketplace/FeaturedArtisans';
 import MarketplaceAIAssistant from '../components/marketplace/MarketplaceAIAssistant';
-import { Loader2, Store, ShoppingBag, Plus, Package } from 'lucide-react';
+import ProductCSVImporter from '../components/marketplace/ProductCSVImporter';
+import { Loader2, Store, ShoppingBag, Plus, Package, Upload } from 'lucide-react';
 
 export default function Marketplace() {
   const [selectedTab, setSelectedTab] = useState('browse');
@@ -46,6 +47,7 @@ export default function Marketplace() {
     { val: 'homemart', label: '🛍️ Homemart Bibs', icon: Package },
     { val: 'list', label: 'List a Service', icon: Plus },
     { val: 'orders', label: 'Orders', icon: Package },
+    { val: 'import', label: 'Import CSV', icon: Upload },
   ];
 
   return (
@@ -105,6 +107,10 @@ export default function Marketplace() {
 
           <TabsContent value="list">
             <OrderManagement orders={orders} />
+          </TabsContent>
+
+          <TabsContent value="import">
+            <ProductCSVImporter />
           </TabsContent>
         </Tabs>
       </div>
