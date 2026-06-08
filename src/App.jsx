@@ -13,6 +13,8 @@ import ArtisanShop from './pages/ArtisanShop'
 import AdminSeedwave from './pages/AdminSeedwave'
 import FruitfulKiosk from './pages/FruitfulKiosk'
 import BanimalDashboard from './pages/BanimalDashboard'
+import SectorAdminHub from './pages/SectorAdminHub'
+import DataSyncCenter from './pages/DataSyncCenter'
 import GrandMashadlelaCollection from './pages/GrandMashadlelaCollection'
 import SubscriptionShop from './pages/SubscriptionShop'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -82,6 +84,8 @@ const AuthenticatedApp = () => {
       <Route path="/AdminSeedwave" element={<LayoutWrapper currentPageName="AdminSeedwave"><AdminSeedwave /></LayoutWrapper>} />
       <Route path="/FruitfulKiosk" element={<LayoutWrapper currentPageName="FruitfulKiosk"><FruitfulKiosk /></LayoutWrapper>} />
       <Route path="/BanimalDashboard" element={<LayoutWrapper currentPageName="BanimalDashboard"><BanimalDashboard /></LayoutWrapper>} />
+      <Route path="/SectorAdminHub" element={<LayoutWrapper currentPageName="SectorAdminHub"><SectorAdminHub /></LayoutWrapper>} />
+      <Route path="/DataSyncCenter" element={<LayoutWrapper currentPageName="DataSyncCenter"><DataSyncCenter /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

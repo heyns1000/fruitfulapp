@@ -45,6 +45,8 @@ const NAV_LINKS = [
   { label: '🌐 Brand Explorer', page: 'BrandNodeExplorer' },
   { label: '🎨 Grand Mashadlela', page: 'GrandMashadlelaCollection' },
   { label: '🛡️ Seedwave Admin', page: 'AdminSeedwave' },
+  { label: '⚙️ Sector Hub', page: 'SectorAdminHub' },
+  { label: '🔄 Data Sync', page: 'DataSyncCenter' },
 ];
 
 export default function Layout({ children, currentPageName }) {
