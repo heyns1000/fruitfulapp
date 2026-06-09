@@ -191,61 +191,73 @@ export default function Dashboard() {
 
         {/* Main Tabs */}
         <Tabs value={selectedSector} onValueChange={setSelectedSector} className="space-y-6">
+
+          {/* ── PAGE NAVIGATION GRID ── */}
+          <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl border-2 border-teal-200 p-5">
+            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-teal-600 mb-4">✦ Platform Navigation — All Pages</p>
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
+              {[
+                { href: '/Marketplace',            emoji: '🛍️', label: 'Marketplace',     bg: '#7c3aed' },
+                { href: '/ArtisanShop',            emoji: '🎨', label: 'Artisan Shop',     bg: '#db2777' },
+                { href: '/SubscriptionShop',       emoji: '🛒', label: 'Sub Shop',         bg: '#e11d48' },
+                { href: '/GrandMashadlelaCollection', emoji: '🎩', label: 'Mashadlela',    bg: '#b45309' },
+                { href: '/Banimal',                emoji: '🐾', label: 'Banimal™',         bg: '#ea580c' },
+                { href: '/BanimalDashboard',       emoji: '🦁', label: 'Banimal Dash',     bg: '#dc2626' },
+                { href: '/VaultMesh',              emoji: '🔐', label: 'VaultMesh™',       bg: '#059669' },
+                { href: '/Payments',               emoji: '💳', label: 'Payments',         bg: '#2563eb' },
+                { href: '/AppBuilder',             emoji: '🏗️', label: 'App Builder',      bg: '#6d28d9' },
+                { href: '/EcosystemExplorer',      emoji: '🌐', label: 'Ecosystem',        bg: '#0d9488' },
+                { href: '/Analytics',              emoji: '📊', label: 'Analytics',        bg: '#0891b2' },
+                { href: '/SectorAnalytics',        emoji: '📈', label: 'Sector Stats',     bg: '#0369a1' },
+                { href: '/CollaborationSuite',     emoji: '🤝', label: 'Collab Suite',     bg: '#4f46e5' },
+                { href: '/LoyaltyProgram',         emoji: '🏆', label: 'Loyalty',          bg: '#ca8a04' },
+                { href: '/MySubscriptions',        emoji: '💎', label: 'My Plans',         bg: '#65a30d' },
+                { href: '/ArtisanDashboard',       emoji: '🖌️', label: 'My Shop',          bg: '#c026d3' },
+                { href: '/ArtisanFinancials',      emoji: '💰', label: 'Financials',       bg: '#16a34a' },
+                { href: '/OrderHistory',           emoji: '📦', label: 'Orders',           bg: '#c2410c' },
+                { href: '/OrderDashboard',         emoji: '🚚', label: 'Order Dash',       bg: '#b91c1c' },
+                { href: '/OrderFulfillment',       emoji: '📋', label: 'Fulfillment',      bg: '#475569' },
+                { href: '/Messages',               emoji: '💬', label: 'Messages',         bg: '#1d4ed8' },
+                { href: '/Wishlist',               emoji: '❤️', label: 'Wishlist',         bg: '#be185d' },
+                { href: '/SubscriptionBoxes',      emoji: '🎁', label: 'Sub Boxes',        bg: '#7e22ce' },
+                { href: '/DiscoveryEngine',        emoji: '🔍', label: 'Discovery',        bg: '#0f766e' },
+                { href: '/MarketIntelligence',     emoji: '🧠', label: 'Intelligence',     bg: '#3730a3' },
+                { href: '/AutomationEngine',       emoji: '⚡', label: 'Automation',       bg: '#0e7490' },
+                { href: '/GlobalBrandMap',         emoji: '🗺️', label: 'Global Map',       bg: '#047857' },
+                { href: '/VideoScriptStudio',      emoji: '🎬', label: 'Video Studio',     bg: '#991b1b' },
+                { href: '/AssetLibrary',           emoji: '🖼️', label: 'Asset Library',    bg: '#92400e' },
+                { href: '/ContentGenerator',       emoji: '✍️', label: 'AI Content',       bg: '#5b21b6' },
+                { href: '/BrandOnboarding',        emoji: '🏢', label: 'Onboard Brand',    bg: '#075985' },
+                { href: '/Gallery',                emoji: '🎭', label: 'Gallery',          bg: '#86198f' },
+                { href: '/AdminSeedwave',          emoji: '🛡️', label: 'Seedwave Admin',   bg: '#334155' },
+                { href: '/SectorAdminHub',         emoji: '⚙️', label: 'Sector Hub',       bg: '#374151' },
+                { href: '/DataSyncCenter',         emoji: '🔄', label: 'Data Sync',        bg: '#1f2937' },
+                { href: '/PulseTradeAnalytics',    emoji: '⚡', label: 'PulseTrade',       bg: '#78350f' },
+                { href: '/BrandNodeExplorer',      emoji: '🌿', label: 'Brand Explorer',   bg: '#134e4a' },
+                { href: '/CareGrainsMap',          emoji: '🖤', label: 'Care Grains',      bg: '#1c1917' },
+                { href: '/ShananaCheckout',        emoji: '🐘', label: 'Shanana™',         bg: '#064e3b' },
+                { href: '/FruitfulKiosk',          emoji: '☕', label: 'Kiosk',            bg: '#78350f' },
+                { href: '/HomemartListing',        emoji: '🏠', label: 'Homemart',         bg: '#9a3412' },
+              ].map(({ href, emoji, label, bg }) => (
+                <a key={href} href={href} className="group block">
+                  <div
+                    className="flex flex-col items-center justify-center gap-1.5 p-3 rounded-xl text-white text-center transition-all duration-200 hover:scale-105 hover:shadow-lg active:scale-95 cursor-pointer"
+                    style={{ backgroundColor: bg }}
+                  >
+                    <span className="text-2xl leading-none">{emoji}</span>
+                    <span className="text-[10px] font-bold leading-tight tracking-wide">{label}</span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* ── SECTOR TABS ── */}
           <TabsList className="flex flex-wrap gap-2 h-auto bg-white/90 backdrop-blur-sm p-4 rounded-xl shadow-xl border-2 border-teal-200">
-            <TabsTrigger value="admin" className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white">⚙️ Admin Panel</TabsTrigger>
-            <TabsTrigger value="collaborations" className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white">🤝 Collaborations</TabsTrigger>
-            {/* Quick-nav links to all major pages */}
-            {[
-              { href: '/Marketplace', label: '🛍️ Marketplace', color: 'bg-purple-600' },
-              { href: '/ArtisanShop', label: '🎨 Artisan Shop', color: 'bg-pink-600' },
-              { href: '/SubscriptionShop', label: '🛒 Sub Shop', color: 'bg-rose-600' },
-              { href: '/GrandMashadlelaCollection', label: '🎨 Mashadlela', color: 'bg-amber-600' },
-              { href: '/Banimal', label: '⚡ Banimal™', color: 'bg-orange-600' },
-              { href: '/BanimalDashboard', label: '🦁 Banimal Dash', color: 'bg-red-600' },
-              { href: '/VaultMesh', label: '🔐 VaultMesh™', color: 'bg-emerald-600' },
-              { href: '/Payments', label: '💳 Payments', color: 'bg-blue-600' },
-              { href: '/AppBuilder', label: '🏗️ App Builder', color: 'bg-violet-600' },
-              { href: '/EcosystemExplorer', label: '🌐 Ecosystem', color: 'bg-teal-600' },
-              { href: '/Analytics', label: '📊 Analytics', color: 'bg-cyan-600' },
-              { href: '/SectorAnalytics', label: '📈 Sector Analytics', color: 'bg-sky-600' },
-              { href: '/CollaborationSuite', label: '🤝 Collab Suite', color: 'bg-indigo-500' },
-              { href: '/LoyaltyProgram', label: '🏆 Loyalty', color: 'bg-yellow-600' },
-              { href: '/MySubscriptions', label: '💳 My Plans', color: 'bg-lime-600' },
-              { href: '/ArtisanDashboard', label: '🎨 My Shop', color: 'bg-fuchsia-600' },
-              { href: '/ArtisanFinancials', label: '💰 Financials', color: 'bg-green-700' },
-              { href: '/OrderHistory', label: '📦 Orders', color: 'bg-orange-700' },
-              { href: '/OrderDashboard', label: '🚚 Order Dash', color: 'bg-red-700' },
-              { href: '/OrderFulfillment', label: '📋 Fulfillment', color: 'bg-slate-600' },
-              { href: '/Messages', label: '💬 Messages', color: 'bg-blue-700' },
-              { href: '/Wishlist', label: '❤️ Wishlist', color: 'bg-pink-700' },
-              { href: '/SubscriptionBoxes', label: '📦 Sub Boxes', color: 'bg-purple-700' },
-              { href: '/DiscoveryEngine', label: '🔍 Discovery', color: 'bg-teal-700' },
-              { href: '/MarketIntelligence', label: '📊 Intelligence', color: 'bg-indigo-700' },
-              { href: '/AutomationEngine', label: '⚡ Automation', color: 'bg-cyan-700' },
-              { href: '/GlobalBrandMap', label: '🗺️ Global Map', color: 'bg-emerald-700' },
-              { href: '/VideoScriptStudio', label: '🎬 Video Studio', color: 'bg-red-800' },
-              { href: '/AssetLibrary', label: '🖼️ Asset Library', color: 'bg-amber-700' },
-              { href: '/ContentGenerator', label: '✍️ AI Content', color: 'bg-violet-700' },
-              { href: '/BrandOnboarding', label: '🏢 Onboard Brand', color: 'bg-sky-700' },
-              { href: '/Gallery', label: '🖼️ Gallery', color: 'bg-fuchsia-700' },
-              { href: '/AdminSeedwave', label: '🛡️ Seedwave Admin', color: 'bg-slate-700' },
-              { href: '/SectorAdminHub', label: '⚙️ Sector Hub', color: 'bg-gray-700' },
-              { href: '/DataSyncCenter', label: '🔄 Data Sync', color: 'bg-zinc-700' },
-              { href: '/PulseTradeAnalytics', label: '⚡ PulseTrade', color: 'bg-amber-800' },
-              { href: '/BrandNodeExplorer', label: '🌐 Brand Explorer', color: 'bg-teal-800' },
-              { href: '/CareGrainsMap', label: '🖤 Care Grains', color: 'bg-stone-700' },
-              { href: '/ShananaCheckout', label: '🐘 Shanana™', color: 'bg-emerald-800' },
-              { href: '/FruitfulKiosk', label: '☕ Kiosk', color: 'bg-brown-600 bg-amber-900' },
-              { href: '/HomemartListing', label: '🏠 Homemart', color: 'bg-orange-800' },
-            ].map(({ href, label, color }) => (
-              <a key={href} href={href}>
-                <button className={`px-3 py-1.5 rounded-lg text-xs font-bold text-white whitespace-nowrap transition-all hover:opacity-80 ${color}`}>
-                  {label}
-                </button>
-              </a>
-            ))}
+            <TabsTrigger value="admin" className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white font-semibold">⚙️ Admin Panel</TabsTrigger>
+            <TabsTrigger value="collaborations" className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white font-semibold">🤝 Collaborations</TabsTrigger>
             {Object.entries(SECTORS).map(([key, label]) => (
-              <TabsTrigger key={key} value={key} className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white text-sm">
+              <TabsTrigger key={key} value={key} className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white text-sm font-medium">
                 {label}
               </TabsTrigger>
             ))}

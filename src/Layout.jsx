@@ -59,12 +59,11 @@ export default function Layout({ children, currentPageName }) {
       <TreatyMonitor />
       <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-teal-50 to-green-50">
         {/* Global Fruitful Banner Ad */}
-        <a href="/BanimalDashboard" className="block w-full">
+        <a href="/BanimalDashboard" className="block w-full overflow-hidden bg-[#a89080]" style={{ aspectRatio: '1440/120' }}>
           <img
             src="https://media.base44.com/images/public/6953a072de46207f94f2b9d2/1f1c5f1b0_banner_copy.png"
             alt="Fruitful™ — BUY ARTISAN. CREATE APPS. EAT PANCAKES."
-            className="w-full object-cover"
-            style={{ maxHeight: '80px', objectPosition: 'center' }}
+            className="w-full h-full object-cover object-center"
           />
         </a>
         {/* Top Navigation Bar */}
