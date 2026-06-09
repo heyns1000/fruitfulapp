@@ -30,8 +30,14 @@ export default function ServiceMarketplace({ services }) {
   const { toggleWishlist, isInWishlist } = useWishlist();
   const navigate = useNavigate();
 
-  // Only show products that have a proper brandId AND brandName (no orphaned/mock items)
-  const activeServices = services.filter(s => s.status === 'active' && s.brandId && s.brandName);
+  // Strict: only active products with both brandId and brandName, no orphaned/cross-pollinated items
+  const activeServices = services.filter(s =>
+    s.status === 'active' &&
+    s.brandId &&
+    s.brandName &&
+    s.productCode &&
+    s.serviceName
+  );
 
   // Derive filter options from data
   const allTags = useMemo(() => {

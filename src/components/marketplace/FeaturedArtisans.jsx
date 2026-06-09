@@ -25,8 +25,11 @@ export default function FeaturedArtisans({ services = [] }) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {artisans.map(artisan => {
+          // Strict: only products explicitly linked to this artisan's brand
           const artisanServices = services.filter(s =>
-            s.brandId === artisan.brandId || s.brandName === artisan.brandName
+            s.status === 'active' &&
+            s.brandId && artisan.brandId &&
+            s.brandId === artisan.brandId
           );
           const avgRating = artisan.testimonials?.length
             ? (artisan.testimonials.reduce((s, t) => s + (t.rating || 0), 0) / artisan.testimonials.length).toFixed(1)

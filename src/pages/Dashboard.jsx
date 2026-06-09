@@ -96,31 +96,61 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-teal-50 to-green-50 relative overflow-hidden">
-      {/* Artistic background elements */}
-      <div className="fixed inset-0 pointer-events-none opacity-[0.07] overflow-hidden">
-        <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6953a072de46207f94f2b9d2/de7b64647_Nikon_1753263376703.png" alt="" className="absolute top-10 right-10 w-64 h-64 object-contain" />
-        <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6953a072de46207f94f2b9d2/80c4597b5_3_1753260859823.png" alt="" className="absolute bottom-10 left-10 w-72 h-72 object-contain rotate-12" />
-        <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6953a072de46207f94f2b9d2/bdd987cfa_1st_eye_1753263376706.png" alt="" className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 object-contain opacity-50" />
-      </div>
+    <div className="min-h-screen bg-gradient-to-b from-[#001a0f] via-[#012b19] to-[#001a0f] relative overflow-hidden">
+      {/* Subtle dot-grid background */}
+      <div className="fixed inset-0 pointer-events-none opacity-[0.06]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #00ff99 1px, transparent 0)', backgroundSize: '32px 32px' }} />
 
-      {/* Main Header */}
-      <header className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white py-10 mb-8 shadow-2xl relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/10" />
-        <div className="container mx-auto px-4 sm:px-6 text-center relative z-10">
-          <div className="flex items-center justify-center gap-4 mb-3">
-            <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6953a072de46207f94f2b9d2/52acd159d_Chief_02_1753263376705.png" alt="FAA" className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow-2xl" />
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold drop-shadow-lg">FAA.ZONE™</h1>
+      {/* Main Header — clean, proportioned */}
+      <header className="relative overflow-hidden border-b border-[#00ff9920]" style={{ background: '#011f0e' }}>
+        <div className="container mx-auto px-6 py-8 relative z-10">
+          <div className="flex items-center gap-5">
+            <img
+              src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6953a072de46207f94f2b9d2/52acd159d_Chief_02_1753263376705.png"
+              alt="FAA Chief"
+              className="w-14 h-14 object-contain rounded-xl"
+              style={{ filter: 'drop-shadow(0 0 10px #00ffc855)' }}
+            />
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-black tracking-tight" style={{ color: '#00ffc8', textShadow: '0 0 12px #00ffcc66' }}>
+                FAA.ZONE™
+              </h1>
+              <p className="text-xs font-semibold mt-0.5" style={{ color: '#9dfcdc99' }}>
+                Financial Allocation Architecture · Seeds of Appreciation · Live Grid
+              </p>
+            </div>
+            <div className="ml-auto hidden sm:flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-xs font-bold" style={{ color: '#00ff9980' }}>Pulse Grid Active</span>
+            </div>
           </div>
-          <p className="text-base sm:text-lg opacity-95 mt-2 font-semibold">The Earth's Financial Allocation Architecture</p>
-          <p className="text-xs sm:text-sm opacity-80 mt-1">Live Omni-View Pulse Grid · Seeds of Appreciation</p>
         </div>
       </header>
 
       <div className="container mx-auto px-4 sm:px-6 pb-12 relative z-10">
 
+        {/* ── SMART GRID SCROLL BLOCKS — Fruitful Global Planet (subtle) ── */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 py-6">
+          {[
+            { emoji: '🌀', title: 'Enter Grid', desc: 'Navigate the full 2.3M item index' },
+            { emoji: '🔍', title: 'Explore Industries', desc: 'Every scroll-certified category' },
+            { emoji: '🌱', title: 'Deploy Brand', desc: 'Start your vault-verified product' },
+            { emoji: '⚙️', title: 'API Config', desc: 'PulseTrade, ClaimRoot, HSOMNI9000' },
+            { emoji: '🧬', title: 'Treaty Brands', desc: 'Biowave ancestral scroll commerce' },
+            { emoji: '📦', title: 'Logistics', desc: 'Vault-locked token routing' },
+            { emoji: '🌿', title: 'Bioregional', desc: 'Root-based pulse-verified goods' },
+            { emoji: '📚', title: 'Scroll Library', desc: 'Glyphs, treaties & signals' },
+          ].map(({ emoji, title, desc }) => (
+            <div key={title}
+              className="rounded-xl p-4 border-l-2 transition-all duration-300 hover:scale-[1.02] cursor-default"
+              style={{ background: 'rgba(0,70,35,0.55)', borderColor: '#00ff99', boxShadow: '0 0 10px rgba(0,255,160,0.12)' }}>
+              <p className="text-lg mb-1">{emoji} <span className="font-bold text-sm" style={{ color: '#b5ffe5' }}>{title}</span></p>
+              <p className="text-[11px] leading-relaxed" style={{ color: '#9dfcdc80' }}>{desc}</p>
+            </div>
+          ))}
+        </div>
+
         {/* ── SEEDWAVE CORE BRAND HEADER ── */}
-        <header className="bg-gradient-to-r from-purple-900 via-indigo-900 to-stone-900 text-white mb-8 shadow-xl rounded-2xl relative overflow-hidden border border-purple-500/30">
+        <header className="text-white mb-8 shadow-xl rounded-2xl relative overflow-hidden border border-purple-500/30" style={{ background: 'linear-gradient(135deg, #2d1b69, #1e3a5f, #1a1a2e)' }}>
           {/* Dot grid */}
           <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #a855f7 1px, transparent 0)', backgroundSize: '28px 28px' }} />
           <div className="absolute top-0 right-0 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl pointer-events-none" />
@@ -193,8 +223,8 @@ export default function Dashboard() {
         <Tabs value={selectedSector} onValueChange={setSelectedSector} className="space-y-6">
 
           {/* ── PAGE NAVIGATION GRID ── */}
-          <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl border-2 border-teal-200 p-5">
-            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-teal-600 mb-4">✦ Platform Navigation — All Pages</p>
+          <div className="rounded-2xl shadow-xl border p-5" style={{ background: 'rgba(0,40,20,0.7)', borderColor: '#00ff9930' }}>
+            <p className="text-[10px] font-black uppercase tracking-[0.3em] mb-4" style={{ color: '#00ffc8' }}>✦ Platform Navigation — All Pages</p>
             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
               {[
                 { href: '/Marketplace',            emoji: '🛍️', label: 'Marketplace',     bg: '#7c3aed' },
@@ -253,11 +283,11 @@ export default function Dashboard() {
           </div>
 
           {/* ── SECTOR TABS ── */}
-          <TabsList className="flex flex-wrap gap-2 h-auto bg-white/90 backdrop-blur-sm p-4 rounded-xl shadow-xl border-2 border-teal-200">
-            <TabsTrigger value="admin" className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white font-semibold">⚙️ Admin Panel</TabsTrigger>
-            <TabsTrigger value="collaborations" className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white font-semibold">🤝 Collaborations</TabsTrigger>
+          <TabsList className="flex flex-wrap gap-2 h-auto p-4 rounded-xl shadow-xl border" style={{ background: 'rgba(0,30,15,0.8)', borderColor: '#00ff9930' }}>
+            <TabsTrigger value="admin" className="data-[state=active]:bg-emerald-700 data-[state=active]:text-white font-semibold text-slate-300">⚙️ Admin Panel</TabsTrigger>
+            <TabsTrigger value="collaborations" className="data-[state=active]:bg-emerald-700 data-[state=active]:text-white font-semibold text-slate-300">🤝 Collaborations</TabsTrigger>
             {Object.entries(SECTORS).map(([key, label]) => (
-              <TabsTrigger key={key} value={key} className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white text-sm font-medium">
+              <TabsTrigger key={key} value={key} className="data-[state=active]:bg-emerald-700 data-[state=active]:text-white text-sm font-medium text-slate-400">
                 {label}
               </TabsTrigger>
             ))}
@@ -273,23 +303,23 @@ export default function Dashboard() {
             <AdminPanel onBrandAdded={handleBrandAdded} />
             <BrandManager />
 
-            <div className="bg-white rounded-lg shadow p-6">
-              <h2 className="text-xl font-bold mb-4 text-indigo-700">📊 All Brands Overview</h2>
+            <div className="rounded-xl border p-6" style={{ background: 'rgba(0,30,15,0.7)', borderColor: '#00ff9920' }}>
+              <h2 className="text-lg font-black mb-4" style={{ color: '#00ffc8' }}>📊 All Brands Overview</h2>
               {brands.length === 0 ? (
-                <p className="text-gray-500">No brands added yet. Use the admin panel above to add your first brand.</p>
+                <p style={{ color: '#9dfcdc60' }}>No brands yet. Add via admin panel above.</p>
               ) : (
                 <div className="space-y-4">
                   {Object.entries(SECTORS).map(([sectorKey, sectorName]) => {
                     const sectorBrands = getBrandsBySector(sectorKey);
                     if (sectorBrands.length === 0) return null;
                     return (
-                      <div key={sectorKey} className="border-b pb-4 last:border-b-0">
-                        <h3 className="font-semibold text-lg text-gray-800 mb-2">{sectorName}</h3>
+                      <div key={sectorKey} className="border-b pb-4 last:border-b-0" style={{ borderColor: '#00ff9915' }}>
+                        <h3 className="font-semibold text-sm mb-2" style={{ color: '#b5ffe5' }}>{sectorName}</h3>
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
                           {sectorBrands.map(brand => (
-                            <div key={brand.id} className="bg-gray-50 p-2 rounded text-sm">
-                              <span className="font-medium">{brand.name}™</span>
-                              <div className="text-xs text-gray-500 mt-1">{brand.subnodes?.length || 0} subnodes</div>
+                            <div key={brand.id} className="rounded-lg p-2 text-xs" style={{ background: 'rgba(0,70,35,0.5)', border: '1px solid #00ff9920' }}>
+                              <span className="font-bold" style={{ color: '#b5ffe5' }}>{brand.name}™</span>
+                              <div className="mt-0.5" style={{ color: '#9dfcdc60' }}>{brand.subnodes?.length || 0} subnodes</div>
                             </div>
                           ))}
                         </div>
@@ -307,13 +337,13 @@ export default function Dashboard() {
 
           {Object.entries(SECTORS).map(([sectorKey, sectorName]) => (
             <TabsContent key={sectorKey} value={sectorKey}>
-              <div className="bg-white rounded-lg shadow p-6">
+              <div className="rounded-xl border p-6" style={{ background: 'rgba(0,30,15,0.7)', borderColor: '#00ff9920' }}>
                 <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-2xl font-bold text-indigo-700">{sectorName} Dashboard</h2>
-                  <span className="text-sm text-gray-500">{getBrandsBySector(sectorKey).length} brands</span>
+                  <h2 className="text-xl font-black" style={{ color: '#00ffc8' }}>{sectorName}</h2>
+                  <span className="text-xs font-bold px-3 py-1 rounded-full" style={{ background: 'rgba(0,255,160,0.1)', color: '#00ff99' }}>{getBrandsBySector(sectorKey).length} brands</span>
                 </div>
                 {getBrandsBySector(sectorKey).length === 0 ? (
-                  <p className="text-gray-500 text-center py-8">No brands in this sector yet. Add some using the Admin Panel.</p>
+                  <p className="text-center py-8 text-sm" style={{ color: '#9dfcdc50' }}>No brands in this sector yet.</p>
                 ) : (
                   <SectorGrid brands={getBrandsBySector(sectorKey)} sectorKey={sectorKey} sectorName={sectorName} />
                 )}
@@ -324,22 +354,9 @@ export default function Dashboard() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-gradient-to-r from-gray-800 via-gray-900 to-black text-gray-300 py-10 mt-12 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6953a072de46207f94f2b9d2/bdd987cfa_1st_eye_1753263376706.png" alt="" className="absolute right-10 bottom-0 w-40 h-40 object-contain" />
-        </div>
-        <div className="container mx-auto px-4 sm:px-6 relative z-10">
-          <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
-            <div className="flex items-center gap-3">
-              <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6953a072de46207f94f2b9d2/de7b64647_Nikon_1753263376703.png" alt="" className="w-12 h-12 object-contain opacity-80" />
-              <div className="text-lg font-bold text-white">FAA.ZONE™</div>
-            </div>
-            <p className="text-xs sm:text-sm">ScrollGrid · PulseTrade Certified · TreatyMesh Validated</p>
-          </div>
-          <p className="text-xs text-gray-500 mt-6 text-center">
-            © 2025 Fruitful Holdings (Pty) Ltd. · Seeds of Appreciation · All rights reserved.
-          </p>
-        </div>
+      <footer className="border-t py-6 mt-8 text-center" style={{ background: '#012b19', borderColor: '#00ff9920', color: '#9dfcdc' }}>
+        <p className="text-xs">🛡️ Powered by HSOMNI9000 · FAA.Zone Grid Protocol · ScrollGrid · PulseTrade Certified · TreatyMesh Validated</p>
+        <p className="text-xs mt-1" style={{ color: '#9dfcdc60' }}>© 2026 Fruitful Holdings (Pty) Ltd · Seeds of Appreciation · Glyphs Pulse Every 9s</p>
       </footer>
     </div>
   );
