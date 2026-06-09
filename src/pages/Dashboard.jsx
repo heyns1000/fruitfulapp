@@ -194,12 +194,56 @@ export default function Dashboard() {
           <TabsList className="flex flex-wrap gap-2 h-auto bg-white/90 backdrop-blur-sm p-4 rounded-xl shadow-xl border-2 border-teal-200">
             <TabsTrigger value="admin" className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white">⚙️ Admin Panel</TabsTrigger>
             <TabsTrigger value="collaborations" className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white">🤝 Collaborations</TabsTrigger>
-            <TabsTrigger value="banimal" className="data-[state=active]:bg-orange-600 data-[state=active]:text-white" onClick={() => window.location.href = '/Banimal'}>⚡ Banimal™</TabsTrigger>
-            <TabsTrigger value="vaultmesh" className="data-[state=active]:bg-emerald-600 data-[state=active]:text-white" onClick={() => window.location.href = '/VaultMesh'}>🔐 VaultMesh™</TabsTrigger>
-            <TabsTrigger value="payments" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white" onClick={() => window.location.href = '/Payments'}>💳 Payments</TabsTrigger>
-            <TabsTrigger value="marketplace" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white" onClick={() => window.location.href = '/Marketplace'}>🛍️ Marketplace</TabsTrigger>
-            <TabsTrigger value="appbuilder" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white" onClick={() => window.location.href = '/AppBuilder'}>⚡ App Builder</TabsTrigger>
-            <TabsTrigger value="ecosystem" className="data-[state=active]:bg-teal-600 data-[state=active]:text-white" onClick={() => window.location.href = '/EcosystemExplorer'}>🌐 Ecosystem Explorer</TabsTrigger>
+            {/* Quick-nav links to all major pages */}
+            {[
+              { href: '/Marketplace', label: '🛍️ Marketplace', color: 'bg-purple-600' },
+              { href: '/ArtisanShop', label: '🎨 Artisan Shop', color: 'bg-pink-600' },
+              { href: '/SubscriptionShop', label: '🛒 Sub Shop', color: 'bg-rose-600' },
+              { href: '/GrandMashadlelaCollection', label: '🎨 Mashadlela', color: 'bg-amber-600' },
+              { href: '/Banimal', label: '⚡ Banimal™', color: 'bg-orange-600' },
+              { href: '/BanimalDashboard', label: '🦁 Banimal Dash', color: 'bg-red-600' },
+              { href: '/VaultMesh', label: '🔐 VaultMesh™', color: 'bg-emerald-600' },
+              { href: '/Payments', label: '💳 Payments', color: 'bg-blue-600' },
+              { href: '/AppBuilder', label: '🏗️ App Builder', color: 'bg-violet-600' },
+              { href: '/EcosystemExplorer', label: '🌐 Ecosystem', color: 'bg-teal-600' },
+              { href: '/Analytics', label: '📊 Analytics', color: 'bg-cyan-600' },
+              { href: '/SectorAnalytics', label: '📈 Sector Analytics', color: 'bg-sky-600' },
+              { href: '/CollaborationSuite', label: '🤝 Collab Suite', color: 'bg-indigo-500' },
+              { href: '/LoyaltyProgram', label: '🏆 Loyalty', color: 'bg-yellow-600' },
+              { href: '/MySubscriptions', label: '💳 My Plans', color: 'bg-lime-600' },
+              { href: '/ArtisanDashboard', label: '🎨 My Shop', color: 'bg-fuchsia-600' },
+              { href: '/ArtisanFinancials', label: '💰 Financials', color: 'bg-green-700' },
+              { href: '/OrderHistory', label: '📦 Orders', color: 'bg-orange-700' },
+              { href: '/OrderDashboard', label: '🚚 Order Dash', color: 'bg-red-700' },
+              { href: '/OrderFulfillment', label: '📋 Fulfillment', color: 'bg-slate-600' },
+              { href: '/Messages', label: '💬 Messages', color: 'bg-blue-700' },
+              { href: '/Wishlist', label: '❤️ Wishlist', color: 'bg-pink-700' },
+              { href: '/SubscriptionBoxes', label: '📦 Sub Boxes', color: 'bg-purple-700' },
+              { href: '/DiscoveryEngine', label: '🔍 Discovery', color: 'bg-teal-700' },
+              { href: '/MarketIntelligence', label: '📊 Intelligence', color: 'bg-indigo-700' },
+              { href: '/AutomationEngine', label: '⚡ Automation', color: 'bg-cyan-700' },
+              { href: '/GlobalBrandMap', label: '🗺️ Global Map', color: 'bg-emerald-700' },
+              { href: '/VideoScriptStudio', label: '🎬 Video Studio', color: 'bg-red-800' },
+              { href: '/AssetLibrary', label: '🖼️ Asset Library', color: 'bg-amber-700' },
+              { href: '/ContentGenerator', label: '✍️ AI Content', color: 'bg-violet-700' },
+              { href: '/BrandOnboarding', label: '🏢 Onboard Brand', color: 'bg-sky-700' },
+              { href: '/Gallery', label: '🖼️ Gallery', color: 'bg-fuchsia-700' },
+              { href: '/AdminSeedwave', label: '🛡️ Seedwave Admin', color: 'bg-slate-700' },
+              { href: '/SectorAdminHub', label: '⚙️ Sector Hub', color: 'bg-gray-700' },
+              { href: '/DataSyncCenter', label: '🔄 Data Sync', color: 'bg-zinc-700' },
+              { href: '/PulseTradeAnalytics', label: '⚡ PulseTrade', color: 'bg-amber-800' },
+              { href: '/BrandNodeExplorer', label: '🌐 Brand Explorer', color: 'bg-teal-800' },
+              { href: '/CareGrainsMap', label: '🖤 Care Grains', color: 'bg-stone-700' },
+              { href: '/ShananaCheckout', label: '🐘 Shanana™', color: 'bg-emerald-800' },
+              { href: '/FruitfulKiosk', label: '☕ Kiosk', color: 'bg-brown-600 bg-amber-900' },
+              { href: '/HomemartListing', label: '🏠 Homemart', color: 'bg-orange-800' },
+            ].map(({ href, label, color }) => (
+              <a key={href} href={href}>
+                <button className={`px-3 py-1.5 rounded-lg text-xs font-bold text-white whitespace-nowrap transition-all hover:opacity-80 ${color}`}>
+                  {label}
+                </button>
+              </a>
+            ))}
             {Object.entries(SECTORS).map(([key, label]) => (
               <TabsTrigger key={key} value={key} className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white text-sm">
                 {label}

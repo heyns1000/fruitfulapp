@@ -519,77 +519,159 @@ export class AppComponent {
         </TabsContent>
 
         <TabsContent value="preview">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Eye className="w-5 h-5" />
-                Live Preview Mockup
-              </CardTitle>
-              <CardDescription>
-                Visual representation of your app structure
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div 
-                className="border-4 rounded-lg p-8 min-h-[600px]"
-                style={{ 
-                  borderColor: appData.colorScheme?.primary,
-                  background: `linear-gradient(135deg, ${appData.colorScheme?.primary}10, ${appData.colorScheme?.secondary}10)`
-                }}
-              >
-                {/* Header */}
-                <div 
-                  className="p-6 rounded-lg mb-6 text-white shadow-lg"
-                  style={{ backgroundColor: appData.colorScheme?.primary }}
-                >
-                  <h1 className="text-3xl font-bold">{appData.appName}</h1>
-                  <p className="text-sm opacity-90 mt-2">{appData.tagline}</p>
-                  <div className="flex gap-4 mt-4">
-                    {appData.pages?.slice(0, 5).map((page, i) => (
-                      <button 
-                        key={i}
-                        className="px-4 py-2 bg-white/20 rounded hover:bg-white/30 transition-all text-sm"
-                      >
-                        {page.name}
-                      </button>
-                    ))}
-                  </div>
+          {/* Vibe-coding IDE-style output — Replit / Lovable / Base44 standard */}
+          <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-2xl bg-slate-950">
+            {/* IDE Top Bar */}
+            <div className="flex items-center justify-between bg-slate-900 border-b border-slate-700 px-4 py-2">
+              <div className="flex items-center gap-2">
+                <div className="flex gap-1.5">
+                  <span className="w-3 h-3 rounded-full bg-red-500" />
+                  <span className="w-3 h-3 rounded-full bg-yellow-500" />
+                  <span className="w-3 h-3 rounded-full bg-green-500" />
                 </div>
+                <span className="text-slate-400 text-xs font-mono ml-2">preview · {appData.appName?.replace(/\s+/g,'-').toLowerCase()}.app</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="flex items-center gap-1.5 text-emerald-400 text-xs font-mono">
+                  <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
+                  Live
+                </span>
+                <Badge className="bg-slate-700 text-slate-300 border-0 text-[10px] font-mono">{appData.framework || 'React'}</Badge>
+              </div>
+            </div>
 
-                {/* Content */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Browser chrome */}
+            <div className="bg-slate-800 border-b border-slate-700 px-4 py-2 flex items-center gap-3">
+              <div className="flex items-center gap-1 text-slate-500">
+                <span className="text-xs">←</span><span className="text-xs">→</span>
+              </div>
+              <div className="flex-1 bg-slate-900 rounded-md px-3 py-1 flex items-center gap-2">
+                <Globe className="w-3 h-3 text-emerald-400" />
+                <span className="text-xs font-mono text-slate-400">https://{appData.appName?.replace(/\s+/g,'-').toLowerCase() || 'myapp'}.faa.zone</span>
+              </div>
+              <Badge className="bg-emerald-900 text-emerald-300 border-0 text-[10px]">✓ Secure</Badge>
+            </div>
+
+            {/* App Viewport */}
+            <div
+              className="min-h-[580px] overflow-y-auto"
+              style={{ background: `linear-gradient(135deg, ${appData.colorScheme?.primary}18 0%, ${appData.colorScheme?.secondary}12 100%)` }}
+            >
+              {/* App Navbar */}
+              <nav className="px-6 py-3 flex items-center justify-between shadow-sm" style={{ backgroundColor: appData.colorScheme?.primary }}>
+                <div className="flex items-center gap-3">
+                  <div className="w-7 h-7 rounded-lg bg-white/20 flex items-center justify-center text-white font-black text-sm">
+                    {appData.appName?.[0] || 'A'}
+                  </div>
+                  <span className="text-white font-bold text-sm">{appData.appName}</span>
+                </div>
+                <div className="hidden md:flex items-center gap-1">
+                  {appData.pages?.slice(0, 5).map((page, i) => (
+                    <button key={i} className="px-3 py-1.5 text-white/80 hover:text-white hover:bg-white/10 rounded-lg text-xs font-medium transition-all">
+                      {page.name}
+                    </button>
+                  ))}
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-white/70 text-xs hidden sm:block">
+                    {appData.userRoles?.slice(0,2).join(' · ')}
+                  </span>
+                  <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center text-white text-xs font-bold">U</div>
+                </div>
+              </nav>
+
+              {/* Hero */}
+              <div className="px-6 py-10 text-center" style={{ background: `linear-gradient(180deg, ${appData.colorScheme?.primary}22 0%, transparent 100%)` }}>
+                <p className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{ color: appData.colorScheme?.accent }}>
+                  {appData.framework || 'React'} · {new Date().getFullYear()}
+                </p>
+                <h1 className="text-3xl font-black text-slate-900 mb-2">{appData.appName}</h1>
+                <p className="text-slate-600 text-sm max-w-md mx-auto">{appData.tagline || appData.description}</p>
+                <div className="flex justify-center gap-3 mt-5">
+                  <button className="px-5 py-2 rounded-lg text-white text-sm font-bold shadow-lg hover:opacity-90 transition-all" style={{ backgroundColor: appData.colorScheme?.primary }}>
+                    Get Started
+                  </button>
+                  <button className="px-5 py-2 rounded-lg text-sm font-bold border-2 hover:bg-slate-50 transition-all" style={{ borderColor: appData.colorScheme?.primary, color: appData.colorScheme?.primary }}>
+                    View Demo
+                  </button>
+                </div>
+              </div>
+
+              {/* Feature Cards Grid */}
+              <div className="px-6 pb-8">
+                <p className="text-xs font-black uppercase tracking-widest text-slate-400 mb-4 text-center">Core Features</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {appData.features?.slice(0, 6).map((feature, idx) => (
-                    <div 
-                      key={idx}
-                      className="bg-white p-6 rounded-lg shadow-md border-2"
-                      style={{ borderColor: appData.colorScheme?.accent }}
-                    >
-                      <h3 className="font-bold text-lg mb-2">{feature.name}</h3>
-                      <p className="text-sm text-gray-600">{feature.description}</p>
+                    <div key={idx} className="bg-white rounded-xl p-5 shadow-sm border border-slate-100 hover:shadow-md transition-shadow group">
+                      <div className="w-8 h-8 rounded-lg mb-3 flex items-center justify-center text-white text-xs font-black"
+                        style={{ backgroundColor: [appData.colorScheme?.primary, appData.colorScheme?.secondary, appData.colorScheme?.accent][idx % 3] }}>
+                        {idx + 1}
+                      </div>
+                      <h3 className="font-bold text-slate-900 text-sm mb-1">{feature.name}</h3>
+                      <p className="text-xs text-slate-500 leading-relaxed">{feature.description}</p>
+                      {feature.relatedBrands?.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mt-3">
+                          {feature.relatedBrands.slice(0,2).map((b,i) => (
+                            <span key={i} className="text-[9px] px-2 py-0.5 rounded-full font-medium" style={{ backgroundColor: `${appData.colorScheme?.accent}22`, color: appData.colorScheme?.primary }}>{b}</span>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
 
-                {/* Brands Showcase */}
-                <div className="mt-6 p-6 bg-white rounded-lg shadow-md">
-                  <h2 className="text-xl font-bold mb-4" style={{ color: appData.colorScheme?.primary }}>
-                    Integrated Brands
-                  </h2>
-                  <div className="flex flex-wrap gap-3">
-                    {selectedBrands.map(brand => (
-                      <div 
-                        key={brand.id}
-                        className="px-4 py-2 rounded-lg font-semibold text-white"
-                        style={{ backgroundColor: appData.colorScheme?.secondary }}
-                      >
-                        {brand.name}™
+                {/* Brands strip */}
+                {selectedBrands?.length > 0 && (
+                  <div className="mt-6 bg-white rounded-xl p-4 border border-slate-100 shadow-sm">
+                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3">Integrated Brands</p>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedBrands.map(brand => (
+                        <span key={brand.id} className="px-3 py-1.5 rounded-lg text-xs font-bold text-white shadow-sm" style={{ backgroundColor: appData.colorScheme?.secondary }}>
+                          {brand.name}™
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Pages list */}
+                {appData.pages?.length > 0 && (
+                  <div className="mt-4 bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden">
+                    <div className="px-4 py-3 border-b border-slate-100">
+                      <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">App Routes</p>
+                    </div>
+                    {appData.pages.slice(0,6).map((page, i) => (
+                      <div key={i} className="flex items-center justify-between px-4 py-2.5 border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                        <div className="flex items-center gap-3">
+                          <span className="font-mono text-xs text-slate-400">{page.route}</span>
+                          <span className="text-xs font-semibold text-slate-700">{page.name}</span>
+                        </div>
+                        <div className="flex gap-1">
+                          {page.sections?.slice(0,2).map((s,j) => (
+                            <span key={j} className="text-[9px] px-1.5 py-0.5 bg-slate-100 text-slate-500 rounded font-mono">{s}</span>
+                          ))}
+                        </div>
                       </div>
                     ))}
                   </div>
-                </div>
+                )}
               </div>
-            </CardContent>
-          </Card>
+            </div>
+
+            {/* IDE Status Bar */}
+            <div className="bg-slate-900 border-t border-slate-700 px-4 py-1.5 flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <span className="text-emerald-400 text-[10px] font-mono flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full" />
+                  Build successful
+                </span>
+                <span className="text-slate-500 text-[10px] font-mono">{appData.pages?.length || 0} pages · {appData.features?.length || 0} features</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="text-slate-500 text-[10px] font-mono">{appData.framework || 'React'} · Tailwind CSS · Base44</span>
+              </div>
+            </div>
+          </div>
         </TabsContent>
 
         <TabsContent value="crosspoll">
