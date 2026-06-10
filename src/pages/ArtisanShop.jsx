@@ -35,11 +35,12 @@ export default function ArtisanShop() {
     a.artisanName?.toLowerCase() === brandName.toLowerCase()
   );
 
+  // Strict: only products explicitly linked to this artisan's brandId
   const products = allServices.filter(s =>
-    s.status === 'active' && (
-      s.brandName?.toLowerCase() === brandName.toLowerCase() ||
-      s.brandName?.toLowerCase() === artisan?.brandName?.toLowerCase()
-    )
+    s.status === 'active' &&
+    s.brandId &&
+    artisan?.brandId &&
+    s.brandId === artisan.brandId
   );
 
   const buyNow = (service) => {

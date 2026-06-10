@@ -15,6 +15,7 @@ import BulkOperations from '../components/admin/BulkOperations';
 import BrandHealthAudit from '../components/admin/BrandHealthAudit';
 import ZeroWasteExporter from '../components/data/ZeroWasteExporter';
 import { Loader2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const SECTORS = {
   agriculture: '🌱 Agriculture & Biotech',
@@ -262,6 +263,7 @@ export default function Dashboard() {
                 { href: '/AdminSeedwave',          emoji: '🛡️', label: 'Seedwave Admin',   bg: '#334155' },
                 { href: '/SectorAdminHub',         emoji: '⚙️', label: 'Sector Hub',       bg: '#374151' },
                 { href: '/DataSyncCenter',         emoji: '🔄', label: 'Data Sync',        bg: '#1f2937' },
+                { href: '/CSVImport',              emoji: '📤', label: 'CSV Import',       bg: '#0f766e' },
                 { href: '/PulseTradeAnalytics',    emoji: '⚡', label: 'PulseTrade',       bg: '#78350f' },
                 { href: '/BrandNodeExplorer',      emoji: '🌿', label: 'Brand Explorer',   bg: '#134e4a' },
                 { href: '/CareGrainsMap',          emoji: '🖤', label: 'Care Grains',      bg: '#1c1917' },

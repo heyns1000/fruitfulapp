@@ -11,6 +11,7 @@ import PulseTradeAnalytics from './pages/PulseTradeAnalytics'
 import BrandNodeExplorer from './pages/BrandNodeExplorer'
 import ArtisanShop from './pages/ArtisanShop'
 import AdminSeedwave from './pages/AdminSeedwave'
+import CSVImport from './pages/CSVImport'
 import FruitfulKiosk from './pages/FruitfulKiosk'
 import BanimalDashboard from './pages/BanimalDashboard'
 import SectorAdminHub from './pages/SectorAdminHub'
@@ -86,6 +87,7 @@ const AuthenticatedApp = () => {
       <Route path="/BanimalDashboard" element={<LayoutWrapper currentPageName="BanimalDashboard"><BanimalDashboard /></LayoutWrapper>} />
       <Route path="/SectorAdminHub" element={<LayoutWrapper currentPageName="SectorAdminHub"><SectorAdminHub /></LayoutWrapper>} />
       <Route path="/DataSyncCenter" element={<LayoutWrapper currentPageName="DataSyncCenter"><DataSyncCenter /></LayoutWrapper>} />
+      <Route path="/CSVImport" element={<LayoutWrapper currentPageName="CSVImport"><CSVImport /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

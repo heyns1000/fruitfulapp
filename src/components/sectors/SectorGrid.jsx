@@ -24,9 +24,12 @@ export default function SectorGrid({ brands, sectorKey, sectorName }) {
           <button
             key={brand.id || index}
             onClick={() => setSelectedBrand(selectedBrand?.id === brand.id ? null : brand)}
-            className={`bg-white px-3 py-2 text-sm rounded-lg shadow transition-all duration-200 hover:-translate-y-1 hover:scale-105 font-semibold ${getHoverColor()} ${
-              selectedBrand?.id === brand.id ? 'bg-indigo-200 text-indigo-900 ring-2 ring-indigo-400' : ''
-            }`}
+            className={`px-3 py-2 text-sm rounded-lg shadow transition-all duration-200 hover:-translate-y-1 hover:scale-105 font-semibold border ${selectedBrand?.id === brand.id ? 'ring-2 ring-emerald-400' : ''}`}
+            style={{
+              background: selectedBrand?.id === brand.id ? 'rgba(0,255,160,0.15)' : 'rgba(0,30,15,0.7)',
+              color: selectedBrand?.id === brand.id ? '#00ffc8' : '#b5ffe5',
+              borderColor: selectedBrand?.id === brand.id ? '#00ff99' : '#00ff9920',
+            }}
           >
             {brand.name}
             <sup>™</sup>
