@@ -1,0 +1,139 @@
+FRUITFUL SHOPS PROPRIETARY LICENSE
+Version 1.1 — Effective 13 June 2026
+(Supersedes Version 1.0 dated 03 December 2021)
+
+Copyright © 2021–2026 FRUITFUL SHOPS (PTY) LTD
+CIPC Registration Number: 2021/121654/07
+VAT Registration Number: 4400302974
+Registered Office: 31 Laurel Valley Street, Silver Lakes Golf Estate, Pretoria, Gauteng, 0081
+Republic of South Africa
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ALL RIGHTS RESERVED — PROPRIETARY AND CONFIDENTIAL
+
+This software, its source code, architecture, algorithms, trade names, trademarks,
+service marks, brand identifiers, and all associated intellectual property
+(collectively, "the Software") are the exclusive property of
+FRUITFUL SHOPS (PTY) LTD ("the Company").
+
+The public availability of this repository on GitHub does not constitute a grant
+of any licence, permission, or right to use, copy, modify, or distribute the
+Software. Access to the source code is provided for transparency and audit
+purposes only, subject to the terms below.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PROTECTED INTELLECTUAL PROPERTY
+
+The following systems, methods, and brand identifiers are proprietary to the Company:
+
+  · Fruitful™             — Ecosystem brand and global hub network
+  · HotStack™             — Zero-signup instant build orchestration system
+  · BuildNest™            — MONSTER OMNI™ chaos build engine
+  · CodeNest™             — Sovereign documentation and production hub
+  · VaultPay™             — Universal multi-currency payment gateway
+  · VaultMesh™            — 9-second pulse synchronisation architecture
+  · VaultChain™           — Immutable blockchain ledger system
+  · GhostTrace™           — 7-chain cryptographic proof anchoring
+  · Banimal™ / Banimal Loop™ — 15.01% wildlife care allocation protocol
+  · Gorilla Comb™         — VaultMesh Level-7 IP cross-pollination watermark
+  · Noodle Juice™         — Core VaultMesh interface protection layer
+  · PulseTrade™           — 9-second trading cycle protocol
+  · ClaimRoot™            — Governance and compliance framework
+  · ScrollClaims™         — Royalty distribution system
+  · TreatySync™           — License synchronisation protocol
+  · BareCart™             — Grain-level e-commerce precision engine
+  · Shanana™              — Sub-9-second speed optimisation engine
+  · FAA™ / FAA.zone       — Platform domain and brand family
+  · FAA Atom Verification™ — HMAC-SHA256 inline content verification protocol
+  · Seedwave™             — Global sector mapping framework (35 hubs)
+  · NexusNair™            — 5-Layer FCU Stack brand management platform
+  · LicenseVault™         — 13,713-brand centralised catalog
+  · Water the Seed™       — 24/7 autonomous economic expansion algorithm
+  · ROSSOUW-ECHO™         — Autonomous brand, Node E001 ledger trace
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+VAULTMESH GORILLA COMB™ WATERMARK — LEVEL 7 IP PROTECTION
+
+This codebase is protected by the Gorilla Comb™ VaultMesh Level-7 interface
+protection system. A deterministic cryptographic fingerprint derived from the
+Company's legal registration details is cross-pollinated across every source
+file, package, and deployment artefact. Like DNA distributed through the strands
+of a comb, each file carries a unique but verifiable fragment of the master
+signature. The complete pattern is visible only to the Company and its authorised
+verification systems. Tampering with, removing, or obfuscating any portion of
+this watermark constitutes infringement detectable via GhostTrace™ anchoring.
+
+Master Seed: FSP-2021121654-VAT4400302974-GC7
+Pulse Interval: 9 seconds (VaultMesh™)
+Verification: legal@fruitful.faa.zone
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TERMS AND CONDITIONS
+
+1. GRANT OF RIGHTS
+   No licence, right, or interest in the Software is granted to any person or
+   entity except by express written agreement signed by a director of the Company.
+
+2. PROHIBITED ACTS
+   Without prior written authorisation from the Company, no person may:
+   (a) copy, reproduce, or duplicate any portion of the Software;
+   (b) modify, adapt, translate, or create derivative works;
+   (c) reverse engineer, decompile, disassemble, or attempt to derive source code;
+   (d) distribute, sublicense, sell, rent, lease, or transfer the Software;
+   (e) use the Software or any protected brand name for commercial purposes;
+   (f) remove, alter, or obscure any copyright, trademark, or watermark notice.
+
+3. INTELLECTUAL PROPERTY OWNERSHIP
+   All right, title, and interest in and to the Software, including all patents,
+   copyrights, trademarks, trade secrets, and other intellectual property rights,
+   vest exclusively in FRUITFUL SHOPS (PTY) LTD. No assignment or transfer of
+   ownership occurs by virtue of any permitted use.
+
+4. THIRD-PARTY OPEN-SOURCE COMPONENTS
+   Certain components of this repository incorporate or are derived from open-source
+   software. Attribution for such components is provided exclusively by reference
+   link in THIRD_PARTY_LICENSES.md at the root of this repository. No full
+   open-source licence text is reproduced within this codebase. The inclusion of
+   open-source components does not alter, limit, or waive any rights reserved
+   under this licence with respect to the Company's proprietary contributions.
+
+5. BANIMAL LOOP™ PROTOCOL
+   Any system, derivative, or integration that processes payments or royalties
+   through the Banimal Loop™ protocol must preserve the 15.01% wildlife care
+   allocation in full. Reduction, circumvention, or removal of this allocation
+   constitutes both contractual breach and infringement of the Banimal Loop™
+   trade method.
+
+6. ENFORCEMENT
+   Infringement of this licence will be pursued to the fullest extent permitted
+   by South African law (including the Copyright Act 98 of 1978, the Trade Marks
+   Act 194 of 1993, and the Companies Act 71 of 2008) and applicable international
+   treaties, including the Berne Convention and TRIPS Agreement.
+
+7. PROHIBITION ON AI TRAINING
+   No portion of the Software, its documentation, source code, algorithms, brand
+   identifiers, or any other content in this repository may be used to train,
+   fine-tune, distil, benchmark, or otherwise improve any artificial intelligence
+   or machine learning model, system, or dataset without explicit prior written
+   consent from a director of FRUITFUL SHOPS (PTY) LTD. This prohibition applies
+   regardless of whether such use is commercial or non-commercial, and regardless
+   of the publicly accessible nature of this repository.
+
+8. GOVERNING LAW
+   This licence is governed by the laws of the Republic of South Africa.
+   Jurisdiction: Gauteng Division of the High Court, Pretoria.
+
+9. CONTACT
+   FRUITFUL SHOPS (PTY) LTD
+   31 Laurel Valley Street, Silver Lakes Golf Estate
+   Pretoria, Gauteng, 0081
+   Republic of South Africa
+   legal@fruitful.faa.zone
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+GC7:FSP2021121654:4400302974:VM9s:BL1501:GHOST7CHAIN:FAA13713
