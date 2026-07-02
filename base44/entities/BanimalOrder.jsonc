@@ -1,0 +1,117 @@
+{
+  "name": "BanimalOrder",
+  "type": "object",
+  "properties": {
+    "orderId": {
+      "type": "string",
+      "description": "Human-readable order ID e.g. BAN-20260001"
+    },
+    "customerName": {
+      "type": "string"
+    },
+    "customerEmail": {
+      "type": "string"
+    },
+    "customerPhone": {
+      "type": "string"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "productCode": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "qty": {
+            "type": "number"
+          },
+          "unitPrice": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "subtotal": {
+      "type": "number"
+    },
+    "deliveryFee": {
+      "type": "number",
+      "default": 0
+    },
+    "total": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string",
+      "default": "ZAR"
+    },
+    "paystackRef": {
+      "type": "string"
+    },
+    "paystackData": {
+      "type": "object"
+    },
+    "paymentStatus": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "paid",
+        "failed"
+      ],
+      "default": "pending"
+    },
+    "bobgoShipmentId": {
+      "type": "string"
+    },
+    "bobgoWaybill": {
+      "type": "string"
+    },
+    "trackingStatus": {
+      "type": "string"
+    },
+    "emailSent": {
+      "type": "boolean",
+      "default": false
+    },
+    "shippingAddress": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "line1": {
+          "type": "string"
+        },
+        "line2": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "province": {
+          "type": "string"
+        },
+        "postalCode": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string",
+          "default": "ZA"
+        }
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "customerEmail",
+    "items",
+    "total",
+    "currency"
+  ]
+}
