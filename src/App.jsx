@@ -14,6 +14,8 @@ import AdminSeedwave from './pages/AdminSeedwave'
 import CSVImport from './pages/CSVImport'
 import FruitfulKiosk from './pages/FruitfulKiosk'
 import BanimalDashboard from './pages/BanimalDashboard'
+import BanimalStore from './pages/BanimalStore'
+import BanimalAdmin from './pages/BanimalAdmin'
 import SectorAdminHub from './pages/SectorAdminHub'
 import DataSyncCenter from './pages/DataSyncCenter'
 import GrandMashadlelaCollection from './pages/GrandMashadlelaCollection'
@@ -88,6 +90,8 @@ const AuthenticatedApp = () => {
       <Route path="/SectorAdminHub" element={<LayoutWrapper currentPageName="SectorAdminHub"><SectorAdminHub /></LayoutWrapper>} />
       <Route path="/DataSyncCenter" element={<LayoutWrapper currentPageName="DataSyncCenter"><DataSyncCenter /></LayoutWrapper>} />
       <Route path="/CSVImport" element={<LayoutWrapper currentPageName="CSVImport"><CSVImport /></LayoutWrapper>} />
+      <Route path="/BanimalStore" element={<LayoutWrapper currentPageName="BanimalStore"><BanimalStore /></LayoutWrapper>} />
+      <Route path="/BanimalAdmin" element={<LayoutWrapper currentPageName="BanimalAdmin"><BanimalAdmin /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
