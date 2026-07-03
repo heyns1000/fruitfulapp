@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Badge } from '@/components/ui/badge';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
+import { BANIMAL_LOGO } from '@/components/banimal/banimalProducts';
 
 // ── REAL DATA FROM FILES ──────────────────────────────────────────────
 const PORTAL_LOCATIONS = [
@@ -102,11 +103,8 @@ export default function BanimalDashboard() {
       <header className="bg-slate-950 border-b border-slate-800 px-6 py-5 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="w-10 h-12 bg-red-500 rounded-xl flex items-center justify-center text-white font-black italic text-2xl shadow-lg border-b-4 border-red-800">f</div>
-            <div>
-              <h1 className="text-xl font-black italic tracking-tight text-white">fruitful</h1>
-              <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-teal-400">Banimal™ Dashboard · Node 042</p>
-            </div>
+            <img src={BANIMAL_LOGO} alt="Banimal" className="h-10 object-contain brightness-0 invert" />
+            <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-teal-400">Dashboard · Node 042</p>
           </div>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2 bg-slate-800 px-3 py-1.5 rounded-lg">
@@ -395,7 +393,8 @@ export default function BanimalDashboard() {
 
       </main>
 
-      <footer className="border-t border-slate-800 py-6 px-6 mt-8 text-center">
+      <footer className="border-t border-slate-800 py-6 px-6 mt-8 text-center space-y-2">
+        <img src={BANIMAL_LOGO} alt="Banimal" className="h-8 mx-auto object-contain brightness-0 invert opacity-40" />
         <p className="text-xs font-bold uppercase tracking-[0.5em] text-slate-600">
           © 2026 Fruitful Holdings (Pty) Ltd · Reg: 2021/121654/07 · Seeds of Appreciation
         </p>

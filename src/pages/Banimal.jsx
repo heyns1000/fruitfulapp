@@ -8,6 +8,7 @@ import ResourceManager from '../components/banimal/ResourceManager';
 import PerformanceMonitor from '../components/banimal/PerformanceMonitor';
 import BackButton from '../components/navigation/BackButton';
 import { Loader2, Zap } from 'lucide-react';
+import { BANIMAL_LOGO, BANIMAL_BANNER_BABYGROW } from '@/components/banimal/banimalProducts';
 
 export default function Banimal() {
   const [selectedTab, setSelectedTab] = useState('orchestrator');
@@ -47,25 +48,20 @@ export default function Banimal() {
         />
       </div>
 
-      <header className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-600 text-white py-12 mb-8 shadow-2xl relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/10"></div>
+      <header className="bg-white border-b border-gray-100 py-6 mb-0 shadow-sm relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
-          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
-            <div className="relative">
-              <img 
-                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6953a072de46207f94f2b9d2/52acd159d_Chief_02_1753263376705.png" 
-                alt="Banimal" 
-                className="w-24 h-24 sm:w-32 sm:h-32 object-contain drop-shadow-2xl animate-pulse"
-              />
-            </div>
-            <div className="text-center sm:text-left">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold drop-shadow-2xl">Banimal™</h1>
-              <p className="text-base sm:text-lg md:text-xl opacity-95 mt-2 font-semibold">Brand Orchestration & Management Platform</p>
-              <p className="text-xs sm:text-sm opacity-80 mt-1">🌍 Powered by the Ecosystem</p>
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            <img src={BANIMAL_LOGO} alt="Banimal — Kind Creatures" className="h-16 object-contain" />
+            <div className="text-center sm:text-left sm:border-l sm:border-gray-200 sm:pl-5">
+              <p className="text-gray-500 text-sm font-semibold">Brand Orchestration & Management Platform</p>
+              <p className="text-xs text-gray-400 mt-0.5">🌍 Powered by the FAA.Zone Ecosystem</p>
             </div>
           </div>
         </div>
       </header>
+      <div className="w-full">
+        <img src={BANIMAL_BANNER_BABYGROW} alt="Banimal Babygrows" className="w-full object-cover max-h-40" />
+      </div>
 
       <div className="container mx-auto px-4 sm:px-6 pb-12 relative z-10">
         <BackButton />
