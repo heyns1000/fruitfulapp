@@ -4,6 +4,7 @@ import { base44 } from '@/api/base44Client';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Loader2, RefreshCw, Mail, Package, Eye } from 'lucide-react';
+import { BANIMAL_LOGO, PRODUCT_IMAGE_MAP } from '@/components/banimal/banimalProducts';
 
 const STATUS_COLORS = {
   paid: 'bg-emerald-900 text-emerald-300 border-emerald-700',
@@ -67,9 +68,11 @@ export default function BanimalAdmin() {
     <div className="min-h-screen bg-slate-900 text-white">
       <header className="bg-slate-950 border-b border-slate-800 px-6 py-4 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div>
-            <h1 className="text-xl font-black text-white">banimal<span className="text-amber-500">™</span> Admin</h1>
-            <p className="text-[10px] uppercase tracking-widest text-slate-500">Order & Inventory Management</p>
+          <div className="flex items-center gap-3">
+            <img src={BANIMAL_LOGO} alt="Banimal" className="h-9 object-contain brightness-0 invert" />
+            <div>
+              <p className="text-[10px] uppercase tracking-widest text-slate-500">Admin Dashboard</p>
+            </div>
           </div>
           <Badge className="bg-emerald-900 text-emerald-300 border-emerald-700">{orders.length} orders</Badge>
         </div>
@@ -159,8 +162,9 @@ export default function BanimalAdmin() {
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="text-left text-[10px] uppercase tracking-wider text-slate-500 border-b border-slate-700 bg-slate-900">
-                        <th className="px-4 py-3">Product</th>
-                        <th className="px-4 py-3">SKU</th>
+                      <th className="px-4 py-3">Image</th>
+                      <th className="px-4 py-3">Product</th>
+                      <th className="px-4 py-3">SKU</th>
                         <th className="px-4 py-3">Price (ZAR)</th>
                         <th className="px-4 py-3">Stock</th>
                         <th className="px-4 py-3">Status</th>
@@ -170,7 +174,12 @@ export default function BanimalAdmin() {
                     <tbody className="divide-y divide-slate-700/50">
                       {products.map(p => (
                         <tr key={p.id} className="hover:bg-slate-700/30 transition-colors">
-                          <td className="px-4 py-3 font-medium text-white text-xs">{p.serviceName}</td>
+                        <td className="px-4 py-3">
+                          {PRODUCT_IMAGE_MAP[p.productCode] ? (
+                            <img src={PRODUCT_IMAGE_MAP[p.productCode]} alt={p.serviceName} className="w-10 h-10 object-contain rounded-lg bg-white/5" />
+                          ) : <div className="w-10 h-10 rounded-lg bg-slate-700 flex items-center justify-center text-lg">👶</div>}
+                        </td>
+                        <td className="px-4 py-3 font-medium text-white text-xs">{p.serviceName}</td>
                           <td className="px-4 py-3 font-mono text-[10px] text-teal-400">{p.productCode}</td>
                           <td className="px-4 py-3 text-amber-400 font-bold">R{(p.pricing?.ZAR || 0).toFixed(2)}</td>
                           <td className="px-4 py-3 text-slate-300 text-xs">{p.inventory?.unlimited ? '∞ Unlimited' : p.inventory?.available}</td>
