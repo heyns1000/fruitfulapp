@@ -4,6 +4,7 @@ import { base44 } from '@/api/base44Client';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Loader2, RefreshCw, Mail, Package, Eye } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { BANIMAL_LOGO, PRODUCT_IMAGE_MAP } from '@/components/banimal/banimalProducts';
 
 const STATUS_COLORS = {
@@ -74,7 +75,11 @@ export default function BanimalAdmin() {
               <p className="text-[10px] uppercase tracking-widest text-slate-500">Admin Dashboard</p>
             </div>
           </div>
-          <Badge className="bg-emerald-900 text-emerald-300 border-emerald-700">{orders.length} orders</Badge>
+          <div className="flex items-center gap-2">
+            <Link to="/BanimalDashboard" className="text-xs font-bold text-teal-300 bg-teal-900/40 border border-teal-700 px-3 py-1.5 rounded-lg hover:bg-teal-800/50 transition-colors">← Dashboard</Link>
+            <Link to="/BanimalStore" className="text-xs font-bold text-amber-300 bg-amber-900/40 border border-amber-700 px-3 py-1.5 rounded-lg hover:bg-amber-800/50 transition-colors">🛍️ Store</Link>
+            <Badge className="bg-emerald-900 text-emerald-300 border-emerald-700">{orders.length} orders</Badge>
+          </div>
         </div>
       </header>
 

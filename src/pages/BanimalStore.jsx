@@ -4,6 +4,7 @@ import { base44 } from '@/api/base44Client';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ShoppingCart, X, Plus, Minus, Loader2, Clock } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import {
   BANIMAL_LOGO,
   BANIMAL_BANNER_BABYGROW,
@@ -121,6 +122,10 @@ export default function BanimalStore() {
       <header className="bg-white border-b border-gray-100 sticky top-0 z-40 px-6 py-3">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <img src={BANIMAL_LOGO} alt="Banimal — Kind Creatures" className="h-12 object-contain" />
+          <div className="flex items-center gap-2">
+            <Link to="/BanimalDashboard" className="text-xs font-bold text-gray-500 hover:text-gray-900 transition-colors hidden sm:block">Dashboard</Link>
+            <Link to="/BanimalAdmin" className="text-xs font-bold text-gray-500 hover:text-gray-900 transition-colors hidden sm:block">Admin</Link>
+          </div>
           <button onClick={() => setCartOpen(true)} className="relative flex items-center gap-2 px-4 py-2 rounded-xl font-bold text-white bg-black hover:bg-gray-800 transition-all">
             <ShoppingCart className="w-4 h-4" />
             Cart

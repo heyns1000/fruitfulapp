@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Badge } from '@/components/ui/badge';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
+import { Link } from 'react-router-dom';
 import { BANIMAL_LOGO } from '@/components/banimal/banimalProducts';
 
 // ── REAL DATA FROM FILES ──────────────────────────────────────────────
@@ -107,12 +108,15 @@ export default function BanimalDashboard() {
             <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-teal-400">Dashboard · Node 042</p>
           </div>
           <div className="flex items-center gap-3">
+            <Link to="/BanimalStore" className="text-xs font-bold text-amber-400 bg-amber-900/40 border border-amber-700 px-3 py-1.5 rounded-lg hover:bg-amber-800/50 transition-colors">
+              🛍️ Store
+            </Link>
+            <Link to="/BanimalAdmin" className="text-xs font-bold text-slate-300 bg-slate-800 px-3 py-1.5 rounded-lg hover:bg-slate-700 transition-colors">
+              ⚙️ Admin
+            </Link>
             <div className="flex items-center gap-2 bg-slate-800 px-3 py-1.5 rounded-lg">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
-              <span className="text-xs font-bold text-slate-300">Treaty Grid Active</span>
-            </div>
-            <div className="text-xs font-bold text-slate-500 bg-slate-800 px-3 py-1.5 rounded-lg">
-              v48 · Hercules
+              <span className="text-xs font-bold text-slate-300">Live</span>
             </div>
           </div>
         </div>

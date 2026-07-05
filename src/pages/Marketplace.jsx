@@ -4,12 +4,11 @@ import { useQuery } from '@tanstack/react-query';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ServiceMarketplace from '../components/marketplace/ServiceMarketplace';
 import HomemartListing from './HomemartListing';
-import ServiceListing from '../components/marketplace/ServiceListing';
 import OrderManagement from '../components/marketplace/OrderManagement';
 import FeaturedArtisans from '../components/marketplace/FeaturedArtisans';
 import MarketplaceAIAssistant from '../components/marketplace/MarketplaceAIAssistant';
 import ProductCSVImporter from '../components/marketplace/ProductCSVImporter';
-import { Loader2, Store, ShoppingBag, Plus, Package, Upload } from 'lucide-react';
+import { Loader2, Store, Plus, Package, Upload } from 'lucide-react';
 
 export default function Marketplace() {
   const [selectedTab, setSelectedTab] = useState('browse');
@@ -44,9 +43,9 @@ export default function Marketplace() {
 
   const TABS = [
     { val: 'browse', label: 'Browse', icon: Store },
-    { val: 'homemart', label: '🛍️ Homemart Bibs', icon: Package },
+    { val: 'homemart', label: '🛍️ Homemart', icon: Package },
     { val: 'list', label: 'List a Service', icon: Plus },
-    { val: 'orders', label: 'Orders', icon: Package },
+    { val: 'orders', label: `Orders (${orders.length})`, icon: Package },
     { val: 'import', label: 'Import CSV', icon: Upload },
   ];
 
@@ -106,6 +105,10 @@ export default function Marketplace() {
           </TabsContent>
 
           <TabsContent value="list">
+            <OrderManagement orders={orders} />
+          </TabsContent>
+
+          <TabsContent value="orders">
             <OrderManagement orders={orders} />
           </TabsContent>
 

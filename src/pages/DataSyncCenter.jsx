@@ -89,6 +89,7 @@ export default function DataSyncCenter() {
       qc.invalidateQueries({ queryKey: ['brands-sync'] });
       qc.invalidateQueries({ queryKey: ['brands-admin'] });
       qc.invalidateQueries({ queryKey: ['brands'] });
+      qc.invalidateQueries({ queryKey: ['products-admin'] });
     } catch (e) {
       addLog(`❌ Brand sync error: ${e.message}`, 'error');
     }
