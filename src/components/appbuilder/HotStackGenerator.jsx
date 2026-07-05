@@ -47,12 +47,14 @@ export default function HotStackGenerator({ selectedBrands, vibePrompt, onGenera
     setIsGenerating(true);
     setLoadingStep(0);
 
-    const brandsSummary = selectedBrands.map(b => ({
-      id: b.id, name: b.name, sector: b.sector,
-      description: b.description, subnodes: b.subnodes || [],
-      tags: b.tags || [], metadata: b.metadata || {},
+    // Keep payload lean to avoid 502 timeouts — trim to essentials only
+    const brandsSummary = selectedBrands.slice(0, 10).map(b => ({
+      name: b.name, sector: b.sector,
+      description: (b.description || '').slice(0, 120),
+      subnodes: (b.subnodes || []).slice(0, 5),
     }));
 
+    try {
     const result = await base44.integrations.Core.InvokeLLM({
       prompt: `You are HotStack™, a 2026 AI vibe-coding app builder. Build REAL applications from actual ecosystem data.
 
@@ -186,6 +188,10 @@ Return production-grade architecture using ONLY the provided real ecosystem data
       generatedAt: new Date().toISOString(),
     });
     toast.success('🔥 HotStack™ app generated!');
+    } catch (err) {
+      setIsGenerating(false);
+      toast.error('Generation failed — try fewer brands or a shorter prompt.', { duration: 5000 });
+    }
   };
 
   if (isGenerating) {
