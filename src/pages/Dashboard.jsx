@@ -71,10 +71,10 @@ const PAGE_GROUPS = [
     id: 'banimal',
     label: '🐾 Banimal',
     pages: [
-      { href: '/Banimal',           emoji: '🐾', label: 'Banimal™ Orchestrator', bg: '#ea580c' },
-      { href: '/BanimalDashboard',  emoji: '🦁', label: 'Banimal Dashboard',     bg: '#dc2626' },
-      { href: '/BanimalStore',      emoji: '👶', label: 'Banimal Store',         bg: '#c2410c' },
-      { href: '/BanimalAdmin',      emoji: '⚙️', label: 'Banimal Admin',         bg: '#991b1b' },
+      { href: '/Banimal',          emoji: '🐾', label: 'Banimal™ Orchestrator', bg: '#ea580c' },
+      { href: '/BanimalDashboard', emoji: '🦁', label: 'Banimal Dashboard',     bg: '#dc2626' },
+      { href: '/BanimalStore',     emoji: '👶', label: 'Banimal Store',         bg: '#c2410c' },
+      { href: '/BanimalAdmin',     emoji: '⚙️', label: 'Banimal Admin',         bg: '#7c2d12' },
     ]
   },
   {

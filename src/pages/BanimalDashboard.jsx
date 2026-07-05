@@ -124,7 +124,7 @@ export default function BanimalDashboard() {
       </div>
 
       {/* Tabs */}
-      <div className="bg-slate-900 border-b border-slate-800 sticky top-[89px] z-30">
+      <div className="bg-slate-900 border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-6 flex gap-1 py-2 overflow-x-auto">
           {TABS.map(t => (
             <button

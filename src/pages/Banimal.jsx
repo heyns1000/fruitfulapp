@@ -27,7 +27,7 @@ export default function Banimal() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50 relative">
       {/* Floating artwork backgrounds */}
       <div className="fixed inset-0 pointer-events-none opacity-10 overflow-hidden">
         <img 
@@ -60,7 +60,7 @@ export default function Banimal() {
         </div>
       </header>
       <div className="w-full">
-        <img src={BANIMAL_BANNER_BABYGROW} alt="Banimal Babygrows" className="w-full object-cover max-h-40" />
+        <img src={BANIMAL_BANNER_BABYGROW} alt="Banimal Babygrows" className="w-full object-contain" />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 pb-12 relative z-10">

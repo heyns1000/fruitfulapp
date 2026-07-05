@@ -133,12 +133,12 @@ export default function BanimalStore() {
 
       {/* Banner 1 — Babygrows */}
       <div className="w-full">
-        <img src={BANIMAL_BANNER_BABYGROW} alt="Banimal Babygrows — Shop Now" className="w-full object-cover max-h-56" />
+        <img src={BANIMAL_BANNER_BABYGROW} alt="Banimal Babygrows — Shop Now" className="w-full object-contain" />
       </div>
 
       {/* Banner 2 — Roleplay */}
       <div className="w-full">
-        <img src={BANIMAL_BANNER_ROLEPLAY} alt="Roleplay — Shop Now" className="w-full object-cover max-h-48" />
+        <img src={BANIMAL_BANNER_ROLEPLAY} alt="Roleplay — Shop Now" className="w-full object-contain" />
       </div>
 
       {/* Category Filter */}
