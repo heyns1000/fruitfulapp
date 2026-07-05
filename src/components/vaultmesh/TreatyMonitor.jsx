@@ -102,7 +102,12 @@ export default function TreatyMonitor() {
   };
 
   const poll = async () => {
-    const vaults = await base44.entities.Vault.list();
+    let vaults;
+    try {
+      vaults = await base44.entities.Vault.list();
+    } catch {
+      return; // network blip — skip this cycle silently
+    }
     const newBreaches = vaults.filter(isBreach);
 
     newBreaches.forEach(v => {
