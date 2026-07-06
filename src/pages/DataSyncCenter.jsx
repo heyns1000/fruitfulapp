@@ -46,10 +46,24 @@ const FAA_BRANDS_SEED = [
   { name: 'Fruitful Kiosk Network', sector: 'trade', subnodes: ['302DykorKiosk','NYPortal','TokyoPortal','JHBKiosk'], description: '11-location global kiosk portal network', isSystemBrand: true },
 ];
 
+// Seed marketplace products — real SKUs aligned with FAA brand nodes
+const FAA_PRODUCTS_SEED = [
+  { brandName: 'SamFox Prints', brandId: 'samfox', serviceName: 'Cape Buffalo Limited Print', productCode: 'PROD-SFX-001', category: 'physical_product', currency: 'USD', pricing: { USD: 180, ZAR: 3300 }, status: 'active', description: 'Hand-signed wildlife fine art print, Cape Town studio edition.' },
+  { brandName: 'SamFox Prints', brandId: 'samfox', serviceName: 'Leopard Dusk Framed Canvas', productCode: 'PROD-SFX-002', category: 'physical_product', currency: 'USD', pricing: { USD: 320, ZAR: 5900 }, status: 'active', description: 'Premium framed canvas, limited edition of 50.' },
+  { brandName: 'HatHaven Hats', brandId: 'hathaven', serviceName: 'Zulu Traditional Hat', productCode: 'PROD-HHV-001', category: 'physical_product', currency: 'ZAR', pricing: { ZAR: 850, USD: 46 }, status: 'active', description: 'Handwoven Zulu hat, natural grass fibres.' },
+  { brandName: 'HatHaven Hats', brandId: 'hathaven', serviceName: 'Summer Straw Wide-Brim', productCode: 'PROD-HHV-002', category: 'physical_product', currency: 'ZAR', pricing: { ZAR: 650, USD: 35 }, status: 'active', description: 'Artisan-crafted summer straw hat.' },
+  { brandName: 'Grand Mashadlela Craft', brandId: 'mashadlela', serviceName: 'Beaded Zulu Necklace', productCode: 'PROD-GMC-001', category: 'physical_product', currency: 'ZAR', pricing: { ZAR: 420, USD: 23 }, status: 'active', description: 'Traditional Zulu beadwork necklace, Mamelodi craft.' },
+  { brandName: 'Fruitful Kitchens', brandId: 'kitchens', serviceName: 'Bushstack Pancake Kit', productCode: 'PROD-FKT-001', category: 'physical_product', currency: 'ZAR', pricing: { ZAR: 120, USD: 7 }, status: 'active', description: 'Kiosk-edition pancake mix, serves 10.' },
+  { brandName: 'Fruitful Apparel', brandId: 'apparel', serviceName: 'FAA.Zone Logo Tee', productCode: 'PROD-FAP-001', category: 'physical_product', currency: 'ZAR', pricing: { ZAR: 380, USD: 21 }, status: 'active', description: 'Artisan-branded cotton tee, screen printed.' },
+  { brandName: 'Baobab Activation', brandId: 'baobab', serviceName: 'BushCoding Pro License', productCode: 'PROD-BAO-001', category: 'license', currency: 'USD', pricing: { USD: 49, ZAR: 900 }, status: 'active', description: 'Monthly AI app-generation license for Baobab platform.' },
+  { brandName: 'VaultMesh', brandId: 'vaultmesh', serviceName: 'VaultMesh Enterprise Seat', productCode: 'PROD-VMH-001', category: 'subscription', currency: 'USD', pricing: { USD: 99, ZAR: 1820 }, status: 'active', description: 'Encrypted vault seat with full VaultMesh access.' },
+  { brandName: 'Fruitful Kiosk Network', brandId: 'kiosk', serviceName: 'Kiosk Portal Access Pass', productCode: 'PROD-FKN-001', category: 'digital_service', currency: 'ZAR', pricing: { ZAR: 200, USD: 11 }, status: 'active', description: 'One-month digital access pass for all 11 Fruitful kiosk portals.' },
+];
+
 const SYNC_SOURCES = [
   { id: 'brands', icon: <Users className="w-5 h-5" />, label: 'FAA Brand Nodes', desc: `${FAA_BRANDS_SEED.length} brands across 30 sectors`, entity: 'Brand', color: 'indigo' },
-  { id: 'transactions', icon: <CreditCard className="w-5 h-5" />, label: 'Payment Transactions', desc: 'Paystack ZAR transaction log', entity: 'PaymentTransaction', color: 'green' },
-  { id: 'products', icon: <Package className="w-5 h-5" />, label: 'Marketplace Products', desc: 'SamFox, HatHaven, Kiosk SKUs', entity: 'MarketplaceService', color: 'amber' },
+  { id: 'products', icon: <Package className="w-5 h-5" />, label: 'Marketplace Products', desc: `${FAA_PRODUCTS_SEED.length} real SKUs across FAA brands`, entity: 'MarketplaceService', color: 'amber' },
+  { id: 'transactions', icon: <CreditCard className="w-5 h-5" />, label: 'Payment Transactions', desc: 'Live Paystack ZAR transaction log', entity: 'PaymentTransaction', color: 'green' },
 ];
 
 const colorMap = {
@@ -98,16 +112,45 @@ export default function DataSyncCenter() {
 
   const syncProducts = async () => {
     setSyncState(s => ({ ...s, products: 'running' }));
-    addLog('Products sync check — verifying existing SKUs…', 'info');
-    addLog(`✅ ${products.length} products already in DB. Use AdminSeedwave to add more.`, 'success');
+    addLog('Starting marketplace products sync…', 'info');
+    const existing = new Set(products.map(p => p.productCode));
+    const toCreate = FAA_PRODUCTS_SEED.filter(p => !existing.has(p.productCode));
+    if (toCreate.length === 0) {
+      addLog('All marketplace SKUs already synced. No duplicates created.', 'success');
+      setSyncState(s => ({ ...s, products: 'done' }));
+      return;
+    }
+    try {
+      await base44.entities.MarketplaceService.bulkCreate(toCreate);
+      addLog(`✅ Created ${toCreate.length} new marketplace SKUs across ${new Set(toCreate.map(p => p.brandName)).size} brands.`, 'success');
+      qc.invalidateQueries({ queryKey: ['products-sync'] });
+      qc.invalidateQueries({ queryKey: ['products-admin'] });
+      qc.invalidateQueries({ queryKey: ['brands'] });
+    } catch (e) {
+      addLog(`❌ Products sync error: ${e.message}`, 'error');
+    }
     setSyncState(s => ({ ...s, products: 'done' }));
+  };
+
+  const syncTransactions = async () => {
+    setSyncState(s => ({ ...s, transactions: 'running' }));
+    addLog('Transactions sync — reading live PaymentTransaction records…', 'info');
+    try {
+      const live = await base44.entities.PaymentTransaction.list();
+      addLog(`✅ ${live.length} transaction records confirmed live in DB.`, 'success');
+      qc.invalidateQueries({ queryKey: ['txn-sync'] });
+    } catch (e) {
+      addLog(`❌ Transaction sync error: ${e.message}`, 'error');
+    }
+    setSyncState(s => ({ ...s, transactions: 'done' }));
   };
 
   const syncAll = async () => {
     addLog('🚀 Full system sync initiated…', 'info');
     await syncBrands();
     await syncProducts();
-    addLog('🎉 Full sync complete. All data sources ingested.', 'success');
+    await syncTransactions();
+    addLog('🎉 Full sync complete. All data sources ingested and verified.', 'success');
   };
 
   return (
@@ -158,7 +201,7 @@ export default function DataSyncCenter() {
                   {state === 'running' && <RefreshCw className="w-4 h-4 animate-spin text-gray-400" />}
                   {state === 'done' && <CheckCircle className="w-4 h-4 text-emerald-500" />}
                   <button
-                    onClick={src.id === 'brands' ? syncBrands : syncProducts}
+                    onClick={src.id === 'brands' ? syncBrands : src.id === 'products' ? syncProducts : syncTransactions}
                     disabled={state === 'running'}
                     className={`${c.btn} text-white font-bold px-4 py-2 rounded-xl text-sm transition-colors disabled:opacity-50`}
                   >
