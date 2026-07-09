@@ -19,6 +19,7 @@ import BanimalAdmin from './pages/BanimalAdmin'
 import SectorAdminHub from './pages/SectorAdminHub'
 import DataSyncCenter from './pages/DataSyncCenter'
 import GrandMashadlelaCollection from './pages/GrandMashadlelaCollection'
+import BlockBox from './pages/BlockBox'
 import SubscriptionShop from './pages/SubscriptionShop'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
@@ -92,6 +93,7 @@ const AuthenticatedApp = () => {
       <Route path="/CSVImport" element={<LayoutWrapper currentPageName="CSVImport"><CSVImport /></LayoutWrapper>} />
       <Route path="/BanimalStore" element={<LayoutWrapper currentPageName="BanimalStore"><BanimalStore /></LayoutWrapper>} />
       <Route path="/BanimalAdmin" element={<LayoutWrapper currentPageName="BanimalAdmin"><BanimalAdmin /></LayoutWrapper>} />
+      <Route path="/BlockBox" element={<BlockBox />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

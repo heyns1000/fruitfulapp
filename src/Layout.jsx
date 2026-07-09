@@ -47,6 +47,7 @@ const NAV_LINKS = [
   { label: '🛡️ Seedwave Admin', page: 'AdminSeedwave' },
   { label: '⚙️ Sector Hub', page: 'SectorAdminHub' },
   { label: '🔄 Data Sync', page: 'DataSyncCenter' },
+  { label: '📦 Block Box', page: 'BlockBox' },
 ];
 
 export default function Layout({ children, currentPageName }) {
