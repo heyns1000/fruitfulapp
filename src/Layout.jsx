@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { CartProvider } from './components/cart/CartContext';
 import ShananaCheckoutPanel from './components/shanana/ShananaCheckoutPanel';
 import TreatyMonitor from './components/vaultmesh/TreatyMonitor';
 import { WishlistProvider } from './components/wishlist/WishlistContext';
 import CartIcon from './components/cart/CartIcon';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ArrowLeft } from 'lucide-react';
 
 const NAV_LINKS = [
   { label: 'Dashboard', page: 'Dashboard' },
@@ -53,6 +53,15 @@ const NAV_LINKS = [
 
 export default function Layout({ children, currentPageName }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate(createPageUrl('Dashboard'));
+    }
+  };
 
   return (
     <WishlistProvider>
@@ -133,6 +142,18 @@ export default function Layout({ children, currentPageName }) {
         <main>
           {children}
         </main>
+
+        {/* Floating Back Button — visible on all pages */}
+        {currentPageName !== 'Dashboard' && (
+          <button
+            onClick={goBack}
+            className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-3 rounded-full bg-teal-600 text-white shadow-lg hover:bg-teal-700 transition-all hover:scale-105 active:scale-95 group"
+            title="Go back"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span className="text-sm font-semibold hidden sm:inline group-hover:inline">Back</span>
+          </button>
+        )}
 
         {/* Footer — Global Footer Repository: DO NOT MODIFY */}
         <footer className="py-8 px-6 md:px-12 text-center border-t" style={{ background: '#f5f5f7', color: '#6b7280', borderColor: '#e8e8ed' }}>
