@@ -14,6 +14,7 @@ const NAV_LINKS = [
   { label: 'Gallery', page: 'Gallery' },
   { label: 'Collaboration', page: 'CollaborationSuite' },
   { label: 'Analytics', page: 'Analytics' },
+  { label: '📈 Brand Insights', page: 'BrandInsights' },
   { label: 'Sector Analytics', page: 'SectorAnalytics' },
   { label: 'AI Content', page: 'ContentGenerator' },
   { label: 'Onboard Brand', page: 'BrandOnboarding' },
