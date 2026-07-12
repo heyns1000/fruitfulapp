@@ -19,9 +19,9 @@ function BBLogo({ size = 40, dark = false }) {
     <svg width={size} height={size} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect width="40" height="40" rx="9" fill={bg} />
       <path
-        d="M10 20 Q14.5 13 19 20 T28 20"
+        d="M8 20 Q13 13 19 20 T29 20"
         stroke={wave}
-        strokeWidth="3.5"
+        strokeWidth="4"
         strokeLinecap="round"
         fill="none"
       />
