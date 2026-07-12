@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 
 // ─── Brand tokens ───────────────────────────────────────────
 const BB = {
@@ -439,6 +441,16 @@ export default function BlockBox() {
       <Retail />
       <Digital />
       <Footer />
+
+      {/* Floating Back Button */}
+      <Link
+        to="/Dashboard"
+        className="fixed bottom-6 right-6 z-[9999] flex items-center gap-2 px-4 py-3 rounded-full bg-teal-600 text-white shadow-lg hover:bg-teal-700 transition-all hover:scale-105 active:scale-95"
+        title="Back to Dashboard"
+      >
+        <ArrowLeft className="w-5 h-5" />
+        <span className="text-sm font-semibold hidden sm:inline">Back</span>
+      </Link>
     </div>
   );
 }
