@@ -108,6 +108,11 @@ export default function BanimalLoopCheckout() {
         </div>
       </div>
 
+      {/* Floating Back Button */}
+      <Link to="/Dashboard" className="fixed bottom-6 right-6 z-[9999] flex items-center gap-2 px-4 py-2.5 rounded-full text-white text-sm font-semibold shadow-lg hover:opacity-90 active:scale-95 transition-all" style={{ background: '#18241C' }}>
+        ← <span className="hidden sm:inline">Back</span>
+      </Link>
+
       <main className="max-w-2xl mx-auto p-5 space-y-5">
 
         {/* STEP 0: Cart */}
