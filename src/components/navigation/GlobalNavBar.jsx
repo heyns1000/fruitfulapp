@@ -112,7 +112,7 @@ const PAGE_GROUPS = [
 ];
 
 export default function GlobalNavBar() {
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <>
