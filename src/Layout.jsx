@@ -25,8 +25,8 @@ export default function Layout({ children, currentPageName }) {
         <ShananaCheckoutPanel />
         <TreatyMonitor />
 
-        <div className="relative">
-          {/* Global banner + nav — fixed top, all pages */}
+        <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-teal-50 to-green-50">
+          {/* Global banner + nav */}
           <GlobalNavBar />
 
           {/* Cart icon - persistent top right */}
@@ -35,7 +35,9 @@ export default function Layout({ children, currentPageName }) {
           </div>
 
           {/* Main content */}
+          <main className="pt-6">
           {children}
+          </main>
 
           {/* Floating Back Button - all non-dashboard pages */}
           {!isDashboard && (

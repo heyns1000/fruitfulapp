@@ -60,7 +60,7 @@ export default function GlobalNavBar() {
         />
       </a>
 
-      {/* Nav bar - sticky so it sticks to top after scrolling past banner */}
+      {/* Nav bar */}
       <div className="sticky top-0 z-[9990]">
         <nav className="bg-white shadow-md border-b-2 border-teal-200">
           <div className="container mx-auto px-4 py-3">
