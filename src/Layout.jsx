@@ -109,13 +109,12 @@ export default function Layout({ children, currentPageName }) {
 
       <div className="min-h-screen" style={{ background: '#F6F2E9' }}>
 
-        {/* ── Fruitful Banner — fixed aspect ratio, no stretching ── */}
-        <a href="/BanimalDashboard" className="block w-full" style={{ lineHeight: 0 }}>
+        {/* ── Fruitful Banner — fixed height, covers centre, never distorts ── */}
+        <a href="/BanimalDashboard" className="block w-full overflow-hidden" style={{ lineHeight: 0, height: '90px' }}>
           <img
             src="https://media.base44.com/images/public/6953a072de46207f94f2b9d2/1f1c5f1b0_banner_copy.png"
             alt="Fruitful™ — BUY ARTISAN. CREATE APPS. EAT PANCAKES."
-            className="w-full"
-            style={{ display: 'block', height: 'auto', maxHeight: '120px', objectFit: 'cover', objectPosition: 'center' }}
+            style={{ width: '100%', height: '90px', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
           />
         </a>
 
@@ -127,12 +126,12 @@ export default function Layout({ children, currentPageName }) {
           <div className="max-w-screen-2xl mx-auto px-4 sm:px-6">
             <div className="flex items-center justify-between h-14">
 
-              {/* Logo — real Fruitful logo */}
-              <Link to={createPageUrl('Dashboard')} className="flex items-center gap-2.5 shrink-0">
+              {/* Logo — Fruitful teal logo */}
+              <Link to={createPageUrl('Dashboard')} className="flex items-center gap-2 shrink-0">
                 <img
-                  src="https://media.base44.com/images/public/6953a072de46207f94f2b9d2/1b49797f9_Fruitful_logo_200px-02.png"
+                  src="https://media.base44.com/images/public/6953a072de46207f94f2b9d2/51d2d1a75_Fruitful_logo_200px-02.png"
                   alt="Fruitful"
-                  className="h-8 w-auto object-contain"
+                  className="h-9 w-auto object-contain"
                 />
               </Link>
 
@@ -216,10 +215,9 @@ export default function Layout({ children, currentPageName }) {
           <div className="max-w-5xl mx-auto">
             <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
               <img
-                src="https://media.base44.com/images/public/6953a072de46207f94f2b9d2/527e18020_Fruitful_logo_200px-01.png"
+                src="https://media.base44.com/images/public/6953a072de46207f94f2b9d2/f9f43a7d3_Fruitful_logo_200px-01.png"
                 alt="Fruitful"
-                className="h-8 w-auto object-contain"
-                style={{ filter: 'brightness(0) invert(1)' }}
+                className="h-9 w-auto object-contain"
               />
               <div className="flex flex-wrap gap-x-6 gap-y-1 text-xs" style={{ color: '#4a6b5a' }}>
                 {['Privacy','Terms','Contact','Copyright','Developers','VaultMesh','FAA.Zone','About'].map(label => (
