@@ -6,7 +6,46 @@ import ShananaCheckoutPanel from './components/shanana/ShananaCheckoutPanel';
 import TreatyMonitor from './components/vaultmesh/TreatyMonitor';
 import { WishlistProvider } from './components/wishlist/WishlistContext';
 import CartIcon from './components/cart/CartIcon';
-import { Menu, X, ArrowLeft } from 'lucide-react';
+import { Menu, X, ArrowLeft, ChevronDown, ChevronUp } from 'lucide-react';
+
+function LicenseFooter() {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <div className="bg-slate-950 border-t border-slate-800 text-slate-500">
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="w-full flex items-center justify-center gap-2 py-2 text-xs hover:text-slate-300 transition-colors"
+      >
+        {open ? <ChevronDown className="w-3 h-3" /> : <ChevronUp className="w-3 h-3" />}
+        <span>FPSL v1.0 — Fruitful Proprietary Source License</span>
+        <span className="text-slate-700">|</span>
+        <span className="font-mono text-slate-700 text-[10px]">GC7:FSP2021121654:FAA13713</span>
+        {open ? <ChevronDown className="w-3 h-3" /> : <ChevronUp className="w-3 h-3" />}
+      </button>
+      {open && (
+        <div className="max-w-4xl mx-auto px-6 pb-5 text-[10px] leading-relaxed font-mono text-slate-600 whitespace-pre-wrap">
+{`FRUITFUL PROPRIETARY SOURCE LICENSE (FPSL) v1.0 — Copyright (c) 2024–2026 Fruitful Holdings (Pty) Ltd & Heyns Schoeman. All rights reserved.
+
+NOTICE: BY CLONING, FORKING, DOWNLOADING, READING, EXECUTING, DEPLOYING, OR OTHERWISE INTERACTING WITH ANY PART OF THIS REPOSITORY — INCLUDING BUT NOT LIMITED TO TEMPLATES, CONFIGS, WORKERS, WORKFLOWS, SCRIPTS, OR DOCS — YOU ACCEPT THE FULL TERMS OF THIS LICENSE WITH IMMEDIATE EFFECT. NO FURTHER AGREEMENT IS REQUIRED. IGNORANCE OF THESE TERMS IS NOT A DEFENCE.
+
+1. GRANT OF RIGHTS — No rights are granted by default. Use requires prior written authorisation from Fruitful Holdings (Pty) Ltd. Authorised use: a) Internal evaluation by the named licensee; b) Contribution back under Fruitful Holdings review; c) Deployment within the Fruitful Ecosystem (*.faa.zone, *.seedwave.faa.zone) by authorised operators only.
+
+2. RESTRICTIONS — You may NOT without explicit written permission: a) Redistribute, sublicense, sell, rent, or transfer the Work; b) Use in a competing product or service; c) Remove or alter this license, any copyright notice, or the fruitful-banner.png attribution; d) Deploy worker/DNS/routing configs outside the Fruitful Ecosystem; e) Use seedwave domain structure or loadBrandConfig pattern commercially without a separate commercial licence.
+
+3. BANNER & ATTRIBUTION REQUIREMENT — All repositories and deployments must include the fruitful-banner.png asset. Removal constitutes a material breach.
+
+4. NO WARRANTY — THE WORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED.
+
+5. LIMITATION OF LIABILITY — FRUITFUL HOLDINGS SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES. THIS TAKES EFFECT FROM THE MOMENT YOU FIRST INTERACT WITH THE WORK.
+
+6. GOVERNING LAW — Republic of South Africa. Disputes: courts of Gauteng, South Africa. Contact: vault@faa.zone | https://faa.zone
+
+Applies to: github.com/Fruitful-Global-Planet/* | github.com/heyns1000/* — GC7:FSP2021121654:4400302974:VM9s:BL1501:GHOST7CHAIN:FAA13713`}
+        </div>
+      )}
+    </div>
+  );
+}
 
 const NAV_LINKS = [
   { label: 'Dashboard', page: 'Dashboard' },
@@ -49,6 +88,9 @@ const NAV_LINKS = [
   { label: '⚙️ Sector Hub', page: 'SectorAdminHub' },
   { label: '🔄 Data Sync', page: 'DataSyncCenter' },
   { label: '📦 Block Box', page: 'BlockBox' },
+  { label: '⚖️ Legal Docs', page: 'LegalDocuments' },
+  { label: '🛒 Banimal Checkout', page: 'BanimalLoopCheckout', direct: true },
+  { label: '🗺️ Mkt Blueprint', page: 'MarketplaceBlueprint' },
 ];
 
 export default function Layout({ children, currentPageName }) {
@@ -93,8 +135,8 @@ export default function Layout({ children, currentPageName }) {
 
               {/* Desktop Nav */}
               <div className="hidden lg:flex items-center gap-1 flex-wrap justify-end">
-                {NAV_LINKS.map(({ label, page }) => (
-                  <Link key={page} to={createPageUrl(page)}>
+                {NAV_LINKS.map(({ label, page, direct }) => (
+                  <Link key={page} to={direct ? `/${page}` : createPageUrl(page)}>
                     <button className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
                       currentPageName === page
                         ? 'bg-teal-600 text-white'
@@ -122,8 +164,8 @@ export default function Layout({ children, currentPageName }) {
             {/* Mobile Dropdown Menu */}
             {menuOpen && (
               <div className="lg:hidden mt-3 pb-2 border-t border-teal-100 pt-3 flex flex-col gap-1">
-                {NAV_LINKS.map(({ label, page }) => (
-                  <Link key={page} to={createPageUrl(page)} onClick={() => setMenuOpen(false)}>
+                {NAV_LINKS.map(({ label, page, direct }) => (
+                  <Link key={page} to={direct ? `/${page}` : createPageUrl(page)} onClick={() => setMenuOpen(false)}>
                     <button className={`w-full text-left px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                       currentPageName === page
                         ? 'bg-teal-600 text-white'
@@ -154,6 +196,9 @@ export default function Layout({ children, currentPageName }) {
             <span className="text-sm font-semibold hidden sm:inline group-hover:inline">Back</span>
           </button>
         )}
+
+        {/* FPSL License Footer */}
+        <LicenseFooter />
 
         {/* Footer — Global Footer Repository: DO NOT MODIFY */}
         <footer className="py-8 px-6 md:px-12 text-center border-t" style={{ background: '#f5f5f7', color: '#6b7280', borderColor: '#e8e8ed' }}>

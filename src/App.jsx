@@ -21,6 +21,9 @@ import DataSyncCenter from './pages/DataSyncCenter'
 import GrandMashadlelaCollection from './pages/GrandMashadlelaCollection'
 import BlockBox from './pages/BlockBox'
 import BrandInsights from './pages/BrandInsights'
+import LegalDocuments from './pages/LegalDocuments'
+import BanimalLoopCheckout from './pages/BanimalLoopCheckout'
+import MarketplaceBlueprint from './pages/MarketplaceBlueprint'
 import SubscriptionShop from './pages/SubscriptionShop'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
@@ -96,6 +99,9 @@ const AuthenticatedApp = () => {
       <Route path="/BanimalAdmin" element={<LayoutWrapper currentPageName="BanimalAdmin"><BanimalAdmin /></LayoutWrapper>} />
       <Route path="/BlockBox" element={<BlockBox />} />
       <Route path="/BrandInsights" element={<LayoutWrapper currentPageName="BrandInsights"><BrandInsights /></LayoutWrapper>} />
+      <Route path="/LegalDocuments" element={<LayoutWrapper currentPageName="LegalDocuments"><LegalDocuments /></LayoutWrapper>} />
+      <Route path="/BanimalLoopCheckout" element={<BanimalLoopCheckout />} />
+      <Route path="/MarketplaceBlueprint" element={<LayoutWrapper currentPageName="MarketplaceBlueprint"><MarketplaceBlueprint /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
