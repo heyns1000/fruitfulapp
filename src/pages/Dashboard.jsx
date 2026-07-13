@@ -231,15 +231,6 @@ export default function Dashboard() {
       {/* Subtle dot-grid background */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.06]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #00ff99 1px, transparent 0)', backgroundSize: '32px 32px' }} />
 
-      {/* ── FRUITFUL BANNER ── */}
-      <a href="/BanimalDashboard" className="block w-full" style={{ lineHeight: 0 }}>
-        <img
-          src="https://media.base44.com/images/public/6953a072de46207f94f2b9d2/1f1c5f1b0_banner_copy.png"
-          alt="Fruitful™"
-          style={{ width: '100%', display: 'block', maxHeight: '160px', objectFit: 'cover', objectPosition: 'center' }}
-        />
-      </a>
-
       {/* ── MAIN HEADER ── */}
       <header className="relative overflow-hidden border-b border-[#00ff9920]" style={{ background: '#011f0e' }}>
         <div className="container mx-auto px-6 py-7 relative z-10">

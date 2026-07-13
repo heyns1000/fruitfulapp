@@ -6,6 +6,7 @@ import ShananaCheckoutPanel from './components/shanana/ShananaCheckoutPanel';
 import TreatyMonitor from './components/vaultmesh/TreatyMonitor';
 import { WishlistProvider } from './components/wishlist/WishlistContext';
 import CartIcon from './components/cart/CartIcon';
+import GlobalNavBar from './components/navigation/GlobalNavBar';
 import { ArrowLeft } from 'lucide-react';
 
 export default function Layout({ children, currentPageName }) {
@@ -25,8 +26,11 @@ export default function Layout({ children, currentPageName }) {
         <TreatyMonitor />
 
         <div className="relative">
-          {/* Cart icon - persistent top right */}
-          <div className="fixed top-4 right-4 z-[9999]">
+          {/* Global banner + nav — fixed top, all pages */}
+          <GlobalNavBar />
+
+          {/* Cart icon - persistent top right (below nav) */}
+          <div className="fixed top-16 right-4 z-[9999]">
             <CartIcon />
           </div>
 
