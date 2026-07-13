@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { CartProvider } from './components/cart/CartContext';
 import ShananaCheckoutPanel from './components/shanana/ShananaCheckoutPanel';
