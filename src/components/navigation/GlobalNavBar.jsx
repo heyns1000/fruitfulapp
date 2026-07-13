@@ -76,7 +76,7 @@ export default function GlobalNavBar() {
               </Link>
 
               {/* Desktop links */}
-              <div className="hidden lg:flex items-center gap-1 overflow-x-auto flex-nowrap justify-end" style={{ maxWidth: 'calc(100% - 160px)' }}>
+              <div className="hidden lg:flex items-center gap-1 flex-wrap justify-end">
                 {NAV_LINKS.map(({ href, label }) => (
                   <Link key={href} to={href}>
                     <button
