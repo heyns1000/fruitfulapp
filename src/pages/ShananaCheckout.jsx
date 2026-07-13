@@ -133,6 +133,11 @@ export default function ShananaCheckout() {
   return (
     <div style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
 
+      {/* Back Button - top left */}
+      <a href="/Dashboard" style={{ position: 'fixed', top: '16px', left: '16px', zIndex: 9999, display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 16px', borderRadius: '999px', background: '#18241C', color: 'white', fontSize: '14px', fontWeight: '600', textDecoration: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.3)' }}>
+        ← <span>Back</span>
+      </a>
+
       {/* Modal */}
       {modal.open && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
