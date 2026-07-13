@@ -442,14 +442,14 @@ export default function BlockBox() {
       <Digital />
       <Footer />
 
-      {/* Floating Back Button */}
+      {/* Back Button - top left */}
       <Link
         to="/Dashboard"
-        className="fixed bottom-6 right-6 z-[9999] flex items-center gap-2 px-4 py-3 rounded-full bg-teal-600 text-white shadow-lg hover:bg-teal-700 transition-all hover:scale-105 active:scale-95"
-        title="Back to Dashboard"
+        className="fixed top-4 left-4 z-[9999] flex items-center gap-2 px-4 py-2.5 rounded-full text-white text-sm font-semibold shadow-lg hover:opacity-90 active:scale-95 transition-all"
+        style={{ background: '#18241C' }}
       >
-        <ArrowLeft className="w-5 h-5" />
-        <span className="text-sm font-semibold hidden sm:inline">Back</span>
+        <ArrowLeft className="w-4 h-4" />
+        <span className="hidden sm:inline">Back</span>
       </Link>
     </div>
   );
