@@ -29,8 +29,8 @@ export default function Layout({ children, currentPageName }) {
           {/* Global banner + nav — fixed top, all pages */}
           <GlobalNavBar />
 
-          {/* Cart icon - persistent top right (below nav) */}
-          <div className="fixed top-16 right-4 z-[9999]">
+          {/* Cart icon - persistent top right */}
+          <div className="fixed top-4 right-4 z-[9999]">
             <CartIcon />
           </div>
 

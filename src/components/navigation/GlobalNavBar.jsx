@@ -52,16 +52,16 @@ export default function GlobalNavBar() {
   return (
     <>
       {/* Banner */}
-      <div className="fixed top-0 left-0 right-0 z-[9990]">
-        <a href="/BanimalDashboard" className="block w-full overflow-hidden" style={{ background: '#a89080', aspectRatio: '1440/120' }}>
-          <img
-            src="https://media.base44.com/images/public/6953a072de46207f94f2b9d2/1f1c5f1b0_banner_copy.png"
-            alt="Fruitful™ — BUY ARTISAN. CREATE APPS. EAT PANCAKES."
-            className="w-full h-full object-cover object-center"
-          />
-        </a>
+      <a href="/BanimalDashboard" className="block w-full overflow-hidden" style={{ background: '#a89080', height: '80px' }}>
+        <img
+          src="https://media.base44.com/images/public/6953a072de46207f94f2b9d2/1f1c5f1b0_banner_copy.png"
+          alt="Fruitful™ — BUY ARTISAN. CREATE APPS. EAT PANCAKES."
+          className="w-full h-full object-cover object-center"
+        />
+      </a>
 
-        {/* Nav bar */}
+      {/* Nav bar - sticky so it sticks to top after scrolling past banner */}
+      <div className="sticky top-0 z-[9990]">
         <nav className="bg-white shadow-md border-b-2 border-teal-200">
           <div className="container mx-auto px-4 py-3">
             <div className="flex items-center justify-between">
@@ -76,7 +76,7 @@ export default function GlobalNavBar() {
               </Link>
 
               {/* Desktop links */}
-              <div className="hidden lg:flex items-center gap-1 flex-wrap justify-end">
+              <div className="hidden lg:flex items-center gap-1 overflow-x-auto flex-nowrap justify-end" style={{ maxWidth: 'calc(100% - 160px)' }}>
                 {NAV_LINKS.map(({ href, label }) => (
                   <Link key={href} to={href}>
                     <button
@@ -122,9 +122,6 @@ export default function GlobalNavBar() {
           </div>
         </nav>
       </div>
-
-      {/* Spacer */}
-      <div style={{ height: mobileOpen ? '420px' : '148px' }} />
     </>
   );
 }
