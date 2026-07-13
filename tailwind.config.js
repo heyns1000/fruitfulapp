@@ -9,6 +9,14 @@ module.exports = {
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
+      fontFamily: {
+        heading: 'var(--font-heading)',
+        body: 'var(--font-body)',
+        display: 'var(--font-display)',
+        mono: 'var(--font-mono)',
+        sans: ['var(--font-body)', 'system-ui', 'sans-serif'],
+        serif: ['var(--font-heading)', 'Georgia', 'serif'],
+      },
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
@@ -59,7 +67,16 @@ module.exports = {
   				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
   				border: 'hsl(var(--sidebar-border))',
   				ring: 'hsl(var(--sidebar-ring))'
-  			}
+  			},
+        fruitful: {
+          cream: '#F6F2E9',
+          forest: '#18241C',
+          teal: '#0FB5A6',
+          'teal-light': '#1dcfc0',
+          'teal-dark': '#0a8a7e',
+          warm: '#e8e0d0',
+          muted: '#8a9e96',
+        }
   		},
   		keyframes: {
   			'accordion-down': {
