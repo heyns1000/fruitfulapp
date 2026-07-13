@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
 const NAV_LINKS = [
@@ -47,7 +47,7 @@ const NAV_LINKS = [
 
 export default function GlobalNavBar() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const currentPath = window.location.pathname;
+  const { pathname: currentPath } = useLocation();
 
   return (
     <>

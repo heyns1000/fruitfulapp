@@ -133,9 +133,10 @@ export default function TreatyMonitor() {
   };
 
   useEffect(() => {
-    poll(); // immediate first check
+    // Delay first poll so it doesn't block page load
+    const firstPoll = setTimeout(poll, 10_000);
     const id = setInterval(poll, POLL_MS);
-    return () => clearInterval(id);
+    return () => { clearTimeout(firstPoll); clearInterval(id); };
   }, []);
 
   const dismiss = (id) => setBreaches(prev => prev.filter(b => b.id !== id));
