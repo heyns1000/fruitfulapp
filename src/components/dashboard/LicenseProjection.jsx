@@ -69,8 +69,8 @@ const fmt = (v) => {
 const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-[#1e293b] border border-[#334155] rounded-xl p-3 text-xs shadow-2xl">
-      <p className="text-[#90cdf4] font-bold mb-2">{label}</p>
+    <div className="bg-card border border-border rounded-xl p-3 text-xs shadow-lg">
+      <p className="text-foreground font-bold mb-2">{label}</p>
       {payload.map((p) => (
         <p key={p.name} style={{ color: p.color }} className="mb-0.5">
           {p.name}: {fmt(p.value)}
@@ -100,34 +100,34 @@ export default function LicenseProjection() {
 
   const scenarios = [
     { key: 'conservative', label: 'Conservative', color: '#f59e0b', rate: monthlyRate * 0.6 },
-    { key: 'base', label: 'Base Case', color: '#22d3ee', rate: monthlyRate },
-    { key: 'optimistic', label: 'Optimistic', color: '#4ade80', rate: monthlyRate * 1.4 },
+    { key: 'base', label: 'Base Case', color: '#0d9488', rate: monthlyRate },
+    { key: 'optimistic', label: 'Optimistic', color: '#16a34a', rate: monthlyRate * 1.4 },
   ];
 
   return (
-    <div className="bg-[#0f172a] border border-[#1e3a5f] rounded-2xl p-6 space-y-6">
+    <div className="bg-card border border-border rounded-2xl p-6 space-y-6 shadow-sm">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-black text-[#90cdf4] flex items-center gap-2">
-            <TrendingUp className="w-5 h-5" />
+          <h2 className="text-xl font-black text-foreground flex items-center gap-2">
+            <TrendingUp className="w-5 h-5 text-primary" />
             Master License Value Projection
           </h2>
-          <p className="text-[#64748b] text-sm mt-0.5">
+          <p className="text-muted-foreground text-sm mt-0.5">
             Based on subnode expansion trends across {Object.keys(ECOSYSTEM_DATA).length} active sectors
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <Calendar className="w-4 h-4 text-[#64748b]" />
-          <span className="text-xs text-[#94a3b8]">Projection window:</span>
+          <Calendar className="w-4 h-4 text-muted-foreground" />
+          <span className="text-xs text-muted-foreground">Projection window:</span>
           {[12, 24].map(m => (
             <button
               key={m}
               onClick={() => setMonths(m)}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold border transition-all ${
                 months === m
-                  ? 'bg-[#0ea5e9] border-[#0ea5e9] text-white'
-                  : 'border-[#334155] text-[#94a3b8] hover:border-[#0ea5e9]'
+                  ? 'bg-primary border-primary text-primary-foreground'
+                  : 'border-border text-muted-foreground hover:border-primary'
               }`}
             >
               {m}mo
@@ -139,15 +139,15 @@ export default function LicenseProjection() {
       {/* KPI Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: 'Current Portfolio', value: fmt(totalValue), Icon: DollarSign, color: 'text-[#22d3ee]' },
-          { label: `${months}mo Projected (Base)`, value: fmt(finalPoint?.base || 0), Icon: TrendingUp, color: 'text-[#4ade80]' },
-          { label: 'Projected Growth', value: `+${growthPct.toFixed(1)}%`, Icon: BarChart2, color: 'text-[#f59e0b]' },
-          { label: 'Monthly Rate (Base)', value: `${(monthlyRate * 100).toFixed(2)}%/mo`, Icon: Layers, color: 'text-[#c084fc]' },
+          { label: 'Current Portfolio', value: fmt(totalValue), Icon: DollarSign, color: 'text-primary' },
+          { label: `${months}mo Projected (Base)`, value: fmt(finalPoint?.base || 0), Icon: TrendingUp, color: 'text-fruitful-green' },
+          { label: 'Projected Growth', value: `+${growthPct.toFixed(1)}%`, Icon: BarChart2, color: 'text-hotstack-amber' },
+          { label: 'Monthly Rate (Base)', value: `${(monthlyRate * 100).toFixed(2)}%/mo`, Icon: Layers, color: 'text-primary' },
         ].map(({ label, value, Icon, color }) => (
-          <div key={label} className="bg-[#1e293b] border border-[#334155] rounded-xl p-4 text-center">
+          <div key={label} className="bg-muted border border-border rounded-xl p-4 text-center">
             <Icon className={`w-4 h-4 mx-auto mb-1 ${color}`} />
             <p className={`text-lg font-black ${color}`}>{value}</p>
-            <p className="text-[10px] text-[#64748b] mt-0.5">{label}</p>
+            <p className="text-[10px] text-muted-foreground mt-0.5">{label}</p>
           </div>
         ))}
       </div>
@@ -181,22 +181,22 @@ export default function LicenseProjection() {
                 </linearGradient>
               ))}
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
             <XAxis
               dataKey="label"
               tick={{ fill: '#64748b', fontSize: 10 }}
               interval={months === 12 ? 1 : 3}
-              axisLine={{ stroke: '#1e293b' }}
+              axisLine={{ stroke: '#e2e8f0' }}
             />
             <YAxis
               tickFormatter={fmt}
               tick={{ fill: '#64748b', fontSize: 10 }}
-              axisLine={{ stroke: '#1e293b' }}
+              axisLine={{ stroke: '#e2e8f0' }}
               width={70}
             />
             <Tooltip content={<CustomTooltip />} />
             <Legend
-              wrapperStyle={{ fontSize: 11, color: '#94a3b8' }}
+              wrapperStyle={{ fontSize: 11, color: '#64748b' }}
               formatter={(val) => scenarios.find(s => s.key === val)?.label || val}
             />
             {scenarios.map(s => (
@@ -218,17 +218,17 @@ export default function LicenseProjection() {
 
       {/* Top sectors by value */}
       <div>
-        <h3 className="text-sm font-bold text-[#94a3b8] uppercase tracking-widest mb-3">
+        <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-widest mb-3">
           Top 5 Sectors by License Portfolio Value
         </h3>
         <div style={{ height: 180 }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={top5Sectors} margin={{ top: 0, right: 8, left: 0, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-              <XAxis dataKey="label" tick={{ fill: '#64748b', fontSize: 10 }} axisLine={{ stroke: '#1e293b' }} />
-              <YAxis tickFormatter={fmt} tick={{ fill: '#64748b', fontSize: 10 }} axisLine={{ stroke: '#1e293b' }} width={70} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+              <XAxis dataKey="label" tick={{ fill: '#64748b', fontSize: 10 }} axisLine={{ stroke: '#e2e8f0' }} />
+              <YAxis tickFormatter={fmt} tick={{ fill: '#64748b', fontSize: 10 }} axisLine={{ stroke: '#e2e8f0' }} width={70} />
               <Tooltip content={<CustomTooltip />} />
-              <Bar dataKey="value" name="Current Value" fill="#0ea5e9" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="value" name="Current Value" fill="#0d9488" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -238,9 +238,9 @@ export default function LicenseProjection() {
       <div className="overflow-x-auto">
         <table className="w-full text-xs">
           <thead>
-            <tr className="border-b border-[#1e3a5f]">
+            <tr className="border-b border-border">
               {['Sector', 'Brands', 'Subnodes', 'Current Value', 'Monthly Rate', `${months}mo Projected`].map(h => (
-                <th key={h} className="text-left text-[#64748b] font-semibold uppercase tracking-wide pb-2 pr-4">{h}</th>
+                <th key={h} className="text-left text-muted-foreground font-semibold uppercase tracking-wide pb-2 pr-4">{h}</th>
               ))}
             </tr>
           </thead>
@@ -249,13 +249,13 @@ export default function LicenseProjection() {
               const rate = getSectorGrowthRate(s.avgSubnodesPerBrand);
               const projected = s.value * Math.pow(1 + rate, months);
               return (
-                <tr key={s.sector} className="border-b border-[#1e293b] hover:bg-[#1e293b]/50 transition-colors">
-                  <td className="py-2 pr-4 text-[#e2e8f0] font-medium">{s.label.slice(0, 20)}</td>
-                  <td className="py-2 pr-4 text-[#94a3b8]">{s.brands}</td>
-                  <td className="py-2 pr-4 text-[#94a3b8]">{s.subnodes}</td>
-                  <td className="py-2 pr-4 text-[#22d3ee] font-bold">{fmt(s.value)}</td>
-                  <td className="py-2 pr-4 text-[#f59e0b]">{(rate * 100).toFixed(2)}%</td>
-                  <td className="py-2 pr-4 text-[#4ade80] font-bold">{fmt(projected)}</td>
+                <tr key={s.sector} className="border-b border-border hover:bg-muted/50 transition-colors">
+                  <td className="py-2 pr-4 text-foreground font-medium">{s.label.slice(0, 20)}</td>
+                  <td className="py-2 pr-4 text-muted-foreground">{s.brands}</td>
+                  <td className="py-2 pr-4 text-muted-foreground">{s.subnodes}</td>
+                  <td className="py-2 pr-4 text-primary font-bold">{fmt(s.value)}</td>
+                  <td className="py-2 pr-4 text-hotstack-amber">{(rate * 100).toFixed(2)}%</td>
+                  <td className="py-2 pr-4 text-fruitful-green font-bold">{fmt(projected)}</td>
                 </tr>
               );
             })}
@@ -263,7 +263,7 @@ export default function LicenseProjection() {
         </table>
       </div>
 
-      <p className="text-[10px] text-[#475569] text-center">
+      <p className="text-[10px] text-muted-foreground text-center">
         Projections use compound growth modelling weighted by subnode density per sector. Not financial advice.
       </p>
     </div>
