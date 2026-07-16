@@ -10,6 +10,22 @@ module.exports = {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
+  			/* Fruitful™ core brand + HotStack™ subbrand named palette */
+  			fruitful: {
+  				teal: '#0d9488',
+  				'teal-deep': '#0f766e',
+  				green: '#16a34a',
+  				mint: '#d1fae5',
+  				ink: '#18241c'
+  			},
+  			hotstack: {
+  				ember: '#f97316',
+  				amber: '#f59e0b'
+  			},
+  			success: {
+  				DEFAULT: 'hsl(var(--success))',
+  				foreground: 'hsl(var(--success-foreground))'
+  			},
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
