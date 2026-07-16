@@ -79,17 +79,17 @@ export default function GlobalNavBar() {
 
   return (
     <>
-      {/* Banner — full artwork shown without distortion, centered on brand ink */}
+      {/* VIP hero banner — Fruitful Global™ artwork, full-bleed without distortion */}
       <a
-        href="/BanimalDashboard"
+        href="/EcosystemExplorer"
         className="block w-full overflow-hidden"
-        style={{ background: 'var(--fruitful-ink)' }}
-        aria-label="Fruitful — Buy artisan. Create apps. Eat pancakes."
+        style={{ background: '#2b1b52' }}
+        aria-label="Fruitful Global — If you don't like the fruits you are growing, change the seeds"
       >
         <img
-          src="https://media.base44.com/images/public/6953a072de46207f94f2b9d2/1f1c5f1b0_banner_copy.png"
-          alt="Fruitful — Buy artisan, create apps, eat pancakes"
-          className="mx-auto h-16 sm:h-20 w-auto max-w-full object-contain"
+          src="/brand/banner-global.png"
+          alt="Fruitful Global — if you don't like the fruits you are growing, change the seeds"
+          className="mx-auto h-24 sm:h-32 lg:h-40 w-auto max-w-full object-contain"
         />
       </a>
 
@@ -98,15 +98,15 @@ export default function GlobalNavBar() {
         <nav className="bg-card/95 backdrop-blur shadow-sm border-b border-border">
           <div className="container mx-auto px-4 py-3">
             <div className="flex items-center justify-between gap-4">
-              {/* Logo */}
-              <Link to="/Dashboard" className="flex items-center gap-2 shrink-0">
+              {/* Logo — official Fruitful™ wordmark */}
+              <Link to="/Dashboard" className="flex items-center gap-2 shrink-0" aria-label="Fruitful home">
                 <img
-                  src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6953a072de46207f94f2b9d2/52acd159d_Chief_02_1753263376705.png"
-                  alt="FAA.ZONE logo"
-                  className="w-10 h-10 object-contain"
+                  src="/brand/fruitful-logo.png"
+                  alt="Fruitful"
+                  className="h-9 w-auto object-contain"
                 />
-                <span className="text-xl font-bold text-fruitful-teal-deep hidden sm:block">
-                  FAA.ZONE<sup className="text-xs">™</sup>
+                <span className="text-sm font-semibold text-muted-foreground hidden md:block border-l border-border pl-2">
+                  FAA.ZONE<sup className="text-[10px]">™</sup>
                 </span>
               </Link>
 

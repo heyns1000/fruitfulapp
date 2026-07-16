@@ -451,8 +451,17 @@ export default function Dashboard() {
         </Tabs>
       </div>
 
+      {/* VIP Thank You banner */}
+      <div className="mt-10 w-full overflow-hidden">
+        <img
+          src="/brand/banner-thankyou.jpg"
+          alt="Fruitful. Thank you."
+          className="w-full h-auto object-cover"
+        />
+      </div>
+
       {/* Footer */}
-      <footer className="border-t border-border py-6 mt-8 text-center bg-card">
+      <footer className="border-t border-border py-6 text-center bg-card">
         <p className="text-xs flex items-center justify-center gap-1.5 text-muted-foreground">
           <Shield className="w-3.5 h-3.5 text-primary" />
           Powered by HSOMNI9000 &middot; FAA.Zone Grid Protocol &middot; ScrollGrid &middot; PulseTrade Certified &middot; TreatyMesh Validated
