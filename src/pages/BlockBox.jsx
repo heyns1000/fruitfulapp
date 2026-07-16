@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Tags, Package, Truck, Handshake } from 'lucide-react';
 
 // ─── Brand tokens ───────────────────────────────────────────
 const BB = {
@@ -263,10 +263,10 @@ function Specs() {
 // ─── Retail / POS section ────────────────────────────────────
 function Retail() {
   const cards = [
-    { icon: '🏪', title: 'Shelf Strip',     body: 'Edge-lit shelf strips with product code, profile spec, and barcode — designed to the millimetre for standard hardware gondola shelving.' },
-    { icon: '📦', title: 'Unit Carton',     body: 'Small and medium unit cartons with full-bleed yellow front panel, product name, tear-action photo, and recycling info on the back panel.' },
-    { icon: '🚚', title: 'In-Store Display', body: 'End-cap header, wobbler and aisle header templates — all co-brandable with retailer identity for exclusive stocking deals.' },
-    { icon: '🤝', title: 'Co-Brand Ready',  body: 'Retailer co-brand pack front and POS set — your logo, Block Box lock-up, professional print-ready artwork at no cost.' },
+    { Icon: Tags, title: 'Shelf Strip',     body: 'Edge-lit shelf strips with product code, profile spec, and barcode — designed to the millimetre for standard hardware gondola shelving.' },
+    { Icon: Package, title: 'Unit Carton',     body: 'Small and medium unit cartons with full-bleed yellow front panel, product name, tear-action photo, and recycling info on the back panel.' },
+    { Icon: Truck, title: 'In-Store Display', body: 'End-cap header, wobbler and aisle header templates — all co-brandable with retailer identity for exclusive stocking deals.' },
+    { Icon: Handshake, title: 'Co-Brand Ready',  body: 'Retailer co-brand pack front and POS set — your logo, Block Box lock-up, professional print-ready artwork at no cost.' },
   ];
   return (
     <section id="retailers" style={{ background: BB.cream }} className="py-24">
@@ -291,7 +291,10 @@ function Retail() {
             {cards.map((c) => (
               <div key={c.title} className="rounded-2xl p-6 border"
                 style={{ background: BB.white, borderColor: BB.sand }}>
-                <div className="text-3xl mb-3">{c.icon}</div>
+                <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-3"
+                  style={{ background: 'rgba(245,197,24,0.15)' }}>
+                  <c.Icon className="w-5 h-5" style={{ color: BB.navy }} strokeWidth={2.25} />
+                </div>
                 <h3 className="font-black text-base mb-1.5" style={{ color: BB.navy }}>{c.title}</h3>
                 <p className="text-xs leading-relaxed" style={{ color: '#7a8599' }}>{c.body}</p>
               </div>
@@ -432,7 +435,7 @@ function Footer() {
 // ─── Page ────────────────────────────────────────────────────
 export default function BlockBox() {
   return (
-    <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif' }}>
+    <div style={{ fontFamily: '"Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif' }}>
       <Navbar />
       <Hero />
       <Specs />
@@ -445,8 +448,8 @@ export default function BlockBox() {
       {/* Back Button - top left */}
       <Link
         to="/Dashboard"
-        className="fixed top-4 left-4 z-[9999] flex items-center gap-2 px-4 py-2.5 rounded-full text-white text-sm font-semibold shadow-lg hover:opacity-90 active:scale-95 transition-all"
-        style={{ background: '#18241C' }}
+        className="fixed top-4 left-4 z-[9999] flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold shadow-lg hover:opacity-90 active:scale-95 transition-all"
+        style={{ background: BB.yellow, color: BB.navy }}
       >
         <ArrowLeft className="w-4 h-4" />
         <span className="hidden sm:inline">Back</span>
