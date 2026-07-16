@@ -14,6 +14,7 @@ import CompleteDataExporter from '../components/data/CompleteDataExporter';
 import BulkOperations from '../components/admin/BulkOperations';
 import BrandHealthAudit from '../components/admin/BrandHealthAudit';
 import ZeroWasteExporter from '../components/data/ZeroWasteExporter';
+import PearLoader from '../components/common/PearLoader';
 import { Link } from 'react-router-dom';
 import {
   Loader2, Sprout, Wheat, Landmark, PenTool, Package, GraduationCap, Scissors,
@@ -240,11 +241,7 @@ export default function Dashboard() {
   const handleBrandAdded = () => queryClient.invalidateQueries({ queryKey: ['brands'] });
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
-      </div>
-    );
+    return <PearLoader fullScreen label="Loading your ecosystem" />;
   }
 
   return (
@@ -462,6 +459,11 @@ export default function Dashboard() {
 
       {/* Footer */}
       <footer className="border-t border-border py-6 text-center bg-card">
+        <img
+          src="/brand/favicon.png"
+          alt="Fruitful"
+          className="w-8 h-8 object-contain mx-auto mb-3 opacity-90"
+        />
         <p className="text-xs flex items-center justify-center gap-1.5 text-muted-foreground">
           <Shield className="w-3.5 h-3.5 text-primary" />
           Powered by HSOMNI9000 &middot; FAA.Zone Grid Protocol &middot; ScrollGrid &middot; PulseTrade Certified &middot; TreatyMesh Validated
