@@ -1,22 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
-import { Loader2 } from 'lucide-react';
-import HotStackHeader from '../components/appbuilder/HotStackHeader';
-import HotStackPrompt from '../components/appbuilder/HotStackPrompt';
-import HotStackBrandStack from '../components/appbuilder/HotStackBrandStack';
-import HotStackGenerator from '../components/appbuilder/HotStackGenerator';
-import HotStackPreview from '../components/appbuilder/HotStackPreview';
-
-// Flow: prompt → brands → generate → preview
-const STEPS = ['prompt', 'brands', 'generate', 'preview'];
+import { Loader2, Flame } from 'lucide-react';
+import HotStackStudio from '../components/appbuilder/HotStackStudio';
 
 export default function AppBuilder() {
-  const [step, setStep] = useState('prompt');
-  const [vibePrompt, setVibePrompt] = useState('');
-  const [selectedBrands, setSelectedBrands] = useState([]);
-  const [generatedApp, setGeneratedApp] = useState(null);
-
   const { data: brands = [], isLoading } = useQuery({
     queryKey: ['brands'],
     queryFn: () => base44.entities.Brand.list('-updated_date'),
@@ -24,53 +12,17 @@ export default function AppBuilder() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-stone-950">
-        <div className="text-center space-y-3">
-          <div className="text-4xl animate-pulse">🔥</div>
-          <Loader2 className="w-8 h-8 animate-spin text-orange-500 mx-auto" />
-          <p className="text-stone-400 text-sm">Loading HotStack™ ecosystem…</p>
+      <div className="flex items-center justify-center min-h-[70vh]">
+        <div className="text-center space-y-4">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-hotstack-ember to-hotstack-amber shadow-lg shadow-orange-500/30">
+            <Flame className="h-7 w-7 text-white" />
+          </div>
+          <Loader2 className="mx-auto h-6 w-6 animate-spin text-hotstack-ember" />
+          <p className="text-sm text-muted-foreground">Loading HotStack&trade; ecosystem&hellip;</p>
         </div>
       </div>
     );
   }
 
-  return (
-    <div className="min-h-screen bg-stone-950 text-white">
-      <HotStackHeader step={step} setStep={setStep} selectedBrands={selectedBrands} generatedApp={generatedApp} />
-
-      <div className="container mx-auto px-4 sm:px-6 pb-16 pt-6">
-        {step === 'prompt' && (
-          <HotStackPrompt
-            vibePrompt={vibePrompt}
-            setVibePrompt={setVibePrompt}
-            onNext={() => setStep('brands')}
-          />
-        )}
-        {step === 'brands' && (
-          <HotStackBrandStack
-            brands={brands}
-            selectedBrands={selectedBrands}
-            setSelectedBrands={setSelectedBrands}
-            onNext={() => setStep('generate')}
-            onBack={() => setStep('prompt')}
-          />
-        )}
-        {step === 'generate' && (
-          <HotStackGenerator
-            selectedBrands={selectedBrands}
-            vibePrompt={vibePrompt}
-            onGenerated={(data) => { setGeneratedApp(data); setStep('preview'); }}
-            onBack={() => setStep('brands')}
-          />
-        )}
-        {step === 'preview' && generatedApp && (
-          <HotStackPreview
-            appData={generatedApp}
-            selectedBrands={selectedBrands}
-            onRebuild={() => setStep('generate')}
-          />
-        )}
-      </div>
-    </div>
-  );
+  return <HotStackStudio brands={brands} />;
 }
