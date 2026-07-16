@@ -12,7 +12,8 @@ import {
 /* Clean, emoji-free nav. Each link carries a lucide icon for CI + a11y. */
 const NAV_LINKS = [
   { href: '/Dashboard',                 label: 'Dashboard',        icon: LayoutDashboard },
-  { href: '/Marketplace',               label: 'Marketplace',      icon: Store },
+  { href: '/BrandMarketplace',          label: 'Brand Market',     icon: Store },
+  { href: '/Marketplace',               label: 'Services',         icon: ShoppingBag },
   { href: '/Gallery',                   label: 'Gallery',          icon: Image },
   { href: '/CollaborationSuite',        label: 'Collaboration',    icon: Users },
   { href: '/Analytics',                 label: 'Analytics',        icon: BarChart3 },

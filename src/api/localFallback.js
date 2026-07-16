@@ -9,84 +9,21 @@
    backend would return, just served locally.
    ========================================================================= */
 
-import { ALL_SECTOR_DATA, FAA_ZONE_INDEX } from '@/components/data/AllSectorData';
+import { getBrandCatalog, getCatalogStats } from '@/lib/ecosystemCatalog';
 
 const uid = (p = 'id') => `${p}_${Math.random().toString(36).slice(2, 10)}`;
 const nowISO = () => new Date().toISOString();
 const delay = (ms = 120) => new Promise((r) => setTimeout(r, ms));
 
-/* ---- Descriptions per sector (concise, brand-accurate) ---- */
-const SECTOR_BLURB = {
-  agriculture: 'Precision agriculture, soil intelligence and yield tooling for the rural economy.',
-  fsf: 'Food, soil and farming systems connecting growers to conscious markets.',
-  banking: 'Compliant banking rails, payouts and financial infrastructure.',
-  creative: 'Creative studio tooling for makers, writers and designers.',
-  logistics: 'Route, track and fulfil across the ecosystem supply chain.',
-  'education-ip': 'Education and IP protection for knowledge creators.',
-  fashion: 'Heritage and modern fashion supply, from atelier to storefront.',
-  gaming: 'Interactive gaming and play-to-earn ecosystem nodes.',
-  health: 'Health, wellbeing and cognitive care platforms.',
-  housing: 'Housing, construction and built-environment infrastructure.',
-  justice: 'Legal, justice and compliance tooling.',
-  knowledge: 'Global archives and knowledge management.',
-  micromesh: 'Local and regional micro-mesh connectivity.',
-  media: 'Media production, distribution and creative rights.',
-  nutrition: 'Nutrition, provenance and wholesome supply.',
-  'ai-logic': 'AI reasoning, automation and logic services.',
-  packaging: 'Sustainable packaging and materials.',
-  quantum: 'Quantum research and advanced computation.',
-  ritual: 'Ritual, wellbeing and cultural practice.',
-  saas: 'Software-as-a-service building blocks.',
-  trade: 'Cross-border trade and marketplace rails.',
-  utilities: 'Energy, water and utility infrastructure.',
-  voice: 'Voice, audio and conversational interfaces.',
-  webless: 'Webless / offline-first connectivity for the next billion.',
-  nft: 'Digital IP, provenance and tokenised assets.',
-  'education-youth': 'Youth education and skills development.',
-  zerowaste: 'Circular, zero-waste operations.',
-  professional: 'Professional services and advisory.',
-  'payroll-mining': 'Payroll, treasury and resource finance.',
-  mining: 'Mining, resources and extraction intelligence.',
-  wildlife: 'Wildlife conservation and habitat protection.',
-};
-
-/* ---- Build the Brand catalogue from the real ecosystem data ---- */
+/* ---- Build the Brand catalogue from the unified ecosystem catalog ----
+   Single source of truth: src/lib/ecosystemCatalog.js. The marketplace UI and
+   this entity/API layer therefore serve the exact same brands & pricing. ---- */
 function buildBrands() {
-  const PER_SECTOR = 16; // keep grids responsive while staying representative
-  const out = [];
-  for (const [sector, data] of Object.entries(ALL_SECTOR_DATA || {})) {
-    const brands = data?.brands || [];
-    const subNodes = data?.subNodes || [];
-    const meta = FAA_ZONE_INDEX?.[sector] || {};
-    const max = Math.min(PER_SECTOR, brands.length);
-    for (let i = 0; i < max; i++) {
-      const name = brands[i];
-      const subnodes = Array.isArray(subNodes[i]) ? subNodes[i] : [];
-      out.push({
-        id: uid('brand'),
-        name,
-        sector,
-        subnodes,
-        tags: [sector, meta.payoutTier ? `tier-${meta.payoutTier}` : 'core'].filter(Boolean),
-        description: SECTOR_BLURB[sector] || 'FAA.ZONE ecosystem brand.',
-        health_score: 70 + ((i * 7) % 30),
-        metadata: {
-          id: `${name.slice(0, 3).toUpperCase()}-${sector.slice(0, 3).toUpperCase()}-${1000 + ((i * 137) % 9000)}`,
-          glyph: meta.glyph || '',
-          monthlyFee: meta.monthlyFee || '$0',
-          annualFee: meta.annualFee || '$0',
-          payoutTier: meta.payoutTier || 'B',
-          region: meta.region || 'Global',
-          activeNodes: 100 + ((i * 313) % 5000),
-        },
-        isSystemBrand: true,
-        aiGenerated: false,
-        created_date: nowISO(),
-        updated_date: nowISO(),
-      });
-    }
-  }
-  return out;
+  return getBrandCatalog().map((b) => ({
+    ...b,
+    created_date: nowISO(),
+    updated_date: nowISO(),
+  }));
 }
 
 const DEMO_USER = {
@@ -104,10 +41,12 @@ function seedFor(name) {
       return buildBrands();
     case 'User':
       return [DEMO_USER];
-    case 'Metrics':
+    case 'Metrics': {
+      const stats = getCatalogStats();
       return [
-        { id: uid('m'), total_brands: 372, total_sectors: 31, active_nodes: 48210, revenue: 1284000, created_date: nowISO() },
+        { id: uid('m'), total_brands: stats.totalBrands, total_sectors: stats.totalSectors, active_nodes: stats.totalNodes, revenue: 1284000, created_date: nowISO() },
       ];
+    }
     default:
       return [];
   }
