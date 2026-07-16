@@ -30,27 +30,27 @@ Context:
   };
 
   return (
-    <div className="rounded-2xl border border-stone-700 bg-stone-900/80 p-6 space-y-4">
-      <h3 className="font-black text-white flex items-center gap-2 text-lg">
+    <div className="rounded-2xl border border-border bg-card/80 p-6 space-y-4">
+      <h3 className="font-black text-foreground flex items-center gap-2 text-lg">
         <HelpCircle className="w-5 h-5 text-purple-400" />
         {t.faqHeading || 'AI Help & FAQ'}
       </h3>
-      <p className="text-stone-400 text-sm">{t.faqSlogan || 'Ask anything about your order, shipping, or FAA.ZONE.'}</p>
+      <p className="text-muted-foreground text-sm">{t.faqSlogan || 'Ask anything about your order, shipping, or FAA.ZONE.'}</p>
       <textarea
         value={question}
         onChange={e => setQuestion(e.target.value)}
         placeholder={t.faqPlaceholder || 'e.g. What payment methods are accepted?'}
-        className="w-full bg-stone-800 border border-stone-700 text-white placeholder:text-stone-600 rounded-xl p-4 text-sm resize-none h-24 focus:outline-none focus:border-purple-500 transition-colors"
+        className="w-full bg-muted border border-border text-foreground placeholder:text-muted-foreground rounded-xl p-4 text-sm resize-none h-24 focus:outline-none focus:border-purple-500 transition-colors"
       />
       <Button
         onClick={ask}
         disabled={loading}
-        className="w-full bg-gradient-to-r from-purple-700 to-indigo-700 hover:from-purple-600 hover:to-indigo-600 text-white font-bold gap-2"
+        className="w-full bg-gradient-to-r from-purple-700 to-indigo-700 hover:from-purple-600 hover:to-indigo-600 text-foreground font-bold gap-2"
       >
         {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> {t.faqLoading || 'Generating…'}</> : <><Sparkles className="w-4 h-4" /> {t.faqBtn || 'Get Answer ✨'}</>}
       </Button>
       {answer && (
-        <div className="bg-stone-800 border border-purple-800/50 rounded-xl p-4 text-stone-200 text-sm leading-relaxed whitespace-pre-wrap">
+        <div className="bg-muted border border-purple-800/50 rounded-xl p-4 text-foreground text-sm leading-relaxed whitespace-pre-wrap">
           {answer}
         </div>
       )}

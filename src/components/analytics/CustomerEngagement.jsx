@@ -64,16 +64,16 @@ export default function CustomerEngagement() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-orange-50 to-orange-100">
+        <Card className="bg-gradient-to-br from-primary/5 to-primary/10">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-orange-900 flex items-center gap-2">
+            <CardTitle className="text-sm font-medium text-primary flex items-center gap-2">
               <MousePointer className="w-4 h-4" />
               Bounce Rate
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-orange-900">36%</div>
-            <p className="text-xs text-orange-700 mt-1">↓ 4% improvement</p>
+            <div className="text-3xl font-bold text-primary">36%</div>
+            <p className="text-xs text-primary mt-1">↓ 4% improvement</p>
           </CardContent>
         </Card>
       </div>

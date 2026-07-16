@@ -38,7 +38,7 @@ export default function Messages() {
   };
 
   return (
-    <div className="h-[calc(100vh-64px)] bg-stone-950 flex overflow-hidden">
+    <div className="h-[calc(100vh-64px)] bg-background flex overflow-hidden">
       {/* Thread list — hidden on mobile when thread is open */}
       <div className={`${mobileShowThread ? 'hidden md:flex' : 'flex'} md:flex flex-col h-full`}>
         <ThreadList
@@ -56,20 +56,20 @@ export default function Messages() {
             {/* Mobile back button */}
             <div className="md:hidden px-4 pt-3 shrink-0">
               <Button variant="ghost" size="sm" onClick={() => setMobileShowThread(false)}
-                className="text-stone-400 hover:text-white gap-1.5 text-xs">
+                className="text-muted-foreground hover:text-foreground gap-1.5 text-xs">
                 <ArrowLeft className="w-3.5 h-3.5" /> All Messages
               </Button>
             </div>
             <ChatWindow thread={selectedThread} currentUser={currentUser} />
           </>
         ) : (
-          <div className="flex-1 flex items-center justify-center bg-stone-950">
-            <div className="text-center text-stone-600">
-              <div className="w-20 h-20 rounded-full bg-stone-900 border border-stone-800 flex items-center justify-center mx-auto mb-4">
+          <div className="flex-1 flex items-center justify-center bg-background">
+            <div className="text-center text-muted-foreground">
+              <div className="w-20 h-20 rounded-full bg-card border border-border flex items-center justify-center mx-auto mb-4">
                 <MessageSquare className="w-8 h-8 opacity-30" />
               </div>
-              <p className="font-bold text-stone-400">Select a conversation</p>
-              <p className="text-sm mt-1 text-stone-600">Or start a new one by clicking <span className="text-orange-400">+ New</span></p>
+              <p className="font-bold text-muted-foreground">Select a conversation</p>
+              <p className="text-sm mt-1 text-muted-foreground">Or start a new one by clicking <span className="text-primary">+ New</span></p>
             </div>
           </div>
         )}

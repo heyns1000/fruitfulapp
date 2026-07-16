@@ -56,7 +56,7 @@ export default function StatementExporter({ orders, artisanName }) {
     doc.setTextColor(249, 115, 22);
     doc.setFontSize(20);
     doc.setFont('helvetica', 'bold');
-    doc.text('@Fruitful@ Artisan Statement', 14, 18);
+    doc.text('Fruitful™ Artisan Statement', 14, 18);
     doc.setFontSize(10);
     doc.setTextColor(200, 200, 200);
     doc.text(`${artisanName || 'Artisan'} · ${MONTHS[month]} ${year}`, 14, 28);
@@ -123,39 +123,39 @@ export default function StatementExporter({ orders, artisanName }) {
   };
 
   return (
-    <div className="bg-stone-900 border border-stone-700 rounded-2xl p-5">
-      <h3 className="font-bold text-white mb-4 flex items-center gap-2">
-        <FileText className="w-5 h-5 text-orange-400" /> Export Monthly Statement
+    <div className="bg-card border border-border rounded-2xl p-5">
+      <h3 className="font-bold text-foreground mb-4 flex items-center gap-2">
+        <FileText className="w-5 h-5 text-primary" /> Export Monthly Statement
       </h3>
       <div className="flex flex-wrap gap-3 items-end">
         <div className="flex-1 min-w-28">
-          <label className="text-xs text-orange-400 uppercase tracking-wider mb-1.5 block">Month</label>
+          <label className="text-xs text-primary uppercase tracking-wider mb-1.5 block">Month</label>
           <Select value={month} onValueChange={setMonth}>
-            <SelectTrigger className="bg-stone-800 border-stone-600 text-white"><SelectValue /></SelectTrigger>
-            <SelectContent className="bg-stone-800 border-stone-600">
-              {MONTHS.map((m, i) => <SelectItem key={i} value={String(i)} className="text-white">{m}</SelectItem>)}
+            <SelectTrigger className="bg-muted border-border text-foreground"><SelectValue /></SelectTrigger>
+            <SelectContent className="bg-muted border-border">
+              {MONTHS.map((m, i) => <SelectItem key={i} value={String(i)} className="text-foreground">{m}</SelectItem>)}
             </SelectContent>
           </Select>
         </div>
         <div className="flex-1 min-w-24">
-          <label className="text-xs text-orange-400 uppercase tracking-wider mb-1.5 block">Year</label>
+          <label className="text-xs text-primary uppercase tracking-wider mb-1.5 block">Year</label>
           <Select value={year} onValueChange={setYear}>
-            <SelectTrigger className="bg-stone-800 border-stone-600 text-white"><SelectValue /></SelectTrigger>
-            <SelectContent className="bg-stone-800 border-stone-600">
+            <SelectTrigger className="bg-muted border-border text-foreground"><SelectValue /></SelectTrigger>
+            <SelectContent className="bg-muted border-border">
               {(years.length ? years : [String(new Date().getFullYear())]).map(y => (
-                <SelectItem key={y} value={y} className="text-white">{y}</SelectItem>
+                <SelectItem key={y} value={y} className="text-foreground">{y}</SelectItem>
               ))}
             </SelectContent>
           </Select>
         </div>
-        <Button onClick={exportCSV} variant="outline" className="border-stone-600 text-stone-300 hover:border-orange-500 hover:text-orange-300 gap-2 shrink-0">
+        <Button onClick={exportCSV} variant="outline" className="border-border text-muted-foreground hover:border-primary hover:text-primary gap-2 shrink-0">
           <Download className="w-4 h-4" /> CSV
         </Button>
-        <Button onClick={exportPDF} disabled={exporting} className="bg-orange-600 hover:bg-orange-500 text-white gap-2 shrink-0">
+        <Button onClick={exportPDF} disabled={exporting} className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 shrink-0">
           {exporting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />} PDF
         </Button>
       </div>
-      <p className="text-xs text-stone-600 mt-3">Only paid orders are included in statements. Use for tax reporting purposes.</p>
+      <p className="text-xs text-muted-foreground mt-3">Only paid orders are included in statements. Use for tax reporting purposes.</p>
     </div>
   );
 }

@@ -40,7 +40,7 @@ function MessageBubble({ msg }) {
       <div className={`max-w-[85%] group ${isUser ? 'items-end' : 'items-start'} flex flex-col`}>
         <div className={`rounded-2xl px-4 py-3 text-sm leading-relaxed ${
           isUser
-            ? 'bg-violet-600 text-white rounded-br-sm'
+            ? 'bg-violet-600 text-foreground rounded-br-sm'
             : 'bg-white border border-gray-200 text-gray-800 rounded-bl-sm shadow-sm'
         }`}>
           {isUser ? (
@@ -272,7 +272,7 @@ Respond as the negotiation advisor. Be specific, practical and structured.`,
       {/* Chat Window */}
       <Card className="border-violet-200 overflow-hidden">
         <CardHeader className="py-3 px-4 bg-gradient-to-r from-violet-600 to-indigo-700 border-b border-violet-700">
-          <CardTitle className="text-sm text-white flex items-center gap-2">
+          <CardTitle className="text-sm text-foreground flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-violet-200" />
             AI Negotiation Advisor
             {ready && <span className="text-violet-300 font-normal ml-1">· {brandA.name} × {brandB.name}</span>}
@@ -343,7 +343,7 @@ Respond as the negotiation advisor. Be specific, practical and structured.`,
             <Button
               onClick={() => sendMessage()}
               disabled={!ready || !input.trim() || loading}
-              className="bg-violet-600 hover:bg-violet-700 text-white self-end px-4"
+              className="bg-violet-600 hover:bg-violet-700 text-foreground self-end px-4"
             >
               <Send className="w-4 h-4" />
             </Button>

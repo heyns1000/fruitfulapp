@@ -36,13 +36,13 @@ export default function SubscriptionProductAggregator({ plan, sector, subnodes =
   const visible = products.slice(0, tierConfig.maxProducts);
 
   if (isLoading) return (
-    <div className="flex items-center justify-center py-12 gap-3 text-stone-400">
+    <div className="flex items-center justify-center py-12 gap-3 text-muted-foreground">
       <Loader2 className="w-5 h-5 animate-spin" /> Loading products for your tier…
     </div>
   );
 
   if (visible.length === 0) return (
-    <div className="text-center py-10 text-stone-500">
+    <div className="text-center py-10 text-muted-foreground">
       <Package className="w-10 h-10 mx-auto mb-2 opacity-30" />
       <p>No products found for this sector/subnodes yet.</p>
     </div>
@@ -51,9 +51,9 @@ export default function SubscriptionProductAggregator({ plan, sector, subnodes =
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <p className="text-sm text-stone-400">
-          <span className="text-orange-400 font-bold">{visible.length}</span> products available with your{' '}
-          <span className="text-white font-semibold">{tierConfig.label}</span> tier
+        <p className="text-sm text-muted-foreground">
+          <span className="text-primary font-bold">{visible.length}</span> products available with your{' '}
+          <span className="text-foreground font-semibold">{tierConfig.label}</span> tier
           {tierConfig.discountPct > 0 && (
             <span className="ml-2 text-green-400">· {tierConfig.discountPct}% discount applied</span>
           )}
@@ -72,28 +72,28 @@ export default function SubscriptionProductAggregator({ plan, sector, subnodes =
           const savings = +(derived.onlineZAR - subscriberPrice).toFixed(2);
 
           return (
-            <div key={product.id} className="bg-stone-900 border border-stone-700 rounded-2xl overflow-hidden hover:border-stone-500 transition-all">
+            <div key={product.id} className="bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/40 transition-all">
               {product.imageUrl && (
                 <img src={product.imageUrl} alt={product.serviceName} className="w-full h-36 object-cover" />
               )}
               <div className="p-4">
                 <div className="flex items-start justify-between gap-2 mb-2">
                   <div>
-                    <p className="font-bold text-white text-sm">{product.serviceName}</p>
-                    <p className="text-stone-500 text-xs">{product.brandName}</p>
+                    <p className="font-bold text-foreground text-sm">{product.serviceName}</p>
+                    <p className="text-muted-foreground text-xs">{product.brandName}</p>
                   </div>
                   {product.tags?.slice(0, 1).map(t => (
-                    <Badge key={t} className="text-xs bg-stone-800 border-stone-600 text-stone-300 shrink-0">{t}</Badge>
+                    <Badge key={t} className="text-xs bg-muted border-border text-muted-foreground shrink-0">{t}</Badge>
                   ))}
                 </div>
 
                 {/* Pricing breakdown */}
                 <div className="space-y-0.5 mb-3">
                   {derived.retailZAR > 0 && (
-                    <p className="text-xs text-stone-500 line-through">Retail: R{derived.retailZAR.toLocaleString()}</p>
+                    <p className="text-xs text-muted-foreground line-through">Retail: R{derived.retailZAR.toLocaleString()}</p>
                   )}
                   <div className="flex items-baseline gap-2">
-                    <p className="text-orange-400 font-black text-lg">R{subscriberPrice.toLocaleString()}</p>
+                    <p className="text-primary font-black text-lg">R{subscriberPrice.toLocaleString()}</p>
                     {savings > 0 && (
                       <span className="text-green-400 text-xs font-semibold flex items-center gap-1">
                         <Tag className="w-3 h-3" /> Save R{savings}
@@ -101,13 +101,13 @@ export default function SubscriptionProductAggregator({ plan, sector, subnodes =
                     )}
                   </div>
                   {formula.costPriceZAR > 0 && (
-                    <p className="text-xs text-stone-600">Cost ex-works: R{formula.costPriceZAR}</p>
+                    <p className="text-xs text-muted-foreground">Cost ex-works: R{formula.costPriceZAR}</p>
                   )}
                 </div>
 
                 <Button
                   size="sm"
-                  className="w-full bg-orange-700 hover:bg-orange-600 text-white font-bold"
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold"
                   onClick={() => onAddToCart({
                     ...product,
                     name: product.serviceName,

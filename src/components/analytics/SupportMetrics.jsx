@@ -71,16 +71,16 @@ export default function SupportMetrics() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-orange-50 to-orange-100">
+        <Card className="bg-gradient-to-br from-primary/5 to-primary/10">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-orange-900 flex items-center gap-2">
+            <CardTitle className="text-sm font-medium text-primary flex items-center gap-2">
               <TrendingDown className="w-4 h-4" />
               CSAT Score
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-orange-900">4.8/5</div>
-            <p className="text-xs text-orange-700 mt-1">Customer satisfaction</p>
+            <div className="text-3xl font-bold text-primary">4.8/5</div>
+            <p className="text-xs text-primary mt-1">Customer satisfaction</p>
           </CardContent>
         </Card>
       </div>

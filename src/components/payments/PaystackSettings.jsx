@@ -97,9 +97,9 @@ export default function PaystackSettings() {
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="p-4 bg-orange-50 border border-orange-200 rounded-lg">
+            <div className="p-4 bg-primary/5 border border-primary/30 rounded-lg">
               <div className="flex items-center gap-2 mb-2">
-                <Badge className="bg-orange-500 text-white text-xs">TEST</Badge>
+                <Badge className="bg-primary text-primary-foreground text-xs">TEST</Badge>
                 <span className="font-semibold text-sm">Test Keys</span>
               </div>
               <ul className="text-xs text-gray-600 space-y-1">
@@ -109,7 +109,7 @@ export default function PaystackSettings() {
             </div>
             <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
               <div className="flex items-center gap-2 mb-2">
-                <Badge className="bg-green-600 text-white text-xs">LIVE</Badge>
+                <Badge className="bg-green-600 text-foreground text-xs">LIVE</Badge>
                 <span className="font-semibold text-sm">Live Keys</span>
               </div>
               <ul className="text-xs text-gray-600 space-y-1">

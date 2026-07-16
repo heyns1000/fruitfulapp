@@ -98,14 +98,21 @@ export default function GlobalNavBar() {
         <nav className="bg-card/95 backdrop-blur shadow-sm border-b border-border">
           <div className="container mx-auto px-4 py-3">
             <div className="flex items-center justify-between gap-4">
-              {/* Logo — official Fruitful™ wordmark */}
-              <Link to="/Dashboard" className="flex items-center gap-2 shrink-0" aria-label="Fruitful home">
+              {/* Logo — Fruitful™ pear mark (global brand icon) + wordmark */}
+              <Link to="/Dashboard" className="flex items-center gap-2.5 shrink-0" aria-label="Fruitful home">
+                <span className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-fruitful-mint/60 shrink-0">
+                  <img
+                    src="/brand/favicon.png"
+                    alt="Fruitful pear"
+                    className="w-7 h-7 object-contain"
+                  />
+                </span>
                 <img
                   src="/brand/fruitful-logo.png"
                   alt="Fruitful"
-                  className="h-9 w-auto object-contain"
+                  className="h-8 w-auto object-contain hidden sm:block"
                 />
-                <span className="text-sm font-semibold text-muted-foreground hidden md:block border-l border-border pl-2">
+                <span className="text-sm font-semibold text-muted-foreground hidden md:block border-l border-border pl-2.5">
                   FAA.ZONE<sup className="text-[10px]">™</sup>
                 </span>
               </Link>

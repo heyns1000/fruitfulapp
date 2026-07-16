@@ -7,7 +7,7 @@ const STEPS = [
   { status: 'processing', label: 'Processing',     desc: 'Artisan is preparing your order',      icon: Package },
   { status: 'crafted',    label: 'Crafted',        desc: 'Your piece has been handcrafted',      icon: Hammer },
   { status: 'shipped',    label: 'Shipped',        desc: 'Your order is on its way',             icon: Truck },
-  { status: 'delivered',  label: 'Delivered',      desc: 'Enjoy your @Fruitful@ piece!',         icon: Star },
+  { status: 'delivered',  label: 'Delivered',      desc: 'Enjoy your Fruitful™ piece!',         icon: Star },
 ];
 
 const STATUS_ORDER = STEPS.map(s => s.status);
@@ -19,7 +19,7 @@ export default function OrderTimeline({ order }) {
   return (
     <div className="relative">
       {/* Vertical line */}
-      <div className="absolute left-5 top-5 bottom-5 w-0.5 bg-stone-800" />
+      <div className="absolute left-5 top-5 bottom-5 w-0.5 bg-muted" />
 
       <div className="space-y-0">
         {STEPS.map((step, i) => {
@@ -36,33 +36,33 @@ export default function OrderTimeline({ order }) {
               {/* Node */}
               <div className={`relative z-10 w-10 h-10 rounded-full flex items-center justify-center shrink-0 border-2 transition-all duration-500 ${
                 isCurrent
-                  ? 'bg-orange-600 border-orange-500 shadow-lg shadow-orange-500/40'
+                  ? 'bg-primary border-primary shadow-lg shadow-orange-500/40'
                   : isDone
-                  ? 'bg-orange-600/20 border-orange-600'
-                  : 'bg-stone-900 border-stone-700'
+                  ? 'bg-primary/10 border-primary'
+                  : 'bg-card border-border'
               }`}>
-                <Icon className={`w-4 h-4 ${isCurrent ? 'text-white' : isDone ? 'text-orange-400' : 'text-stone-600'}`} />
+                <Icon className={`w-4 h-4 ${isCurrent ? 'text-foreground' : isDone ? 'text-primary' : 'text-muted-foreground'}`} />
                 {isCurrent && (
-                  <span className="absolute inset-0 rounded-full bg-orange-500 animate-ping opacity-30" />
+                  <span className="absolute inset-0 rounded-full bg-primary animate-ping opacity-30" />
                 )}
               </div>
 
               {/* Content */}
               <div className="flex-1 pt-1.5 min-w-0">
                 <div className="flex items-center justify-between gap-2">
-                  <p className={`font-bold text-sm ${isDone ? 'text-white' : 'text-stone-600'}`}>
+                  <p className={`font-bold text-sm ${isDone ? 'text-foreground' : 'text-muted-foreground'}`}>
                     {step.label}
-                    {isCurrent && <span className="ml-2 text-orange-400 text-xs">← Current</span>}
+                    {isCurrent && <span className="ml-2 text-primary text-xs">← Current</span>}
                   </p>
                   {timestamp && (
-                    <span className="text-xs text-stone-600 shrink-0">
+                    <span className="text-xs text-muted-foreground shrink-0">
                       {new Date(timestamp).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
                     </span>
                   )}
                 </div>
-                <p className={`text-xs mt-0.5 ${isDone ? 'text-stone-400' : 'text-stone-700'}`}>{step.desc}</p>
+                <p className={`text-xs mt-0.5 ${isDone ? 'text-muted-foreground' : 'text-foreground'}`}>{step.desc}</p>
                 {historyEntry?.note && (
-                  <p className="text-xs text-orange-300 mt-1 italic">"{historyEntry.note}"</p>
+                  <p className="text-xs text-primary mt-1 italic">"{historyEntry.note}"</p>
                 )}
               </div>
             </div>
@@ -77,7 +77,7 @@ export default function OrderTimeline({ order }) {
             </div>
             <div className="pt-1.5">
               <p className="font-bold text-sm text-red-400">{order.status === 'refunded' ? 'Refunded' : 'Cancelled'}</p>
-              <p className="text-xs text-stone-500 mt-0.5">{order.notes || 'Order was cancelled'}</p>
+              <p className="text-xs text-muted-foreground mt-0.5">{order.notes || 'Order was cancelled'}</p>
             </div>
           </div>
         )}

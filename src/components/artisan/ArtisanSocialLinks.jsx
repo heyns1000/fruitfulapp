@@ -16,9 +16,9 @@ export default function ArtisanSocialLinks({ socialMedia = {} }) {
 
   return (
     <div className="space-y-4">
-      <div className="border-b border-stone-700 pb-3">
-        <p className="text-xs font-bold tracking-widest uppercase text-orange-500 mb-1">Follow</p>
-        <h2 className="text-2xl font-black text-white">🔗 Connect with This Artisan</h2>
+      <div className="border-b border-border pb-3">
+        <p className="text-xs font-bold tracking-widest uppercase text-primary mb-1">Follow</p>
+        <h2 className="text-2xl font-black text-foreground">🔗 Connect with This Artisan</h2>
       </div>
       <div className="flex flex-wrap gap-3">
         {links.map(({ key, label, icon: Icon, color, prefix }) => {
@@ -30,7 +30,7 @@ export default function ArtisanSocialLinks({ socialMedia = {} }) {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className={`flex items-center gap-2 px-4 py-2 ${color} text-white rounded-full text-sm font-semibold hover:opacity-90 transition-opacity shadow-md`}
+              className={`flex items-center gap-2 px-4 py-2 ${color} text-foreground rounded-full text-sm font-semibold hover:opacity-90 transition-opacity shadow-md`}
             >
               {Icon ? <Icon className="w-4 h-4" /> : <span className="text-base">♪</span>}
               {label}

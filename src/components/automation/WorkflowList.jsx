@@ -53,8 +53,8 @@ export default function WorkflowList({ rules, isLoading, onEdit, onRefresh }) {
 
   if (rules.length === 0) return (
     <div className="text-center py-20">
-      <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-        <Zap className="w-10 h-10 text-orange-400" />
+      <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+        <Zap className="w-10 h-10 text-primary" />
       </div>
       <p className="text-xl font-semibold text-gray-700">No automations yet</p>
       <p className="text-gray-500 text-sm mt-2">Click "New Workflow" to build your first If-This-Then-That rule</p>
@@ -76,9 +76,9 @@ export default function WorkflowList({ rules, isLoading, onEdit, onRefresh }) {
 
                 {/* Visual Flow */}
                 <div className="flex items-center gap-2 mt-3 flex-wrap">
-                  <div className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-50 border border-orange-200 rounded-full">
-                    <Zap className="w-3 h-3 text-orange-500 shrink-0" />
-                    <span className="text-xs font-medium text-orange-800 whitespace-nowrap">
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 bg-primary/5 border border-primary/30 rounded-full">
+                    <Zap className="w-3 h-3 text-primary shrink-0" />
+                    <span className="text-xs font-medium text-primary whitespace-nowrap">
                       {rule.trigger?.icon} {rule.trigger?.label}
                     </span>
                   </div>

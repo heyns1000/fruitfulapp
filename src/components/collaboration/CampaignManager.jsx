@@ -80,14 +80,14 @@ export default function CampaignManager() {
                   <CardTitle className="text-xl">{campaign.name}</CardTitle>
                   <div className="flex gap-2 mt-2 flex-wrap">
                     {campaign.brands.map(brand => (
-                      <Badge key={brand} className="bg-blue-600 text-white">
+                      <Badge key={brand} className="bg-blue-600 text-foreground">
                         {brand}
                       </Badge>
                     ))}
                   </div>
                 </div>
                 <div className="text-right">
-                  <Badge className={campaign.status === 'Active' ? 'bg-green-600' : 'bg-orange-600'}>
+                  <Badge className={campaign.status === 'Active' ? 'bg-green-600' : 'bg-primary'}>
                     {campaign.status}
                   </Badge>
                   <div className="flex items-center gap-1 mt-2 text-sm text-purple-700">

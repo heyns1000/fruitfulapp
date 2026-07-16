@@ -141,7 +141,7 @@ Return top 5 suggestions with highest potential ROI.`,
     switch(complexity) {
       case 'low': return 'bg-green-100 text-green-800';
       case 'medium': return 'bg-yellow-100 text-yellow-800';
-      case 'high': return 'bg-orange-100 text-orange-800';
+      case 'high': return 'bg-primary/10 text-primary';
       default: return 'bg-gray-100 text-gray-800';
     }
   };
@@ -208,11 +208,11 @@ Return top 5 suggestions with highest potential ROI.`,
             <div className="flex items-start justify-between">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
-                  <Badge className="bg-indigo-600 text-white text-sm px-3 py-1">
+                  <Badge className="bg-indigo-600 text-foreground text-sm px-3 py-1">
                     {suggestion.brand1Name}™
                   </Badge>
                   <span className="text-2xl">🤝</span>
-                  <Badge className="bg-indigo-600 text-white text-sm px-3 py-1">
+                  <Badge className="bg-indigo-600 text-foreground text-sm px-3 py-1">
                     {suggestion.brand2Name}™
                   </Badge>
                 </div>

@@ -97,16 +97,16 @@ export default function SupportCoordination() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-orange-50 to-orange-100">
+        <Card className="bg-gradient-to-br from-primary/5 to-primary/10">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-orange-900 flex items-center gap-2">
+            <CardTitle className="text-sm font-medium text-primary flex items-center gap-2">
               <Headphones className="w-4 h-4" />
               Cross-Brand Tickets
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-orange-900">{supportMetrics.crossBrandTickets}</div>
-            <p className="text-xs text-orange-700 mt-1">Active this week</p>
+            <div className="text-3xl font-bold text-primary">{supportMetrics.crossBrandTickets}</div>
+            <p className="text-xs text-primary mt-1">Active this week</p>
           </CardContent>
         </Card>
       </div>
@@ -158,7 +158,7 @@ export default function SupportCoordination() {
                       </Badge>
                       <Badge variant="outline" className={
                         ticket.priority === 'High' ? 'border-red-500 text-red-700' :
-                        ticket.priority === 'Medium' ? 'border-orange-500 text-orange-700' :
+                        ticket.priority === 'Medium' ? 'border-primary text-primary' :
                         'border-gray-500 text-gray-700'
                       }>
                         {ticket.priority}
@@ -171,7 +171,7 @@ export default function SupportCoordination() {
 
                 <div className="flex flex-wrap gap-2 mt-3 mb-3">
                   {ticket.brands.map(brand => (
-                    <Badge key={brand} className="bg-teal-600 text-white">
+                    <Badge key={brand} className="bg-teal-600 text-foreground">
                       {brand}
                     </Badge>
                   ))}

@@ -2,7 +2,7 @@ import React from 'react';
 import { ShieldCheck, Star, Users, TrendingUp } from 'lucide-react';
 
 function calcTrustScore(reviews) {
-  if (!reviews.length) return { score: 0, label: 'No Reviews', color: 'text-stone-500', bg: 'bg-stone-800', ring: 'ring-stone-600' };
+  if (!reviews.length) return { score: 0, label: 'No Reviews', color: 'text-muted-foreground', bg: 'bg-muted', ring: 'ring-stone-600' };
 
   const avgRating = reviews.reduce((s, r) => s + r.rating, 0) / reviews.length;
   const ratingPoints = (avgRating / 5) * 65; // up to 65
@@ -17,9 +17,9 @@ function calcTrustScore(reviews) {
   let label, color, bg, ring;
   if (score >= 85) { label = 'Elite Trusted'; color = 'text-emerald-400'; bg = 'bg-emerald-500/10'; ring = 'ring-emerald-500/40'; }
   else if (score >= 70) { label = 'Highly Trusted'; color = 'text-teal-400'; bg = 'bg-teal-500/10'; ring = 'ring-teal-500/40'; }
-  else if (score >= 55) { label = 'Trusted'; color = 'text-orange-400'; bg = 'bg-orange-500/10'; ring = 'ring-orange-500/40'; }
+  else if (score >= 55) { label = 'Trusted'; color = 'text-primary'; bg = 'bg-primary/10'; ring = 'ring-primary/40'; }
   else if (score >= 35) { label = 'Building Trust'; color = 'text-amber-400'; bg = 'bg-amber-500/10'; ring = 'ring-amber-500/40'; }
-  else { label = 'New Seller'; color = 'text-stone-400'; bg = 'bg-stone-800'; ring = 'ring-stone-600'; }
+  else { label = 'New Seller'; color = 'text-muted-foreground'; bg = 'bg-muted'; ring = 'ring-stone-600'; }
 
   return { score, label, color, bg, ring, avgRating: avgRating.toFixed(1), verifiedCount: reviews.filter(r => r.verified).length };
 }
@@ -52,19 +52,19 @@ export default function TrustScore({ reviews = [] }) {
 
       {/* Info */}
       <div className="flex-1 text-center sm:text-left">
-        <p className="text-xs font-bold tracking-widest uppercase text-stone-500 mb-0.5">Trust Score</p>
+        <p className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-0.5">Trust Score</p>
         <p className={`text-2xl font-black ${color}`}>{label}</p>
         <div className="flex flex-wrap justify-center sm:justify-start gap-4 mt-3 text-sm">
-          <span className="flex items-center gap-1.5 text-stone-400">
-            <Star className="w-3.5 h-3.5 fill-orange-400 text-orange-400" />
+          <span className="flex items-center gap-1.5 text-muted-foreground">
+            <Star className="w-3.5 h-3.5 fill-orange-400 text-primary" />
             {avgRating || '—'} avg rating
           </span>
-          <span className="flex items-center gap-1.5 text-stone-400">
-            <Users className="w-3.5 h-3.5 text-stone-500" />
+          <span className="flex items-center gap-1.5 text-muted-foreground">
+            <Users className="w-3.5 h-3.5 text-muted-foreground" />
             {reviews.length} review{reviews.length !== 1 ? 's' : ''}
           </span>
           {verifiedCount > 0 && (
-            <span className="flex items-center gap-1.5 text-stone-400">
+            <span className="flex items-center gap-1.5 text-muted-foreground">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
               {verifiedCount} verified
             </span>
@@ -79,12 +79,12 @@ export default function TrustScore({ reviews = [] }) {
           const pct = reviews.length ? (count / reviews.length) * 100 : 0;
           return (
             <div key={star} className="flex items-center gap-2">
-              <span className="text-xs text-stone-500 w-3">{star}</span>
-              <Star className="w-3 h-3 fill-orange-400 text-orange-400 shrink-0" />
-              <div className="flex-1 h-1.5 bg-stone-800 rounded-full overflow-hidden">
-                <div className="h-full bg-orange-400 rounded-full transition-all" style={{ width: `${pct}%` }} />
+              <span className="text-xs text-muted-foreground w-3">{star}</span>
+              <Star className="w-3 h-3 fill-orange-400 text-primary shrink-0" />
+              <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
+                <div className="h-full bg-primary rounded-full transition-all" style={{ width: `${pct}%` }} />
               </div>
-              <span className="text-xs text-stone-600 w-3 text-right">{count}</span>
+              <span className="text-xs text-muted-foreground w-3 text-right">{count}</span>
             </div>
           );
         })}

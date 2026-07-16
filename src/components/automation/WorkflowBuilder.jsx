@@ -125,7 +125,7 @@ export default function WorkflowBuilder({ existingRule, onSaved, onCancel }) {
             <button
               onClick={() => setStep(i + 1)}
               className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
-                step === i + 1 ? 'bg-orange-500 text-white shadow' : 'bg-white text-gray-500 border border-gray-200 hover:bg-gray-50'
+                step === i + 1 ? 'bg-primary text-primary-foreground shadow' : 'bg-white text-gray-500 border border-gray-200 hover:bg-gray-50'
               }`}
             >
               {i + 1}. {s}
@@ -137,18 +137,18 @@ export default function WorkflowBuilder({ existingRule, onSaved, onCancel }) {
 
       {/* Step 1: Trigger */}
       {step === 1 && (
-        <Card className="border-orange-200">
-          <CardHeader className="bg-orange-50 border-b border-orange-100 rounded-t-xl pb-3">
-            <CardTitle className="text-base text-orange-900 flex items-center gap-2">
+        <Card className="border-primary/30">
+          <CardHeader className="bg-primary/5 border-b border-primary/20 rounded-t-xl pb-3">
+            <CardTitle className="text-base text-primary flex items-center gap-2">
               <Zap className="w-4 h-4" />IF THIS HAPPENS...
             </CardTitle>
-            <p className="text-xs text-orange-700 mt-1">Choose the event that starts this automation</p>
+            <p className="text-xs text-primary mt-1">Choose the event that starts this automation</p>
           </CardHeader>
           <CardContent className="pt-4">
             <ItemPicker groups={TRIGGERS} selected={trigger} onSelect={setTrigger} accent="orange" />
             {trigger && (
               <div className="mt-4 flex justify-end">
-                <Button onClick={() => setStep(2)} className="bg-orange-500 hover:bg-orange-600 text-white">
+                <Button onClick={() => setStep(2)} className="bg-primary hover:bg-primary/90 text-primary-foreground">
                   Next: Add Actions →
                 </Button>
               </div>
@@ -193,7 +193,7 @@ export default function WorkflowBuilder({ existingRule, onSaved, onCancel }) {
             <ItemPicker groups={ACTIONS} selected={null} onSelect={addAction} />
             {actions.length > 0 && (
               <div className="mt-4 flex justify-end">
-                <Button onClick={() => setStep(3)} className="bg-blue-600 hover:bg-blue-700 text-white">
+                <Button onClick={() => setStep(3)} className="bg-blue-600 hover:bg-blue-700 text-foreground">
                   Next: Review →
                 </Button>
               </div>
@@ -213,9 +213,9 @@ export default function WorkflowBuilder({ existingRule, onSaved, onCancel }) {
           <CardContent className="pt-4 space-y-4">
             {/* Visual summary */}
             <div className="flex flex-col items-center gap-2 p-4 bg-gray-50 rounded-xl border border-gray-200">
-              <div className="w-full p-3 rounded-lg bg-orange-50 border border-orange-200 text-center">
-                <p className="text-xs text-orange-500 uppercase font-bold mb-1">Trigger</p>
-                <p className="text-sm font-semibold text-orange-800">{trigger?.icon} {trigger?.label}</p>
+              <div className="w-full p-3 rounded-lg bg-primary/5 border border-primary/30 text-center">
+                <p className="text-xs text-primary uppercase font-bold mb-1">Trigger</p>
+                <p className="text-sm font-semibold text-primary">{trigger?.icon} {trigger?.label}</p>
               </div>
               <ArrowDown className="w-5 h-5 text-gray-400" />
               <div className="w-full space-y-1.5">
@@ -254,7 +254,7 @@ export default function WorkflowBuilder({ existingRule, onSaved, onCancel }) {
             <Button
               onClick={save}
               disabled={!name || saving}
-              className="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white h-11 text-base font-semibold"
+              className="w-full bg-gradient-to-r from-primary to-fruitful-green hover:from-primary hover:to-amber-600 text-foreground h-11 text-base font-semibold"
             >
               {saving ? 'Saving...' : <><Save className="w-4 h-4 mr-2" />{existingRule ? 'Update Workflow' : 'Activate Workflow'}</>}
             </Button>

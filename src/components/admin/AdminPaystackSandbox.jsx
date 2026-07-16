@@ -99,7 +99,7 @@ export default function AdminPaystackSandbox({ brands, sectors }) {
   const statusColor = (s) => {
     if (s === 'success') return 'bg-green-100 text-green-700';
     if (s === 'failed') return 'bg-red-100 text-red-700';
-    if (s === 'abandoned') return 'bg-orange-100 text-orange-700';
+    if (s === 'abandoned') return 'bg-primary/10 text-primary';
     return 'bg-yellow-100 text-yellow-700';
   };
 

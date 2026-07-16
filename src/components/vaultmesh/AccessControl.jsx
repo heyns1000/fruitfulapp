@@ -25,7 +25,7 @@ export default function AccessControl({ vaults }) {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-yellow-50 to-orange-50 border-yellow-200">
+        <Card className="bg-gradient-to-br from-yellow-50 to-primary/5 border-yellow-200">
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium text-gray-600 flex items-center gap-2">
               <Lock className="w-4 h-4" />

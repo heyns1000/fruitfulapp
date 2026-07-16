@@ -109,7 +109,7 @@ export default function XeroIntegrationGuide() {
     <div className="space-y-6 max-w-4xl">
 
       {/* Header */}
-      <div className="p-5 bg-gradient-to-r from-indigo-700 to-blue-700 rounded-2xl text-white">
+      <div className="p-5 bg-gradient-to-r from-indigo-700 to-blue-700 rounded-2xl text-foreground">
         <div className="flex items-center gap-3 mb-2">
           <BookOpen className="w-6 h-6" />
           <h2 className="text-xl font-extrabold tracking-tight">Xero Integration — Developer Setup Guide</h2>
@@ -170,7 +170,7 @@ export default function XeroIntegrationGuide() {
                     </td>
                     <td className="px-4 py-3 text-gray-600 text-xs">{f.desc}</td>
                     <td className="px-4 py-3">
-                      <Badge variant={f.required ? 'default' : 'secondary'} className={f.required ? 'bg-red-600 text-white text-xs' : 'text-xs'}>
+                      <Badge variant={f.required ? 'default' : 'secondary'} className={f.required ? 'bg-red-600 text-foreground text-xs' : 'text-xs'}>
                         {f.required ? 'Required' : 'Optional'}
                       </Badge>
                     </td>

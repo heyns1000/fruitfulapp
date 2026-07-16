@@ -66,19 +66,19 @@ export default function ArtisanProfile() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-stone-950">
-        <Loader2 className="w-10 h-10 animate-spin text-orange-500" />
+      <div className="flex items-center justify-center min-h-screen bg-background">
+        <Loader2 className="w-10 h-10 animate-spin text-primary" />
       </div>
     );
   }
 
   if (!artisan) {
     return (
-      <div className="min-h-screen flex items-center justify-center flex-col gap-4 bg-stone-950 text-stone-400">
+      <div className="min-h-screen flex items-center justify-center flex-col gap-4 bg-background text-muted-foreground">
         <Package className="w-12 h-12 opacity-30" />
         <p>Artisan profile not found.</p>
         <Link to={createPageUrl('Marketplace')}>
-          <Button variant="outline" className="border-orange-500 text-orange-400">
+          <Button variant="outline" className="border-primary text-primary">
             <ArrowLeft className="w-4 h-4 mr-2" /> Back to Marketplace
           </Button>
         </Link>
@@ -92,7 +92,7 @@ export default function ArtisanProfile() {
   // avgRating used in hero stats pill
 
   return (
-    <div className="min-h-screen bg-stone-950 text-white">
+    <div className="min-h-screen bg-background text-foreground">
 
       {/* ── HERO ── */}
       <div className="relative h-screen min-h-[600px] max-h-[850px] overflow-hidden">
@@ -105,12 +105,12 @@ export default function ArtisanProfile() {
         <style>{`@keyframes subtleZoom { from { transform: scale(1.05); } to { transform: scale(1.12); } }`}</style>
 
         {/* Layered overlays for depth */}
-        <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/50 to-stone-950/10" />
-        <div className="absolute inset-0 bg-gradient-to-r from-stone-950/90 via-stone-950/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-background/10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/30 to-transparent" />
 
         {/* Back */}
         <Link to={createPageUrl('Marketplace')} className="absolute top-6 left-6 z-10">
-          <Button size="sm" className="bg-black/40 backdrop-blur-md border border-white/15 text-white hover:bg-orange-600 hover:border-orange-600 transition-all gap-1.5">
+          <Button size="sm" className="bg-black/40 backdrop-blur-md border border-white/15 text-primary-foreground hover:bg-primary/90 hover:border-primary transition-all gap-1.5">
             <ArrowLeft className="w-4 h-4" /> Marketplace
           </Button>
         </Link>
@@ -119,36 +119,36 @@ export default function ArtisanProfile() {
         <div className="absolute top-6 right-6 flex gap-2">
           {avgRating && (
             <div className="flex items-center gap-1.5 bg-black/40 backdrop-blur-md border border-white/15 rounded-full px-4 py-1.5 text-sm">
-              <Star className="w-3.5 h-3.5 fill-orange-400 text-orange-400" />
-              <span className="font-bold text-white">{avgRating}</span>
-              <span className="text-stone-400">({artisan.testimonials?.length})</span>
+              <Star className="w-3.5 h-3.5 fill-orange-400 text-primary" />
+              <span className="font-bold text-foreground">{avgRating}</span>
+              <span className="text-muted-foreground">({artisan.testimonials?.length})</span>
             </div>
           )}
           {artisan.featured && (
-            <div className="bg-orange-600 rounded-full px-4 py-1.5 text-xs font-bold text-white">✦ Featured</div>
+            <div className="bg-primary rounded-full px-4 py-1.5 text-xs font-bold text-primary-foreground">Featured</div>
           )}
         </div>
 
         {/* Hero text */}
         <div className="absolute bottom-0 left-0 right-0 px-8 md:px-16 pb-16">
           <div className="max-w-5xl">
-            <p className="text-orange-400 text-xs font-bold tracking-[0.3em] uppercase mb-4">
-              ✦ {artisan.initiation || 'Master Artisan'} · {artisan.brandName}
+            <p className="text-primary text-xs font-bold tracking-[0.3em] uppercase mb-4">
+              {artisan.initiation || 'Master Artisan'} · {artisan.brandName}
             </p>
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tight leading-none mb-4" style={{ fontFamily: 'Georgia, serif', textShadow: '0 4px 40px rgba(0,0,0,0.5)' }}>
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tight leading-none mb-4" style={{ fontFamily: 'inherit', textShadow: '0 4px 40px rgba(0,0,0,0.5)' }}>
               {artisan.artisanName}
             </h1>
-            <p className="text-xl md:text-2xl text-stone-300 font-light mb-2">{artisan.title}</p>
+            <p className="text-xl md:text-2xl text-muted-foreground font-light mb-2">{artisan.title}</p>
             {artisan.location && (
-              <p className="flex items-center gap-1.5 text-stone-400 text-sm mb-8">
-                <MapPin className="w-4 h-4 text-orange-500" />{artisan.location}
+              <p className="flex items-center gap-1.5 text-muted-foreground text-sm mb-8">
+                <MapPin className="w-4 h-4 text-primary" />{artisan.location}
               </p>
             )}
             <div className="flex flex-wrap items-center gap-4">
               <FollowArtisan artisanId={artisan.id} artisanName={artisan.artisanName} />
               <button
                 onClick={() => scrollTo('shop')}
-                className="flex items-center gap-2 text-stone-300 hover:text-orange-400 transition-colors text-sm font-medium"
+                className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm font-medium"
               >
                 <ChevronDown className="w-4 h-4" /> View Products
               </button>
@@ -157,19 +157,19 @@ export default function ArtisanProfile() {
         </div>
 
         {/* Scroll cue */}
-        <div className="absolute bottom-6 right-8 flex flex-col items-center gap-1 text-stone-500 text-[10px] tracking-widest uppercase">
-          <div className="w-px h-12 bg-gradient-to-b from-transparent to-orange-500 mx-auto" />
+        <div className="absolute bottom-6 right-8 flex flex-col items-center gap-1 text-muted-foreground text-[10px] tracking-widest uppercase">
+          <div className="w-px h-12 bg-gradient-to-b from-transparent to-primary mx-auto" />
           Scroll
         </div>
       </div>
 
       {/* ── SOUL MESSAGE BAND ── */}
       {artisan.soulMessage && (
-        <div className="relative overflow-hidden bg-gradient-to-r from-orange-700 via-orange-600 to-amber-600 px-8 md:px-16 py-10">
+        <div className="relative overflow-hidden bg-gradient-to-r from-primary via-primary to-fruitful-green px-8 md:px-16 py-10">
           <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%)', backgroundSize: '20px 20px' }} />
           <div className="max-w-4xl mx-auto relative">
-            <Quote className="w-8 h-8 text-orange-200 mb-3 opacity-60" />
-            <p className="text-2xl md:text-3xl font-bold italic text-white leading-relaxed">
+            <Quote className="w-8 h-8 text-primary mb-3 opacity-60" />
+            <p className="text-2xl md:text-3xl font-bold italic text-foreground leading-relaxed">
               "{artisan.soulMessage}"
             </p>
           </div>
@@ -177,7 +177,7 @@ export default function ArtisanProfile() {
       )}
 
       {/* ── STICKY NAV ── */}
-      <div className="sticky top-0 z-40 bg-stone-950/95 backdrop-blur-md border-b border-stone-800">
+      <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-border">
         <div className="max-w-6xl mx-auto px-6 flex items-center gap-1 overflow-x-auto scrollbar-none py-0">
           {SECTIONS.map(s => (
             <button
@@ -185,8 +185,8 @@ export default function ArtisanProfile() {
               onClick={() => scrollTo(s.id)}
               className={`px-5 py-4 text-sm font-semibold whitespace-nowrap border-b-2 transition-all ${
                 activeSection === s.id
-                  ? 'border-orange-500 text-orange-400'
-                  : 'border-transparent text-stone-400 hover:text-white'
+                  ? 'border-primary text-primary'
+                  : 'border-transparent text-muted-foreground hover:text-foreground'
               }`}
             >
               {s.label}
@@ -215,14 +215,14 @@ export default function ArtisanProfile() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                     <div className="absolute bottom-0 left-0 right-0 p-6 space-y-2">
                       {artisan.dateOfBirth && (
-                        <div className="flex items-center gap-2 text-stone-300 text-sm">
-                          <span className="text-orange-400">Born</span>
+                        <div className="flex items-center gap-2 text-muted-foreground text-sm">
+                          <span className="text-primary">Born</span>
                           {new Date(artisan.dateOfBirth).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
                         </div>
                       )}
                       {artisan.location && (
-                        <div className="flex items-center gap-2 text-stone-300 text-sm">
-                          <Globe className="w-3.5 h-3.5 text-orange-400" />
+                        <div className="flex items-center gap-2 text-muted-foreground text-sm">
+                          <Globe className="w-3.5 h-3.5 text-primary" />
                           {artisan.location}
                         </div>
                       )}
@@ -231,27 +231,27 @@ export default function ArtisanProfile() {
                   {/* Quick stats below portrait */}
                   <div className="grid grid-cols-2 gap-3 mt-4">
                     {artisan.materials?.length > 0 && (
-                      <div className="bg-stone-900 border border-stone-700 rounded-xl p-4 text-center">
-                        <p className="text-2xl font-black text-orange-400">{artisan.materials.length}</p>
-                        <p className="text-xs text-stone-400 mt-0.5">Materials</p>
+                      <div className="bg-card border border-border rounded-xl p-4 text-center">
+                        <p className="text-2xl font-black text-primary">{artisan.materials.length}</p>
+                        <p className="text-xs text-muted-foreground mt-0.5">Materials</p>
                       </div>
                     )}
                     {artisan.signatureTechniques?.length > 0 && (
-                      <div className="bg-stone-900 border border-stone-700 rounded-xl p-4 text-center">
-                        <p className="text-2xl font-black text-orange-400">{artisan.signatureTechniques.length}</p>
-                        <p className="text-xs text-stone-400 mt-0.5">Techniques</p>
+                      <div className="bg-card border border-border rounded-xl p-4 text-center">
+                        <p className="text-2xl font-black text-primary">{artisan.signatureTechniques.length}</p>
+                        <p className="text-xs text-muted-foreground mt-0.5">Techniques</p>
                       </div>
                     )}
                     {services.length > 0 && (
-                      <div className="bg-stone-900 border border-stone-700 rounded-xl p-4 text-center">
-                        <p className="text-2xl font-black text-orange-400">{services.length}</p>
-                        <p className="text-xs text-stone-400 mt-0.5">Products</p>
+                      <div className="bg-card border border-border rounded-xl p-4 text-center">
+                        <p className="text-2xl font-black text-primary">{services.length}</p>
+                        <p className="text-xs text-muted-foreground mt-0.5">Products</p>
                       </div>
                     )}
                     {artisan.testimonials?.length > 0 && (
-                      <div className="bg-stone-900 border border-stone-700 rounded-xl p-4 text-center">
-                        <p className="text-2xl font-black text-orange-400">{avgRating}★</p>
-                        <p className="text-xs text-stone-400 mt-0.5">Rating</p>
+                      <div className="bg-card border border-border rounded-xl p-4 text-center">
+                        <p className="text-2xl font-black text-primary">{avgRating}★</p>
+                        <p className="text-xs text-muted-foreground mt-0.5">Rating</p>
                       </div>
                     )}
                   </div>
@@ -263,8 +263,8 @@ export default function ArtisanProfile() {
             <div className="md:col-span-3 space-y-12">
               {artisan.biography && (
                 <div>
-                  <p className="text-xs font-bold tracking-[0.25em] uppercase text-orange-500 mb-4">The Story</p>
-                  <p className="text-stone-200 leading-relaxed text-lg whitespace-pre-line">{artisan.biography}</p>
+                  <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-4">The Story</p>
+                  <p className="text-foreground leading-relaxed text-lg whitespace-pre-line">{artisan.biography}</p>
                 </div>
               )}
 
@@ -272,30 +272,30 @@ export default function ArtisanProfile() {
               {(artisan.origin || artisan.craftsmanship) && (
                 <div className="space-y-4">
                   {artisan.origin && (
-                    <div className="group relative bg-stone-900 border border-stone-700 hover:border-orange-600 rounded-2xl p-7 transition-colors overflow-hidden">
-                      <div className="absolute inset-0 bg-gradient-to-br from-orange-950/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="group relative bg-card border border-border hover:border-primary rounded-2xl p-7 transition-colors overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                       <div className="relative">
                         <div className="flex items-center gap-2.5 mb-3">
-                          <div className="w-8 h-8 rounded-lg bg-orange-600/20 flex items-center justify-center">
-                            <Lightbulb className="w-4 h-4 text-orange-400" />
+                          <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                            <Lightbulb className="w-4 h-4 text-primary" />
                           </div>
-                          <p className="text-xs font-bold tracking-widest uppercase text-orange-400">Inspiration & Origin</p>
+                          <p className="text-xs font-bold tracking-widest uppercase text-primary">Inspiration & Origin</p>
                         </div>
-                        <p className="text-stone-300 leading-relaxed">{artisan.origin}</p>
+                        <p className="text-muted-foreground leading-relaxed">{artisan.origin}</p>
                       </div>
                     </div>
                   )}
                   {artisan.craftsmanship && (
-                    <div className="group relative bg-stone-900 border border-stone-700 hover:border-orange-600 rounded-2xl p-7 transition-colors overflow-hidden">
-                      <div className="absolute inset-0 bg-gradient-to-br from-orange-950/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="group relative bg-card border border-border hover:border-primary rounded-2xl p-7 transition-colors overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                       <div className="relative">
                         <div className="flex items-center gap-2.5 mb-3">
-                          <div className="w-8 h-8 rounded-lg bg-orange-600/20 flex items-center justify-center">
-                            <BookOpen className="w-4 h-4 text-orange-400" />
+                          <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                            <BookOpen className="w-4 h-4 text-primary" />
                           </div>
-                          <p className="text-xs font-bold tracking-widest uppercase text-orange-400">The Craft</p>
+                          <p className="text-xs font-bold tracking-widest uppercase text-primary">The Craft</p>
                         </div>
-                        <p className="text-stone-300 leading-relaxed">{artisan.craftsmanship}</p>
+                        <p className="text-muted-foreground leading-relaxed">{artisan.craftsmanship}</p>
                       </div>
                     </div>
                   )}
@@ -305,10 +305,10 @@ export default function ArtisanProfile() {
               {/* Symbolism pull-quote */}
               {artisan.symbolism && (
                 <div className="relative py-6">
-                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-orange-500 to-transparent rounded-full" />
+                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-primary to-transparent rounded-full" />
                   <div className="pl-8">
-                    <Quote className="w-7 h-7 text-orange-600 mb-3 opacity-70" />
-                    <p className="text-2xl text-stone-200 italic font-light leading-relaxed">{artisan.symbolism}</p>
+                    <Quote className="w-7 h-7 text-primary mb-3 opacity-70" />
+                    <p className="text-2xl text-foreground italic font-light leading-relaxed">{artisan.symbolism}</p>
                   </div>
                 </div>
               )}
@@ -317,13 +317,13 @@ export default function ArtisanProfile() {
               {artisan.culturalSignificance && (
                 <div>
                   <div className="flex items-center gap-2.5 mb-4">
-                    <div className="w-8 h-8 rounded-lg bg-amber-600/20 flex items-center justify-center">
-                      <Globe className="w-4 h-4 text-amber-400" />
+                    <div className="w-8 h-8 rounded-lg bg-fruitful-green/15 flex items-center justify-center">
+                      <Globe className="w-4 h-4 text-fruitful-green" />
                     </div>
-                    <p className="text-xs font-bold tracking-widest uppercase text-amber-400">Cultural Heritage</p>
+                    <p className="text-xs font-bold tracking-widest uppercase text-fruitful-green">Cultural Heritage</p>
                   </div>
-                  <div className="bg-gradient-to-br from-amber-950/30 to-stone-900 border border-amber-800/30 rounded-2xl p-7">
-                    <p className="text-stone-300 leading-relaxed whitespace-pre-line">{artisan.culturalSignificance}</p>
+                  <div className="bg-gradient-to-br from-fruitful-green/10 to-card border border-fruitful-green/30 rounded-2xl p-7">
+                    <p className="text-muted-foreground leading-relaxed whitespace-pre-line">{artisan.culturalSignificance}</p>
                   </div>
                 </div>
               )}
@@ -333,9 +333,9 @@ export default function ArtisanProfile() {
 
         {/* ─ CRAFT ─ */}
         <section id="craft" ref={el => sectionRefs.current['craft'] = el} className="scroll-mt-16 space-y-10">
-          <div className="border-b border-stone-800 pb-5">
-            <p className="text-xs font-bold tracking-[0.25em] uppercase text-orange-500 mb-1">Mastery</p>
-            <h2 className="text-4xl font-black text-white">The Art of the Craft</h2>
+          <div className="border-b border-border pb-5">
+            <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-1">Mastery</p>
+            <h2 className="text-4xl font-black text-foreground">The Art of the Craft</h2>
           </div>
 
           {/* AI Enrichment CTA */}
@@ -348,14 +348,14 @@ export default function ArtisanProfile() {
             {artisan.tools?.length > 0 && (
               <div className="space-y-5">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-stone-800 border border-stone-600 flex items-center justify-center">
-                    <Hammer className="w-5 h-5 text-orange-500" />
+                  <div className="w-9 h-9 rounded-xl bg-muted border border-border flex items-center justify-center">
+                    <Hammer className="w-5 h-5 text-primary" />
                   </div>
-                  <h3 className="text-lg font-bold text-white">Artisan's Tools</h3>
+                  <h3 className="text-lg font-bold text-foreground">Artisan's Tools</h3>
                 </div>
                 <div className="flex flex-wrap gap-2.5">
                   {artisan.tools.map((tool, i) => (
-                    <span key={i} className="bg-stone-800 border border-stone-600 text-stone-200 rounded-full px-4 py-1.5 text-sm hover:border-orange-500 hover:text-orange-300 transition-colors cursor-default">
+                    <span key={i} className="bg-muted border border-border text-foreground rounded-full px-4 py-1.5 text-sm hover:border-primary hover:text-primary transition-colors cursor-default">
                       {tool}
                     </span>
                   ))}
@@ -367,18 +367,18 @@ export default function ArtisanProfile() {
             {artisan.signatureTechniques?.length > 0 && (
               <div className="space-y-5">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-stone-800 border border-stone-600 flex items-center justify-center">
-                    <Sparkles className="w-5 h-5 text-orange-500" />
+                  <div className="w-9 h-9 rounded-xl bg-muted border border-border flex items-center justify-center">
+                    <Sparkles className="w-5 h-5 text-primary" />
                   </div>
-                  <h3 className="text-lg font-bold text-white">Signature Techniques</h3>
+                  <h3 className="text-lg font-bold text-foreground">Signature Techniques</h3>
                 </div>
                 <div className="space-y-3">
                   {artisan.signatureTechniques.map((tech, i) => (
-                    <div key={i} className="flex items-start gap-4 bg-stone-900 border border-stone-700 rounded-xl px-5 py-4 hover:border-orange-600 transition-colors group">
-                      <span className="text-orange-500 font-black text-lg tabular-nums mt-0.5 group-hover:text-orange-300 transition-colors">
+                    <div key={i} className="flex items-start gap-4 bg-card border border-border rounded-xl px-5 py-4 hover:border-primary transition-colors group">
+                      <span className="text-primary font-black text-lg tabular-nums mt-0.5 group-hover:text-primary transition-colors">
                         {String(i + 1).padStart(2, '0')}
                       </span>
-                      <p className="text-stone-300 text-sm leading-relaxed">{tech}</p>
+                      <p className="text-muted-foreground text-sm leading-relaxed">{tech}</p>
                     </div>
                   ))}
                 </div>
@@ -393,38 +393,38 @@ export default function ArtisanProfile() {
         {/* ─ SHOP ─ */}
         {services.length > 0 && (
           <section id="shop" ref={el => sectionRefs.current['shop'] = el} className="scroll-mt-16 space-y-8">
-            <div className="border-b border-stone-800 pb-5 flex items-end justify-between">
+            <div className="border-b border-border pb-5 flex items-end justify-between">
               <div>
-                <p className="text-xs font-bold tracking-[0.25em] uppercase text-orange-500 mb-1">Shop</p>
-                <h2 className="text-4xl font-black text-white">Products by {artisan.artisanName.split(' ')[0]}</h2>
+                <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-1">Shop</p>
+                <h2 className="text-4xl font-black text-foreground">Products by {artisan.artisanName.split(' ')[0]}</h2>
               </div>
-              <Badge className="bg-stone-800 border border-stone-600 text-stone-300">{services.length} items</Badge>
+              <Badge className="bg-muted border border-border text-muted-foreground">{services.length} items</Badge>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {services.map(service => {
                 const price = service.pricing?.USD || service.pricing?.ZAR || 0;
                 const currency = service.pricing?.USD ? '$' : 'R';
                 return (
-                  <div key={service.id} className="group bg-stone-900 border border-stone-700 rounded-2xl overflow-hidden hover:border-orange-500 transition-all duration-300 hover:shadow-2xl hover:shadow-orange-900/20 hover:-translate-y-1">
-                    <div className="aspect-[4/3] overflow-hidden bg-stone-800 relative">
+                  <div key={service.id} className="group bg-card border border-border rounded-2xl overflow-hidden hover:border-primary transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1">
+                    <div className="aspect-[4/3] overflow-hidden bg-muted relative">
                       {service.imageUrl ? (
                         <img src={service.imageUrl} alt={service.serviceName} className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700" style={{ transform: 'scale(1)' }} />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
-                          <Package className="w-14 h-14 text-stone-600" />
+                          <Package className="w-14 h-14 text-muted-foreground" />
                         </div>
                       )}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
                     <div className="p-5 space-y-3">
-                      <h3 className="font-bold text-white text-base leading-snug">{service.serviceName}</h3>
+                      <h3 className="font-bold text-foreground text-base leading-snug">{service.serviceName}</h3>
                       {service.description && (
-                        <p className="text-stone-400 text-sm line-clamp-2">{service.description}</p>
+                        <p className="text-muted-foreground text-sm line-clamp-2">{service.description}</p>
                       )}
                       <div className="flex items-center justify-between pt-1">
-                        <span className="text-2xl font-black text-orange-400">{currency}{price}</span>
+                        <span className="text-2xl font-black text-primary">{currency}{price}</span>
                         <Link to={createPageUrl('Marketplace')}>
-                          <Button size="sm" className="bg-orange-600 hover:bg-orange-500 text-white font-bold">
+                          <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold">
                             Buy Now
                           </Button>
                         </Link>
@@ -439,10 +439,10 @@ export default function ArtisanProfile() {
 
         {/* ─ GALLERY / PORTFOLIO ─ */}
         <section id="gallery" ref={el => sectionRefs.current['gallery'] = el} className="scroll-mt-16 space-y-8">
-          <div className="border-b border-stone-800 pb-5 flex items-end justify-between flex-wrap gap-3">
+          <div className="border-b border-border pb-5 flex items-end justify-between flex-wrap gap-3">
             <div>
-              <p className="text-xs font-bold tracking-[0.25em] uppercase text-orange-500 mb-1">Portfolio</p>
-              <h2 className="text-4xl font-black text-white">Work &amp; Projects</h2>
+              <p className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-1">Portfolio</p>
+              <h2 className="text-4xl font-black text-foreground">Work &amp; Projects</h2>
             </div>
           </div>
           <PortfolioGallery artisan={artisan} fallbackImages={artisan.galleryImages || []} />
@@ -464,16 +464,16 @@ export default function ArtisanProfile() {
       <ArtisanWishlistSection artisanName={artisan.artisanName} brandId={artisan.brandId} />
 
       {/* ── FOOTER CTA ── */}
-      <div className="border-t border-stone-800 bg-stone-900">
+      <div className="border-t border-border bg-card">
         <div className="max-w-6xl mx-auto px-8 py-14 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
-            <p className="text-2xl font-black text-white mb-1">Love {artisan.artisanName.split(' ')[0]}'s work?</p>
-            <p className="text-stone-400">Follow to get notified when new pieces drop.</p>
+            <p className="text-2xl font-black text-foreground mb-1">Love {artisan.artisanName.split(' ')[0]}'s work?</p>
+            <p className="text-muted-foreground">Follow to get notified when new pieces drop.</p>
           </div>
           <div className="flex gap-3">
             <FollowArtisan artisanId={artisan.id} artisanName={artisan.artisanName} />
             <Link to={createPageUrl('Marketplace')}>
-              <Button variant="outline" className="border-stone-600 text-stone-300 hover:border-orange-500 hover:text-orange-400">
+              <Button variant="outline" className="border-border text-muted-foreground hover:border-primary hover:text-primary">
                 Browse Marketplace
               </Button>
             </Link>

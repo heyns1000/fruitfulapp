@@ -12,7 +12,7 @@ import { toast } from 'sonner';
 const RISK_COLORS = {
   low: 'bg-green-100 text-green-800',
   medium: 'bg-yellow-100 text-yellow-800',
-  high: 'bg-orange-100 text-orange-800',
+  high: 'bg-primary/10 text-primary',
   critical: 'bg-red-100 text-red-800'
 };
 
@@ -470,7 +470,7 @@ Provide:
                       <div key={idx} className="p-3 bg-red-50 rounded-lg border border-red-200">
                         <div className="flex items-start justify-between mb-2">
                           <p className="font-semibold text-red-900">{violation.regulation}</p>
-                          <Badge className="bg-red-600 text-white">{violation.severity}</Badge>
+                          <Badge className="bg-red-600 text-foreground">{violation.severity}</Badge>
                         </div>
                         <p className="text-sm text-red-800 mb-2">{violation.description}</p>
                         <p className="text-sm text-red-700">

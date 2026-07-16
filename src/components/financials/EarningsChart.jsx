@@ -21,7 +21,7 @@ export default function EarningsChart({ orders }) {
     }));
 
   if (data.length === 0) return (
-    <div className="h-40 flex items-center justify-center text-stone-600 text-sm">No earnings data yet</div>
+    <div className="h-40 flex items-center justify-center text-muted-foreground text-sm">No earnings data yet</div>
   );
 
   return (

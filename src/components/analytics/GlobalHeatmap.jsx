@@ -42,8 +42,8 @@ const SECTOR_LABELS = {
 // Color intensity based on node count
 function getHeatColor(value, max) {
   const ratio = max > 0 ? value / max : 0;
-  if (ratio > 0.8) return { bg: 'bg-red-500', text: 'text-white', border: 'border-red-600' };
-  if (ratio > 0.6) return { bg: 'bg-orange-400', text: 'text-white', border: 'border-orange-500' };
+  if (ratio > 0.8) return { bg: 'bg-red-500', text: 'text-foreground', border: 'border-red-600' };
+  if (ratio > 0.6) return { bg: 'bg-primary', text: 'text-foreground', border: 'border-primary' };
   if (ratio > 0.4) return { bg: 'bg-yellow-400', text: 'text-gray-900', border: 'border-yellow-500' };
   if (ratio > 0.2) return { bg: 'bg-teal-300', text: 'text-gray-900', border: 'border-teal-400' };
   if (ratio > 0) return { bg: 'bg-teal-100', text: 'text-gray-700', border: 'border-teal-200' };
@@ -129,7 +129,7 @@ export default function GlobalHeatmap() {
             onClick={() => setMetric(m.key)}
             className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all border ${
               metric === m.key
-                ? 'bg-teal-600 text-white border-teal-600'
+                ? 'bg-teal-600 text-foreground border-teal-600'
                 : 'bg-white text-gray-600 border-gray-300 hover:border-teal-400'
             }`}
           >
@@ -187,7 +187,7 @@ export default function GlobalHeatmap() {
               { color: 'bg-teal-100 border-teal-200', label: 'Low' },
               { color: 'bg-teal-300 border-teal-400', label: 'Med' },
               { color: 'bg-yellow-400 border-yellow-500', label: 'High' },
-              { color: 'bg-orange-400 border-orange-500', label: 'Very High' },
+              { color: 'bg-primary border-primary', label: 'Very High' },
               { color: 'bg-red-500 border-red-600', label: 'Peak' },
             ].map(l => (
               <div key={l.label} className="flex items-center gap-1">
@@ -218,7 +218,7 @@ export default function GlobalHeatmap() {
                 <div className="text-xs text-gray-500">Subnodes</div>
               </div>
               <div className="text-center bg-white rounded-lg p-3 shadow-sm">
-                <div className="text-2xl font-bold text-orange-600">{sectorData[selectedSector].activeNodes.toLocaleString()}</div>
+                <div className="text-2xl font-bold text-primary">{sectorData[selectedSector].activeNodes.toLocaleString()}</div>
                 <div className="text-xs text-gray-500">Active Nodes</div>
               </div>
             </div>

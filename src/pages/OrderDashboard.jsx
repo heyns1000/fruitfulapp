@@ -23,11 +23,11 @@ const STATUS_CONFIG = {
   pending:    { color: 'bg-yellow-900/40 text-yellow-300 border-yellow-700',  icon: Clock,         label: 'Pending' },
   confirmed:  { color: 'bg-blue-900/40 text-blue-300 border-blue-700',        icon: CheckCircle2,  label: 'Confirmed' },
   processing: { color: 'bg-purple-900/40 text-purple-300 border-purple-700',  icon: Package,       label: 'Processing' },
-  crafted:    { color: 'bg-amber-900/40 text-amber-300 border-amber-700',     icon: Hammer,        label: 'Crafted' },
+  crafted:    { color: 'bg-fruitful-green/10 text-fruitful-green border-fruitful-green/40',     icon: Hammer,        label: 'Crafted' },
   shipped:    { color: 'bg-cyan-900/40 text-cyan-300 border-cyan-700',        icon: Truck,         label: 'Shipped' },
   delivered:  { color: 'bg-green-900/40 text-green-300 border-green-700',     icon: CheckCircle2,  label: 'Delivered' },
   cancelled:  { color: 'bg-red-900/40 text-red-300 border-red-700',           icon: XCircle,       label: 'Cancelled' },
-  refunded:   { color: 'bg-stone-700 text-stone-300 border-stone-600',        icon: RotateCcw,     label: 'Refunded' },
+  refunded:   { color: 'bg-muted text-muted-foreground border-border',        icon: RotateCcw,     label: 'Refunded' },
 };
 
 const ACTIVE_STATUSES = ['pending', 'confirmed', 'processing', 'crafted', 'shipped'];
@@ -133,21 +133,21 @@ export default function OrderDashboard() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-stone-950 flex items-center justify-center">
-        <Loader2 className="w-10 h-10 animate-spin text-orange-500" />
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="w-10 h-10 animate-spin text-primary" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-stone-950 text-white">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Hero Header */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-stone-900 via-orange-950/30 to-stone-900 border-b border-stone-800 px-6 md:px-10 py-10">
+      <div className="relative overflow-hidden bg-gradient-to-br from-fruitful-mint/50 via-card to-card border-b border-border px-6 md:px-10 py-10">
         <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, #f97316 0%, transparent 60%)' }} />
         <div className="max-w-6xl mx-auto relative">
-          <p className="text-orange-400 text-xs font-bold uppercase tracking-[0.3em] mb-2">@Fruitful@ Marketplace</p>
+          <p className="text-primary text-xs font-bold uppercase tracking-[0.3em] mb-2">Fruitful™ Marketplace</p>
           <h1 className="text-5xl font-black mb-2">Order Dashboard</h1>
-          <p className="text-stone-400">Real-time tracking for all your artisan purchases</p>
+          <p className="text-muted-foreground">Real-time tracking for all your artisan purchases</p>
 
           {/* Live indicator */}
           {activeOrders.length > 0 && (
@@ -164,15 +164,15 @@ export default function OrderDashboard() {
         {/* Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {[
-            { label: 'Total Orders', val: orders.length, color: 'text-white', sub: 'all time' },
-            { label: 'In Transit', val: activeOrders.length, color: 'text-orange-400', sub: 'being crafted / shipped' },
+            { label: 'Total Orders', val: orders.length, color: 'text-foreground', sub: 'all time' },
+            { label: 'In Transit', val: activeOrders.length, color: 'text-primary', sub: 'being crafted / shipped' },
             { label: 'Delivered', val: deliveredOrders.length, color: 'text-green-400', sub: 'successfully received' },
-            { label: 'Total Spent', val: `$${totalSpend.toLocaleString()}`, color: 'text-amber-400', sub: 'confirmed payments' },
+            { label: 'Total Spent', val: `$${totalSpend.toLocaleString()}`, color: 'text-fruitful-green', sub: 'confirmed payments' },
           ].map(s => (
-            <div key={s.label} className="bg-stone-900 border border-stone-700 rounded-2xl p-5 hover:border-stone-500 transition-colors">
+            <div key={s.label} className="bg-card border border-border rounded-2xl p-5 hover:border-primary/40 transition-colors">
               <p className={`text-3xl font-black ${s.color}`}>{s.val}</p>
-              <p className="text-white text-sm font-semibold mt-1">{s.label}</p>
-              <p className="text-stone-600 text-xs mt-0.5">{s.sub}</p>
+              <p className="text-foreground text-sm font-semibold mt-1">{s.label}</p>
+              <p className="text-muted-foreground text-xs mt-0.5">{s.sub}</p>
             </div>
           ))}
         </div>
@@ -180,8 +180,8 @@ export default function OrderDashboard() {
         {/* Active orders spotlight */}
         {activeOrders.length > 0 && (
           <div>
-            <h2 className="text-xs font-bold tracking-[0.25em] uppercase text-orange-400 mb-3 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-orange-400 animate-pulse" />
+            <h2 className="text-xs font-bold tracking-[0.25em] uppercase text-primary mb-3 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
               Active Orders
             </h2>
             <div className="grid sm:grid-cols-2 gap-4">
@@ -190,11 +190,11 @@ export default function OrderDashboard() {
                 const Icon = cfg.icon;
                 return (
                   <button key={order.id} onClick={() => setExpandedOrder(expandedOrder === order.id ? null : order.id)}
-                    className="text-left bg-gradient-to-br from-orange-950/20 to-stone-900 border border-orange-800/30 hover:border-orange-600 rounded-2xl p-5 transition-all">
+                    className="text-left bg-gradient-to-br from-fruitful-mint/50 to-card border border-primary/30 hover:border-primary rounded-2xl p-5 transition-all">
                     <div className="flex items-start justify-between gap-2 mb-3">
                       <div>
-                        <p className="font-bold text-white">{order.orderNumber || '#' + order.id.slice(-8).toUpperCase()}</p>
-                        <p className="text-stone-500 text-xs">{order.items?.length} item{order.items?.length !== 1 ? 's' : ''}</p>
+                        <p className="font-bold text-foreground">{order.orderNumber || '#' + order.id.slice(-8).toUpperCase()}</p>
+                        <p className="text-muted-foreground text-xs">{order.items?.length} item{order.items?.length !== 1 ? 's' : ''}</p>
                       </div>
                       <Badge className={`text-xs border flex items-center gap-1 ${cfg.color}`}>
                         <Icon className="w-3 h-3" /> {cfg.label}
@@ -204,7 +204,7 @@ export default function OrderDashboard() {
                       <DeliveryCountdown estimatedDelivery={order.estimatedDelivery} status={order.status} />
                     )}
                     {order.artisanName && (
-                      <p className="text-stone-500 text-xs mt-2 flex items-center gap-1">
+                      <p className="text-muted-foreground text-xs mt-2 flex items-center gap-1">
                         <Hammer className="w-3 h-3" /> Crafted by {order.artisanName}
                       </p>
                     )}
@@ -218,18 +218,18 @@ export default function OrderDashboard() {
         {/* Filters */}
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-500" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input value={search} onChange={e => setSearch(e.target.value)}
               placeholder="Search orders..."
-              className="pl-10 bg-stone-900 border-stone-700 text-white placeholder:text-stone-500 focus:border-orange-500" />
+              className="pl-10 bg-card border-border text-foreground placeholder:text-muted-foreground focus:border-primary" />
           </div>
           <div className="flex gap-2 flex-wrap">
             {['all', 'processing', 'crafted', 'shipped', 'delivered'].map(s => (
               <button key={s} onClick={() => setStatusFilter(s)}
                 className={`px-4 py-2 rounded-xl text-xs font-semibold border transition-all capitalize ${
                   statusFilter === s
-                    ? 'bg-orange-600 border-orange-600 text-white'
-                    : 'bg-stone-900 border-stone-700 text-stone-400 hover:border-stone-500'
+                    ? 'bg-primary border-primary text-primary-foreground'
+                    : 'bg-card border-border text-muted-foreground hover:border-primary/40'
                 }`}>
                 {s === 'all' ? 'All' : STATUS_CONFIG[s]?.label || s}
               </button>
@@ -240,10 +240,10 @@ export default function OrderDashboard() {
         {/* Orders list */}
         {filtered.length === 0 ? (
           <div className="text-center py-24">
-            <Package className="w-16 h-16 text-stone-700 mx-auto mb-4" />
-            <p className="text-stone-400 text-lg">No orders found</p>
+            <Package className="w-16 h-16 text-foreground mx-auto mb-4" />
+            <p className="text-muted-foreground text-lg">No orders found</p>
             <Link to={createPageUrl('Marketplace')}>
-              <Button className="mt-4 bg-orange-600 hover:bg-orange-500 text-white">Browse Marketplace</Button>
+              <Button className="mt-4 bg-primary hover:bg-primary/90 text-primary-foreground">Browse Marketplace</Button>
             </Link>
           </div>
         ) : (
@@ -257,7 +257,7 @@ export default function OrderDashboard() {
               const canMarkReceived = order.status === 'shipped';
 
               return (
-                <div key={order.id} className={`bg-stone-900 border rounded-2xl overflow-hidden transition-all ${isExpanded ? 'border-orange-600' : 'border-stone-700 hover:border-stone-600'}`}>
+                <div key={order.id} className={`bg-card border rounded-2xl overflow-hidden transition-all ${isExpanded ? 'border-primary' : 'border-border hover:border-primary/40'}`}>
                   {/* Row header */}
                   <button className="w-full text-left p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
                     onClick={() => setExpandedOrder(isExpanded ? null : order.id)}>
@@ -267,10 +267,10 @@ export default function OrderDashboard() {
                       </div>
                       <div>
                         <div className="flex items-center gap-2 mb-0.5">
-                          <span className="font-bold text-white">{order.orderNumber || '#' + order.id.slice(-8).toUpperCase()}</span>
+                          <span className="font-bold text-foreground">{order.orderNumber || '#' + order.id.slice(-8).toUpperCase()}</span>
                           <Badge className={`text-xs border ${cfg.color}`}>{cfg.label}</Badge>
                         </div>
-                        <p className="text-stone-500 text-sm">
+                        <p className="text-muted-foreground text-sm">
                           {new Date(order.created_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
                           {order.items?.length ? ` · ${order.items.length} item${order.items.length !== 1 ? 's' : ''}` : ''}
                           {order.artisanName ? ` · by ${order.artisanName}` : ''}
@@ -281,18 +281,18 @@ export default function OrderDashboard() {
                       {order.estimatedDelivery && !['delivered','cancelled','refunded'].includes(order.status) && (
                         <DeliveryCountdown estimatedDelivery={order.estimatedDelivery} status={order.status} />
                       )}
-                      <span className="text-orange-400 font-black text-xl">${order.totalAmount?.toLocaleString()}</span>
-                      {isExpanded ? <ChevronUp className="w-5 h-5 text-stone-500 shrink-0" /> : <ChevronDown className="w-5 h-5 text-stone-500 shrink-0" />}
+                      <span className="text-primary font-black text-xl">${order.totalAmount?.toLocaleString()}</span>
+                      {isExpanded ? <ChevronUp className="w-5 h-5 text-muted-foreground shrink-0" /> : <ChevronDown className="w-5 h-5 text-muted-foreground shrink-0" />}
                     </div>
                   </button>
 
                   {/* Expanded */}
                   {isExpanded && (
-                    <div className="border-t border-stone-800 p-6 space-y-8">
+                    <div className="border-t border-border p-6 space-y-8">
                       <div className="grid md:grid-cols-2 gap-8">
                         {/* Timeline */}
                         <div>
-                          <h4 className="text-xs text-orange-400 uppercase tracking-wider font-bold mb-5">Order Timeline</h4>
+                          <h4 className="text-xs text-primary uppercase tracking-wider font-bold mb-5">Order Timeline</h4>
                           <OrderTimeline order={order} />
                         </div>
 
@@ -301,16 +301,16 @@ export default function OrderDashboard() {
                           {/* Items */}
                           {order.items?.length > 0 && (
                             <div>
-                              <h4 className="text-xs text-orange-400 uppercase tracking-wider font-bold mb-3">Items</h4>
+                              <h4 className="text-xs text-primary uppercase tracking-wider font-bold mb-3">Items</h4>
                               <div className="space-y-2">
                                 {order.items.map((item, i) => (
-                                  <div key={i} className="flex items-center gap-3 bg-stone-800 rounded-xl p-3">
+                                  <div key={i} className="flex items-center gap-3 bg-muted rounded-xl p-3">
                                     {item.imageUrl && <img src={item.imageUrl} alt={item.serviceName} className="w-12 h-12 rounded-lg object-cover" />}
                                     <div className="flex-1 min-w-0">
-                                      <p className="font-semibold text-white text-sm truncate">{item.serviceName}</p>
-                                      <p className="text-stone-500 text-xs">Qty {item.quantity} · ${item.unitPrice}</p>
+                                      <p className="font-semibold text-foreground text-sm truncate">{item.serviceName}</p>
+                                      <p className="text-muted-foreground text-xs">Qty {item.quantity} · ${item.unitPrice}</p>
                                     </div>
-                                    <p className="font-bold text-orange-400 text-sm shrink-0">${(item.quantity * item.unitPrice).toFixed(2)}</p>
+                                    <p className="font-bold text-primary text-sm shrink-0">${(item.quantity * item.unitPrice).toFixed(2)}</p>
                                   </div>
                                 ))}
                               </div>
@@ -320,7 +320,7 @@ export default function OrderDashboard() {
                           {/* Shipment Tracker */}
                           {order.trackingNumber && (
                             <div>
-                              <h4 className="text-xs text-orange-400 uppercase tracking-wider font-bold mb-3">Live Shipment Tracking</h4>
+                              <h4 className="text-xs text-primary uppercase tracking-wider font-bold mb-3">Live Shipment Tracking</h4>
                               <ShipmentTracker order={order} />
                             </div>
                           )}
@@ -328,9 +328,9 @@ export default function OrderDashboard() {
                           {/* Address */}
                           {order.shippingAddress?.name && (
                             <div>
-                              <h4 className="text-xs text-orange-400 uppercase tracking-wider font-bold mb-2">Delivery Address</h4>
-                              <p className="text-stone-300 text-sm bg-stone-800 rounded-xl p-3 flex gap-2">
-                                <MapPin className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
+                              <h4 className="text-xs text-primary uppercase tracking-wider font-bold mb-2">Delivery Address</h4>
+                              <p className="text-muted-foreground text-sm bg-muted rounded-xl p-3 flex gap-2">
+                                <MapPin className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                                 <span>
                                   {order.shippingAddress.name}, {order.shippingAddress.addressLine1},&nbsp;
                                   {order.shippingAddress.city}, {order.shippingAddress.country}
@@ -341,23 +341,23 @@ export default function OrderDashboard() {
 
                           {/* Notes */}
                           {order.notes && (
-                            <div className="bg-stone-800 rounded-xl p-3">
-                              <p className="text-xs text-orange-400 font-bold uppercase tracking-wider mb-1">Notes</p>
-                              <p className="text-stone-300 text-sm">{order.notes}</p>
+                            <div className="bg-muted rounded-xl p-3">
+                              <p className="text-xs text-primary font-bold uppercase tracking-wider mb-1">Notes</p>
+                              <p className="text-muted-foreground text-sm">{order.notes}</p>
                             </div>
                           )}
                         </div>
                       </div>
 
                       {/* Actions */}
-                      <div className="flex flex-wrap gap-3 pt-2 border-t border-stone-800">
+                      <div className="flex flex-wrap gap-3 pt-2 border-t border-border">
                         <Button onClick={() => handleReorder(order)} size="sm"
-                          className="bg-orange-600 hover:bg-orange-500 text-white gap-2">
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2">
                           <RefreshCw className="w-3 h-3" /> Reorder
                         </Button>
                         {canMarkReceived && (
                           <Button size="sm" onClick={() => setReceivedDialog(order)}
-                            className="bg-green-700 hover:bg-green-600 text-white gap-2">
+                            className="bg-green-700 hover:bg-green-600 text-foreground gap-2">
                             <ShieldCheck className="w-3 h-3" /> Mark as Received
                           </Button>
                         )}
@@ -369,14 +369,14 @@ export default function OrderDashboard() {
                         )}
                         {canReturn && (
                           <Button variant="outline" size="sm" onClick={() => setReturnDialog(order)}
-                            className="border-stone-600 text-stone-300 hover:border-stone-400 gap-2">
+                            className="border-border text-muted-foreground hover:border-primary/40 gap-2">
                             <RotateCcw className="w-3 h-3" /> Return / Exchange
                           </Button>
                         )}
                         {order.status === 'delivered' && (
                           <Link to={createPageUrl('Marketplace')}>
                             <Button variant="outline" size="sm"
-                              className="border-orange-700 text-orange-400 hover:bg-orange-900/20 gap-2">
+                              className="border-primary text-primary hover:bg-primary/10 gap-2">
                               <Star className="w-3 h-3" /> Leave a Review
                             </Button>
                           </Link>
@@ -393,29 +393,29 @@ export default function OrderDashboard() {
 
       {/* Mark Received Dialog */}
       <Dialog open={!!receivedDialog} onOpenChange={() => setReceivedDialog(null)}>
-        <DialogContent className="bg-stone-900 border-stone-700 text-white">
+        <DialogContent className="bg-card border-border text-foreground">
           <DialogHeader>
-            <DialogTitle className="text-white flex items-center gap-2">
-              <PartyPopper className="w-5 h-5 text-orange-400" />
+            <DialogTitle className="text-foreground flex items-center gap-2">
+              <PartyPopper className="w-5 h-5 text-primary" />
               Confirm Package Received
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
-            <p className="text-stone-300 text-sm">
+            <p className="text-muted-foreground text-sm">
               By confirming, you're letting your artisan know their work arrived safely.
               They'll receive a notification celebrating the delivery!
             </p>
-            <div className="bg-orange-950/30 border border-orange-800/40 rounded-xl p-4 flex items-center gap-3">
-              <Bell className="w-5 h-5 text-orange-400 shrink-0" />
-              <p className="text-stone-300 text-sm">
-                <span className="text-orange-300 font-semibold">{receivedDialog?.artisanName || 'The artisan'}</span> will be automatically pinged.
+            <div className="bg-primary/10 border border-primary/30 rounded-xl p-4 flex items-center gap-3">
+              <Bell className="w-5 h-5 text-primary shrink-0" />
+              <p className="text-muted-foreground text-sm">
+                <span className="text-primary font-semibold">{receivedDialog?.artisanName || 'The artisan'}</span> will be automatically pinged.
               </p>
             </div>
             <div className="flex gap-3">
-              <Button variant="outline" onClick={() => setReceivedDialog(null)} className="flex-1 border-stone-600 text-stone-300">Not Yet</Button>
+              <Button variant="outline" onClick={() => setReceivedDialog(null)} className="flex-1 border-border text-muted-foreground">Not Yet</Button>
               <Button onClick={() => markReceivedMutation.mutate(receivedDialog)}
                 disabled={markReceivedMutation.isPending}
-                className="flex-1 bg-green-700 hover:bg-green-600 text-white gap-2">
+                className="flex-1 bg-green-700 hover:bg-green-600 text-foreground gap-2">
                 {markReceivedMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <ShieldCheck className="w-4 h-4" />}
                 Yes, I Received It!
               </Button>
@@ -426,23 +426,23 @@ export default function OrderDashboard() {
 
       {/* Return Dialog */}
       <Dialog open={!!returnDialog} onOpenChange={() => setReturnDialog(null)}>
-        <DialogContent className="bg-stone-900 border-stone-700 text-white">
+        <DialogContent className="bg-card border-border text-foreground">
           <DialogHeader>
-            <DialogTitle className="text-white">Return / Exchange Request</DialogTitle>
+            <DialogTitle className="text-foreground">Return / Exchange Request</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
-            <p className="text-stone-400 text-sm">Order: <span className="text-white font-semibold">{returnDialog?.orderNumber}</span></p>
+            <p className="text-muted-foreground text-sm">Order: <span className="text-foreground font-semibold">{returnDialog?.orderNumber}</span></p>
             <div>
-              <label className="text-xs text-orange-400 uppercase tracking-wider mb-1 block">Reason for Return</label>
+              <label className="text-xs text-primary uppercase tracking-wider mb-1 block">Reason for Return</label>
               <Textarea value={returnReason} onChange={e => setReturnReason(e.target.value)} rows={4}
                 placeholder="Please describe your reason..."
-                className="bg-stone-800 border-stone-600 text-white placeholder:text-stone-500 resize-none" />
+                className="bg-muted border-border text-foreground placeholder:text-muted-foreground resize-none" />
             </div>
             <div className="flex gap-3">
-              <Button variant="outline" onClick={() => setReturnDialog(null)} className="flex-1 border-stone-600 text-stone-300">Cancel</Button>
+              <Button variant="outline" onClick={() => setReturnDialog(null)} className="flex-1 border-border text-muted-foreground">Cancel</Button>
               <Button onClick={() => returnMutation.mutate({ id: returnDialog.id, reason: returnReason })}
                 disabled={!returnReason || returnMutation.isPending}
-                className="flex-1 bg-orange-600 hover:bg-orange-500 text-white">
+                className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground">
                 {returnMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
                 Submit Request
               </Button>

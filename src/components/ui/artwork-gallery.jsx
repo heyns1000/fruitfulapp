@@ -10,7 +10,7 @@ const artworks = [
   {
     url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6953a072de46207f94f2b9d2/bdd987cfa_1st_eye_1753263376706.png",
     name: "First Eye",
-    color: "from-orange-400 to-amber-600"
+    color: "from-primary to-amber-600"
   },
   {
     url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6953a072de46207f94f2b9d2/80c4597b5_3_1753260859823.png",
@@ -20,12 +20,12 @@ const artworks = [
   {
     url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6953a072de46207f94f2b9d2/4540be9bd_Monster_01_1753263376704.png",
     name: "Monster 01",
-    color: "from-yellow-400 to-orange-600"
+    color: "from-yellow-400 to-primary"
   },
   {
     url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6953a072de46207f94f2b9d2/de7b64647_Nikon_1753263376703.png",
     name: "Nikon Artist",
-    color: "from-orange-400 to-red-600"
+    color: "from-primary to-red-600"
   }
 ];
 
@@ -64,7 +64,7 @@ export default function ArtworkGallery() {
                     className="w-full h-full object-contain drop-shadow-2xl"
                   />
                 </div>
-                <div className={`bg-gradient-to-r ${artwork.color} text-white px-4 py-3 text-center`}>
+                <div className={`bg-gradient-to-r ${artwork.color} text-foreground px-4 py-3 text-center`}>
                   <p className="font-bold text-sm sm:text-base">{artwork.name}</p>
                   <p className="text-xs opacity-90">by Sam Fox</p>
                 </div>

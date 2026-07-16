@@ -152,17 +152,17 @@ export default function SubscriptionShop() {
   const cartItemCount = cartItems.reduce((s, i) => s + i.quantity, 0);
 
   return (
-    <div className="min-h-screen bg-stone-950 text-white">
+    <div className="min-h-screen bg-background text-foreground">
 
       {/* Hero */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-stone-900 via-orange-950/30 to-stone-900 border-b border-stone-800 px-6 md:px-16 py-16">
-        <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #e85d26 1px, transparent 0)', backgroundSize: '36px 36px' }} />
+      <div className="relative overflow-hidden bg-gradient-to-br from-fruitful-mint/50 via-card to-card border-b border-border px-6 md:px-16 py-16">
+        <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #0d9488 1px, transparent 0)', backgroundSize: '36px 36px' }} />
         <div className="max-w-5xl mx-auto relative">
-          <Badge className="bg-orange-900/40 text-orange-300 border-orange-700 mb-4">✦ Fruitful™ Subscription Shop</Badge>
-          <h1 className="text-5xl md:text-6xl font-black tracking-tight leading-none mb-3" style={{ fontFamily: 'Georgia, serif' }}>
-            Subscribe & <span className="text-orange-500">Shop</span>
+          <Badge className="bg-primary/10 text-primary border-primary mb-4">Fruitful™ Subscription Shop</Badge>
+          <h1 className="text-5xl md:text-6xl font-black tracking-tight leading-none mb-3" style={{ fontFamily: 'inherit' }}>
+            Subscribe & <span className="text-primary">Shop</span>
           </h1>
-          <p className="text-stone-300 text-lg max-w-xl mb-6">
+          <p className="text-muted-foreground text-lg max-w-xl mb-6">
             Choose your tier — unlock sector-linked products at cost-price-derived subscriber rates. Wholesale, retail &amp; online prices are calculated from ex-works ZAR.
           </p>
           <div className="flex items-center gap-3 flex-wrap">
@@ -173,7 +173,7 @@ export default function SubscriptionShop() {
             )}
             {cartItemCount > 0 && (
               <Link to={createPageUrl('Checkout')}>
-                <Button className="bg-orange-700 hover:bg-orange-600 gap-2">
+                <Button className="bg-primary hover:bg-primary/90 gap-2">
                   <ShoppingCart className="w-4 h-4" /> Cart ({cartItemCount}) · Checkout
                 </Button>
               </Link>
@@ -186,8 +186,8 @@ export default function SubscriptionShop() {
 
         {/* Step 1: Pick tier */}
         <section>
-          <h2 className="text-xl font-black text-white mb-6 flex items-center gap-2">
-            <span className="w-7 h-7 rounded-full bg-orange-700 text-white flex items-center justify-center text-sm font-black">1</span>
+          <h2 className="text-xl font-black text-foreground mb-6 flex items-center gap-2">
+            <span className="w-7 h-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-black">1</span>
             Choose Your Subscription Tier
           </h2>
           <SubscriptionTierSelector
@@ -200,13 +200,13 @@ export default function SubscriptionShop() {
 
         {/* Step 2: Sector + subnode filter */}
         <section>
-          <h2 className="text-xl font-black text-white mb-4 flex items-center gap-2">
-            <span className="w-7 h-7 rounded-full bg-orange-700 text-white flex items-center justify-center text-sm font-black">2</span>
+          <h2 className="text-xl font-black text-foreground mb-4 flex items-center gap-2">
+            <span className="w-7 h-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-black">2</span>
             Link Sector &amp; Subnodes
           </h2>
-          <div className="bg-stone-900 border border-stone-700 rounded-2xl p-6 space-y-4">
+          <div className="bg-card border border-border rounded-2xl p-6 space-y-4">
             <div>
-              <label className="text-xs text-orange-400 uppercase tracking-wider font-bold mb-2 block">Sector</label>
+              <label className="text-xs text-primary uppercase tracking-wider font-bold mb-2 block">Sector</label>
               <div className="flex flex-wrap gap-2">
                 {SECTOR_OPTIONS.map(s => (
                   <button
@@ -214,8 +214,8 @@ export default function SubscriptionShop() {
                     onClick={() => setSelectedSector(s.key)}
                     className={`px-3 py-1.5 rounded-full text-sm border transition-all ${
                       selectedSector === s.key
-                        ? 'bg-orange-700 border-orange-700 text-white'
-                        : 'border-stone-600 text-stone-300 hover:border-orange-600'
+                        ? 'bg-primary border-primary text-primary-foreground'
+                        : 'border-border text-muted-foreground hover:border-primary'
                     }`}
                   >
                     {s.label}
@@ -224,14 +224,14 @@ export default function SubscriptionShop() {
               </div>
             </div>
             <div>
-              <label className="text-xs text-orange-400 uppercase tracking-wider font-bold mb-2 block">
-                Subnodes <span className="text-stone-500 font-normal normal-case">(comma-separated, e.g. pottery, pots, aprons)</span>
+              <label className="text-xs text-primary uppercase tracking-wider font-bold mb-2 block">
+                Subnodes <span className="text-muted-foreground font-normal normal-case">(comma-separated, e.g. pottery, pots, aprons)</span>
               </label>
               <input
                 value={subnodesInput}
                 onChange={e => setSubnodesInput(e.target.value)}
                 placeholder="pottery, pots, aprons, hats, paintings..."
-                className="w-full bg-stone-800 border border-stone-600 rounded-xl px-4 py-2.5 text-white text-sm focus:border-orange-500 outline-none"
+                className="w-full bg-muted border border-border rounded-xl px-4 py-2.5 text-foreground text-sm focus:border-primary outline-none"
               />
             </div>
           </div>
@@ -239,24 +239,24 @@ export default function SubscriptionShop() {
 
         {/* Step 3: Activate / Browse */}
         <section>
-          <h2 className="text-xl font-black text-white mb-4 flex items-center gap-2">
-            <span className="w-7 h-7 rounded-full bg-orange-700 text-white flex items-center justify-center text-sm font-black">3</span>
+          <h2 className="text-xl font-black text-foreground mb-4 flex items-center gap-2">
+            <span className="w-7 h-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-black">3</span>
             Activate &amp; Browse Products
           </h2>
 
           {/* Pricing summary */}
-          <div className="bg-stone-900 border border-stone-700 rounded-2xl p-5 mb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="bg-card border border-border rounded-2xl p-5 mb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
-              <p className="text-white font-black text-lg">{tierConfig.label} — {selectedCycle}</p>
-              <p className="text-orange-400 font-bold text-2xl">R{price.toLocaleString()}<span className="text-sm text-stone-400 font-normal">/{selectedCycle === 'monthly' ? 'mo' : selectedCycle === 'quarterly' ? 'qtr' : 'yr'}</span></p>
-              <p className="text-stone-500 text-xs mt-1">
+              <p className="text-foreground font-black text-lg">{tierConfig.label} — {selectedCycle}</p>
+              <p className="text-primary font-bold text-2xl">R{price.toLocaleString()}<span className="text-sm text-muted-foreground font-normal">/{selectedCycle === 'monthly' ? 'mo' : selectedCycle === 'quarterly' ? 'qtr' : 'yr'}</span></p>
+              <p className="text-muted-foreground text-xs mt-1">
                 {tierConfig.discountPct}% off all products · {tierConfig.freeShipping ? 'Free shipping' : 'Standard shipping'} · Up to {tierConfig.maxProducts === 999 ? 'unlimited' : tierConfig.maxProducts} products
               </p>
             </div>
             <div className="flex gap-2 flex-wrap">
               {!activeSub || activeSub.plan !== selectedPlan ? (
                 <Button
-                  className="bg-orange-700 hover:bg-orange-600 text-white font-bold gap-2"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold gap-2"
                   onClick={() => { setSubscribing(true); subscribeMutation.mutate(); }}
                   disabled={subscribeMutation.isPending}
                 >
@@ -268,7 +268,7 @@ export default function SubscriptionShop() {
               )}
               <Button
                 variant="outline"
-                className="border-stone-600 text-stone-300 hover:border-orange-500 gap-2"
+                className="border-border text-muted-foreground hover:border-primary gap-2"
                 onClick={() => setShowProducts(v => !v)}
               >
                 {showProducts ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
@@ -279,7 +279,7 @@ export default function SubscriptionShop() {
 
           {/* Product aggregator */}
           {showProducts && (
-            <div className="bg-stone-900 border border-stone-700 rounded-2xl p-6">
+            <div className="bg-card border border-border rounded-2xl p-6">
               <SubscriptionProductAggregator
                 plan={selectedPlan}
                 sector={selectedSector}
@@ -292,13 +292,13 @@ export default function SubscriptionShop() {
 
         {/* CTA to checkout */}
         {cartItemCount > 0 && (
-          <div className="bg-gradient-to-r from-orange-950/60 to-stone-900 border border-orange-800/40 rounded-2xl p-6 flex items-center justify-between gap-4 flex-wrap">
+          <div className="bg-gradient-to-r from-fruitful-mint/60 to-card border border-primary/30 rounded-2xl p-6 flex items-center justify-between gap-4 flex-wrap">
             <div>
-              <p className="text-white font-black text-lg">{cartItemCount} item(s) in cart</p>
-              <p className="text-stone-400 text-sm">Subscriber prices &amp; discounts applied</p>
+              <p className="text-foreground font-black text-lg">{cartItemCount} item(s) in cart</p>
+              <p className="text-muted-foreground text-sm">Subscriber prices &amp; discounts applied</p>
             </div>
             <Link to={createPageUrl('Checkout')}>
-              <Button className="bg-orange-700 hover:bg-orange-600 text-white font-bold text-lg px-8 py-3 gap-2">
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg px-8 py-3 gap-2">
                 Proceed to Checkout <ArrowRight className="w-5 h-5" />
               </Button>
             </Link>
@@ -309,7 +309,7 @@ export default function SubscriptionShop() {
         <div className="flex flex-wrap gap-3 text-sm">
           {['MySubscriptions', 'Marketplace', 'Checkout', 'OrderHistory'].map(p => (
             <Link key={p} to={createPageUrl(p)}>
-              <Button variant="outline" size="sm" className="border-stone-700 text-stone-400 hover:border-stone-500">{p}</Button>
+              <Button variant="outline" size="sm" className="border-border text-muted-foreground hover:border-primary/40">{p}</Button>
             </Link>
           ))}
         </div>

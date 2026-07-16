@@ -158,7 +158,7 @@ export default function PackingSlipModal({ order, onClose }) {
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
           <h2 className="font-bold text-gray-900 text-lg">Packing Slip Preview</h2>
           <div className="flex items-center gap-2">
-            <Button size="sm" onClick={handleDownloadPDF} className="bg-orange-600 hover:bg-orange-700 text-white">
+            <Button size="sm" onClick={handleDownloadPDF} className="bg-primary hover:bg-primary/90 text-primary-foreground">
               <Printer className="w-4 h-4" /> Download PDF
             </Button>
             <button onClick={onClose} className="text-gray-400 hover:text-gray-700 transition-colors">
@@ -170,7 +170,7 @@ export default function PackingSlipModal({ order, onClose }) {
         {/* Slip preview */}
         <div ref={slipRef} className="p-8 text-gray-900 font-sans text-sm">
           {/* Header */}
-          <div className="bg-gray-900 text-white rounded-xl px-6 py-5 mb-6">
+          <div className="bg-gray-900 text-foreground rounded-xl px-6 py-5 mb-6">
             <div className="text-xl font-black">FAA.ZONE™ PACKING SLIP</div>
             <div className="text-gray-400 text-xs mt-1">marketplace.faa.zone · Generated: {format(new Date(), 'dd MMM yyyy HH:mm')}</div>
           </div>
@@ -208,15 +208,15 @@ export default function PackingSlipModal({ order, onClose }) {
           </div>
 
           {order.trackingNumber && (
-            <div className="mb-5 bg-orange-50 border border-orange-200 rounded-lg px-4 py-2 text-sm">
-              <span className="font-semibold text-orange-700">Tracking:</span> {order.trackingNumber}
+            <div className="mb-5 bg-primary/5 border border-primary/30 rounded-lg px-4 py-2 text-sm">
+              <span className="font-semibold text-primary">Tracking:</span> {order.trackingNumber}
             </div>
           )}
 
           {/* Items table */}
           <table className="w-full text-sm mb-4">
             <thead>
-              <tr className="bg-gray-900 text-white">
+              <tr className="bg-gray-900 text-foreground">
                 <th className="text-left px-3 py-2 rounded-tl-lg">Item</th>
                 <th className="text-left px-3 py-2">SKU</th>
                 <th className="text-center px-3 py-2">Qty</th>

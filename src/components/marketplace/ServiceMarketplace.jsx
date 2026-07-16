@@ -115,7 +115,7 @@ export default function ServiceMarketplace({ services }) {
           </SelectContent>
         </Select>
         <Button variant="outline" onClick={() => setShowFilters(f => !f)} className="gap-2">
-          <SlidersHorizontal className="w-4 h-4" /> Filters {appliedFilters.length > 0 && <Badge className="bg-purple-600 text-white ml-1">{appliedFilters.length}</Badge>}
+          <SlidersHorizontal className="w-4 h-4" /> Filters {appliedFilters.length > 0 && <Badge className="bg-purple-600 text-foreground ml-1">{appliedFilters.length}</Badge>}
         </Button>
       </div>
 
@@ -177,7 +177,7 @@ export default function ServiceMarketplace({ services }) {
               <div className="flex flex-wrap gap-2">
                 {allTags.slice(0, 30).map(tag => (
                   <button key={tag} onClick={() => toggleTag(tag)}
-                    className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${activeTags.includes(tag) ? 'bg-purple-600 text-white border-purple-600' : 'bg-gray-50 text-gray-700 border-gray-200 hover:border-purple-400'}`}>
+                    className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${activeTags.includes(tag) ? 'bg-purple-600 text-foreground border-purple-600' : 'bg-gray-50 text-gray-700 border-gray-200 hover:border-purple-400'}`}>
                     #{tag}
                   </button>
                 ))}
@@ -232,7 +232,7 @@ export default function ServiceMarketplace({ services }) {
                     </div>
                   )}
                   {service.inventory?.available <= 5 && service.inventory?.available > 0 && (
-                    <div className="absolute top-2 left-2 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                    <div className="absolute top-2 left-2 bg-primary text-primary-foreground text-xs font-bold px-2 py-1 rounded-full">
                       Only {service.inventory.available} left
                     </div>
                   )}
@@ -290,7 +290,7 @@ export default function ServiceMarketplace({ services }) {
                         <Plus className="w-4 h-4" />
                       </Button>
                       <Button size="sm" onClick={() => buyNow(service)}
-                        className="bg-purple-600 hover:bg-purple-700 text-white px-3 gap-1">
+                        className="bg-purple-600 hover:bg-purple-700 text-foreground px-3 gap-1">
                         <Zap className="w-3 h-3" />Buy
                       </Button>
                     </div>

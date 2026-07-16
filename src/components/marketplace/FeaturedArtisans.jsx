@@ -36,7 +36,7 @@ export default function FeaturedArtisans({ services = [] }) {
             : null;
 
           return (
-            <Card key={artisan.id} className="overflow-hidden border-amber-200 hover:shadow-xl transition-shadow bg-gradient-to-br from-amber-50 to-orange-50">
+            <Card key={artisan.id} className="overflow-hidden border-amber-200 hover:shadow-xl transition-shadow bg-gradient-to-br from-amber-50 to-primary/5">
               {/* Workshop Image */}
               <div className="relative h-36 overflow-hidden">
                 <img
@@ -45,7 +45,7 @@ export default function FeaturedArtisans({ services = [] }) {
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <Badge className="absolute top-2 right-2 bg-amber-500 text-white border-0">⭐ Featured</Badge>
+                <Badge className="absolute top-2 right-2 bg-amber-500 text-foreground border-0">⭐ Featured</Badge>
               </div>
 
               <CardContent className="pt-4 space-y-3">
@@ -100,7 +100,7 @@ export default function FeaturedArtisans({ services = [] }) {
 
                 <Link
                   to={createPageUrl(`ArtisanProfile?id=${artisan.id}`)}
-                  className="flex items-center justify-center gap-2 w-full py-2 rounded-lg bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold transition-colors"
+                  className="flex items-center justify-center gap-2 w-full py-2 rounded-lg bg-amber-600 hover:bg-amber-700 text-foreground text-sm font-semibold transition-colors"
                 >
                   View Full Profile <ArrowRight className="w-4 h-4" />
                 </Link>

@@ -35,8 +35,8 @@ export default function FollowArtisan({ artisanId, artisanName }) {
         onClick={toggle}
         className={`gap-2 font-bold px-6 py-2.5 rounded-xl transition-all ${
           isFollowing
-            ? 'bg-stone-800 border border-orange-600 text-orange-400 hover:bg-red-900/30 hover:border-red-600 hover:text-red-400'
-            : 'bg-orange-600 hover:bg-orange-500 text-white'
+            ? 'bg-muted border border-primary text-primary hover:bg-red-900/30 hover:border-red-600 hover:text-red-400'
+            : 'bg-primary hover:bg-primary/90 text-primary-foreground'
         }`}
       >
         {isFollowing ? (
@@ -46,7 +46,7 @@ export default function FollowArtisan({ artisanId, artisanName }) {
         )}
       </Button>
       {isFollowing && (
-        <p className="text-xs text-orange-400 flex items-center gap-1">
+        <p className="text-xs text-primary flex items-center gap-1">
           <Bell className="w-3 h-3" /> You follow {artisanName.split(' ')[0]} — new products will notify you
         </p>
       )}

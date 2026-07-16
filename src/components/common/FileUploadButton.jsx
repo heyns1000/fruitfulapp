@@ -54,7 +54,7 @@ export default function FileUploadButton({
           className={`flex flex-col items-center justify-center w-full h-32 rounded-xl border-2 border-dashed cursor-pointer transition-colors ${
             preview
               ? 'border-green-600/60 bg-green-900/10'
-              : 'border-stone-600 hover:border-orange-500 bg-stone-800/40'
+              : 'border-border hover:border-primary bg-muted/40'
           }`}
         >
           <input
@@ -67,21 +67,21 @@ export default function FileUploadButton({
           />
           {uploading ? (
             <div className="flex flex-col items-center gap-2">
-              <Loader2 className="w-6 h-6 animate-spin text-orange-400" />
-              <span className="text-stone-400 text-xs">Uploading…</span>
+              <Loader2 className="w-6 h-6 animate-spin text-primary" />
+              <span className="text-muted-foreground text-xs">Uploading…</span>
             </div>
           ) : preview ? (
             <div className="relative w-full h-full">
               <img src={preview} alt="preview" className="w-full h-full object-cover rounded-xl opacity-80" />
               <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-xl">
-                <span className="text-white text-xs font-bold flex items-center gap-1">
+                <span className="text-foreground text-xs font-bold flex items-center gap-1">
                   <Check className="w-3.5 h-3.5 text-green-400" /> Click to replace
                 </span>
               </div>
             </div>
           ) : (
-            <div className="flex flex-col items-center gap-1 text-stone-400">
-              <Upload className="w-6 h-6 text-orange-400" />
+            <div className="flex flex-col items-center gap-1 text-muted-foreground">
+              <Upload className="w-6 h-6 text-primary" />
               <span className="text-sm">{label}</span>
               <span className="text-xs opacity-50">Click to browse</span>
             </div>
@@ -106,7 +106,7 @@ export default function FileUploadButton({
         <img
           src={preview}
           alt="preview"
-          className="w-10 h-10 rounded-lg object-cover border border-stone-600"
+          className="w-10 h-10 rounded-lg object-cover border border-border"
         />
       )}
       <Button
@@ -115,7 +115,7 @@ export default function FileUploadButton({
         size="sm"
         disabled={uploading}
         onClick={() => inputRef.current?.click()}
-        className="border-stone-600 text-stone-300 hover:border-orange-500 hover:text-orange-300 gap-1.5"
+        className="border-border text-muted-foreground hover:border-primary hover:text-primary gap-1.5"
       >
         {uploading ? (
           <><Loader2 className="w-3.5 h-3.5 animate-spin" /> Uploading…</>
@@ -127,7 +127,7 @@ export default function FileUploadButton({
         <button
           type="button"
           onClick={() => { setPreview(null); onUploaded(''); }}
-          className="text-stone-500 hover:text-red-400 transition-colors"
+          className="text-muted-foreground hover:text-red-400 transition-colors"
         >
           <X className="w-3.5 h-3.5" />
         </button>

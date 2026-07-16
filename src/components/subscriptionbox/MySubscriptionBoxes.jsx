@@ -7,10 +7,10 @@ import { Package, Calendar, PauseCircle, XCircle, PlayCircle, Loader2 } from 'lu
 import { toast } from 'sonner';
 
 const STATUS_STYLES = {
-  active: 'bg-green-700 text-white',
-  paused: 'bg-yellow-700 text-white',
+  active: 'bg-green-700 text-foreground',
+  paused: 'bg-yellow-700 text-foreground',
   cancelled: 'bg-red-900 text-red-200',
-  pending: 'bg-stone-700 text-stone-200',
+  pending: 'bg-muted text-foreground',
 };
 
 export default function MySubscriptionBoxes({ userEmail }) {
@@ -37,9 +37,9 @@ export default function MySubscriptionBoxes({ userEmail }) {
     toast.success(action === 'cancel' ? 'Subscription cancelled.' : action === 'pause' ? 'Subscription paused.' : 'Subscription resumed!');
   };
 
-  if (isLoading) return <div className="flex items-center justify-center p-12"><Loader2 className="w-8 h-8 animate-spin text-orange-500" /></div>;
+  if (isLoading) return <div className="flex items-center justify-center p-12"><Loader2 className="w-8 h-8 animate-spin text-primary" /></div>;
   if (!subs.length) return (
-    <div className="text-center py-16 text-stone-500 space-y-2">
+    <div className="text-center py-16 text-muted-foreground space-y-2">
       <Package className="w-12 h-12 mx-auto opacity-30" />
       <p className="text-lg font-semibold">No active subscriptions yet.</p>
       <p className="text-sm">Browse the boxes above to get started.</p>
@@ -49,23 +49,23 @@ export default function MySubscriptionBoxes({ userEmail }) {
   return (
     <div className="space-y-4">
       {subs.map(sub => (
-        <div key={sub.id} className="bg-stone-900 border border-stone-700 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div key={sub.id} className="bg-card border border-border rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="space-y-1.5">
             <div className="flex items-center gap-3">
-              <h3 className="text-white font-bold text-lg">{sub.boxName}</h3>
+              <h3 className="text-foreground font-bold text-lg">{sub.boxName}</h3>
               <Badge className={`${STATUS_STYLES[sub.status]} border-0 text-xs capitalize`}>{sub.status}</Badge>
             </div>
-            <div className="flex flex-wrap gap-3 text-sm text-stone-400">
-              <span className="capitalize">{sub.billingCycle} · <span className="text-orange-400 font-bold">{sub.currency === 'ZAR' ? 'R' : '$'}{sub.amount}</span></span>
+            <div className="flex flex-wrap gap-3 text-sm text-muted-foreground">
+              <span className="capitalize">{sub.billingCycle} · <span className="text-primary font-bold">{sub.currency === 'ZAR' ? 'R' : '$'}{sub.amount}</span></span>
               {sub.nextBillingDate && (
                 <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5" />Next: {sub.nextBillingDate}</span>
               )}
-              <span>Boxes shipped: <span className="text-white">{sub.boxesShipped || 0}</span></span>
+              <span>Boxes shipped: <span className="text-foreground">{sub.boxesShipped || 0}</span></span>
             </div>
             {sub.customizations && Object.keys(sub.customizations).length > 0 && (
               <div className="flex flex-wrap gap-1.5 mt-1">
                 {Object.entries(sub.customizations).map(([k, v]) => (
-                  <span key={k} className="bg-orange-950/50 border border-orange-800/50 text-orange-300 text-xs px-2.5 py-0.5 rounded-full">{v}</span>
+                  <span key={k} className="bg-primary/10 border border-primary/30 text-primary text-xs px-2.5 py-0.5 rounded-full">{v}</span>
                 ))}
               </div>
             )}

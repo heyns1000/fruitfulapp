@@ -93,15 +93,15 @@ export default function SubscribeModal({ box, open, onClose }) {
 
   return (
     <Dialog open={open} onOpenChange={reset}>
-      <DialogContent className="bg-stone-950 border border-stone-700 text-white max-w-lg rounded-3xl p-0 overflow-hidden max-h-[90vh] overflow-y-auto">
+      <DialogContent className="bg-background border border-border text-foreground max-w-lg rounded-3xl p-0 overflow-hidden max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="bg-gradient-to-r from-orange-700 to-amber-600 p-6 sticky top-0 z-10">
+        <div className="bg-gradient-to-r from-primary to-amber-600 p-6 sticky top-0 z-10">
           <div className="flex items-center justify-between mb-1">
-            <p className="text-orange-200 text-xs font-bold tracking-widest uppercase">Subscribe to</p>
-            {isGift && <span className="bg-white/20 text-white text-xs font-bold px-2.5 py-1 rounded-full">🎁 Gift Mode</span>}
+            <p className="text-primary text-xs font-bold tracking-widest uppercase">Subscribe to</p>
+            {isGift && <span className="bg-white/20 text-foreground text-xs font-bold px-2.5 py-1 rounded-full">🎁 Gift Mode</span>}
           </div>
-          <DialogTitle className="text-2xl font-black text-white">{box.name}</DialogTitle>
-          <p className="text-orange-100 text-sm mt-1 italic">{box.tagline}</p>
+          <DialogTitle className="text-2xl font-black text-foreground">{box.name}</DialogTitle>
+          <p className="text-primary text-sm mt-1 italic">{box.tagline}</p>
           {/* Step dots */}
           <div className="flex gap-1.5 mt-3">
             {[1,2,3,4].filter(s => s !== 2 || isGift).map((s, idx) => (
@@ -118,46 +118,46 @@ export default function SubscribeModal({ box, open, onClose }) {
               <div className="w-16 h-16 bg-green-600/20 rounded-full flex items-center justify-center mx-auto">
                 <CheckCircle2 className="w-9 h-9 text-green-400" />
               </div>
-              <h3 className="text-2xl font-black text-white">{isGift ? 'Gift Sent! 🎁' : "You're Subscribed!"}</h3>
-              <p className="text-stone-400">
+              <h3 className="text-2xl font-black text-foreground">{isGift ? 'Gift Sent! 🎁' : "You're Subscribed!"}</h3>
+              <p className="text-muted-foreground">
                 {isGift
                   ? `A subscription gift has been arranged for ${giftDetails.recipientName || 'your recipient'}. They'll be thrilled!`
                   : "Your first box is on its way. You'll receive email updates on each shipment."}
               </p>
-              <div className="bg-stone-900 border border-stone-700 rounded-2xl p-4 text-left space-y-2">
-                <div className="flex justify-between text-sm"><span className="text-stone-400">Box</span><span className="text-white font-bold">{box.name}</span></div>
-                <div className="flex justify-between text-sm"><span className="text-stone-400">Plan</span><span className="text-white font-bold capitalize">{cycle}</span></div>
-                <div className="flex justify-between text-sm"><span className="text-stone-400">Amount</span><span className="text-orange-400 font-bold">{currency}{price}/{cycle === 'annual' ? 'yr' : cycle === 'quarterly' ? 'qtr' : 'mo'}</span></div>
+              <div className="bg-card border border-border rounded-2xl p-4 text-left space-y-2">
+                <div className="flex justify-between text-sm"><span className="text-muted-foreground">Box</span><span className="text-foreground font-bold">{box.name}</span></div>
+                <div className="flex justify-between text-sm"><span className="text-muted-foreground">Plan</span><span className="text-foreground font-bold capitalize">{cycle}</span></div>
+                <div className="flex justify-between text-sm"><span className="text-muted-foreground">Amount</span><span className="text-primary font-bold">{currency}{price}/{cycle === 'annual' ? 'yr' : cycle === 'quarterly' ? 'qtr' : 'mo'}</span></div>
                 {isGift && giftDetails.deliveryDate && (
-                  <div className="flex justify-between text-sm"><span className="text-stone-400">First delivery</span><span className="text-white">{giftDetails.deliveryDate}</span></div>
+                  <div className="flex justify-between text-sm"><span className="text-muted-foreground">First delivery</span><span className="text-foreground">{giftDetails.deliveryDate}</span></div>
                 )}
                 {isGift && giftDetails.wrapping !== 'none' && (
-                  <div className="flex justify-between text-sm"><span className="text-stone-400">Wrapping</span><span className="text-white capitalize">{giftDetails.wrapping}</span></div>
+                  <div className="flex justify-between text-sm"><span className="text-muted-foreground">Wrapping</span><span className="text-foreground capitalize">{giftDetails.wrapping}</span></div>
                 )}
               </div>
-              <Button onClick={reset} className="w-full bg-orange-600 hover:bg-orange-500 font-bold rounded-xl">Done</Button>
+              <Button onClick={reset} className="w-full bg-primary hover:bg-primary/90 font-bold rounded-xl">Done</Button>
             </div>
           )}
 
           {/* ── Step 1: Plan + Gift Toggle ── */}
           {step === 1 && (
             <div className="space-y-4">
-              <p className="text-stone-300 font-semibold">Choose your billing cycle</p>
+              <p className="text-muted-foreground font-semibold">Choose your billing cycle</p>
               <div className="space-y-3">
                 {CYCLES.filter(c => box.pricing?.[c.key]).map(c => (
                   <button
                     key={c.key}
                     onClick={() => setCycle(c.key)}
-                    className={`w-full flex items-center justify-between p-4 rounded-2xl border transition-all ${cycle === c.key ? 'border-orange-500 bg-orange-950/40' : 'border-stone-700 bg-stone-900 hover:border-stone-500'}`}
+                    className={`w-full flex items-center justify-between p-4 rounded-2xl border transition-all ${cycle === c.key ? 'border-primary bg-primary/10' : 'border-border bg-card hover:border-primary/40'}`}
                   >
                     <div className="flex items-center gap-3">
-                      <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${cycle === c.key ? 'border-orange-500' : 'border-stone-600'}`}>
-                        {cycle === c.key && <div className="w-2 h-2 bg-orange-500 rounded-full" />}
+                      <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${cycle === c.key ? 'border-primary' : 'border-border'}`}>
+                        {cycle === c.key && <div className="w-2 h-2 bg-primary rounded-full" />}
                       </div>
-                      <span className="font-bold text-white capitalize">{c.label}</span>
-                      {c.discount && <Badge className="bg-green-700 text-white border-0 text-xs">{c.discount}</Badge>}
+                      <span className="font-bold text-foreground capitalize">{c.label}</span>
+                      {c.discount && <Badge className="bg-green-700 text-foreground border-0 text-xs">{c.discount}</Badge>}
                     </div>
-                    <span className="text-orange-400 font-black text-lg">{currency}{box.pricing[c.key]}<span className="text-stone-500 text-sm font-normal">/{c.key === 'annual' ? 'yr' : c.key === 'quarterly' ? 'qtr' : 'mo'}</span></span>
+                    <span className="text-primary font-black text-lg">{currency}{box.pricing[c.key]}<span className="text-muted-foreground text-sm font-normal">/{c.key === 'annual' ? 'yr' : c.key === 'quarterly' ? 'qtr' : 'mo'}</span></span>
                   </button>
                 ))}
               </div>
@@ -165,19 +165,19 @@ export default function SubscribeModal({ box, open, onClose }) {
               {/* Gift toggle */}
               <button
                 onClick={() => setIsGift(!isGift)}
-                className={`w-full flex items-center gap-3 p-4 rounded-2xl border transition-all ${isGift ? 'border-pink-500 bg-pink-950/30' : 'border-stone-700 bg-stone-900 hover:border-stone-500'}`}
+                className={`w-full flex items-center gap-3 p-4 rounded-2xl border transition-all ${isGift ? 'border-pink-500 bg-pink-950/30' : 'border-border bg-card hover:border-primary/40'}`}
               >
-                <Gift className={`w-5 h-5 ${isGift ? 'text-pink-400' : 'text-stone-500'}`} />
+                <Gift className={`w-5 h-5 ${isGift ? 'text-pink-400' : 'text-muted-foreground'}`} />
                 <div className="text-left flex-1">
-                  <p className={`font-semibold text-sm ${isGift ? 'text-pink-300' : 'text-stone-300'}`}>🎁 Send as a gift</p>
-                  <p className="text-stone-500 text-xs">Add a personal message, gift wrapping & delivery date</p>
+                  <p className={`font-semibold text-sm ${isGift ? 'text-pink-300' : 'text-muted-foreground'}`}>🎁 Send as a gift</p>
+                  <p className="text-muted-foreground text-xs">Add a personal message, gift wrapping & delivery date</p>
                 </div>
-                <div className={`w-5 h-5 rounded border-2 flex items-center justify-center ${isGift ? 'bg-pink-500 border-pink-500' : 'border-stone-600'}`}>
-                  {isGift && <span className="text-white text-xs">✓</span>}
+                <div className={`w-5 h-5 rounded border-2 flex items-center justify-center ${isGift ? 'bg-pink-500 border-pink-500' : 'border-border'}`}>
+                  {isGift && <span className="text-foreground text-xs">✓</span>}
                 </div>
               </button>
 
-              <Button onClick={nextFromStep1} className="w-full bg-orange-600 hover:bg-orange-500 font-bold rounded-xl">
+              <Button onClick={nextFromStep1} className="w-full bg-primary hover:bg-primary/90 font-bold rounded-xl">
                 Continue <ChevronRight className="w-4 h-4" />
               </Button>
             </div>
@@ -188,7 +188,7 @@ export default function SubscribeModal({ box, open, onClose }) {
             <div className="space-y-5">
               <div className="flex items-center gap-2">
                 <Gift className="w-5 h-5 text-pink-400" />
-                <p className="text-stone-200 font-bold">Gift Details</p>
+                <p className="text-foreground font-bold">Gift Details</p>
               </div>
 
               <div className="space-y-3">
@@ -196,40 +196,40 @@ export default function SubscribeModal({ box, open, onClose }) {
                   placeholder="Recipient's name *"
                   value={giftDetails.recipientName}
                   onChange={e => setGiftDetails(p => ({ ...p, recipientName: e.target.value }))}
-                  className="bg-stone-900 border-stone-700 text-white placeholder:text-stone-500 focus:border-pink-500"
+                  className="bg-card border-border text-foreground placeholder:text-muted-foreground focus:border-pink-500"
                 />
                 <Input
                   placeholder="Recipient's email (optional)"
                   type="email"
                   value={giftDetails.recipientEmail}
                   onChange={e => setGiftDetails(p => ({ ...p, recipientEmail: e.target.value }))}
-                  className="bg-stone-900 border-stone-700 text-white placeholder:text-stone-500 focus:border-pink-500"
+                  className="bg-card border-border text-foreground placeholder:text-muted-foreground focus:border-pink-500"
                 />
               </div>
 
               {/* Gift message */}
               <div>
-                <p className="text-stone-400 text-sm font-medium mb-2">Personal message</p>
+                <p className="text-muted-foreground text-sm font-medium mb-2">Personal message</p>
                 <textarea
                   value={giftDetails.message}
                   onChange={e => setGiftDetails(p => ({ ...p, message: e.target.value }))}
                   placeholder="Write a heartfelt message... it will be included in the first box."
-                  className="w-full bg-stone-900 border border-stone-700 rounded-xl p-3 text-white text-sm resize-none h-24 focus:outline-none focus:border-pink-500 placeholder:text-stone-600"
+                  className="w-full bg-card border border-border rounded-xl p-3 text-foreground text-sm resize-none h-24 focus:outline-none focus:border-pink-500 placeholder:text-muted-foreground"
                 />
               </div>
 
               {/* Wrapping */}
               <div>
-                <p className="text-stone-400 text-sm font-medium mb-2">Gift wrapping</p>
+                <p className="text-muted-foreground text-sm font-medium mb-2">Gift wrapping</p>
                 <div className="grid grid-cols-2 gap-2">
                   {WRAPPING_OPTIONS.map(w => (
                     <button
                       key={w.key}
                       onClick={() => setGiftDetails(p => ({ ...p, wrapping: w.key }))}
-                      className={`p-3 rounded-xl border text-left transition-all ${giftDetails.wrapping === w.key ? 'border-pink-500 bg-pink-950/30' : 'border-stone-700 bg-stone-900 hover:border-stone-500'}`}
+                      className={`p-3 rounded-xl border text-left transition-all ${giftDetails.wrapping === w.key ? 'border-pink-500 bg-pink-950/30' : 'border-border bg-card hover:border-primary/40'}`}
                     >
                       <span className="text-xl">{w.icon}</span>
-                      <p className={`text-xs mt-1 font-medium ${giftDetails.wrapping === w.key ? 'text-pink-300' : 'text-stone-400'}`}>{w.label}</p>
+                      <p className={`text-xs mt-1 font-medium ${giftDetails.wrapping === w.key ? 'text-pink-300' : 'text-muted-foreground'}`}>{w.label}</p>
                     </button>
                   ))}
                 </div>
@@ -237,19 +237,19 @@ export default function SubscribeModal({ box, open, onClose }) {
 
               {/* First delivery date */}
               <div>
-                <p className="text-stone-400 text-sm font-medium mb-2">Preferred first delivery date</p>
+                <p className="text-muted-foreground text-sm font-medium mb-2">Preferred first delivery date</p>
                 <Input
                   type="date"
                   min={minDateStr}
                   value={giftDetails.deliveryDate}
                   onChange={e => setGiftDetails(p => ({ ...p, deliveryDate: e.target.value }))}
-                  className="bg-stone-900 border-stone-700 text-white focus:border-pink-500"
+                  className="bg-card border-border text-foreground focus:border-pink-500"
                 />
-                <p className="text-stone-600 text-xs mt-1">Earliest available: {minDateStr}</p>
+                <p className="text-muted-foreground text-xs mt-1">Earliest available: {minDateStr}</p>
               </div>
 
               <div className="flex gap-3">
-                <Button variant="outline" onClick={() => setStep(1)} className="flex-1 border-stone-600 text-stone-300">Back</Button>
+                <Button variant="outline" onClick={() => setStep(1)} className="flex-1 border-border text-muted-foreground">Back</Button>
                 <Button onClick={() => setStep(hasCustomizations ? 3 : 4)} className="flex-1 bg-pink-600 hover:bg-pink-500 font-bold rounded-xl">Continue</Button>
               </div>
             </div>
@@ -259,18 +259,18 @@ export default function SubscribeModal({ box, open, onClose }) {
           {step === 3 && hasCustomizations && (
             <div className="space-y-5">
               <div className="flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-orange-500" />
-                <p className="text-stone-200 font-bold">Personalize {isGift ? "the gift box" : "your box"}</p>
+                <Sparkles className="w-5 h-5 text-primary" />
+                <p className="text-foreground font-bold">Personalize {isGift ? "the gift box" : "your box"}</p>
               </div>
               {box.customizationOptions.map(opt => (
                 <div key={opt.key} className="space-y-2">
-                  <p className="text-stone-400 text-sm font-medium">{opt.label}</p>
+                  <p className="text-muted-foreground text-sm font-medium">{opt.label}</p>
                   <div className="flex flex-wrap gap-2">
                     {opt.options.map(o => (
                       <button
                         key={o}
                         onClick={() => setCustomizations(prev => ({ ...prev, [opt.key]: o }))}
-                        className={`px-4 py-2 rounded-full text-sm border transition-all ${customizations[opt.key] === o ? 'bg-orange-600 border-orange-600 text-white' : 'border-stone-600 text-stone-300 hover:border-orange-500 hover:text-orange-300'}`}
+                        className={`px-4 py-2 rounded-full text-sm border transition-all ${customizations[opt.key] === o ? 'bg-primary border-primary text-primary-foreground' : 'border-border text-muted-foreground hover:border-primary hover:text-primary'}`}
                       >
                         {o}
                       </button>
@@ -279,8 +279,8 @@ export default function SubscribeModal({ box, open, onClose }) {
                 </div>
               ))}
               <div className="flex gap-3">
-                <Button variant="outline" onClick={backFromStep3} className="flex-1 border-stone-600 text-stone-300">Back</Button>
-                <Button onClick={() => setStep(4)} className="flex-1 bg-orange-600 hover:bg-orange-500 font-bold rounded-xl">Continue</Button>
+                <Button variant="outline" onClick={backFromStep3} className="flex-1 border-border text-muted-foreground">Back</Button>
+                <Button onClick={() => setStep(4)} className="flex-1 bg-primary hover:bg-primary/90 font-bold rounded-xl">Continue</Button>
               </div>
             </div>
           )}
@@ -288,51 +288,51 @@ export default function SubscribeModal({ box, open, onClose }) {
           {/* ── Step 4: Shipping + Confirm ── */}
           {step === 4 && (
             <div className="space-y-4">
-              <p className="text-stone-300 font-semibold">{isGift ? "Your details & delivery address" : "Delivery details"}</p>
+              <p className="text-muted-foreground font-semibold">{isGift ? "Your details & delivery address" : "Delivery details"}</p>
               <Input
                 placeholder="Your email *"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 type="email"
-                className="bg-stone-900 border-stone-700 text-white placeholder:text-stone-500 focus:border-orange-500"
+                className="bg-card border-border text-foreground placeholder:text-muted-foreground focus:border-primary"
               />
               <Input
                 placeholder={isGift ? "Recipient's full name" : "Full name"}
                 value={shipping.name}
                 onChange={e => setShipping(p => ({ ...p, name: e.target.value }))}
-                className="bg-stone-900 border-stone-700 text-white placeholder:text-stone-500 focus:border-orange-500"
+                className="bg-card border-border text-foreground placeholder:text-muted-foreground focus:border-primary"
               />
               <Input
                 placeholder="Street address"
                 value={shipping.addressLine1}
                 onChange={e => setShipping(p => ({ ...p, addressLine1: e.target.value }))}
-                className="bg-stone-900 border-stone-700 text-white placeholder:text-stone-500 focus:border-orange-500"
+                className="bg-card border-border text-foreground placeholder:text-muted-foreground focus:border-primary"
               />
               <div className="grid grid-cols-2 gap-3">
-                <Input placeholder="City" value={shipping.city} onChange={e => setShipping(p => ({ ...p, city: e.target.value }))} className="bg-stone-900 border-stone-700 text-white placeholder:text-stone-500 focus:border-orange-500" />
-                <Input placeholder="Postal code" value={shipping.postalCode} onChange={e => setShipping(p => ({ ...p, postalCode: e.target.value }))} className="bg-stone-900 border-stone-700 text-white placeholder:text-stone-500 focus:border-orange-500" />
+                <Input placeholder="City" value={shipping.city} onChange={e => setShipping(p => ({ ...p, city: e.target.value }))} className="bg-card border-border text-foreground placeholder:text-muted-foreground focus:border-primary" />
+                <Input placeholder="Postal code" value={shipping.postalCode} onChange={e => setShipping(p => ({ ...p, postalCode: e.target.value }))} className="bg-card border-border text-foreground placeholder:text-muted-foreground focus:border-primary" />
               </div>
 
               {/* Summary */}
-              <div className="bg-stone-900 border border-stone-700 rounded-xl p-4 space-y-1.5">
-                <p className="text-stone-400 text-xs font-bold uppercase tracking-wider mb-2">Order Summary</p>
-                <div className="flex justify-between text-sm"><span className="text-stone-400">{box.name}</span><span className="text-white">{currency}{price}</span></div>
-                <div className="flex justify-between text-sm"><span className="text-stone-400">Billing</span><span className="text-white capitalize">{cycle}</span></div>
-                {isGift && <div className="flex justify-between text-sm"><span className="text-stone-400">Gift for</span><span className="text-pink-300">{giftDetails.recipientName || '—'}</span></div>}
+              <div className="bg-card border border-border rounded-xl p-4 space-y-1.5">
+                <p className="text-muted-foreground text-xs font-bold uppercase tracking-wider mb-2">Order Summary</p>
+                <div className="flex justify-between text-sm"><span className="text-muted-foreground">{box.name}</span><span className="text-foreground">{currency}{price}</span></div>
+                <div className="flex justify-between text-sm"><span className="text-muted-foreground">Billing</span><span className="text-foreground capitalize">{cycle}</span></div>
+                {isGift && <div className="flex justify-between text-sm"><span className="text-muted-foreground">Gift for</span><span className="text-pink-300">{giftDetails.recipientName || '—'}</span></div>}
                 {isGift && giftDetails.wrapping !== 'none' && (
-                  <div className="flex justify-between text-sm"><span className="text-stone-400">Wrapping</span><span className="text-white capitalize">{giftDetails.wrapping}</span></div>
+                  <div className="flex justify-between text-sm"><span className="text-muted-foreground">Wrapping</span><span className="text-foreground capitalize">{giftDetails.wrapping}</span></div>
                 )}
                 {isGift && giftDetails.deliveryDate && (
-                  <div className="flex justify-between text-sm"><span className="text-stone-400">First delivery</span><span className="text-white">{giftDetails.deliveryDate}</span></div>
+                  <div className="flex justify-between text-sm"><span className="text-muted-foreground">First delivery</span><span className="text-foreground">{giftDetails.deliveryDate}</span></div>
                 )}
                 {Object.keys(customizations).length > 0 && (
-                  <div className="flex justify-between text-sm"><span className="text-stone-400">Customized</span><span className="text-orange-400">✓ Yes</span></div>
+                  <div className="flex justify-between text-sm"><span className="text-muted-foreground">Customized</span><span className="text-primary">✓ Yes</span></div>
                 )}
               </div>
 
               <div className="flex gap-3">
-                <Button variant="outline" onClick={backFromStep4} className="flex-1 border-stone-600 text-stone-300">Back</Button>
-                <Button onClick={handleConfirm} disabled={createMutation.isPending} className={`flex-1 font-bold rounded-xl ${isGift ? 'bg-pink-600 hover:bg-pink-500' : 'bg-orange-600 hover:bg-orange-500'}`}>
+                <Button variant="outline" onClick={backFromStep4} className="flex-1 border-border text-muted-foreground">Back</Button>
+                <Button onClick={handleConfirm} disabled={createMutation.isPending} className={`flex-1 font-bold rounded-xl ${isGift ? 'bg-pink-600 hover:bg-pink-500' : 'bg-primary hover:bg-primary/90'}`}>
                   {createMutation.isPending ? 'Confirming...' : isGift ? `🎁 Send Gift · ${currency}${price}` : `Subscribe · ${currency}${price}`}
                 </Button>
               </div>

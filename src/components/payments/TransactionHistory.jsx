@@ -12,7 +12,7 @@ const STATUS_CONFIG = {
   pending:   { color: 'bg-yellow-100 text-yellow-800', label: 'Pending' },
   processing:{ color: 'bg-blue-100 text-blue-800', label: 'Processing' },
   failed:    { color: 'bg-red-100 text-red-800', label: 'Failed' },
-  abandoned: { color: 'bg-orange-100 text-orange-800', label: 'Abandoned' },
+  abandoned: { color: 'bg-primary/10 text-primary', label: 'Abandoned' },
   refunded:  { color: 'bg-gray-100 text-gray-800', label: 'Refunded' },
 };
 

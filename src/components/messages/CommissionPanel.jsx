@@ -105,10 +105,10 @@ export default function CommissionPanel({ open, onClose, thread, currentUser, on
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="bg-stone-900 border-stone-700 text-white max-w-lg">
+      <DialogContent className="bg-card border-border text-foreground max-w-lg">
         <DialogHeader>
-          <DialogTitle className="text-white flex items-center gap-2">
-            <FileText className="w-5 h-5 text-orange-400" />
+          <DialogTitle className="text-foreground flex items-center gap-2">
+            <FileText className="w-5 h-5 text-primary" />
             {isAccepted ? 'Commission Agreement' : isRejected ? 'Commission Declined' : isPending ? 'Commission Request' : 'New Commission Request'}
           </DialogTitle>
         </DialogHeader>
@@ -125,7 +125,7 @@ export default function CommissionPanel({ open, onClose, thread, currentUser, on
             </div>
             {thread.orderId && (
               <Link to={createPageUrl('OrderDashboard')}>
-                <Button className="w-full bg-orange-600 hover:bg-orange-500 text-white gap-2">
+                <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground gap-2">
                   <ExternalLink className="w-4 h-4" /> View Order in Dashboard
                 </Button>
               </Link>
@@ -137,7 +137,7 @@ export default function CommissionPanel({ open, onClose, thread, currentUser, on
         {isRejected && (
           <div className="bg-red-900/20 border border-red-700/40 rounded-xl p-4 flex items-center gap-3">
             <XCircle className="w-5 h-5 text-red-400 shrink-0" />
-            <p className="text-stone-300 text-sm">This commission request was declined. Feel free to send a new one.</p>
+            <p className="text-muted-foreground text-sm">This commission request was declined. Feel free to send a new one.</p>
           </div>
         )}
 
@@ -150,7 +150,7 @@ export default function CommissionPanel({ open, onClose, thread, currentUser, on
               </p>
               <CommissionDetails commission={commission} />
             </div>
-            <Button variant="outline" onClick={onClose} className="w-full border-stone-600 text-stone-300">Close</Button>
+            <Button variant="outline" onClick={onClose} className="w-full border-border text-muted-foreground">Close</Button>
           </div>
         )}
 
@@ -167,7 +167,7 @@ export default function CommissionPanel({ open, onClose, thread, currentUser, on
                 <XCircle className="w-4 h-4" /> Decline
               </Button>
               <Button onClick={() => respondMutation.mutate(true)} disabled={respondMutation.isPending}
-                className="flex-1 bg-green-700 hover:bg-green-600 text-white gap-2">
+                className="flex-1 bg-green-700 hover:bg-green-600 text-foreground gap-2">
                 {respondMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
                 Accept & Create Order
               </Button>
@@ -179,43 +179,43 @@ export default function CommissionPanel({ open, onClose, thread, currentUser, on
         {!isPending && !isAccepted && !isRejected && (
           <div className="space-y-4">
             <div>
-              <label className="text-xs text-orange-400 uppercase tracking-wider mb-1.5 block">Project Description *</label>
+              <label className="text-xs text-primary uppercase tracking-wider mb-1.5 block">Project Description *</label>
               <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={2}
                 placeholder="Describe what you'd like commissioned..."
-                className="w-full bg-stone-800 border border-stone-600 text-white placeholder:text-stone-500 rounded-lg p-3 text-sm resize-none focus:outline-none focus:border-orange-500" />
+                className="w-full bg-muted border border-border text-foreground placeholder:text-muted-foreground rounded-lg p-3 text-sm resize-none focus:outline-none focus:border-primary" />
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-xs text-orange-400 uppercase tracking-wider mb-1.5 block">Amount *</label>
+                <label className="text-xs text-primary uppercase tracking-wider mb-1.5 block">Amount *</label>
                 <Input type="number" value={form.amount} onChange={e => setForm(f => ({ ...f, amount: e.target.value }))}
-                  placeholder="0.00" className="bg-stone-800 border-stone-600 text-white placeholder:text-stone-500" />
+                  placeholder="0.00" className="bg-muted border-border text-foreground placeholder:text-muted-foreground" />
               </div>
               <div>
-                <label className="text-xs text-orange-400 uppercase tracking-wider mb-1.5 block">Currency</label>
+                <label className="text-xs text-primary uppercase tracking-wider mb-1.5 block">Currency</label>
                 <Select value={form.currency} onValueChange={v => setForm(f => ({ ...f, currency: v }))}>
-                  <SelectTrigger className="bg-stone-800 border-stone-600 text-white"><SelectValue /></SelectTrigger>
-                  <SelectContent className="bg-stone-800 border-stone-600">
-                    {CURRENCIES.map(c => <SelectItem key={c} value={c} className="text-white">{c}</SelectItem>)}
+                  <SelectTrigger className="bg-muted border-border text-foreground"><SelectValue /></SelectTrigger>
+                  <SelectContent className="bg-muted border-border">
+                    {CURRENCIES.map(c => <SelectItem key={c} value={c} className="text-foreground">{c}</SelectItem>)}
                   </SelectContent>
                 </Select>
               </div>
             </div>
             <div>
-              <label className="text-xs text-orange-400 uppercase tracking-wider mb-1.5 block">Timeline (days) *</label>
+              <label className="text-xs text-primary uppercase tracking-wider mb-1.5 block">Timeline (days) *</label>
               <Input type="number" value={form.timelineDays} onChange={e => setForm(f => ({ ...f, timelineDays: e.target.value }))}
-                placeholder="e.g. 14" className="bg-stone-800 border-stone-600 text-white placeholder:text-stone-500" />
+                placeholder="e.g. 14" className="bg-muted border-border text-foreground placeholder:text-muted-foreground" />
             </div>
             <div>
-              <label className="text-xs text-orange-400 uppercase tracking-wider mb-1.5 block">Deliverables</label>
+              <label className="text-xs text-primary uppercase tracking-wider mb-1.5 block">Deliverables</label>
               <textarea value={form.deliverables} onChange={e => setForm(f => ({ ...f, deliverables: e.target.value }))} rows={2}
                 placeholder="What will be delivered, materials, finish, size..."
-                className="w-full bg-stone-800 border border-stone-600 text-white placeholder:text-stone-500 rounded-lg p-3 text-sm resize-none focus:outline-none focus:border-orange-500" />
+                className="w-full bg-muted border border-border text-foreground placeholder:text-muted-foreground rounded-lg p-3 text-sm resize-none focus:outline-none focus:border-primary" />
             </div>
             <div className="flex gap-3">
-              <Button variant="outline" onClick={onClose} className="flex-1 border-stone-600 text-stone-300">Cancel</Button>
+              <Button variant="outline" onClick={onClose} className="flex-1 border-border text-muted-foreground">Cancel</Button>
               <Button onClick={() => proposeMutation.mutate()}
                 disabled={!form.description || !form.amount || !form.timelineDays || proposeMutation.isPending}
-                className="flex-1 bg-orange-600 hover:bg-orange-500 text-white gap-2">
+                className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground gap-2">
                 {proposeMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileText className="w-4 h-4" />}
                 Send Commission Request
               </Button>
@@ -231,17 +231,17 @@ function CommissionDetails({ commission }) {
   if (!commission) return null;
   return (
     <div className="space-y-2 text-sm">
-      <p className="text-stone-300">{commission.description}</p>
+      <p className="text-muted-foreground">{commission.description}</p>
       <div className="flex gap-4 flex-wrap mt-2">
-        <span className="flex items-center gap-1 text-orange-300 font-bold">
+        <span className="flex items-center gap-1 text-primary font-bold">
           <DollarSign className="w-3.5 h-3.5" /> {commission.amount} {commission.currency}
         </span>
-        <span className="flex items-center gap-1 text-stone-400">
+        <span className="flex items-center gap-1 text-muted-foreground">
           <Clock className="w-3.5 h-3.5" /> {commission.timelineDays} days
         </span>
       </div>
       {commission.deliverables && (
-        <p className="text-stone-500 text-xs flex items-start gap-1 mt-1">
+        <p className="text-muted-foreground text-xs flex items-start gap-1 mt-1">
           <Package className="w-3.5 h-3.5 shrink-0 mt-0.5" /> {commission.deliverables}
         </p>
       )}

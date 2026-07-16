@@ -21,7 +21,7 @@ const impactColor = {
 
 const priorityColor = {
   Critical: 'bg-red-600',
-  High: 'bg-orange-500',
+  High: 'bg-primary',
   Medium: 'bg-blue-500',
 };
 
@@ -65,14 +65,14 @@ export default function ReportViewer({ report }) {
           <h2 className="text-xl font-bold text-slate-900">{report.reportTitle}</h2>
           <p className="text-sm text-gray-500">Generated for {report.brand.name} · {report.period}</p>
         </div>
-        <Button onClick={exportPDF} className="bg-slate-800 hover:bg-slate-900 text-white">
+        <Button onClick={exportPDF} className="bg-slate-800 hover:bg-slate-900 text-foreground">
           <FileDown className="w-4 h-4 mr-2" />Export PDF
         </Button>
       </div>
 
       <div ref={reportRef} className="bg-white space-y-5 p-2">
         {/* Report Header */}
-        <div className="bg-gradient-to-r from-slate-800 via-gray-800 to-zinc-800 text-white rounded-xl p-6">
+        <div className="bg-gradient-to-r from-slate-800 via-gray-800 to-zinc-800 text-foreground rounded-xl p-6">
           <div className="flex items-start justify-between flex-wrap gap-4">
             <div>
               <p className="text-xs text-gray-400 uppercase tracking-widest mb-1">FAA.ZONE Market Intelligence</p>
@@ -85,7 +85,7 @@ export default function ReportViewer({ report }) {
                 <Sparkles className="w-4 h-4" />{report.overallMarketSentiment}
               </div>
               <p className="text-xs text-gray-400 mt-2">Market Sentiment</p>
-              <div className="mt-2 text-4xl font-extrabold text-white">{report.overallMarketScore}<span className="text-lg text-gray-400">/100</span></div>
+              <div className="mt-2 text-4xl font-extrabold text-foreground">{report.overallMarketScore}<span className="text-lg text-gray-400">/100</span></div>
               <p className="text-xs text-gray-400">Intelligence Score</p>
             </div>
           </div>
@@ -221,7 +221,7 @@ export default function ReportViewer({ report }) {
         {report.competitorMovements?.length > 0 && (
           <Card className="border-slate-200">
             <CardHeader className="pb-2 border-b">
-              <CardTitle className="text-base flex items-center gap-2 text-slate-800"><AlertTriangle className="w-4 h-4 text-orange-500" />Competitor Movements</CardTitle>
+              <CardTitle className="text-base flex items-center gap-2 text-slate-800"><AlertTriangle className="w-4 h-4 text-primary" />Competitor Movements</CardTitle>
             </CardHeader>
             <CardContent className="pt-4">
               <div className="space-y-3">
@@ -281,7 +281,7 @@ export default function ReportViewer({ report }) {
                     <div className={`shrink-0 w-2 rounded-full self-stretch ${priorityColor[r.priority]}`} />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
-                        <Badge className={`text-[10px] text-white border-0 ${priorityColor[r.priority]}`}>{r.priority}</Badge>
+                        <Badge className={`text-[10px] text-foreground border-0 ${priorityColor[r.priority]}`}>{r.priority}</Badge>
                       </div>
                       <p className="text-sm font-semibold text-slate-800">{r.recommendation}</p>
                       <p className="text-xs text-gray-600 mt-1">{r.rationale}</p>
@@ -295,7 +295,7 @@ export default function ReportViewer({ report }) {
         )}
 
         {/* Report Footer */}
-        <div className="bg-slate-800 text-white rounded-xl p-4 text-center">
+        <div className="bg-slate-800 text-foreground rounded-xl p-4 text-center">
           <p className="text-xs text-gray-400">FAA.ZONE™ Market Intelligence Report · {report.period} · Powered by AI Analysis</p>
           <p className="text-xs text-gray-500 mt-1">This report is AI-generated and intended for strategic guidance purposes.</p>
         </div>

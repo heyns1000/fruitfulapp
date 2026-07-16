@@ -31,10 +31,10 @@ const BG_GLYPHS = {
   'fashion':     'from-pink-900 via-rose-900 to-red-900',
   'creative':    'from-purple-900 via-violet-900 to-indigo-900',
   'health':      'from-blue-900 via-sky-900 to-cyan-900',
-  'mining':      'from-stone-900 via-zinc-900 to-neutral-900',
+  'mining':      'from-card via-zinc-900 to-neutral-900',
   'banking':     'from-slate-900 via-gray-900 to-zinc-900',
   'gaming':      'from-fuchsia-900 via-pink-900 to-purple-900',
-  'ritual':      'from-orange-900 via-amber-900 to-yellow-900',
+  'ritual':      'from-primary via-amber-900 to-yellow-900',
   'wildlife':    'from-lime-900 via-green-900 to-emerald-900',
   'default':     'from-teal-900 via-green-900 to-cyan-900',
 };
@@ -93,10 +93,10 @@ Generate a production-ready UI specification: pages, features, color scheme, key
     <div className="bg-black/30 border border-purple-700/50 rounded-3xl p-6 space-y-5">
       <div className="flex items-center gap-3">
         <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center">
-          <Sparkles className="w-5 h-5 text-white" />
+          <Sparkles className="w-5 h-5 text-foreground" />
         </div>
         <div>
-          <p className="text-white font-black text-lg">FAA AI App Builder</p>
+          <p className="text-foreground font-black text-lg">FAA AI App Builder</p>
           <p className="text-purple-300 text-xs">Generate a new interface for this sector</p>
         </div>
       </div>
@@ -105,13 +105,13 @@ Generate a production-ready UI specification: pages, features, color scheme, key
         <div>
           <label className="text-xs text-purple-300 uppercase tracking-wider font-bold mb-1 block">App Name</label>
           <Input value={appName} onChange={e => setAppName(e.target.value)}
-            className="bg-white/10 border-purple-700/60 text-white placeholder:text-purple-400 focus-visible:ring-purple-500" />
+            className="bg-white/10 border-purple-700/60 text-foreground placeholder:text-purple-400 focus-visible:ring-purple-500" />
         </div>
         <div>
           <label className="text-xs text-purple-300 uppercase tracking-wider font-bold mb-1 block">Description (optional)</label>
           <Textarea value={appDesc} onChange={e => setAppDesc(e.target.value)} rows={2}
             placeholder="What should this app do for the sector?"
-            className="bg-white/10 border-purple-700/60 text-white placeholder:text-purple-400 focus-visible:ring-purple-500" />
+            className="bg-white/10 border-purple-700/60 text-foreground placeholder:text-purple-400 focus-visible:ring-purple-500" />
         </div>
         <Button onClick={generate} disabled={isGenerating || !appName.trim()}
           className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 font-bold gap-2">
@@ -123,11 +123,11 @@ Generate a production-ready UI specification: pages, features, color scheme, key
         {result && (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
             <div className="border-t border-purple-700/50 pt-4">
-              <p className="text-white font-black text-xl mb-1">{appName}</p>
+              <p className="text-foreground font-black text-xl mb-1">{appName}</p>
               <p className="text-purple-300 text-sm italic mb-4">"{result.tagline}"</p>
               {result.heroHeadline && (
                 <div className="bg-white/5 rounded-2xl p-4 mb-4">
-                  <p className="text-white font-bold text-lg">{result.heroHeadline}</p>
+                  <p className="text-foreground font-bold text-lg">{result.heroHeadline}</p>
                   <p className="text-purple-200 text-sm">{result.heroSubline}</p>
                 </div>
               )}
@@ -143,7 +143,7 @@ Generate a production-ready UI specification: pages, features, color scheme, key
                   <p className="text-xs text-purple-400 uppercase tracking-wider font-bold">Generated Pages</p>
                   {result.pages.map((p, i) => (
                     <div key={i} className="bg-white/5 border border-purple-700/30 rounded-xl p-3">
-                      <p className="text-white font-semibold text-sm">{p.name}</p>
+                      <p className="text-foreground font-semibold text-sm">{p.name}</p>
                       <p className="text-purple-300 text-xs">{p.description}</p>
                       {p.keyFeatures?.length > 0 && (
                         <div className="flex flex-wrap gap-1 mt-2">
@@ -228,7 +228,7 @@ export default function SectorLandingPage({ sector, onBack, sectorPulseCount }) 
       <div className={`relative overflow-hidden bg-gradient-to-br ${bg} rounded-3xl mb-8`}>
         <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #fff 1px, transparent 0)', backgroundSize: '30px 30px' }} />
         <div className="relative px-6 md:px-12 py-14">
-          <button onClick={onBack} className="flex items-center gap-1.5 text-white/60 hover:text-white text-sm font-semibold mb-6 transition-colors">
+          <button onClick={onBack} className="flex items-center gap-1.5 text-foreground/60 hover:text-foreground text-sm font-semibold mb-6 transition-colors">
             <ChevronLeft className="w-4 h-4" /> All Sectors
           </button>
           <div className="flex items-start gap-6 flex-wrap">
@@ -237,26 +237,26 @@ export default function SectorLandingPage({ sector, onBack, sectorPulseCount }) 
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-3 flex-wrap mb-2">
-                <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight" style={{ fontFamily: 'Georgia, serif' }}>{sector.label}</h1>
+                <h1 className="text-4xl md:text-5xl font-black text-foreground tracking-tight" style={{ fontFamily: 'inherit' }}>{sector.label}</h1>
                 <Badge className={`border text-sm px-3 py-1 ${TIER_COLORS[sector.tier]}`}>Tier {sector.tier}</Badge>
               </div>
-              <p className="text-white/60 text-lg mb-4">{sector.region} · FAA.ZONE™ Ecosystem Sector</p>
+              <p className="text-foreground/60 text-lg mb-4">{sector.region} · FAA.ZONE™ Ecosystem Sector</p>
               <div className="flex items-center gap-4 flex-wrap">
                 <div className="bg-white/10 rounded-xl px-4 py-2">
-                  <p className="text-xs text-white/50 uppercase tracking-wider">Monthly</p>
-                  <p className="text-white font-black text-xl">${sector.monthly}</p>
+                  <p className="text-xs text-foreground/50 uppercase tracking-wider">Monthly</p>
+                  <p className="text-foreground font-black text-xl">${sector.monthly}</p>
                 </div>
                 <div className="bg-white/10 rounded-xl px-4 py-2">
-                  <p className="text-xs text-white/50 uppercase tracking-wider">Annual</p>
-                  <p className="text-white font-black text-xl">${sector.annual}</p>
+                  <p className="text-xs text-foreground/50 uppercase tracking-wider">Annual</p>
+                  <p className="text-foreground font-black text-xl">${sector.annual}</p>
                 </div>
                 <div className="bg-white/10 rounded-xl px-4 py-2">
-                  <p className="text-xs text-white/50 uppercase tracking-wider">Subnodes</p>
-                  <p className="text-white font-black text-xl">{sector.subnodes.length}</p>
+                  <p className="text-xs text-foreground/50 uppercase tracking-wider">Subnodes</p>
+                  <p className="text-foreground font-black text-xl">{sector.subnodes.length}</p>
                 </div>
                 <div className="bg-white/10 rounded-xl px-4 py-2">
-                  <p className="text-xs text-white/50 uppercase tracking-wider">Live Products</p>
-                  <p className="text-white font-black text-xl">{loadingProducts ? '…' : products.length}</p>
+                  <p className="text-xs text-foreground/50 uppercase tracking-wider">Live Products</p>
+                  <p className="text-foreground font-black text-xl">{loadingProducts ? '…' : products.length}</p>
                 </div>
                 {sectorPulseCount > 0 && (
                   <div className="bg-yellow-500/20 border border-yellow-500/40 rounded-xl px-4 py-2">
@@ -276,14 +276,14 @@ export default function SectorLandingPage({ sector, onBack, sectorPulseCount }) 
 
           {/* Subnode navigation */}
           <div>
-            <p className="text-white font-black text-lg mb-3 flex items-center gap-2">
+            <p className="text-foreground font-black text-lg mb-3 flex items-center gap-2">
               <Layers className="w-5 h-5 text-teal-400" /> Core Subnodes
             </p>
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => setSelectedSubnode(null)}
                 className={`px-4 py-2 rounded-full text-sm font-bold border transition-all ${
-                  !selectedSubnode ? 'bg-teal-600 border-teal-600 text-white' : 'border-teal-700/50 text-teal-300 hover:border-teal-500 bg-white/5'
+                  !selectedSubnode ? 'bg-teal-600 border-teal-600 text-foreground' : 'border-teal-700/50 text-teal-300 hover:border-teal-500 bg-white/5'
                 }`}
               >
                 All ({products.length})
@@ -293,7 +293,7 @@ export default function SectorLandingPage({ sector, onBack, sectorPulseCount }) 
                   onClick={() => setSelectedSubnode(selectedSubnode === sn.name ? null : sn.name)}
                   className={`px-4 py-2 rounded-full text-sm font-bold border transition-all ${
                     selectedSubnode === sn.name
-                      ? 'bg-teal-600 border-teal-600 text-white'
+                      ? 'bg-teal-600 border-teal-600 text-foreground'
                       : 'border-teal-700/50 text-teal-300 hover:border-teal-500 bg-white/5'
                   }`}
                 >
@@ -309,25 +309,25 @@ export default function SectorLandingPage({ sector, onBack, sectorPulseCount }) 
               className="bg-teal-900/30 border border-teal-700/40 rounded-2xl p-4">
               <p className="text-teal-300 font-bold">{selectedSubnode} — Subnode Detail</p>
               <p className="text-teal-400/70 text-sm mt-1">
-                Monthly access: <strong className="text-white">${sector.monthly}</strong> ·
-                Annual: <strong className="text-white">${sector.annual}</strong> ·
-                Linked to <strong className="text-white">{sector.label}</strong> core sector
+                Monthly access: <strong className="text-foreground">${sector.monthly}</strong> ·
+                Annual: <strong className="text-foreground">${sector.annual}</strong> ·
+                Linked to <strong className="text-foreground">{sector.label}</strong> core sector
               </p>
             </motion.div>
           )}
 
           {/* Subscriber plan picker */}
           <div>
-            <p className="text-white font-black text-lg mb-3 flex items-center gap-2">
-              <Star className="w-5 h-5 text-orange-400" /> Apply Subscription Discount
+            <p className="text-foreground font-black text-lg mb-3 flex items-center gap-2">
+              <Star className="w-5 h-5 text-primary" /> Apply Subscription Discount
             </p>
             <div className="flex gap-2 flex-wrap">
               {Object.entries(PLAN_CONFIG).map(([key, plan]) => (
                 <button key={key} onClick={() => setSelectedPlan(key)}
                   className={`px-4 py-2 rounded-full text-sm font-bold border transition-all ${
                     selectedPlan === key
-                      ? 'bg-orange-700 border-orange-700 text-white'
-                      : 'border-stone-600 text-stone-300 hover:border-orange-600 bg-white/5'
+                      ? 'bg-primary border-primary text-primary-foreground'
+                      : 'border-border text-muted-foreground hover:border-primary bg-white/5'
                   }`}
                 >
                   {plan.label} · {plan.discountPct}% off
@@ -338,7 +338,7 @@ export default function SectorLandingPage({ sector, onBack, sectorPulseCount }) 
 
           {/* Live products grid */}
           <div>
-            <p className="text-white font-black text-lg mb-3 flex items-center gap-2">
+            <p className="text-foreground font-black text-lg mb-3 flex items-center gap-2">
               <ShoppingBag className="w-5 h-5 text-green-400" />
               {selectedSubnode ? `${selectedSubnode} Products` : `${sector.label} Products`}
               {loadingProducts && <Loader2 className="w-4 h-4 animate-spin text-teal-400" />}
@@ -373,7 +373,7 @@ export default function SectorLandingPage({ sector, onBack, sectorPulseCount }) 
                     <div className="p-4">
                       <div className="flex items-start justify-between gap-2 mb-2">
                         <div>
-                          <p className="text-white font-bold text-sm">{product.serviceName}</p>
+                          <p className="text-foreground font-bold text-sm">{product.serviceName}</p>
                           <p className="text-teal-400 text-xs">{product.brandName}</p>
                         </div>
                         {product.tags?.slice(0, 1).map(t => (
@@ -384,13 +384,13 @@ export default function SectorLandingPage({ sector, onBack, sectorPulseCount }) 
                       {/* Pricing chain */}
                       <div className="space-y-0.5 mb-3">
                         {derived.wholesaleZAR > 0 && (
-                          <p className="text-xs text-stone-600">Wholesale: R{derived.wholesaleZAR.toLocaleString()}</p>
+                          <p className="text-xs text-muted-foreground">Wholesale: R{derived.wholesaleZAR.toLocaleString()}</p>
                         )}
                         {derived.retailZAR > 0 && (
-                          <p className="text-xs text-stone-500 line-through">Retail: R{derived.retailZAR.toLocaleString()}</p>
+                          <p className="text-xs text-muted-foreground line-through">Retail: R{derived.retailZAR.toLocaleString()}</p>
                         )}
                         <div className="flex items-baseline gap-2">
-                          <p className="text-orange-400 font-black text-lg">R{subscriberPrice.toLocaleString()}</p>
+                          <p className="text-primary font-black text-lg">R{subscriberPrice.toLocaleString()}</p>
                           {savings > 0 && (
                             <span className="text-green-400 text-xs font-semibold flex items-center gap-0.5">
                               <Tag className="w-3 h-3" /> Save R{savings}
@@ -398,7 +398,7 @@ export default function SectorLandingPage({ sector, onBack, sectorPulseCount }) 
                           )}
                         </div>
                         {formula.costPriceZAR > 0 && (
-                          <p className="text-xs text-stone-700">Ex-works cost: R{formula.costPriceZAR}</p>
+                          <p className="text-xs text-foreground">Ex-works cost: R{formula.costPriceZAR}</p>
                         )}
                       </div>
 
@@ -414,12 +414,12 @@ export default function SectorLandingPage({ sector, onBack, sectorPulseCount }) 
 
                       {/* Subscription pricing badges */}
                       <div className="flex gap-1 flex-wrap mb-3 text-xs">
-                        <span className="bg-stone-800 text-stone-300 rounded-full px-2 py-0.5">${sector.monthly}/mo</span>
-                        <span className="bg-stone-800 text-stone-300 rounded-full px-2 py-0.5">${sector.annual}/yr</span>
+                        <span className="bg-muted text-muted-foreground rounded-full px-2 py-0.5">${sector.monthly}/mo</span>
+                        <span className="bg-muted text-muted-foreground rounded-full px-2 py-0.5">${sector.annual}/yr</span>
                       </div>
 
                       <Button size="sm"
-                        className="w-full bg-teal-700 hover:bg-teal-600 text-white font-bold"
+                        className="w-full bg-teal-700 hover:bg-teal-600 text-foreground font-bold"
                         onClick={() => handleAddToCart(product, subscriberPrice)}>
                         <ShoppingBag className="w-3.5 h-3.5 mr-1.5" /> Add · R{subscriberPrice}
                       </Button>
@@ -432,28 +432,28 @@ export default function SectorLandingPage({ sector, onBack, sectorPulseCount }) 
 
           {/* Pricing tiers for this sector */}
           <div>
-            <p className="text-white font-black text-lg mb-3 flex items-center gap-2">
+            <p className="text-foreground font-black text-lg mb-3 flex items-center gap-2">
               <Globe className="w-5 h-5 text-blue-400" /> Sector Pricing Plans
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
                 { label: 'Monthly Access', price: `$${sector.monthly}`, sub: 'per month', badge: 'Starter', color: 'border-blue-700/50 bg-blue-900/10' },
                 { label: 'Annual Access', price: `$${sector.annual}`, sub: 'per year · best value', badge: 'Save ~15%', color: 'border-teal-700/50 bg-teal-900/10' },
-                { label: 'Enterprise', price: 'Custom', sub: 'unlimited subnodes', badge: 'Contact us', color: 'border-orange-700/50 bg-orange-900/10' },
+                { label: 'Enterprise', price: 'Custom', sub: 'unlimited subnodes', badge: 'Contact us', color: 'border-primary/50 bg-primary/10' },
               ].map(p => (
                 <div key={p.label} className={`rounded-2xl border p-5 ${p.color}`}>
-                  <Badge className="text-xs mb-3 bg-white/10 text-white border-white/20">{p.badge}</Badge>
-                  <p className="text-white font-black text-2xl">{p.price}</p>
-                  <p className="text-white font-bold text-sm">{p.label}</p>
-                  <p className="text-white/50 text-xs mt-1">{p.sub}</p>
+                  <Badge className="text-xs mb-3 bg-white/10 text-foreground border-white/20">{p.badge}</Badge>
+                  <p className="text-foreground font-black text-2xl">{p.price}</p>
+                  <p className="text-foreground font-bold text-sm">{p.label}</p>
+                  <p className="text-foreground/50 text-xs mt-1">{p.sub}</p>
                   <div className="mt-3 space-y-1">
                     {sector.subnodes.slice(0, 3).map(sn => (
-                      <div key={sn} className="flex items-center gap-1.5 text-xs text-white/60">
+                      <div key={sn} className="flex items-center gap-1.5 text-xs text-foreground/60">
                         <CheckCircle2 className="w-3 h-3 text-green-400" /> {sn}
                       </div>
                     ))}
                     {sector.subnodes.length > 3 && (
-                      <p className="text-xs text-white/40">+{sector.subnodes.length - 3} more subnodes</p>
+                      <p className="text-xs text-foreground/40">+{sector.subnodes.length - 3} more subnodes</p>
                     )}
                   </div>
                 </div>
@@ -465,14 +465,14 @@ export default function SectorLandingPage({ sector, onBack, sectorPulseCount }) 
         {/* ── RIGHT: AI App Builder ── */}
         <div className="xl:col-span-1 space-y-6">
           <div className="sticky top-24">
-            <p className="text-white font-black text-lg mb-3 flex items-center gap-2">
+            <p className="text-foreground font-black text-lg mb-3 flex items-center gap-2">
               <Code2 className="w-5 h-5 text-purple-400" /> AI Interface Builder
             </p>
             <SectorAppBuilder sector={sector} subnodes={subnodes} products={products} />
 
             {/* Quick sector stats */}
             <div className="mt-6 bg-white/5 border border-teal-700/30 rounded-2xl p-5 space-y-3">
-              <p className="text-white font-bold text-sm">Sector Intelligence</p>
+              <p className="text-foreground font-bold text-sm">Sector Intelligence</p>
               {[
                 { label: 'Sector Key', value: sector.key },
                 { label: 'Tier', value: `Tier ${sector.tier}` },
@@ -484,7 +484,7 @@ export default function SectorLandingPage({ sector, onBack, sectorPulseCount }) 
               ].map(row => (
                 <div key={row.label} className="flex justify-between text-xs">
                   <span className="text-teal-400/70">{row.label}</span>
-                  <span className="text-white font-semibold">{row.value}</span>
+                  <span className="text-foreground font-semibold">{row.value}</span>
                 </div>
               ))}
             </div>

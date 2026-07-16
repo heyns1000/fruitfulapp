@@ -36,7 +36,7 @@ const PRICE_LABELS = {
 };
 
 const TYPE_COLORS = {
-  original: 'bg-stone-700 text-stone-300',
+  original: 'bg-muted text-muted-foreground',
   commissioned: 'bg-teal-900 text-teal-300',
   collaboration: 'bg-purple-900 text-purple-300',
   exhibition: 'bg-amber-900 text-amber-300',
@@ -106,7 +106,7 @@ export default function PortfolioGallery({ artisan, fallbackImages = [] }) {
     return (
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 animate-pulse">
         {[...Array(6)].map((_, i) => (
-          <div key={i} className="aspect-square rounded-xl bg-stone-800" />
+          <div key={i} className="aspect-square rounded-xl bg-muted" />
         ))}
       </div>
     );
@@ -114,9 +114,9 @@ export default function PortfolioGallery({ artisan, fallbackImages = [] }) {
 
   if (projects.length === 0) {
     return (
-      <div className="text-center py-16 border border-dashed border-stone-700 rounded-2xl">
-        <Package className="w-12 h-12 text-stone-600 mx-auto mb-3" />
-        <p className="text-stone-400">No portfolio projects yet.</p>
+      <div className="text-center py-16 border border-dashed border-border rounded-2xl">
+        <Package className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+        <p className="text-muted-foreground">No portfolio projects yet.</p>
       </div>
     );
   }
@@ -125,16 +125,16 @@ export default function PortfolioGallery({ artisan, fallbackImages = [] }) {
     <div className="space-y-6">
       {/* ── Stats strip ── */}
       <div className="flex flex-wrap gap-4 text-sm">
-        <div className="bg-stone-900 border border-stone-700 rounded-xl px-4 py-2.5 flex items-center gap-2">
-          <Layers className="w-4 h-4 text-orange-400" />
-          <span className="text-white font-bold">{projects.length}</span>
-          <span className="text-stone-400">Projects</span>
+        <div className="bg-card border border-border rounded-xl px-4 py-2.5 flex items-center gap-2">
+          <Layers className="w-4 h-4 text-primary" />
+          <span className="text-foreground font-bold">{projects.length}</span>
+          <span className="text-muted-foreground">Projects</span>
         </div>
         {projects.filter(p => p.featured).length > 0 && (
-          <div className="bg-stone-900 border border-stone-700 rounded-xl px-4 py-2.5 flex items-center gap-2">
-            <Star className="w-4 h-4 text-orange-400" />
-            <span className="text-white font-bold">{projects.filter(p => p.featured).length}</span>
-            <span className="text-stone-400">Featured</span>
+          <div className="bg-card border border-border rounded-xl px-4 py-2.5 flex items-center gap-2">
+            <Star className="w-4 h-4 text-primary" />
+            <span className="text-foreground font-bold">{projects.filter(p => p.featured).length}</span>
+            <span className="text-muted-foreground">Featured</span>
           </div>
         )}
         {projects.filter(p => p.isCommissionable).length > 0 && (
@@ -164,8 +164,8 @@ export default function PortfolioGallery({ artisan, fallbackImages = [] }) {
             <button key={cat.key} onClick={() => setActiveCategory(cat.key)}
               className={`px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition-all border ${
                 activeCategory === cat.key
-                  ? 'bg-orange-600 border-orange-600 text-white'
-                  : 'border-stone-700 text-stone-400 hover:border-stone-500 hover:text-white'
+                  ? 'bg-primary border-primary text-primary-foreground'
+                  : 'border-border text-muted-foreground hover:border-primary/40 hover:text-foreground'
               }`}>
               {cat.label}
             </button>
@@ -176,21 +176,21 @@ export default function PortfolioGallery({ artisan, fallbackImages = [] }) {
       {/* ── Technique filter chips ── */}
       {allTechniques.length > 0 && (
         <div className="flex flex-wrap gap-2 items-center">
-          <span className="text-xs text-stone-500 uppercase tracking-widest font-bold mr-1 flex items-center gap-1">
+          <span className="text-xs text-muted-foreground uppercase tracking-widest font-bold mr-1 flex items-center gap-1">
             <Sparkles className="w-3 h-3" /> Technique
           </span>
           {allTechniques.map(tech => (
             <button key={tech} onClick={() => setActiveTechnique(activeTechnique === tech ? null : tech)}
               className={`px-3 py-1 rounded-full text-xs font-semibold transition-all border ${
                 activeTechnique === tech
-                  ? 'bg-orange-600/30 border-orange-500 text-orange-300'
-                  : 'border-stone-700 text-stone-500 hover:border-orange-600 hover:text-orange-400'
+                  ? 'bg-primary/30 border-primary text-primary'
+                  : 'border-border text-muted-foreground hover:border-primary hover:text-primary'
               }`}>
               {tech}
             </button>
           ))}
           {activeTechnique && (
-            <button onClick={() => setActiveTechnique(null)} className="text-xs text-stone-500 hover:text-white ml-1">
+            <button onClick={() => setActiveTechnique(null)} className="text-xs text-muted-foreground hover:text-foreground ml-1">
               <X className="w-3.5 h-3.5" />
             </button>
           )}
@@ -199,11 +199,11 @@ export default function PortfolioGallery({ artisan, fallbackImages = [] }) {
 
       {/* ── View mode + count ── */}
       <div className="flex items-center justify-between">
-        <p className="text-stone-500 text-sm">{filtered.length} project{filtered.length !== 1 ? 's' : ''}</p>
+        <p className="text-muted-foreground text-sm">{filtered.length} project{filtered.length !== 1 ? 's' : ''}</p>
         <div className="flex gap-1">
           {[{ key: 'grid', Icon: Grid3X3 }, { key: 'masonry', Icon: LayoutList }].map(({ key, Icon }) => (
             <button key={key} onClick={() => setViewMode(key)}
-              className={`p-2 rounded-lg transition-colors ${viewMode === key ? 'bg-stone-700 text-white' : 'text-stone-500 hover:text-white'}`}>
+              className={`p-2 rounded-lg transition-colors ${viewMode === key ? 'bg-muted text-foreground' : 'text-muted-foreground hover:text-foreground'}`}>
               <Icon className="w-4 h-4" />
             </button>
           ))}
@@ -218,7 +218,7 @@ export default function PortfolioGallery({ artisan, fallbackImages = [] }) {
           const cover = project.coverImageUrl || project.imageUrls?.[0];
           return (
             <div key={project.id}
-              className={`group relative rounded-xl overflow-hidden cursor-pointer border border-stone-700 hover:border-orange-500 transition-all duration-300 hover:shadow-xl hover:shadow-orange-900/20 ${
+              className={`group relative rounded-xl overflow-hidden cursor-pointer border border-border hover:border-primary transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 ${
                 viewMode === 'masonry' ? 'break-inside-avoid mb-3' : 'aspect-square'
               } ${project.featured ? 'ring-1 ring-orange-500/50' : ''}`}
               onClick={() => setLightbox({ project, imgIdx: 0 })}>
@@ -230,8 +230,8 @@ export default function PortfolioGallery({ artisan, fallbackImages = [] }) {
                     viewMode === 'masonry' ? '' : 'h-full'
                   }`} />
               ) : (
-                <div className="w-full h-full bg-stone-800 flex items-center justify-center">
-                  <Package className="w-10 h-10 text-stone-600" />
+                <div className="w-full h-full bg-muted flex items-center justify-center">
+                  <Package className="w-10 h-10 text-muted-foreground" />
                 </div>
               )}
 
@@ -241,7 +241,7 @@ export default function PortfolioGallery({ artisan, fallbackImages = [] }) {
               {/* Badges top */}
               <div className="absolute top-2 left-2 flex flex-col gap-1">
                 {project.featured && (
-                  <span className="bg-orange-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+                  <span className="bg-primary text-primary-foreground text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
                     <Star className="w-2.5 h-2.5" /> Featured
                   </span>
                 )}
@@ -255,7 +255,7 @@ export default function PortfolioGallery({ artisan, fallbackImages = [] }) {
               {/* Commission badge */}
               {project.isCommissionable && (
                 <div className="absolute top-2 right-2">
-                  <span className="bg-teal-600/90 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                  <span className="bg-teal-600/90 text-foreground text-[10px] font-bold px-2 py-0.5 rounded-full">
                     Open
                   </span>
                 </div>
@@ -263,16 +263,16 @@ export default function PortfolioGallery({ artisan, fallbackImages = [] }) {
 
               {/* Hover info */}
               <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                <p className="text-white font-bold text-sm truncate">{project.title}</p>
-                {project.year && <p className="text-stone-400 text-xs">{project.year}</p>}
+                <p className="text-foreground font-bold text-sm truncate">{project.title}</p>
+                {project.year && <p className="text-muted-foreground text-xs">{project.year}</p>}
                 {project.techniques?.slice(0, 2).map(t => (
-                  <span key={t} className="inline-block bg-orange-600/30 border border-orange-600/50 text-orange-300 text-[10px] px-2 py-0.5 rounded-full mr-1 mt-1">{t}</span>
+                  <span key={t} className="inline-block bg-primary/30 border border-primary/50 text-primary text-[10px] px-2 py-0.5 rounded-full mr-1 mt-1">{t}</span>
                 ))}
               </div>
 
               {/* Multi-image indicator */}
               {project.imageUrls?.length > 1 && (
-                <div className="absolute bottom-2 right-2 bg-black/60 text-white text-[10px] px-1.5 py-0.5 rounded font-bold">
+                <div className="absolute bottom-2 right-2 bg-black/60 text-foreground text-[10px] px-1.5 py-0.5 rounded font-bold">
                   +{project.imageUrls.length - 1}
                 </div>
               )}
@@ -293,23 +293,23 @@ export default function PortfolioGallery({ artisan, fallbackImages = [] }) {
                   className="max-h-full max-w-full object-contain p-4" />
               ) : (
                 <div className="flex items-center justify-center w-full h-full">
-                  <Package className="w-20 h-20 text-stone-700" />
+                  <Package className="w-20 h-20 text-foreground" />
                 </div>
               )}
 
               {/* Image nav */}
               {lightboxImages.length > 1 && (
                 <>
-                  <button onClick={prevImg} className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-orange-600 transition-colors">
+                  <button onClick={prevImg} className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-primary-foreground hover:bg-primary/90 transition-colors">
                     <ChevronLeft className="w-5 h-5" />
                   </button>
-                  <button onClick={nextImg} className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-orange-600 transition-colors">
+                  <button onClick={nextImg} className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-primary-foreground hover:bg-primary/90 transition-colors">
                     <ChevronRight className="w-5 h-5" />
                   </button>
                   <div className="absolute bottom-4 flex gap-1.5">
                     {lightboxImages.map((_, i) => (
                       <button key={i} onClick={() => setLightbox(l => ({ ...l, imgIdx: i }))}
-                        className={`w-1.5 h-1.5 rounded-full transition-all ${i === lightbox.imgIdx ? 'bg-orange-500 w-4' : 'bg-stone-500'}`} />
+                        className={`w-1.5 h-1.5 rounded-full transition-all ${i === lightbox.imgIdx ? 'bg-primary w-4' : 'bg-muted0'}`} />
                     ))}
                   </div>
                 </>
@@ -318,21 +318,21 @@ export default function PortfolioGallery({ artisan, fallbackImages = [] }) {
               {/* Project nav */}
               <div className="absolute top-4 left-4 flex gap-2">
                 <button onClick={prevProject} disabled={filtered.findIndex(p => p.id === lightboxProject.id) === 0}
-                  className="px-3 py-1.5 bg-black/50 rounded-lg text-white text-xs hover:bg-stone-700 disabled:opacity-30 flex items-center gap-1">
+                  className="px-3 py-1.5 bg-black/50 rounded-lg text-foreground text-xs hover:bg-muted disabled:opacity-30 flex items-center gap-1">
                   <ChevronLeft className="w-3.5 h-3.5" /> Prev project
                 </button>
                 <button onClick={nextProject} disabled={filtered.findIndex(p => p.id === lightboxProject.id) === filtered.length - 1}
-                  className="px-3 py-1.5 bg-black/50 rounded-lg text-white text-xs hover:bg-stone-700 disabled:opacity-30 flex items-center gap-1">
+                  className="px-3 py-1.5 bg-black/50 rounded-lg text-foreground text-xs hover:bg-muted disabled:opacity-30 flex items-center gap-1">
                   Next project <ChevronRight className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
 
             {/* Detail panel */}
-            <div className="w-full md:w-[380px] bg-stone-950 border-l border-stone-800 overflow-y-auto flex flex-col">
-              <div className="flex items-center justify-between px-6 py-4 border-b border-stone-800 shrink-0">
-                <p className="text-xs text-stone-500 uppercase tracking-widest font-bold">Project Detail</p>
-                <button onClick={() => setLightbox(null)} className="text-stone-400 hover:text-white transition-colors">
+            <div className="w-full md:w-[380px] bg-background border-l border-border overflow-y-auto flex flex-col">
+              <div className="flex items-center justify-between px-6 py-4 border-b border-border shrink-0">
+                <p className="text-xs text-muted-foreground uppercase tracking-widest font-bold">Project Detail</p>
+                <button onClick={() => setLightbox(null)} className="text-muted-foreground hover:text-foreground transition-colors">
                   <X className="w-5 h-5" />
                 </button>
               </div>
@@ -341,8 +341,8 @@ export default function PortfolioGallery({ artisan, fallbackImages = [] }) {
                 {/* Title + type */}
                 <div>
                   <div className="flex items-start justify-between gap-3 mb-2">
-                    <h2 className="text-2xl font-black text-white leading-tight">{lightboxProject.title}</h2>
-                    {lightboxProject.featured && <Star className="w-5 h-5 text-orange-400 shrink-0 mt-0.5 fill-orange-400" />}
+                    <h2 className="text-2xl font-black text-foreground leading-tight">{lightboxProject.title}</h2>
+                    {lightboxProject.featured && <Star className="w-5 h-5 text-primary shrink-0 mt-0.5 fill-orange-400" />}
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {lightboxProject.projectType && (
@@ -351,7 +351,7 @@ export default function PortfolioGallery({ artisan, fallbackImages = [] }) {
                       </span>
                     )}
                     {lightboxProject.category && (
-                      <span className="bg-stone-800 text-stone-300 text-xs font-bold px-2.5 py-1 rounded-full capitalize">
+                      <span className="bg-muted text-muted-foreground text-xs font-bold px-2.5 py-1 rounded-full capitalize">
                         {lightboxProject.category}
                       </span>
                     )}
@@ -363,34 +363,34 @@ export default function PortfolioGallery({ artisan, fallbackImages = [] }) {
 
                 {/* Description */}
                 {lightboxProject.description && (
-                  <p className="text-stone-300 text-sm leading-relaxed">{lightboxProject.description}</p>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{lightboxProject.description}</p>
                 )}
 
                 {/* Meta row */}
                 <div className="grid grid-cols-2 gap-3 text-sm">
                   {lightboxProject.year && (
-                    <div className="bg-stone-900 rounded-xl p-3 flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-orange-400 shrink-0" />
+                    <div className="bg-card rounded-xl p-3 flex items-center gap-2">
+                      <Calendar className="w-4 h-4 text-primary shrink-0" />
                       <div>
-                        <p className="text-stone-500 text-xs">Year</p>
-                        <p className="text-white font-bold">{lightboxProject.year}</p>
+                        <p className="text-muted-foreground text-xs">Year</p>
+                        <p className="text-foreground font-bold">{lightboxProject.year}</p>
                       </div>
                     </div>
                   )}
                   {lightboxProject.completionDays && (
-                    <div className="bg-stone-900 rounded-xl p-3 flex items-center gap-2">
-                      <Clock className="w-4 h-4 text-orange-400 shrink-0" />
+                    <div className="bg-card rounded-xl p-3 flex items-center gap-2">
+                      <Clock className="w-4 h-4 text-primary shrink-0" />
                       <div>
-                        <p className="text-stone-500 text-xs">Time</p>
-                        <p className="text-white font-bold">{lightboxProject.completionDays}d</p>
+                        <p className="text-muted-foreground text-xs">Time</p>
+                        <p className="text-foreground font-bold">{lightboxProject.completionDays}d</p>
                       </div>
                     </div>
                   )}
                   {lightboxProject.priceRange && (
-                    <div className="bg-stone-900 rounded-xl p-3 flex items-center gap-2 col-span-2">
+                    <div className="bg-card rounded-xl p-3 flex items-center gap-2 col-span-2">
                       <Tag className="w-4 h-4 text-teal-400 shrink-0" />
                       <div>
-                        <p className="text-stone-500 text-xs">Similar commission from</p>
+                        <p className="text-muted-foreground text-xs">Similar commission from</p>
                         <p className="text-teal-300 font-bold">{PRICE_LABELS[lightboxProject.priceRange]}</p>
                       </div>
                     </div>
@@ -401,12 +401,12 @@ export default function PortfolioGallery({ artisan, fallbackImages = [] }) {
                 {lightboxProject.techniques?.length > 0 && (
                   <div>
                     <div className="flex items-center gap-2 mb-3">
-                      <Sparkles className="w-4 h-4 text-orange-400" />
-                      <p className="text-xs font-bold uppercase tracking-widest text-orange-400">Techniques Used</p>
+                      <Sparkles className="w-4 h-4 text-primary" />
+                      <p className="text-xs font-bold uppercase tracking-widest text-primary">Techniques Used</p>
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {lightboxProject.techniques.map(t => (
-                        <span key={t} className="bg-orange-600/20 border border-orange-600/40 text-orange-300 text-xs px-3 py-1 rounded-full">{t}</span>
+                        <span key={t} className="bg-primary/10 border border-primary/30 text-primary text-xs px-3 py-1 rounded-full">{t}</span>
                       ))}
                     </div>
                   </div>
@@ -416,12 +416,12 @@ export default function PortfolioGallery({ artisan, fallbackImages = [] }) {
                 {lightboxProject.materials?.length > 0 && (
                   <div>
                     <div className="flex items-center gap-2 mb-3">
-                      <Hammer className="w-4 h-4 text-stone-400" />
-                      <p className="text-xs font-bold uppercase tracking-widest text-stone-400">Materials</p>
+                      <Hammer className="w-4 h-4 text-muted-foreground" />
+                      <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Materials</p>
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {lightboxProject.materials.map(m => (
-                        <span key={m} className="bg-stone-800 border border-stone-600 text-stone-300 text-xs px-3 py-1 rounded-full">{m}</span>
+                        <span key={m} className="bg-muted border border-border text-muted-foreground text-xs px-3 py-1 rounded-full">{m}</span>
                       ))}
                     </div>
                   </div>
@@ -440,7 +440,7 @@ export default function PortfolioGallery({ artisan, fallbackImages = [] }) {
               </div>
 
               {/* Commission CTA */}
-              <div className="px-6 py-5 border-t border-stone-800 shrink-0 space-y-3">
+              <div className="px-6 py-5 border-t border-border shrink-0 space-y-3">
                 {lightboxProject.isCommissionable ? (
                   <>
                     <div className="flex items-center gap-2 text-teal-400 text-sm font-semibold">
@@ -449,19 +449,19 @@ export default function PortfolioGallery({ artisan, fallbackImages = [] }) {
                     </div>
                     <Link to={`${createPageUrl('Messages')}?artisanId=${artisan.id}&artisanName=${encodeURIComponent(artisan.artisanName)}&project=${encodeURIComponent(lightboxProject.title)}`}
                       onClick={() => setLightbox(null)}>
-                      <Button className="w-full bg-teal-600 hover:bg-teal-500 text-white font-bold gap-2">
+                      <Button className="w-full bg-teal-600 hover:bg-teal-500 text-foreground font-bold gap-2">
                         <MessageSquarePlus className="w-4 h-4" />
                         Request a Similar Commission
                       </Button>
                     </Link>
                     {lightboxProject.priceRange && lightboxProject.priceRange !== 'on_request' && (
-                      <p className="text-xs text-stone-500 text-center">
+                      <p className="text-xs text-muted-foreground text-center">
                         Typically starting {PRICE_LABELS[lightboxProject.priceRange]}
                       </p>
                     )}
                   </>
                 ) : (
-                  <div className="text-stone-500 text-sm text-center py-1">
+                  <div className="text-muted-foreground text-sm text-center py-1">
                     This type of commission is not currently available
                   </div>
                 )}
@@ -484,18 +484,18 @@ function FallbackGallery({ images }) {
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
         {images.map((url, idx) => (
           <button key={idx} onClick={() => setLightboxIdx(idx)}
-            className="aspect-square overflow-hidden rounded-xl border border-stone-700 hover:border-orange-500 hover:shadow-xl transition-all duration-300">
+            className="aspect-square overflow-hidden rounded-xl border border-border hover:border-primary hover:shadow-xl transition-all duration-300">
             <img src={url} alt={`Gallery ${idx + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
           </button>
         ))}
       </div>
       {lightboxIdx !== null && (
         <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4" onClick={() => setLightboxIdx(null)}>
-          <button onClick={() => setLightboxIdx(null)} className="absolute top-4 right-4 text-white hover:text-orange-400"><X className="w-8 h-8" /></button>
-          <button onClick={e => { e.stopPropagation(); prev(); }} className="absolute left-4 text-white hover:text-orange-400"><ChevronLeft className="w-10 h-10" /></button>
+          <button onClick={() => setLightboxIdx(null)} className="absolute top-4 right-4 text-foreground hover:text-primary"><X className="w-8 h-8" /></button>
+          <button onClick={e => { e.stopPropagation(); prev(); }} className="absolute left-4 text-foreground hover:text-primary"><ChevronLeft className="w-10 h-10" /></button>
           <img src={images[lightboxIdx]} alt="Gallery" className="max-h-[85vh] max-w-full rounded-xl" onClick={e => e.stopPropagation()} />
-          <button onClick={e => { e.stopPropagation(); next(); }} className="absolute right-4 text-white hover:text-orange-400"><ChevronRight className="w-10 h-10" /></button>
-          <p className="absolute bottom-4 text-white/60 text-sm">{lightboxIdx + 1} / {images.length}</p>
+          <button onClick={e => { e.stopPropagation(); next(); }} className="absolute right-4 text-foreground hover:text-primary"><ChevronRight className="w-10 h-10" /></button>
+          <p className="absolute bottom-4 text-foreground/60 text-sm">{lightboxIdx + 1} / {images.length}</p>
         </div>
       )}
     </div>

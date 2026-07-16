@@ -26,14 +26,14 @@ export default function ProductVariations({ service, onAddToCart }) {
       {/* Color Selection */}
       {colors.length > 1 && (
         <div>
-          <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2">Color — <span className="text-white normal-case font-normal">{selectedColor}</span></p>
+          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Color — <span className="text-foreground normal-case font-normal">{selectedColor}</span></p>
           <div className="flex gap-2 flex-wrap">
             {colors.map(c => (
               <button key={c} onClick={() => setSelectedColor(c)}
                 className={cn('px-3 py-1.5 rounded-lg border text-sm font-medium transition-all',
                   selectedColor === c
-                    ? 'border-orange-500 bg-orange-500/20 text-orange-300'
-                    : 'border-stone-600 text-stone-300 hover:border-stone-400')}>
+                    ? 'border-primary bg-primary/15 text-primary'
+                    : 'border-border text-muted-foreground hover:border-primary/40')}>
                 {c}
               </button>
             ))}
@@ -43,14 +43,14 @@ export default function ProductVariations({ service, onAddToCart }) {
 
       {/* Size Selection */}
       <div>
-        <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2">Size — <span className="text-white normal-case font-normal">{selectedSize}</span></p>
+        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Size — <span className="text-foreground normal-case font-normal">{selectedSize}</span></p>
         <div className="flex gap-2 flex-wrap">
           {sizes.map(s => (
             <button key={s} onClick={() => setSelectedSize(s)}
               className={cn('px-3 py-1.5 rounded-lg border text-sm font-medium transition-all',
                 selectedSize === s
-                  ? 'border-orange-500 bg-orange-500/20 text-orange-300'
-                  : 'border-stone-600 text-stone-300 hover:border-stone-400')}>
+                  ? 'border-primary bg-primary/15 text-primary'
+                  : 'border-border text-muted-foreground hover:border-primary/40')}>
               {s}
             </button>
           ))}
@@ -59,11 +59,11 @@ export default function ProductVariations({ service, onAddToCart }) {
 
       {/* Quantity */}
       <div className="flex items-center gap-3">
-        <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider">Qty</p>
-        <div className="flex items-center border border-stone-600 rounded-lg overflow-hidden">
-          <button onClick={() => setQty(q => Math.max(1, q - 1))} className="px-3 py-1.5 text-stone-300 hover:bg-stone-700 transition-colors">−</button>
-          <span className="px-4 py-1.5 text-white font-semibold text-sm border-x border-stone-600">{qty}</span>
-          <button onClick={() => setQty(q => q + 1)} className="px-3 py-1.5 text-stone-300 hover:bg-stone-700 transition-colors">+</button>
+        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Qty</p>
+        <div className="flex items-center border border-border rounded-lg overflow-hidden">
+          <button onClick={() => setQty(q => Math.max(1, q - 1))} className="px-3 py-1.5 text-muted-foreground hover:bg-muted transition-colors">−</button>
+          <span className="px-4 py-1.5 text-foreground font-semibold text-sm border-x border-border">{qty}</span>
+          <button onClick={() => setQty(q => q + 1)} className="px-3 py-1.5 text-muted-foreground hover:bg-muted transition-colors">+</button>
         </div>
         {lowStock && <Badge className="bg-amber-500/20 text-amber-300 border-amber-500/40">⚠ Low Stock</Badge>}
         {!inStock && <Badge className="bg-red-500/20 text-red-300 border-red-500/40">Out of Stock</Badge>}
@@ -71,10 +71,10 @@ export default function ProductVariations({ service, onAddToCart }) {
 
       {/* Price + CTA */}
       <div className="flex items-center gap-4 pt-2">
-        <span className="text-2xl font-black text-white">{currency} {(price * qty).toFixed(2)}</span>
+        <span className="text-2xl font-black text-foreground">{currency} {(price * qty).toFixed(2)}</span>
         <Button disabled={!inStock}
           onClick={() => onAddToCart?.({ ...service, selectedSize, selectedColor, quantity: qty })}
-          className="bg-orange-600 hover:bg-orange-500 text-white font-bold px-6">
+          className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-6">
           Add to Cart
         </Button>
       </div>

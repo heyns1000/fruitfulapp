@@ -17,7 +17,7 @@ export default function ArtisanGallery({ images = [] }) {
           <button
             key={idx}
             onClick={() => setLightboxIdx(idx)}
-            className="aspect-square overflow-hidden rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-orange-500 border border-stone-700 hover:border-orange-500"
+            className="aspect-square overflow-hidden rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-orange-500 border border-border hover:border-primary"
           >
             <img src={url} alt={`Gallery ${idx + 1}`} className="w-full h-full object-cover" />
           </button>
@@ -29,10 +29,10 @@ export default function ArtisanGallery({ images = [] }) {
           className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
           onClick={() => setLightboxIdx(null)}
         >
-          <button onClick={() => setLightboxIdx(null)} className="absolute top-4 right-4 text-white hover:text-amber-400">
+          <button onClick={() => setLightboxIdx(null)} className="absolute top-4 right-4 text-foreground hover:text-amber-400">
             <X className="w-8 h-8" />
           </button>
-          <button onClick={e => { e.stopPropagation(); prev(); }} className="absolute left-4 text-white hover:text-amber-400">
+          <button onClick={e => { e.stopPropagation(); prev(); }} className="absolute left-4 text-foreground hover:text-amber-400">
             <ChevronLeft className="w-10 h-10" />
           </button>
           <img
@@ -41,10 +41,10 @@ export default function ArtisanGallery({ images = [] }) {
             className="max-h-[85vh] max-w-full rounded-xl shadow-2xl"
             onClick={e => e.stopPropagation()}
           />
-          <button onClick={e => { e.stopPropagation(); next(); }} className="absolute right-4 text-white hover:text-amber-400">
+          <button onClick={e => { e.stopPropagation(); next(); }} className="absolute right-4 text-foreground hover:text-amber-400">
             <ChevronRight className="w-10 h-10" />
           </button>
-          <p className="absolute bottom-4 text-white/60 text-sm">{lightboxIdx + 1} / {images.length}</p>
+          <p className="absolute bottom-4 text-foreground/60 text-sm">{lightboxIdx + 1} / {images.length}</p>
         </div>
       )}
     </div>

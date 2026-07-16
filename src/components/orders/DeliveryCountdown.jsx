@@ -14,7 +14,7 @@ export default function DeliveryCountdown({ estimatedDelivery, status }) {
     <div className={`flex items-center gap-2 text-sm rounded-lg px-3 py-2 border ${
       delivered ? 'bg-green-900/20 border-green-700 text-green-400' :
       overdue   ? 'bg-red-900/20 border-red-700 text-red-400' :
-                  'bg-orange-900/20 border-orange-700 text-orange-300'
+                  'bg-primary/10 border-primary text-primary'
     }`}>
       {delivered ? <CheckCircle2 className="w-4 h-4 shrink-0" /> : <Calendar className="w-4 h-4 shrink-0" />}
       {delivered

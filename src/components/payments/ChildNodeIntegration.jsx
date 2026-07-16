@@ -84,7 +84,7 @@ const ChildPaymentWrapper = ({ cartItems, totalAmount, userEmail }) => {
   return (
     <button
       onClick={handlePayment}
-      className="bg-[#e63946] text-white px-10 py-5 rounded-full font-black uppercase tracking-widest shadow-2xl hover:scale-105 transition-transform"
+      className="bg-[#e63946] text-foreground px-10 py-5 rounded-full font-black uppercase tracking-widest shadow-2xl hover:scale-105 transition-transform"
     >
       Initialize Vibe Payment
     </button>
@@ -122,7 +122,7 @@ export default function ChildNodeIntegration() {
     <div className="space-y-6 max-w-4xl">
 
       {/* Header */}
-      <div className="p-5 bg-gradient-to-r from-teal-700 to-green-700 rounded-2xl text-white">
+      <div className="p-5 bg-gradient-to-r from-teal-700 to-green-700 rounded-2xl text-foreground">
         <div className="flex items-center gap-3 mb-2">
           <GitBranch className="w-6 h-6" />
           <h2 className="text-xl font-extrabold tracking-tight">Fruitful Shops™ — Motherload Routing Protocol</h2>
@@ -142,15 +142,15 @@ export default function ChildNodeIntegration() {
         <CardContent>
           <div className="flex flex-col sm:flex-row items-center gap-3">
             <div className="flex-1 p-4 rounded-xl border-2 border-teal-400 bg-teal-50 text-center">
-              <Badge className="bg-teal-700 text-white mb-2">MASTER NODE — The Brain</Badge>
+              <Badge className="bg-teal-700 text-foreground mb-2">MASTER NODE — The Brain</Badge>
               <p className="font-mono text-sm font-bold text-teal-800">fruitfulapp.base44.app</p>
               <p className="text-xs text-teal-600 mt-1">Central DB · Xero · Webhook Handler</p>
             </div>
             <ArrowRight className="w-6 h-6 text-gray-400 shrink-0 rotate-90 sm:rotate-0" />
-            <div className="flex-1 p-4 rounded-xl border-2 border-orange-400 bg-orange-50 text-center">
-              <Badge className="bg-orange-600 text-white mb-2">CHILD NODE — The Forager</Badge>
-              <p className="font-mono text-sm font-bold text-orange-800">bushcoding.onhercules.app</p>
-              <p className="text-xs text-orange-600 mt-1">Initiates payment · passes metadata</p>
+            <div className="flex-1 p-4 rounded-xl border-2 border-primary bg-primary/5 text-center">
+              <Badge className="bg-primary text-primary-foreground mb-2">CHILD NODE — The Forager</Badge>
+              <p className="font-mono text-sm font-bold text-primary">bushcoding.onhercules.app</p>
+              <p className="text-xs text-primary mt-1">Initiates payment · passes metadata</p>
             </div>
           </div>
         </CardContent>

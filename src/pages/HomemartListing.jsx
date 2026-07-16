@@ -42,31 +42,31 @@ export default function HomemartListing({ embedded = false }) {
   };
 
   return (
-    <div className={embedded ? 'text-white' : 'min-h-screen bg-stone-950 text-white'}>
+    <div className={embedded ? 'text-foreground' : 'min-h-screen bg-background text-foreground'}>
       <HomemartStockSync />
 
       {!embedded && (
-      <div className="bg-gradient-to-br from-stone-900 via-orange-950/20 to-stone-900 border-b border-stone-800 px-6 md:px-12 py-12">
+      <div className="bg-gradient-to-br from-fruitful-mint/50 via-card to-card border-b border-border px-6 md:px-12 py-12">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-orange-400 text-xs font-bold tracking-[0.3em] uppercase">✦ Vendor Store</span>
+            <span className="text-primary text-xs font-bold tracking-[0.3em] uppercase">Vendor Store</span>
             <Badge className="bg-green-500/20 text-green-300 border-green-500/30 text-xs">Live</Badge>
           </div>
           <div className="flex items-start justify-between flex-wrap gap-4">
             <div>
-              <h1 className="text-4xl md:text-6xl font-black tracking-tight" style={{ fontFamily: 'Georgia, serif' }}>
-                Homemart<br /><span className="text-orange-500">Banimal™ Bibs</span>
+              <h1 className="text-4xl md:text-6xl font-black tracking-tight" style={{ fontFamily: 'inherit' }}>
+                Homemart<br /><span className="text-primary">Banimal™ Bibs</span>
               </h1>
-              <p className="text-stone-400 mt-2 text-sm">Baby & Toddler · 100% Cotton · Handcrafted Quality</p>
+              <p className="text-muted-foreground mt-2 text-sm">Baby & Toddler · 100% Cotton · Handcrafted Quality</p>
             </div>
             <div className="flex flex-col items-end gap-2">
               {lowStockCount > 0 && (
-                <div className="flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 rounded-lg px-3 py-2">
-                  <AlertTriangle className="w-4 h-4 text-amber-400" />
-                  <span className="text-amber-300 text-sm font-semibold">{lowStockCount} item{lowStockCount > 1 ? 's' : ''} low on stock</span>
+                <div className="flex items-center gap-2 bg-fruitful-green/10 border border-fruitful-green/30 rounded-lg px-3 py-2">
+                  <AlertTriangle className="w-4 h-4 text-fruitful-green" />
+                  <span className="text-fruitful-green text-sm font-semibold">{lowStockCount} item{lowStockCount > 1 ? 's' : ''} low on stock</span>
                 </div>
               )}
-              <div className="flex gap-3 text-stone-500 text-sm">
+              <div className="flex gap-3 text-muted-foreground text-sm">
                 <span className="flex items-center gap-1"><Package className="w-4 h-4" />{products.length} products</span>
                 <span className="flex items-center gap-1"><Store className="w-4 h-4" />Homemart</span>
               </div>
@@ -80,27 +80,27 @@ export default function HomemartListing({ embedded = false }) {
         {/* Filters */}
         <div className="flex flex-col sm:flex-row gap-3 mb-8">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-500" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input value={search} onChange={e => setSearch(e.target.value)}
-              placeholder="Search bibs, SKU..." className="pl-9 bg-stone-900 border-stone-700 text-white placeholder:text-stone-500" />
+              placeholder="Search bibs, SKU..." className="pl-9 bg-card border-border text-foreground placeholder:text-muted-foreground" />
           </div>
           <div className="flex gap-2 flex-wrap">
             {CATS.map(c => (
               <button key={c} onClick={() => setCat(c)}
-                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${cat === c ? 'bg-orange-600 text-white' : 'bg-stone-800 text-stone-400 hover:bg-stone-700'}`}>
+                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${cat === c ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground hover:bg-muted'}`}>
                 {c}
               </button>
             ))}
           </div>
           <Button variant="outline" size="icon" onClick={() => queryClient.invalidateQueries({ queryKey: ['homemart-products'] })}
-            className="border-stone-700 text-stone-400 hover:text-white shrink-0">
+            className="border-border text-muted-foreground hover:text-foreground shrink-0">
             <RefreshCw className="w-4 h-4" />
           </Button>
         </div>
 
         {isLoading ? (
           <div className="flex justify-center py-20">
-            <div className="w-8 h-8 border-4 border-stone-700 border-t-orange-500 rounded-full animate-spin" />
+            <div className="w-8 h-8 border-4 border-border border-t-orange-500 rounded-full animate-spin" />
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -112,36 +112,36 @@ export default function HomemartListing({ embedded = false }) {
 
               return (
                 <div key={product.id}
-                  className={`bg-stone-900 border rounded-2xl overflow-hidden transition-all cursor-pointer ${selected?.id === product.id ? 'border-orange-500 ring-1 ring-orange-500/40' : 'border-stone-700 hover:border-stone-500'}`}
+                  className={`bg-card border rounded-2xl overflow-hidden transition-all cursor-pointer ${selected?.id === product.id ? 'border-primary ring-1 ring-primary/40' : 'border-border hover:border-primary/40'}`}
                   onClick={() => setSelected(selected?.id === product.id ? null : product)}>
                   
                   {/* Product Image */}
-                  <div className="relative aspect-square bg-stone-800 overflow-hidden">
+                  <div className="relative aspect-square bg-muted overflow-hidden">
                     {product.imageUrl ? (
                       <img src={product.imageUrl} alt={product.serviceName} className="w-full h-full object-cover" />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-stone-600">
+                      <div className="w-full h-full flex items-center justify-center text-muted-foreground">
                         <Package className="w-16 h-16" />
                       </div>
                     )}
                     <div className="absolute top-3 left-3 flex gap-2 flex-wrap">
-                      {isLow && <Badge className="bg-amber-500/90 text-white text-xs">Low Stock</Badge>}
-                      {product.status === 'active' && <Badge className="bg-green-500/90 text-white text-xs">Active</Badge>}
+                      {isLow && <Badge className="bg-fruitful-green text-primary-foreground text-xs">Low Stock</Badge>}
+                      {product.status === 'active' && <Badge className="bg-green-500/90 text-foreground text-xs">Active</Badge>}
                     </div>
                     <div className="absolute top-3 right-3">
-                      <span className="bg-black/60 text-white text-xs font-mono px-2 py-1 rounded">{product.productCode}</span>
+                      <span className="bg-black/60 text-foreground text-xs font-mono px-2 py-1 rounded">{product.productCode}</span>
                     </div>
                   </div>
 
                   {/* Info */}
                   <div className="p-4">
-                    <h3 className="font-bold text-white text-base leading-tight mb-1">{product.serviceName}</h3>
-                    <p className="text-stone-400 text-xs mb-3 line-clamp-2">{product.description}</p>
+                    <h3 className="font-bold text-foreground text-base leading-tight mb-1">{product.serviceName}</h3>
+                    <p className="text-muted-foreground text-xs mb-3 line-clamp-2">{product.description}</p>
                     
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-xl font-black text-orange-400">{currency} {price.toFixed(2)}</span>
+                      <span className="text-xl font-black text-primary">{currency} {price.toFixed(2)}</span>
                       {available !== null && (
-                        <span className={`text-xs font-semibold ${isLow ? 'text-amber-400' : 'text-stone-500'}`}>
+                        <span className={`text-xs font-semibold ${isLow ? 'text-fruitful-green' : 'text-muted-foreground'}`}>
                           {available} in stock
                         </span>
                       )}
@@ -150,18 +150,18 @@ export default function HomemartListing({ embedded = false }) {
                     {/* Tags */}
                     <div className="flex gap-1 flex-wrap mb-3">
                       {(product.tags || []).slice(0, 3).map(t => (
-                        <span key={t} className="text-[10px] bg-stone-800 text-stone-400 px-2 py-0.5 rounded-full">{t}</span>
+                        <span key={t} className="text-[10px] bg-muted text-muted-foreground px-2 py-0.5 rounded-full">{t}</span>
                       ))}
                     </div>
 
-                    <button className="text-xs text-orange-400 font-semibold hover:text-orange-300 transition-colors">
+                    <button className="text-xs text-primary font-semibold hover:text-primary transition-colors">
                       {selected?.id === product.id ? '▲ Hide options' : '▼ Select options'}
                     </button>
                   </div>
 
                   {/* Expanded Variations */}
                   {selected?.id === product.id && (
-                    <div className="px-4 pb-4 border-t border-stone-700 pt-4" onClick={e => e.stopPropagation()}>
+                    <div className="px-4 pb-4 border-t border-border pt-4" onClick={e => e.stopPropagation()}>
                       <ProductVariations service={product} onAddToCart={handleAddToCart} />
                     </div>
                   )}
@@ -172,7 +172,7 @@ export default function HomemartListing({ embedded = false }) {
         )}
 
         {!isLoading && filtered.length === 0 && (
-          <div className="text-center py-20 text-stone-500">
+          <div className="text-center py-20 text-muted-foreground">
             <Package className="w-12 h-12 mx-auto mb-3 opacity-30" />
             <p>No products match your search.</p>
           </div>

@@ -20,10 +20,10 @@ export default function ArtisanWishlistSection({ artisanName, brandId }) {
 
   return (
     <div className="space-y-6">
-      <div className="border-b border-stone-800 pb-5 flex items-center justify-between">
+      <div className="border-b border-border pb-5 flex items-center justify-between">
         <div>
           <p className="text-xs font-bold tracking-[0.25em] uppercase text-pink-500 mb-1">Your Saves</p>
-          <h2 className="text-3xl font-black text-white flex items-center gap-2">
+          <h2 className="text-3xl font-black text-foreground flex items-center gap-2">
             <Heart className="w-6 h-6 fill-pink-500 text-pink-500" />
             Wishlisted from {artisanName.split(' ')[0]}
           </h2>
@@ -38,13 +38,13 @@ export default function ArtisanWishlistSection({ artisanName, brandId }) {
           const price = item.pricing?.USD || item.pricing?.ZAR || 0;
           const currencySymbol = item.pricing?.USD ? '$' : 'R';
           return (
-            <div key={item.id} className="group bg-stone-900 border border-stone-700 rounded-2xl overflow-hidden hover:border-pink-600 transition-all duration-300 hover:-translate-y-0.5">
-              <div className="relative aspect-square bg-stone-800 overflow-hidden">
+            <div key={item.id} className="group bg-card border border-border rounded-2xl overflow-hidden hover:border-pink-600 transition-all duration-300 hover:-translate-y-0.5">
+              <div className="relative aspect-square bg-muted overflow-hidden">
                 {item.imageUrl ? (
                   <img src={item.imageUrl} alt={item.serviceName} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
-                    <Package className="w-12 h-12 text-stone-600" />
+                    <Package className="w-12 h-12 text-muted-foreground" />
                   </div>
                 )}
                 <button
@@ -55,13 +55,13 @@ export default function ArtisanWishlistSection({ artisanName, brandId }) {
                 </button>
               </div>
               <div className="p-4 space-y-3">
-                <h3 className="font-bold text-white text-sm leading-snug">{item.serviceName}</h3>
+                <h3 className="font-bold text-foreground text-sm leading-snug">{item.serviceName}</h3>
                 <div className="flex items-center justify-between">
-                  <span className="text-xl font-black text-orange-400">{currencySymbol}{price}</span>
+                  <span className="text-xl font-black text-primary">{currencySymbol}{price}</span>
                   <Button
                     size="sm"
                     onClick={() => { addItem({ ...item, quantity: 1 }); }}
-                    className="bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold gap-1.5 px-3"
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold gap-1.5 px-3"
                   >
                     <ShoppingCart className="w-3.5 h-3.5" /> Add to Cart
                   </Button>

@@ -52,8 +52,8 @@ export default function ReviewForm({ artisanId, artisanName, services = [], onSu
         <div className="w-14 h-14 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center">
           <CheckCircle2 className="w-7 h-7 text-green-400" />
         </div>
-        <p className="text-white font-bold text-lg">Thank you for your review!</p>
-        <p className="text-stone-400 text-sm">Your feedback helps the community.</p>
+        <p className="text-foreground font-bold text-lg">Thank you for your review!</p>
+        <p className="text-muted-foreground text-sm">Your feedback helps the community.</p>
       </div>
     );
   }
@@ -62,10 +62,10 @@ export default function ReviewForm({ artisanId, artisanName, services = [], onSu
     <form onSubmit={handleSubmit} className="space-y-5">
       {/* Star rating */}
       <div>
-        <label className="text-xs font-bold tracking-widest uppercase text-orange-400 block mb-2">Your Rating *</label>
+        <label className="text-xs font-bold tracking-widest uppercase text-primary block mb-2">Your Rating *</label>
         <StarRating value={rating} onChange={setRating} size="lg" />
         {rating > 0 && (
-          <p className="text-stone-400 text-xs mt-1">
+          <p className="text-muted-foreground text-xs mt-1">
             {['', 'Poor', 'Fair', 'Good', 'Great', 'Excellent!'][rating]}
           </p>
         )}
@@ -74,12 +74,12 @@ export default function ReviewForm({ artisanId, artisanName, services = [], onSu
       {/* Product selector */}
       {services.length > 0 && (
         <div>
-          <label className="text-xs font-bold tracking-widest uppercase text-stone-400 block mb-2">Product Reviewed</label>
+          <label className="text-xs font-bold tracking-widest uppercase text-muted-foreground block mb-2">Product Reviewed</label>
           <Select value={productId} onValueChange={setProductId}>
-            <SelectTrigger className="bg-stone-800 border-stone-600 text-white">
+            <SelectTrigger className="bg-muted border-border text-foreground">
               <SelectValue placeholder="General artisan review" />
             </SelectTrigger>
-            <SelectContent className="bg-stone-800 border-stone-600 text-white">
+            <SelectContent className="bg-muted border-border text-foreground">
               <SelectItem value={null}>General artisan review</SelectItem>
               {services.map(s => (
                 <SelectItem key={s.id} value={s.id}>{s.serviceName}</SelectItem>
@@ -91,35 +91,35 @@ export default function ReviewForm({ artisanId, artisanName, services = [], onSu
 
       {/* Feedback */}
       <div>
-        <label className="text-xs font-bold tracking-widest uppercase text-stone-400 block mb-2">Your Feedback *</label>
+        <label className="text-xs font-bold tracking-widest uppercase text-muted-foreground block mb-2">Your Feedback *</label>
         <Textarea
           value={feedback}
           onChange={e => setFeedback(e.target.value)}
           placeholder="Share your experience with this artisan or product..."
           rows={4}
-          className="bg-stone-800 border-stone-600 text-white placeholder:text-stone-500 resize-none"
+          className="bg-muted border-border text-foreground placeholder:text-muted-foreground resize-none"
         />
       </div>
 
       {/* Reviewer info */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div>
-          <label className="text-xs font-bold tracking-widest uppercase text-stone-400 block mb-2">Your Name *</label>
+          <label className="text-xs font-bold tracking-widest uppercase text-muted-foreground block mb-2">Your Name *</label>
           <Input
             value={reviewerName}
             onChange={e => setReviewerName(e.target.value)}
             placeholder="Display name"
-            className="bg-stone-800 border-stone-600 text-white placeholder:text-stone-500"
+            className="bg-muted border-border text-foreground placeholder:text-muted-foreground"
           />
         </div>
         <div>
-          <label className="text-xs font-bold tracking-widest uppercase text-stone-400 block mb-2">Email (optional)</label>
+          <label className="text-xs font-bold tracking-widest uppercase text-muted-foreground block mb-2">Email (optional)</label>
           <Input
             type="email"
             value={reviewerEmail}
             onChange={e => setReviewerEmail(e.target.value)}
             placeholder="Kept private"
-            className="bg-stone-800 border-stone-600 text-white placeholder:text-stone-500"
+            className="bg-muted border-border text-foreground placeholder:text-muted-foreground"
           />
         </div>
       </div>
@@ -127,7 +127,7 @@ export default function ReviewForm({ artisanId, artisanName, services = [], onSu
       <Button
         type="submit"
         disabled={mutation.isPending}
-        className="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold gap-2"
+        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold gap-2"
       >
         <Send className="w-4 h-4" />
         {mutation.isPending ? 'Submitting...' : 'Submit Review'}

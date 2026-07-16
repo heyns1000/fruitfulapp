@@ -95,7 +95,7 @@ Instructions:
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="flex items-center gap-3 w-full bg-gradient-to-r from-violet-600 to-purple-700 text-white px-5 py-3 rounded-2xl shadow-lg hover:shadow-xl transition-all"
+          className="flex items-center gap-3 w-full bg-gradient-to-r from-violet-600 to-purple-700 text-foreground px-5 py-3 rounded-2xl shadow-lg hover:shadow-xl transition-all"
         >
           <Sparkles className="w-5 h-5 animate-pulse" />
           <span className="font-semibold">Ask our AI Shopping Assistant</span>

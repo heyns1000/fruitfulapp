@@ -57,19 +57,19 @@ export default function AIInsights() {
                 key={idx} 
                 className={`p-4 rounded-lg border-2 ${
                   insight.type === 'opportunity' ? 'bg-green-50 border-green-300' :
-                  insight.type === 'warning' ? 'bg-orange-50 border-orange-300' :
+                  insight.type === 'warning' ? 'bg-primary/5 border-primary/40' :
                   'bg-blue-50 border-blue-300'
                 }`}
               >
                 <div className="flex items-start gap-3">
                   <div className={`p-2 rounded-lg ${
                     insight.type === 'opportunity' ? 'bg-green-200' :
-                    insight.type === 'warning' ? 'bg-orange-200' :
+                    insight.type === 'warning' ? 'bg-primary/15' :
                     'bg-blue-200'
                   }`}>
                     <Icon className={`w-5 h-5 ${
                       insight.type === 'opportunity' ? 'text-green-700' :
-                      insight.type === 'warning' ? 'text-orange-700' :
+                      insight.type === 'warning' ? 'text-primary' :
                       'text-blue-700'
                     }`} />
                   </div>

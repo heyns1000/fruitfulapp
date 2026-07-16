@@ -23,8 +23,8 @@ export default function StarRating({ value = 0, onChange, readonly = false, size
           <Star
             className={`${cls} transition-colors ${
               star <= active
-                ? 'fill-orange-400 text-orange-400'
-                : 'text-stone-600 fill-transparent'
+                ? 'fill-hotstack-amber text-hotstack-amber'
+                : 'text-muted-foreground/40 fill-transparent'
             }`}
           />
         </button>

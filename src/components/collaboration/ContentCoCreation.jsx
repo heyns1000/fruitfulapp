@@ -98,7 +98,7 @@ export default function ContentCoCreation() {
                     ))}
                   </div>
                 </div>
-                <Badge className={project.status === 'In Progress' ? 'bg-blue-600' : 'bg-orange-600'}>
+                <Badge className={project.status === 'In Progress' ? 'bg-blue-600' : 'bg-primary'}>
                   {project.status}
                 </Badge>
               </div>

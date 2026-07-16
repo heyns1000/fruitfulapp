@@ -170,7 +170,7 @@ export default function SubscriptionManager({ subscriptions, brands }) {
         {Object.entries(BILLING_DISCOUNTS).map(([cycle, disc]) => (
           <button key={cycle} onClick={() => setBillingCycle(cycle)}
             className={`px-4 py-2 rounded-xl border text-sm font-semibold transition-all capitalize ${
-              billingCycle === cycle ? 'bg-teal-600 border-teal-600 text-white' : 'border-gray-300 text-gray-600 hover:border-gray-400'
+              billingCycle === cycle ? 'bg-teal-600 border-teal-600 text-foreground' : 'border-gray-300 text-gray-600 hover:border-gray-400'
             }`}>
             {cycle} {disc > 0 && <span className="ml-1 text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full">-{disc}%</span>}
           </button>
@@ -191,7 +191,7 @@ export default function SubscriptionManager({ subscriptions, brands }) {
                     <Icon className="w-8 h-8 text-teal-600 mb-2" />
                     <CardTitle>{plan.name}</CardTitle>
                   </div>
-                  {isSelected && <Badge className="bg-teal-600 text-white">Selected</Badge>}
+                  {isSelected && <Badge className="bg-teal-600 text-foreground">Selected</Badge>}
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -236,7 +236,7 @@ export default function SubscriptionManager({ subscriptions, brands }) {
             </div>
           </div>
           <Button onClick={createSubscription} disabled={createSubscriptionMutation.isPending}
-            className="w-full bg-teal-600 hover:bg-teal-700 text-white" size="lg">
+            className="w-full bg-teal-600 hover:bg-teal-700 text-foreground" size="lg">
             {createSubscriptionMutation.isPending
               ? <><Loader2 className="w-5 h-5 animate-spin mr-2" /> Processing…</>
               : `Subscribe — ${PLANS[selectedPlan].displayPrice[billingCycle]}/${billingCycle.replace('ly','')}`}

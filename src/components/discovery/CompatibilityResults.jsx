@@ -57,7 +57,7 @@ export default function CompatibilityResults({ results, sourceBrand, onSelectMat
                     <Button
                       size="sm"
                       onClick={() => onSelectMatch(match)}
-                      className="bg-indigo-600 hover:bg-indigo-700 text-white shrink-0"
+                      className="bg-indigo-600 hover:bg-indigo-700 text-foreground shrink-0"
                     >
                       Generate Proposal <ChevronRight className="w-3 h-3 ml-1" />
                     </Button>

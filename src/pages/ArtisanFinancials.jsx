@@ -21,7 +21,7 @@ const ORDER_STATUS_COLOR = {
   pending:    'text-yellow-400',
   confirmed:  'text-blue-400',
   processing: 'text-purple-400',
-  crafted:    'text-amber-400',
+  crafted:    'text-fruitful-green',
   shipped:    'text-cyan-400',
   delivered:  'text-green-400',
   cancelled:  'text-red-400',
@@ -69,19 +69,19 @@ export default function ArtisanFinancials() {
   });
 
   if (isLoading) return (
-    <div className="min-h-screen bg-stone-950 flex items-center justify-center">
-      <Loader2 className="w-10 h-10 animate-spin text-orange-500" />
+    <div className="min-h-screen bg-background flex items-center justify-center">
+      <Loader2 className="w-10 h-10 animate-spin text-primary" />
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-stone-950 text-white">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
-      <div className="bg-gradient-to-br from-stone-900 via-orange-950/20 to-stone-900 border-b border-stone-800 px-6 md:px-10 py-10">
+      <div className="bg-gradient-to-br from-fruitful-mint/50 via-card to-card border-b border-border px-6 md:px-10 py-10">
         <div className="max-w-6xl mx-auto">
-          <p className="text-orange-400 text-xs font-bold uppercase tracking-[0.3em] mb-2">@Fruitful@ Platform</p>
+          <p className="text-primary text-xs font-bold uppercase tracking-[0.3em] mb-2">Fruitful™ Platform</p>
           <h1 className="text-4xl md:text-5xl font-black mb-1">Financial Dashboard</h1>
-          <p className="text-stone-400">{artisan?.artisanName || currentUser?.full_name || 'Artisan'} · Earnings & Payouts</p>
+          <p className="text-muted-foreground">{artisan?.artisanName || currentUser?.full_name || 'Artisan'} · Earnings & Payouts</p>
         </div>
       </div>
 
@@ -91,28 +91,28 @@ export default function ArtisanFinancials() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             { label: 'Total Earned', value: `$${totalEarned.toLocaleString('en-US', { minimumFractionDigits: 2 })}`, sub: `${paidOrders.length} paid orders`, icon: DollarSign, color: 'text-green-400', border: 'border-green-800/30', glow: 'from-green-950/20' },
-            { label: 'This Month', value: `$${thisMonthEarnings.toLocaleString('en-US', { minimumFractionDigits: 2 })}`, sub: format(now, 'MMMM yyyy'), icon: TrendingUp, color: 'text-orange-400', border: 'border-orange-800/30', glow: 'from-orange-950/20' },
+            { label: 'This Month', value: `$${thisMonthEarnings.toLocaleString('en-US', { minimumFractionDigits: 2 })}`, sub: format(now, 'MMMM yyyy'), icon: TrendingUp, color: 'text-primary', border: 'border-primary/30', glow: 'from-primary/10' },
             { label: 'Pending Payout', value: `$${pendingAmount.toLocaleString('en-US', { minimumFractionDigits: 2 })}`, sub: `${pendingOrders.length} awaiting payment`, icon: Clock, color: 'text-yellow-400', border: 'border-yellow-800/30', glow: 'from-yellow-950/20' },
             { label: 'Total Orders', value: orders.length, sub: `${orders.filter(o => o.status === 'delivered').length} delivered`, icon: ShoppingBag, color: 'text-blue-400', border: 'border-blue-800/30', glow: 'from-blue-950/20' },
           ].map(s => {
             const Icon = s.icon;
             return (
-              <div key={s.label} className={`bg-gradient-to-br ${s.glow} to-stone-900 border ${s.border} rounded-2xl p-5 hover:scale-[1.01] transition-transform`}>
-                <div className={`w-8 h-8 rounded-lg bg-stone-800 flex items-center justify-center mb-3 ${s.color}`}>
+              <div key={s.label} className={`bg-gradient-to-br ${s.glow} to-card border ${s.border} rounded-2xl p-5 hover:scale-[1.01] transition-transform`}>
+                <div className={`w-8 h-8 rounded-lg bg-muted flex items-center justify-center mb-3 ${s.color}`}>
                   <Icon className="w-4 h-4" />
                 </div>
                 <p className={`text-2xl md:text-3xl font-black ${s.color}`}>{s.value}</p>
-                <p className="text-white text-sm font-semibold mt-1">{s.label}</p>
-                <p className="text-stone-600 text-xs mt-0.5">{s.sub}</p>
+                <p className="text-foreground text-sm font-semibold mt-1">{s.label}</p>
+                <p className="text-muted-foreground text-xs mt-0.5">{s.sub}</p>
               </div>
             );
           })}
         </div>
 
         {/* Earnings Chart */}
-        <div className="bg-stone-900 border border-stone-700 rounded-2xl p-6">
-          <h3 className="font-bold text-white mb-4 flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-orange-400" /> Monthly Earnings (Last 12 Months)
+        <div className="bg-card border border-border rounded-2xl p-6">
+          <h3 className="font-bold text-foreground mb-4 flex items-center gap-2">
+            <TrendingUp className="w-5 h-5 text-primary" /> Monthly Earnings (Last 12 Months)
           </h3>
           <EarningsChart orders={orders} />
         </div>
@@ -127,15 +127,15 @@ export default function ArtisanFinancials() {
           {/* Filters */}
           <div className="flex flex-col sm:flex-row gap-3 mb-4">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-500" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search by order # or buyer..."
-                className="pl-10 bg-stone-900 border-stone-700 text-white placeholder:text-stone-500 focus:border-orange-500" />
+                className="pl-10 bg-card border-border text-foreground placeholder:text-muted-foreground focus:border-primary" />
             </div>
             <div className="flex gap-2">
               {['all', 'paid', 'pending', 'failed'].map(f => (
                 <button key={f} onClick={() => setPayFilter(f)}
                   className={`px-4 py-2 rounded-xl text-xs font-semibold border transition-all capitalize ${
-                    payFilter === f ? 'bg-orange-600 border-orange-600 text-white' : 'bg-stone-900 border-stone-700 text-stone-400 hover:border-stone-500'
+                    payFilter === f ? 'bg-primary border-primary text-primary-foreground' : 'bg-card border-border text-muted-foreground hover:border-primary/40'
                   }`}>{f === 'all' ? 'All' : f}</button>
               ))}
             </div>
@@ -143,7 +143,7 @@ export default function ArtisanFinancials() {
 
           {/* Table */}
           {filtered.length === 0 ? (
-            <div className="text-center py-16 text-stone-600">
+            <div className="text-center py-16 text-muted-foreground">
               <DollarSign className="w-12 h-12 mx-auto mb-3 opacity-20" />
               <p>No transactions found</p>
             </div>
@@ -156,7 +156,7 @@ export default function ArtisanFinancials() {
 
                 return (
                   <div key={order.id}
-                    className={`bg-stone-900 border rounded-2xl overflow-hidden transition-all ${isExpanded ? 'border-orange-600' : 'border-stone-700 hover:border-stone-600'}`}>
+                    className={`bg-card border rounded-2xl overflow-hidden transition-all ${isExpanded ? 'border-primary' : 'border-border hover:border-primary/40'}`}>
                     <button className="w-full text-left p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
                       onClick={() => setExpandedId(isExpanded ? null : order.id)}>
                       <div className="flex items-center gap-4">
@@ -165,13 +165,13 @@ export default function ArtisanFinancials() {
                         </div>
                         <div>
                           <div className="flex items-center gap-2">
-                            <span className="font-bold text-white text-sm">{order.orderNumber || '#' + order.id.slice(-8).toUpperCase()}</span>
+                            <span className="font-bold text-foreground text-sm">{order.orderNumber || '#' + order.id.slice(-8).toUpperCase()}</span>
                             <Badge className={`text-xs border ${payCfg.color}`}>{payCfg.label}</Badge>
                             {order.status && (
-                              <span className={`text-xs capitalize ${ORDER_STATUS_COLOR[order.status] || 'text-stone-400'}`}>· {order.status}</span>
+                              <span className={`text-xs capitalize ${ORDER_STATUS_COLOR[order.status] || 'text-muted-foreground'}`}>· {order.status}</span>
                             )}
                           </div>
-                          <p className="text-stone-500 text-xs mt-0.5">
+                          <p className="text-muted-foreground text-xs mt-0.5">
                             {format(parseISO(order.created_date), 'dd MMM yyyy')}
                             {order.buyerEmail ? ` · ${order.buyerEmail}` : ''}
                           </p>
@@ -181,21 +181,21 @@ export default function ArtisanFinancials() {
                         <span className={`text-xl font-black ${order.paymentStatus === 'paid' ? 'text-green-400' : order.paymentStatus === 'failed' ? 'text-red-400 line-through' : 'text-yellow-400'}`}>
                           ${(order.totalAmount || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}
                         </span>
-                        <span className="text-stone-600 text-xs">{order.currency || 'USD'}</span>
-                        {isExpanded ? <ChevronUp className="w-4 h-4 text-stone-500" /> : <ChevronDown className="w-4 h-4 text-stone-500" />}
+                        <span className="text-muted-foreground text-xs">{order.currency || 'USD'}</span>
+                        {isExpanded ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
                       </div>
                     </button>
 
                     {isExpanded && (
-                      <div className="border-t border-stone-800 px-5 py-4 space-y-3">
+                      <div className="border-t border-border px-5 py-4 space-y-3">
                         {order.items?.length > 0 && (
                           <div>
-                            <p className="text-xs text-orange-400 uppercase tracking-wider font-bold mb-2">Items</p>
+                            <p className="text-xs text-primary uppercase tracking-wider font-bold mb-2">Items</p>
                             <div className="space-y-1.5">
                               {order.items.map((item, i) => (
                                 <div key={i} className="flex items-center justify-between text-sm">
-                                  <span className="text-stone-300">{item.serviceName} × {item.quantity}</span>
-                                  <span className="text-stone-400">${((item.unitPrice || 0) * (item.quantity || 1)).toFixed(2)}</span>
+                                  <span className="text-muted-foreground">{item.serviceName} × {item.quantity}</span>
+                                  <span className="text-muted-foreground">${((item.unitPrice || 0) * (item.quantity || 1)).toFixed(2)}</span>
                                 </div>
                               ))}
                             </div>
@@ -204,19 +204,19 @@ export default function ArtisanFinancials() {
                         <div className="grid grid-cols-2 gap-3 text-sm">
                           {order.paystackReference && (
                             <div>
-                              <p className="text-xs text-orange-400 uppercase tracking-wider">Reference</p>
-                              <code className="text-stone-300 text-xs">{order.paystackReference}</code>
+                              <p className="text-xs text-primary uppercase tracking-wider">Reference</p>
+                              <code className="text-muted-foreground text-xs">{order.paystackReference}</code>
                             </div>
                           )}
                           {order.estimatedDelivery && (
                             <div>
-                              <p className="text-xs text-orange-400 uppercase tracking-wider">Est. Delivery</p>
-                              <p className="text-stone-300">{order.estimatedDelivery}</p>
+                              <p className="text-xs text-primary uppercase tracking-wider">Est. Delivery</p>
+                              <p className="text-muted-foreground">{order.estimatedDelivery}</p>
                             </div>
                           )}
                         </div>
                         {order.notes && (
-                          <p className="text-xs text-stone-500 italic">{order.notes}</p>
+                          <p className="text-xs text-muted-foreground italic">{order.notes}</p>
                         )}
                       </div>
                     )}

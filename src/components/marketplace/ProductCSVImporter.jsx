@@ -138,28 +138,28 @@ export default function ProductCSVImporter() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-stone-900 border border-stone-700 rounded-xl p-6">
+      <div className="bg-card border border-border rounded-xl p-6">
         <div className="flex items-start justify-between flex-wrap gap-4">
           <div>
-            <h2 className="text-xl font-bold text-white flex items-center gap-2">
-              <Upload className="w-5 h-5 text-orange-400" /> Bulk Product Import via CSV
+            <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
+              <Upload className="w-5 h-5 text-primary" /> Bulk Product Import via CSV
             </h2>
-            <p className="text-stone-400 text-sm mt-1">Upload a CSV to add multiple artisan products at once — no manual entry needed.</p>
+            <p className="text-muted-foreground text-sm mt-1">Upload a CSV to add multiple artisan products at once — no manual entry needed.</p>
           </div>
-          <Button variant="outline" onClick={downloadTemplate} className="border-stone-600 text-stone-300 hover:bg-stone-800 gap-2">
+          <Button variant="outline" onClick={downloadTemplate} className="border-border text-muted-foreground hover:bg-muted gap-2">
             <Download className="w-4 h-4" /> Download Template
           </Button>
         </div>
 
         {/* Required columns */}
-        <div className="mt-4 p-3 bg-stone-800/60 rounded-lg">
-          <p className="text-xs text-stone-400 font-semibold mb-2">REQUIRED COLUMNS</p>
+        <div className="mt-4 p-3 bg-muted/60 rounded-lg">
+          <p className="text-xs text-muted-foreground font-semibold mb-2">REQUIRED COLUMNS</p>
           <div className="flex flex-wrap gap-1.5">
-            {REQUIRED_COLS.map(c => <Badge key={c} className="bg-orange-600/20 text-orange-300 text-xs">{c}</Badge>)}
+            {REQUIRED_COLS.map(c => <Badge key={c} className="bg-primary/10 text-primary text-xs">{c}</Badge>)}
           </div>
-          <p className="text-xs text-stone-500 mt-2 font-semibold mb-1">OPTIONAL</p>
+          <p className="text-xs text-muted-foreground mt-2 font-semibold mb-1">OPTIONAL</p>
           <div className="flex flex-wrap gap-1.5">
-            {OPTIONAL_COLS.map(c => <Badge key={c} variant="outline" className="border-stone-600 text-stone-400 text-xs">{c}</Badge>)}
+            {OPTIONAL_COLS.map(c => <Badge key={c} variant="outline" className="border-border text-muted-foreground text-xs">{c}</Badge>)}
           </div>
         </div>
       </div>
@@ -169,20 +169,20 @@ export default function ProductCSVImporter() {
         onDragOver={e => e.preventDefault()}
         onDrop={handleDrop}
         onClick={() => fileInputRef.current?.click()}
-        className="border-2 border-dashed border-stone-600 hover:border-orange-500 rounded-xl p-10 text-center cursor-pointer transition-colors bg-stone-900/50 group"
+        className="border-2 border-dashed border-border hover:border-primary rounded-xl p-10 text-center cursor-pointer transition-colors bg-card/50 group"
       >
-        <FileText className="w-10 h-10 text-stone-500 group-hover:text-orange-400 mx-auto mb-3 transition-colors" />
-        <p className="text-stone-300 font-semibold">{file ? file.name : 'Drop your CSV here or click to browse'}</p>
-        <p className="text-stone-500 text-sm mt-1">Only .csv files are supported</p>
+        <FileText className="w-10 h-10 text-muted-foreground group-hover:text-primary mx-auto mb-3 transition-colors" />
+        <p className="text-muted-foreground font-semibold">{file ? file.name : 'Drop your CSV here or click to browse'}</p>
+        <p className="text-muted-foreground text-sm mt-1">Only .csv files are supported</p>
         <input ref={fileInputRef} type="file" accept=".csv" className="hidden"
           onChange={e => e.target.files[0] && handleFile(e.target.files[0])} />
       </div>
 
       {/* Preview */}
       {preview && (
-        <div className="bg-stone-900 border border-stone-700 rounded-xl p-6 space-y-4">
+        <div className="bg-card border border-border rounded-xl p-6 space-y-4">
           <div className="flex items-center gap-4 flex-wrap">
-            <h3 className="font-bold text-white">Preview</h3>
+            <h3 className="font-bold text-foreground">Preview</h3>
             <span className="flex items-center gap-1 text-sm text-green-400"><CheckCircle className="w-4 h-4" /> {validCount} valid</span>
             {invalidCount > 0 && <span className="flex items-center gap-1 text-sm text-red-400"><XCircle className="w-4 h-4" /> {invalidCount} invalid</span>}
             {preview.missingRequired?.length > 0 && (
@@ -193,15 +193,15 @@ export default function ProductCSVImporter() {
           </div>
 
           {/* Row validation list */}
-          <div className="max-h-64 overflow-y-auto rounded-lg border border-stone-700 divide-y divide-stone-800">
+          <div className="max-h-64 overflow-y-auto rounded-lg border border-border divide-y divide-stone-800">
             {preview.validation.map((v, i) => (
-              <div key={i} className={`px-4 py-2.5 flex items-start gap-3 text-sm ${v.errors.length ? 'bg-red-950/20' : 'bg-stone-800/30'}`}>
+              <div key={i} className={`px-4 py-2.5 flex items-start gap-3 text-sm ${v.errors.length ? 'bg-red-950/20' : 'bg-muted/30'}`}>
                 {v.errors.length === 0
                   ? <CheckCircle className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
                   : <XCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />}
                 <div>
-                  <span className="text-stone-200 font-medium">{v.row.serviceName || `Row ${i + 1}`}</span>
-                  <span className="text-stone-500 ml-2">{v.row.brandName}</span>
+                  <span className="text-foreground font-medium">{v.row.serviceName || `Row ${i + 1}`}</span>
+                  <span className="text-muted-foreground ml-2">{v.row.brandName}</span>
                   {v.errors.length > 0 && (
                     <div className="text-red-400 text-xs mt-0.5">{v.errors.join(' · ')}</div>
                   )}
@@ -213,7 +213,7 @@ export default function ProductCSVImporter() {
           <Button
             onClick={handleImport}
             disabled={importing || validCount === 0 || preview.missingRequired?.length > 0}
-            className="bg-orange-600 hover:bg-orange-700 gap-2"
+            className="bg-primary hover:bg-primary/90 gap-2"
           >
             {importing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
             Import {validCount} Product{validCount !== 1 ? 's' : ''}
@@ -223,8 +223,8 @@ export default function ProductCSVImporter() {
 
       {/* Results */}
       {results && (
-        <div className="bg-stone-900 border border-stone-700 rounded-xl p-6 space-y-3">
-          <h3 className="font-bold text-white">Import Results</h3>
+        <div className="bg-card border border-border rounded-xl p-6 space-y-3">
+          <h3 className="font-bold text-foreground">Import Results</h3>
           {results.success.length > 0 && (
             <div className="p-3 bg-green-950/30 rounded-lg border border-green-900">
               <p className="text-green-400 font-semibold text-sm mb-1">✅ {results.success.length} imported successfully</p>

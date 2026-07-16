@@ -326,7 +326,7 @@ export default function BrandManager() {
             disabled={isDuplicateChecking}
             variant="outline"
             size="sm"
-            className="text-orange-600 border-orange-300 hover:bg-orange-50"
+            className="text-primary border-primary/40 hover:bg-primary/5"
           >
             {isDuplicateChecking ? (
               <Loader2 className="w-4 h-4 animate-spin mr-2" />
@@ -340,20 +340,20 @@ export default function BrandManager() {
       </div>
 
       {duplicates.length > 0 && (
-        <div className="mb-6 p-4 bg-orange-50 border border-orange-200 rounded-lg">
+        <div className="mb-6 p-4 bg-primary/5 border border-primary/30 rounded-lg">
           <div className="flex items-center gap-2 mb-3">
-            <AlertTriangle className="w-5 h-5 text-orange-600" />
-            <h3 className="font-semibold text-orange-900">Potential Duplicates Detected</h3>
+            <AlertTriangle className="w-5 h-5 text-primary" />
+            <h3 className="font-semibold text-primary">Potential Duplicates Detected</h3>
           </div>
           <div className="space-y-3">
             {duplicates.map((group, idx) => (
-              <div key={idx} className="bg-white p-3 rounded border border-orange-200">
-                <p className="text-sm text-orange-800 mb-2"><strong>Reason:</strong> {group.reason}</p>
+              <div key={idx} className="bg-white p-3 rounded border border-primary/30">
+                <p className="text-sm text-primary mb-2"><strong>Reason:</strong> {group.reason}</p>
                 <div className="flex flex-wrap gap-2">
                   {group.brandIds.map(id => {
                     const brand = brands.find(b => b.id === id);
                     return brand ? (
-                      <span key={id} className="text-xs px-2 py-1 bg-orange-100 text-orange-900 rounded">
+                      <span key={id} className="text-xs px-2 py-1 bg-primary/10 text-primary rounded">
                         {brand.name} ({SECTORS[brand.sector]?.split(' ')[0]})
                       </span>
                     ) : null;
