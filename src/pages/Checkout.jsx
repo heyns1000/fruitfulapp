@@ -15,8 +15,8 @@ import CheckoutAIFAQ from '../components/checkout/CheckoutAIFAQ';
 // ── i18n ────────────────────────────────────────────────────────────────────
 const LANGS = {
   en: {
-    name: 'English', announcement: '🛒 Buy one, we sponsor one! ❤️ Every FAA.ZONE purchase supports an artisan community.',
-    backToShop: '← Back to Marketplace', heading: '🌐 FAA.ZONE Checkout',
+    name: 'English', announcement: 'Buy one, we sponsor one. Every FAA.ZONE purchase supports an artisan community.',
+    backToShop: 'Back to Marketplace', heading: 'FAA.ZONE Checkout',
     slogan: 'Handcrafted | Ethical | African Heritage',
     stepSummary: 'Summary', stepShipping: 'Shipping', stepPayment: 'Payment', stepConfirm: 'Confirm',
     summaryTitle: 'Order Summary', shippingTitle: 'Delivery Details', paymentTitle: 'Payment Method', confirmTitle: 'Review & Confirm',
@@ -137,33 +137,35 @@ const LANGS = {
 };
 
 // ── Theme style maps ─────────────────────────────────────────────────────────
+// All themes retargeted onto the Fruitful™ CI (teal primary, mint/white surfaces)
+// so checkout is consistent with the rest of the app in every mode.
 const THEME_STYLES = {
-  dark: {
-    bg: 'bg-[#1a1a1c]', card: 'bg-[#2a2a2e] border-[#3a3a3e]', text: 'text-[#f5f5f7]',
-    muted: 'text-[#a0a0a5]', input: 'bg-[#3a3a3e] border-[#4a4a4e] text-[#f5f5f7] placeholder:text-[#666]',
-    stepInactive: 'bg-[#4A5568] text-[#a0a0a5]', stepActive: 'bg-[#0071e3] text-white',
-    headerBg: 'bg-[#4CAF50]', headerShadow: 'shadow-[0_10px_30px_rgba(76,175,80,0.35)]',
-    announceBg: 'bg-[#4CAF50]', footerBg: 'bg-[#1a1a1a]',
-    btn: 'bg-[#0071e3] hover:bg-[#0060c0] text-white',
-    btnOutline: 'border-[#3a3a3e] text-[#f5f5f7] hover:bg-[#3a3a3e]',
-  },
   light: {
-    bg: 'bg-[#f5f5f7]', card: 'bg-white border-[#e8e8ed]', text: 'text-[#1d1d1f]',
-    muted: 'text-[#6e6e73]', input: 'bg-white border-[#d2d2d7] text-[#1d1d1f] placeholder:text-[#b0b0b5]',
-    stepInactive: 'bg-gray-200 text-gray-500', stepActive: 'bg-[#0071e3] text-white',
-    headerBg: 'bg-[#4CAF50]', headerShadow: 'shadow-[0_10px_30px_rgba(76,175,80,0.35)]',
-    announceBg: 'bg-[#4CAF50]', footerBg: 'bg-gray-900',
-    btn: 'bg-[#0071e3] hover:bg-[#0060c0] text-white',
-    btnOutline: 'border-gray-300 text-gray-700 hover:bg-gray-100',
+    bg: 'bg-background', card: 'bg-card border-border', text: 'text-foreground',
+    muted: 'text-muted-foreground', input: 'bg-card border-border text-foreground placeholder:text-muted-foreground',
+    stepInactive: 'bg-muted text-muted-foreground', stepActive: 'bg-primary text-primary-foreground',
+    headerBg: 'bg-fruitful-teal', headerShadow: 'shadow-[0_10px_30px_rgba(13,148,136,0.30)]',
+    announceBg: 'bg-fruitful-teal-deep', footerBg: 'bg-fruitful-ink',
+    btn: 'bg-primary hover:bg-fruitful-teal-deep text-primary-foreground',
+    btnOutline: 'border-border text-foreground hover:bg-muted',
+  },
+  dark: {
+    bg: 'bg-fruitful-ink', card: 'bg-[#20302a] border-[#2c4038]', text: 'text-fruitful-mint',
+    muted: 'text-[#8fb3a6]', input: 'bg-[#2c4038] border-[#3a5248] text-fruitful-mint placeholder:text-[#6f9184]',
+    stepInactive: 'bg-[#2c4038] text-[#8fb3a6]', stepActive: 'bg-primary text-primary-foreground',
+    headerBg: 'bg-fruitful-teal', headerShadow: 'shadow-[0_10px_30px_rgba(13,148,136,0.35)]',
+    announceBg: 'bg-fruitful-teal-deep', footerBg: 'bg-[#12201a]',
+    btn: 'bg-primary hover:bg-fruitful-teal-deep text-primary-foreground',
+    btnOutline: 'border-[#2c4038] text-fruitful-mint hover:bg-[#2c4038]',
   },
   hyper: {
-    bg: 'bg-[#000033]', card: 'bg-[#110044] border-[#330066]', text: 'text-[#FFCCFF]',
-    muted: 'text-[#AA44AA]', input: 'bg-[#000022] border-[#330066] text-[#FFCCFF] placeholder:text-[#AA44AA]',
-    stepInactive: 'bg-[#330066] text-[#FFCCFF]', stepActive: 'bg-[#FF00FF] text-white',
-    headerBg: 'bg-[#FF00FF]', headerShadow: 'shadow-[0_10px_30px_rgba(255,0,255,0.4)]',
-    announceBg: 'bg-[#CC00CC]', footerBg: 'bg-[#110044]',
-    btn: 'bg-[#8A2BE2] hover:bg-[#7b27cb] text-white',
-    btnOutline: 'border-[#330066] text-[#FFCCFF] hover:bg-[#220055]',
+    bg: 'bg-fruitful-teal-deep', card: 'bg-fruitful-teal/40 border-fruitful-mint/30', text: 'text-white',
+    muted: 'text-fruitful-mint', input: 'bg-fruitful-teal-deep border-fruitful-mint/30 text-white placeholder:text-fruitful-mint/70',
+    stepInactive: 'bg-fruitful-teal/50 text-fruitful-mint', stepActive: 'bg-hotstack-ember text-white',
+    headerBg: 'bg-hotstack-ember', headerShadow: 'shadow-[0_10px_30px_rgba(249,115,22,0.4)]',
+    announceBg: 'bg-hotstack-amber', footerBg: 'bg-fruitful-ink',
+    btn: 'bg-hotstack-ember hover:bg-hotstack-amber text-white',
+    btnOutline: 'border-fruitful-mint/30 text-white hover:bg-fruitful-teal/50',
   },
 };
 
@@ -177,7 +179,7 @@ export default function Checkout() {
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [placedOrderRef, setPlacedOrderRef] = useState('');
   const [showAnnounce, setShowAnnounce] = useState(true);
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState('light');
   const [lang, setLang] = useState('en');
 
   const t = LANGS[lang] || LANGS.en;
@@ -284,17 +286,17 @@ export default function Checkout() {
   if (orderPlaced) return (
     <div className={`min-h-screen ${T.bg} flex items-center justify-center p-6`}>
       <div className={`${T.card} border rounded-3xl p-10 text-center max-w-md w-full`}>
-        <div className="w-20 h-20 bg-green-900/40 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-green-500">
-          <CheckCircle2 className="w-10 h-10 text-green-400" />
+        <div className="w-20 h-20 bg-fruitful-green/15 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-fruitful-green">
+          <CheckCircle2 className="w-10 h-10 text-fruitful-green" />
         </div>
         <h1 className={`text-3xl font-black ${T.text} mb-2`}>{t.orderConfirmed}</h1>
         <p className={`${T.muted} mb-2`}>{t.thankYou}</p>
-        <code className="text-orange-400 text-sm bg-black/20 px-3 py-1 rounded-lg">{placedOrderRef}</code>
+        <code className="text-primary text-sm bg-primary/10 px-3 py-1 rounded-lg font-semibold">{placedOrderRef}</code>
         <div className="flex gap-3 mt-8">
           <Link to={createPageUrl('OrderHistory')} className="flex-1">
             <Button className={`w-full ${T.btn}`}>{t.viewOrders}</Button>
           </Link>
-          <Link to={createPageUrl('Marketplace')} className="flex-1">
+          <Link to={createPageUrl('BrandMarketplace')} className="flex-1">
             <Button variant="outline" className={`w-full ${T.btnOutline}`}>{t.shopMore}</Button>
           </Link>
         </div>
@@ -306,10 +308,10 @@ export default function Checkout() {
   if (cartItems.length === 0 && step === 1) return (
     <div className={`min-h-screen ${T.bg} flex items-center justify-center p-6`}>
       <div className={`${T.card} border rounded-3xl p-10 text-center max-w-md w-full`}>
-        <ShoppingBag className="w-16 h-16 text-stone-600 mx-auto mb-4" />
+        <ShoppingBag className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
         <h2 className={`text-2xl font-black ${T.text} mb-2`}>{t.emptyCart}</h2>
         <p className={`${T.muted} mb-6`}>{t.addItems}</p>
-        <Link to={createPageUrl('Marketplace')}>
+        <Link to={createPageUrl('BrandMarketplace')}>
           <Button className={`${T.btn} px-8`}>{t.browseMarket}</Button>
         </Link>
       </div>
@@ -349,13 +351,13 @@ export default function Checkout() {
             <React.Fragment key={s.id}>
               <div className={`flex flex-col items-center gap-1 cursor-pointer`} onClick={() => step > s.id && setStep(s.id)}>
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all ${
-                  step === s.id ? T.stepActive : step > s.id ? 'bg-green-600 text-white' : T.stepInactive
+                  step === s.id ? T.stepActive : step > s.id ? 'bg-fruitful-green text-white' : T.stepInactive
                 }`}>
                   {step > s.id ? <CheckCircle2 className="w-5 h-5" /> : s.id}
                 </div>
                 <span className={`text-xs font-medium hidden sm:block ${step === s.id ? T.text : T.muted}`}>{s.label}</span>
               </div>
-              {i < steps.length - 1 && <div className={`flex-1 border-t-2 mx-3 ${step > s.id ? 'border-green-600' : 'border-[#4A5568]'}`} />}
+              {i < steps.length - 1 && <div className={`flex-1 border-t-2 mx-3 ${step > s.id ? 'border-fruitful-green' : 'border-border'}`} />}
             </React.Fragment>
           ))}
         </div>
@@ -374,18 +376,18 @@ export default function Checkout() {
                   <div className="space-y-3">
                     {cartItems.map(item => (
                       <div key={item.id} className={`${T.card} border rounded-2xl p-4 flex items-center gap-4`}>
-                        <div className="w-20 h-20 bg-stone-800 rounded-xl overflow-hidden flex-shrink-0">
-                          {item.imageUrl ? <img src={item.imageUrl} alt={item.name || item.serviceName} className="w-full h-full object-cover" /> : <Package className="w-8 h-8 text-stone-600 m-auto mt-5" />}
+                        <div className="w-20 h-20 bg-muted rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center">
+                          {item.imageUrl ? <img src={item.imageUrl} alt={item.name || item.serviceName} className="w-full h-full object-cover" /> : <Package className="w-8 h-8 text-muted-foreground" />}
                         </div>
                         <div className="flex-1 min-w-0">
                           <h3 className={`font-bold ${T.text} truncate`}>{item.name || item.serviceName}</h3>
                           {item.productCode && <p className={`text-xs ${T.muted}`}>SKU: {item.productCode}</p>}
-                          <p className="text-orange-400 font-bold mt-1">${item.price}</p>
+                          <p className="text-primary font-bold mt-1">${item.price}</p>
                         </div>
                         <div className="flex items-center gap-2">
-                          <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="w-7 h-7 bg-stone-800/60 rounded-lg flex items-center justify-center hover:bg-stone-700 text-white">-</button>
+                          <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="w-7 h-7 bg-muted rounded-lg flex items-center justify-center hover:bg-muted-foreground/20 text-foreground">-</button>
                           <span className={`w-6 text-center font-bold ${T.text}`}>{item.quantity}</span>
-                          <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="w-7 h-7 bg-stone-800/60 rounded-lg flex items-center justify-center hover:bg-stone-700 text-white">+</button>
+                          <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="w-7 h-7 bg-muted rounded-lg flex items-center justify-center hover:bg-muted-foreground/20 text-foreground">+</button>
                         </div>
                         <div className="text-right">
                           <p className={`font-black ${T.text} text-lg`}>${(item.price * item.quantity).toFixed(2)}</p>
@@ -452,14 +454,14 @@ export default function Checkout() {
                      { val: 'bank', label: 'Bank Transfer', desc: 'Direct bank transfer (manual)', icon: '🏦' },
                    ].map(m => (
                     <button key={m.val} onClick={() => setPaymentMethod(m.val)}
-                      className={`w-full flex items-center gap-4 p-5 rounded-2xl border text-left transition-all mb-3 ${paymentMethod === m.val ? 'border-green-500 bg-green-500/10' : `${T.card} hover:border-green-700`}`}>
+                      className={`w-full flex items-center gap-4 p-5 rounded-2xl border text-left transition-all mb-3 ${paymentMethod === m.val ? 'border-primary bg-primary/10' : `${T.card} hover:border-primary/50`}`}>
                       <span className="text-2xl">{m.icon}</span>
                       <div>
                         <p className={`font-bold ${T.text}`}>{m.label}</p>
                         <p className={`${T.muted} text-sm`}>{m.desc}</p>
                       </div>
-                      <div className={`ml-auto w-5 h-5 rounded-full border-2 flex items-center justify-center ${paymentMethod === m.val ? 'border-green-500' : 'border-stone-600'}`}>
-                        {paymentMethod === m.val && <div className="w-2.5 h-2.5 rounded-full bg-green-500" />}
+                      <div className={`ml-auto w-5 h-5 rounded-full border-2 flex items-center justify-center ${paymentMethod === m.val ? 'border-primary' : 'border-border'}`}>
+                        {paymentMethod === m.val && <div className="w-2.5 h-2.5 rounded-full bg-primary" />}
                       </div>
                     </button>
                   ))}
@@ -480,13 +482,13 @@ export default function Checkout() {
                       { label: t.stepShipping, value: `${shipping.name}, ${shipping.addressLine1}, ${shipping.city}, ${shipping.country}` },
                       { label: t.stepPayment, value: paymentMethod },
                     ].map(row => (
-                      <div key={row.label} className="border-t border-[#3a3a3e] first:border-0 pt-3 first:pt-0">
-                        <p className="text-xs text-green-400 uppercase tracking-wider font-bold mb-1">{row.label}</p>
+                      <div key={row.label} className="border-t border-border first:border-0 pt-3 first:pt-0">
+                        <p className="text-xs text-primary uppercase tracking-wider font-bold mb-1">{row.label}</p>
                         <p className={`${T.muted} text-sm`}>{row.value}</p>
                       </div>
                     ))}
-                    <div className="border-t border-[#3a3a3e] pt-3">
-                      <p className="text-xs text-green-400 uppercase tracking-wider font-bold mb-2">Items ({cartItems.length})</p>
+                    <div className="border-t border-border pt-3">
+                      <p className="text-xs text-primary uppercase tracking-wider font-bold mb-2">Items ({cartItems.length})</p>
                       {cartItems.map(i => (
                         <div key={i.id} className={`flex justify-between text-sm ${T.muted}`}>
                           <span>{i.name || i.serviceName} × {i.quantity}</span>
@@ -531,15 +533,15 @@ export default function Checkout() {
                   </div>
                   <div className={`flex justify-between ${T.muted}`}>
                     <span>{t.shipping}</span>
-                    <span className="text-green-400">{t.free}</span>
+                    <span className="text-fruitful-green font-semibold">{t.free}</span>
                   </div>
                 </div>
-                <div className={`border-t border-[#3a3a3e] pt-3 flex justify-between font-black text-lg`}>
+                <div className={`border-t border-border pt-3 flex justify-between font-black text-lg`}>
                   <span className={T.text}>{t.total}</span>
-                  <span className="text-orange-400">${getTotal().toFixed(2)}</span>
+                  <span className="text-primary">${getTotal().toFixed(2)}</span>
                 </div>
                 <div className={`mt-4 text-xs ${T.muted} text-center`}>
-                  🌍 {t.footerSlogan}
+                  {t.footerSlogan}
                 </div>
               </div>
             </div>
@@ -548,7 +550,7 @@ export default function Checkout() {
 
         {/* Planet Pulse */}
         <p className={`text-center text-xl font-bold my-8 transition-opacity duration-700 ${pulseVisible ? 'opacity-100' : 'opacity-40'}`}
-          style={{ color: theme === 'hyper' ? '#FF00FF' : theme === 'light' ? '#7B68EE' : '#7B68EE' }}>
+          style={{ color: theme === 'hyper' ? '#f97316' : '#0d9488' }}>
           {t.planetText}
         </p>
       </div>
@@ -557,10 +559,10 @@ export default function Checkout() {
       <footer className={`${T.footerBg} text-white py-10 px-6 text-center`}>
         <div className="max-w-2xl mx-auto">
           <h2 className="text-3xl font-extrabold text-white mb-1">{t.footerHeading}</h2>
-          <p className="text-blue-400 text-xl font-bold mb-3">{t.footerSlogan}</p>
-          <p className="text-gray-300 mb-6">{t.footerText}</p>
-          <Link to={createPageUrl('Marketplace')}>
-            <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-full inline-flex items-center gap-2 transition-colors">
+          <p className="text-fruitful-mint text-xl font-bold mb-3">{t.footerSlogan}</p>
+          <p className="text-white/70 mb-6">{t.footerText}</p>
+          <Link to={createPageUrl('BrandMarketplace')}>
+            <button className="bg-primary hover:bg-fruitful-teal-deep text-primary-foreground font-semibold px-6 py-3 rounded-full inline-flex items-center gap-2 transition-colors">
               {t.browseMarket} <ChevronRight className="w-4 h-4" />
             </button>
           </Link>
@@ -573,16 +575,16 @@ export default function Checkout() {
               <button key={m} onClick={() => setTheme(m)}
                 className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${
                   theme === m
-                    ? 'bg-blue-600 border-blue-600 text-white'
-                    : 'border-gray-700 text-gray-400 hover:border-gray-500'
+                    ? 'bg-primary border-primary text-primary-foreground'
+                    : 'border-white/20 text-white/60 hover:border-white/40'
                 }`}>
                 {m === 'light' ? t.lightMode : m === 'dark' ? t.darkMode : t.hyperMode}
               </button>
             ))}
             <div className="relative">
-              <Globe className="w-4 h-4 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <Globe className="w-4 h-4 text-white/60 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               <select value={lang} onChange={e => setLang(e.target.value)}
-                className="pl-8 pr-3 py-1.5 rounded-full text-sm font-medium border border-gray-700 bg-gray-900 text-gray-300 cursor-pointer appearance-none focus:outline-none focus:border-blue-500">
+                className="pl-8 pr-3 py-1.5 rounded-full text-sm font-medium border border-white/20 bg-white/10 text-white cursor-pointer appearance-none focus:outline-none focus:border-primary">
                 {Object.entries(LANGS).map(([code, l]) => (
                   <option key={code} value={code}>{l.name}</option>
                 ))}
