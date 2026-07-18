@@ -65,7 +65,7 @@ export default function HotStackGenerator({ selectedBrands, vibePrompt, customiz
 
     try {
       const result = await base44.integrations.Core.InvokeLLM({
-        model: 'claude_sonnet_4_6',
+        model: 'gemini_3_flash',
         prompt: `You are HotStack™, an elite AI app builder. Generate a COMPLETE app blueprint as JSON that will render as a LIVE production app. Every field must contain REAL, SPECIFIC content — never empty, never generic, never placeholder.
 
 VIBE: "${vibePrompt || 'Build a full ecosystem app for the FAA.ZONE brands.'}"
