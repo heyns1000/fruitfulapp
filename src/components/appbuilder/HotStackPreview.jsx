@@ -205,41 +205,48 @@ export default function HotStackPreview({ appData, selectedBrands, customization
           LIVE PREVIEW — FULL SCREEN REAL APP
       ══════════════════════════════════════ */}
       {activeTab === 'visualise' && (
-        <div className="fixed inset-0 z-[9998] flex flex-col" style={{ background: '#0a090e' }}>
+        <div className="fixed inset-0 z-[9998] flex flex-col" style={{ background: '#08070b' }}>
+
+          {/* Ambient gradient mesh background */}
+          <div className="fixed inset-0 pointer-events-none overflow-hidden">
+            <div className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full blur-[120px] opacity-[0.07]" style={{ backgroundColor: primary }} />
+            <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full blur-[120px] opacity-[0.05]" style={{ backgroundColor: accent }} />
+          </div>
 
           {/* ── Top Navigation Bar ── */}
-          <header className="flex items-center justify-between px-5 py-3 border-b shrink-0"
-            style={{ background: '#0e0c12', borderColor: `rgba(${primaryRgb},0.12)` }}>
+          <header className="relative flex items-center justify-between px-5 py-3 border-b shrink-0 backdrop-blur-xl"
+            style={{ background: 'rgba(14,12,18,0.7)', borderColor: 'rgba(255,255,255,0.06)' }}>
             <div className="flex items-center gap-4">
               <button onClick={onRebuild}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-stone-700 text-stone-400 hover:bg-stone-800 text-xs font-bold transition-all">
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-stone-400 hover:bg-white/5 hover:text-white text-xs font-bold transition-all"
+                style={{ border: '1px solid rgba(255,255,255,0.06)' }}>
                 <RotateCcw className="w-3.5 h-3.5" /> Exit
               </button>
               <div className="flex items-center gap-2.5">
                 {logoUrl ? (
-                  <img src={logoUrl} alt="logo" className="w-8 h-8 rounded-lg object-cover" />
+                  <img src={logoUrl} alt="logo" className="w-9 h-9 rounded-xl object-cover" />
                 ) : (
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-black text-black"
-                    style={{ background: `linear-gradient(135deg, ${primary}, ${accent})` }}>
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center text-sm font-black text-black"
+                    style={{ background: `linear-gradient(135deg, ${primary}, ${accent})`, boxShadow: `0 4px 12px rgba(${primaryRgb},0.3)` }}>
                     {appData.appName?.[0] || 'H'}
                   </div>
                 )}
                 <div>
                   <p className="text-white font-black text-sm leading-tight">{appData.appName}</p>
-                  <p className="text-[10px] font-mono" style={{ color: accent }}>{appData.tagline?.slice(0, 40)}</p>
+                  <p className="text-[10px] font-mono text-stone-500">{appData.tagline?.slice(0, 40)}</p>
                 </div>
               </div>
             </div>
 
             {/* Center nav */}
-            <nav className="hidden md:flex items-center gap-1">
+            <nav className="hidden md:flex items-center gap-1 p-1 rounded-xl" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.04)' }}>
               {appData.pages?.slice(0, 7).map((page, i) => {
                 const isActive = i === activePage;
                 return (
                   <button key={i} onClick={() => setActivePage(i)}
                     className="px-3 py-1.5 rounded-lg text-xs font-bold transition-all"
                     style={isActive
-                      ? { background: primary, color: '#000' }
+                      ? { background: primary, color: '#000', boxShadow: `0 2px 8px rgba(${primaryRgb},0.3)` }
                       : { color: 'rgba(255,255,255,0.4)' }
                     }>
                     {page.name}
@@ -249,26 +256,26 @@ export default function HotStackPreview({ appData, selectedBrands, customization
             </nav>
 
             <div className="flex items-center gap-3">
-              <button onClick={() => toast.info('Search — live preview')} className="text-stone-500 hover:text-white transition-colors">
+              <button onClick={() => toast.info('Search — live preview')} className="text-stone-500 hover:text-white transition-colors w-8 h-8 rounded-lg hover:bg-white/5 flex items-center justify-center">
                 <Search className="w-4 h-4" />
               </button>
-              <button onClick={() => toast.info('Notifications — live preview')} className="text-stone-500 hover:text-white transition-colors relative">
+              <button onClick={() => toast.info('Notifications — live preview')} className="text-stone-500 hover:text-white transition-colors relative w-8 h-8 rounded-lg hover:bg-white/5 flex items-center justify-center">
                 <Bell className="w-4 h-4" />
-                <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full" style={{ backgroundColor: primary }} />
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full" style={{ backgroundColor: primary }} />
               </button>
               <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-black text-black"
-                style={{ background: `linear-gradient(135deg, ${primary}, ${accent})` }}>
+                style={{ background: `linear-gradient(135deg, ${primary}, ${accent})`, boxShadow: `0 2px 8px rgba(${primaryRgb},0.3)` }}>
                 {(appData.userRoles?.[0] || 'A')[0].toUpperCase()}
               </div>
             </div>
           </header>
 
           {/* ── Body: Sidebar + Content ── */}
-          <div className="flex flex-1 overflow-hidden">
+          <div className="relative flex flex-1 overflow-hidden">
 
             {/* Sidebar */}
-            <aside className="w-60 shrink-0 flex flex-col border-r hidden lg:flex"
-              style={{ background: '#0c0a10', borderColor: `rgba(${primaryRgb},0.1)` }}>
+            <aside className="w-60 shrink-0 flex flex-col border-r hidden lg:flex backdrop-blur-xl"
+              style={{ background: 'rgba(12,10,16,0.6)', borderColor: 'rgba(255,255,255,0.04)' }}>
               <div className="p-3">
                 <p className="text-[9px] font-black tracking-[0.18em] uppercase px-3 pb-2 text-stone-700">Pages</p>
                 {appData.pages?.slice(0, 12).map((page, i) => {
@@ -276,9 +283,9 @@ export default function HotStackPreview({ appData, selectedBrands, customization
                   const isActive = i === activePage;
                   return (
                     <button key={i} onClick={() => setActivePage(i)}
-                      className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-xs font-semibold transition-all text-left"
+                      className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-xs font-semibold transition-all text-left mb-0.5"
                       style={isActive
-                        ? { background: `linear-gradient(90deg, rgba(${primaryRgb},0.18), rgba(${primaryRgb},0.04))`, color: primary, borderLeft: `2px solid ${primary}` }
+                        ? { background: `linear-gradient(90deg, rgba(${primaryRgb},0.15), rgba(${primaryRgb},0.02))`, color: primary, borderLeft: `2px solid ${primary}` }
                         : { color: 'rgba(255,255,255,0.4)' }
                       }>
                       <Icon className="w-3.5 h-3.5 shrink-0" style={isActive ? { color: primary } : {}} />
@@ -288,12 +295,12 @@ export default function HotStackPreview({ appData, selectedBrands, customization
                 })}
               </div>
 
-              <div className="mt-auto p-3 border-t" style={{ borderColor: `rgba(${primaryRgb},0.08)` }}>
+              <div className="mt-auto p-3 border-t" style={{ borderColor: 'rgba(255,255,255,0.04)' }}>
                 <p className="text-[9px] font-black tracking-[0.18em] uppercase px-3 pb-2 text-stone-700">Ecosystem</p>
                 {selectedBrands.slice(0, 6).map(b => {
                   const sm = SECTOR_META[b.sector];
                   return (
-                    <div key={b.id} className="flex items-center gap-2 px-3 py-1.5 rounded-lg mb-0.5 hover:bg-white/[0.03] transition-colors cursor-pointer">
+                    <div key={b.id} className="flex items-center gap-2 px-3 py-1.5 rounded-lg mb-0.5 hover:bg-white/[0.04] transition-colors cursor-pointer">
                       <span className="text-xs">{sm?.icon || '◆'}</span>
                       <span className="text-[11px] font-bold truncate" style={{ color: sm?.accent || '#aaa' }}>{b.name}™</span>
                     </div>
@@ -306,7 +313,7 @@ export default function HotStackPreview({ appData, selectedBrands, customization
             </aside>
 
             {/* Main content */}
-            <main className="flex-1 overflow-auto" style={{ background: '#0a090e' }}>
+            <main className="flex-1 overflow-auto relative" style={{ background: 'rgba(8,7,11,0.5)' }}>
               <PageRenderer
                 page={currentPage}
                 appData={appData}
