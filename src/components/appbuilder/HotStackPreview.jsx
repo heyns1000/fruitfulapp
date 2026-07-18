@@ -6,10 +6,11 @@ import {
   Zap, Shield, RotateCcw, Layers, Globe,
   Activity, Lock, Cpu, TrendingUp, Users,
   Package, Star, GitBranch, ArrowRight, CheckCircle2,
-  ChevronRight, Code2, Eye, LayoutDashboard, Sparkles
+  ChevronRight, Code2, Eye, LayoutDashboard, Sparkles, Rocket
 } from 'lucide-react';
 import { toast } from 'sonner';
 import PageRenderer from './PageRenderer';
+import CodeExporter from './CodeExporter';
 
 const SECTOR_META = {
   agriculture:      { icon: '🌱', accent: '#22c55e' },
@@ -70,6 +71,7 @@ const TABS = [
 export default function HotStackPreview({ appData, selectedBrands, customization, onRebuild }) {
   const [activePage, setActivePage] = useState(0);
   const [activeTab, setActiveTab] = useState('visualise');
+  const [showExporter, setShowExporter] = useState(false);
 
   const primary   = appData.colorScheme?.primary   || '#f97316';
   const secondary = appData.colorScheme?.secondary || '#1c1917';
@@ -169,10 +171,10 @@ export default function HotStackPreview({ appData, selectedBrands, customization
                 className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-stone-700 text-stone-400 hover:bg-stone-800 text-xs font-bold transition-all">
                 <FileCode className="w-3.5 h-3.5" /> README
               </button>
-              <button onClick={downloadReact}
+              <button onClick={() => setShowExporter(true)}
                 className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-black transition-all text-black"
                 style={{ background: `linear-gradient(135deg, ${primary}, ${accent})` }}>
-                <Download className="w-3.5 h-3.5" /> React Code
+                <Rocket className="w-3.5 h-3.5" /> Export Code
               </button>
             </div>
           </div>
@@ -542,6 +544,15 @@ export default function HotStackPreview({ appData, selectedBrands, customization
             </div>
           ))}
         </div>
+      )}
+
+      {/* Real Code Exporter */}
+      {showExporter && (
+        <CodeExporter
+          appData={appData}
+          selectedBrands={selectedBrands}
+          onClose={() => setShowExporter(false)}
+        />
       )}
     </div>
   );
