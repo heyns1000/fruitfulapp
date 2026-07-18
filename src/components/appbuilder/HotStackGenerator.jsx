@@ -64,75 +64,34 @@ export default function HotStackGenerator({ selectedBrands, vibePrompt, customiz
     const refFiles = customization?.referenceFiles || [];
 
     try {
+      // Lean LLM call — only pages + content blocks. Metadata generated locally to avoid timeout.
       const result = await base44.integrations.Core.InvokeLLM({
         model: 'gemini_3_flash',
-        prompt: `You are HotStack™, an elite AI app builder. Generate a COMPLETE app blueprint as JSON that will render as a LIVE production app. Every field must contain REAL, SPECIFIC content — never empty, never generic, never placeholder.
+        prompt: `Generate an app blueprint as JSON. 3 pages, each with 2 content blocks. Use the real brand data below. Every field must have REAL specific content — real names, real numbers, real descriptions. No placeholders.
 
 VIBE: "${vibePrompt || 'Build a full ecosystem app for the FAA.ZONE brands.'}"
 APP NAME: ${appName}
-TYPE: ${appType}
-ROLES: ${JSON.stringify(userRoles)}
-${hasCustomColors ? `BRAND COLORS (use exactly): primary=${customColors.primary} secondary=${customColors.secondary} accent=${customColors.accent}` : ''}
-${refFiles.length > 0 ? `REFERENCE FILES: ${refFiles.length} file(s) attached — incorporate their style.` : ''}
+${hasCustomColors ? `COLORS: primary=${customColors.primary} accent=${customColors.accent}` : ''}
 
-REAL BRANDS (${selectedBrands.length}):
-${JSON.stringify(brandsSummary)}
+BRANDS: ${JSON.stringify(brandsSummary)}
 
-═══ RULES ═══
-1. Generate 6 pages. Each page needs 4 contentBlocks. Each block needs 6-10 items.
-2. EVERY item must have real data — real names, real numbers, real descriptions.
-3. Use the brand names, sectors, and subnodes from the REAL BRANDS list above.
-4. Numbers should look real: "12,847" not "123", "$284K" not "$1", "94.2%" not "50%".
+Generate these 3 pages:
+1. "Dashboard" — blocks: kpi_grid (4 items: label/value/sub) + card_grid (6 items: name/description/sector/status/metric)
+2. "Marketplace" — blocks: hero (badge/title/body/ctaLabel) + data_table (6 items: name/email/status/amount/date)
+3. "Analytics" — blocks: chart (8 items: label/value integer) + stat_list (6 items: label/value/sub)
 
-═══ BLOCK TYPES ═══
-
-hero: { badge, title, body, ctaLabel }
-kpi_grid: items[{ label, value, sub }] — 4 items, value = real formatted number
-card_grid: items[{ name, description, sector, status, metric }] — 6-9 items
-data_table: items[{ name, email, status, amount, date }] — 6-10 rows, all fields filled
-chart: items[{ label, value }] — 8-12 items, value = integer
-activity_feed: items[{ message, time, user }] — 6-10 items, message = full sentence
-timeline: items[{ title, description, time }] — 5-8 items
-stat_list: items[{ label, value, sub }] — 6-8 items
-form: items[{ label, type }] — 4-6 items
-split_panel: { title, body, items[{ name, description }] } — 4-5 items
-cta: { title, body, items[{ label }] }
-
-═══ PAGE LAYOUTS ═══
-Page 1 "Dashboard" (layout: dashboard): kpi_grid + chart + data_table + activity_feed
-Page 2 "Marketplace" (layout: list): hero + card_grid + data_table
-Page 3 "Analytics" (layout: analytics): kpi_grid + chart + stat_list + data_table
-Page 4 "Profiles" (layout: detail): hero + split_panel + stat_list + card_grid
-Page 5 "Settings" (layout: settings): form + split_panel
-Page 6 "Activity" (layout: dashboard): kpi_grid + activity_feed + timeline + card_grid
-
-═══ ALSO GENERATE ═══
-features: 8 items [{ name, description, relatedBrands[] }]
-crossPollination: 6 items [{ brand1, brand2, connectionType, feature, synergyScore }]
-databaseSchema: 6 items [{ tableName, fields[], relationships[] }]
-techStack: { frontend[], backend[], database }
-rolePermissions: { roles[{ name, permissions[], description }] }
-
-GOOD examples:
-- name: "Artisan Pottery Collection" (NOT "Product 1")
-- description: "Hand-thrown ceramic vessels from master potters in KwaZulu-Natal" (NOT "A product")
-- value: "12,847" (NOT "123")
-- message: "Thandiwe N. completed order #ORD-9241 for R3,240" (NOT "New order")
-
-Return ONLY valid JSON. Every field filled with real content.`,
+Use real African names (Thandiwe, Sipho, Nomsa, Lerato, Zanele), real amounts (R3,240, R45,200), real product names from the brands. Return ONLY JSON.`,
         file_urls: refFiles.length > 0 ? refFiles : undefined,
         response_json_schema: {
           type: 'object',
           properties: {
-            appName:     { type: 'string' },
-            tagline:     { type: 'string' },
+            tagline: { type: 'string' },
             colorScheme: { type: 'object', properties: { primary: { type: 'string' }, secondary: { type: 'string' }, accent: { type: 'string' } } },
             pages: { type: 'array', items: { type: 'object', properties: {
               name: { type: 'string' },
               route: { type: 'string' },
               description: { type: 'string' },
               layout: { type: 'string' },
-              sections: { type: 'array', items: { type: 'string' } },
               contentBlocks: { type: 'array', items: { type: 'object', properties: {
                 type: { type: 'string' },
                 title: { type: 'string' },
@@ -140,49 +99,37 @@ Return ONLY valid JSON. Every field filled with real content.`,
                 badge: { type: 'string' },
                 ctaLabel: { type: 'string' },
                 items: { type: 'array', items: { type: 'object', properties: {
-                  name: { type: 'string' },
-                  title: { type: 'string' },
-                  label: { type: 'string' },
-                  description: { type: 'string' },
-                  body: { type: 'string' },
-                  value: { type: 'string' },
-                  count: { type: 'string' },
-                  sub: { type: 'string' },
-                  trend: { type: 'string' },
-                  metric: { type: 'string' },
-                  sector: { type: 'string' },
-                  category: { type: 'string' },
-                  status: { type: 'string' },
-                  message: { type: 'string' },
-                  time: { type: 'string' },
-                  date: { type: 'string' },
-                  user: { type: 'string' },
-                  icon: { type: 'string' },
-                  type: { type: 'string' },
-                  amount: { type: 'string' },
-                  orderId: { type: 'string' },
-                  email: { type: 'string' },
-                  revenue: { type: 'string' },
-                  price: { type: 'string' },
+                  name: { type: 'string' }, label: { type: 'string' }, description: { type: 'string' },
+                  value: { type: 'string' }, sub: { type: 'string' }, metric: { type: 'string' },
+                  sector: { type: 'string' }, status: { type: 'string' }, message: { type: 'string' },
+                  time: { type: 'string' }, user: { type: 'string' }, amount: { type: 'string' },
+                  email: { type: 'string' }, date: { type: 'string' },
                 } } }
               } } }
-            } } },
-            features: { type: 'array', items: { type: 'object', properties: { name: { type: 'string' }, description: { type: 'string' }, relatedBrands: { type: 'array', items: { type: 'string' } } } } },
-            crossPollination: { type: 'array', items: { type: 'object', properties: { brand1: { type: 'string' }, brand2: { type: 'string' }, connectionType: { type: 'string' }, feature: { type: 'string' }, synergyScore: { type: 'number' } } } },
-            databaseSchema: { type: 'array', items: { type: 'object', properties: { tableName: { type: 'string' }, fields: { type: 'array', items: { type: 'string' } }, relationships: { type: 'array', items: { type: 'string' } } } } },
-            techStack: { type: 'object', properties: { frontend: { type: 'array', items: { type: 'string' } }, backend: { type: 'array', items: { type: 'string' } }, database: { type: 'string' } } },
-            rolePermissions: { type: 'object', properties: { roles: { type: 'array', items: { type: 'object', properties: { name: { type: 'string' }, permissions: { type: 'array', items: { type: 'string' } }, description: { type: 'string' } } } } } },
-            loyaltyProgram: { type: 'object', properties: { programName: { type: 'string' }, earnRate: { type: 'string' }, tiers: { type: 'array', items: { type: 'string' } }, crossBrandBenefits: { type: 'array', items: { type: 'string' } } } },
+            } } }
           },
         },
       });
 
       setIsGenerating(false);
+
+      // Generate metadata locally from brand data (fast, no LLM needed)
+      const localMeta = generateLocalMetadata(selectedBrands, userRoles, appName);
+
       // Override AI colors with user's custom colors if provided
-      const finalResult = hasCustomColors
-        ? { ...result, colorScheme: { ...result.colorScheme, ...customColors } }
-        : result;
-      onGenerated({ ...finalResult, appName, vibePrompt, appType, userRoles, selectedBrands, customization, generatedAt: new Date().toISOString() });
+      const colorScheme = hasCustomColors
+        ? { ...(result.colorScheme || {}), ...customColors }
+        : result.colorScheme || { primary: '#f97316', secondary: '#1c1917', accent: '#f59e0b' };
+
+      const finalResult = {
+        ...result,
+        appName,
+        tagline: result.tagline || vibePrompt?.slice(0, 80) || `${appName} — powered by FAA.ZONE`,
+        colorScheme,
+        ...localMeta,
+      };
+
+      onGenerated({ ...finalResult, vibePrompt, appType, userRoles, selectedBrands, customization, generatedAt: new Date().toISOString() });
       toast.success('🔥 HotStack™ app generated!');
     } catch (err) {
       setIsGenerating(false);
@@ -191,6 +138,49 @@ Return ONLY valid JSON. Every field filled with real content.`,
       toast.error(`Generation failed: ${msg}. Try fewer brands.`, { duration: 6000 });
     }
   };
+
+  // Generate features, crossPollination, databaseSchema, techStack, rolePermissions locally from brand data
+  function generateLocalMetadata(brands, roles, name) {
+    const features = brands.slice(0, 8).map((b, i) => ({
+      name: `${b.name}™ ${b.subnodes?.[0] || 'Hub'}`,
+      description: `${b.name} ecosystem integration — ${b.subnodes?.length || 0} active subnodes across the ${b.sector} sector with real-time sync.`,
+      relatedBrands: [b.name],
+    }));
+
+    const crossPollination = [];
+    for (let i = 0; i < brands.length - 1 && i < 6; i++) {
+      const b1 = brands[i], b2 = brands[i + 1];
+      crossPollination.push({
+        brand1: b1.name, brand2: b2.name,
+        connectionType: ['supply_chain', 'data_share', 'co_brand', 'referral', 'bundle'][i % 5],
+        feature: `${b1.name} × ${b2.name} cross-sector collaboration via shared ${b1.sector}/${b2.sector} data layer`,
+        synergyScore: 65 + Math.floor(Math.random() * 30),
+      });
+    }
+
+    const databaseSchema = [
+      { tableName: 'Brand', fields: ['id:string', 'name:string', 'sector:string', 'subnodes:array', 'tags:array'], relationships: ['has many MarketplaceService'] },
+      { tableName: 'MarketplaceService', fields: ['id:string', 'brandId:string', 'serviceName:string', 'pricing:object', 'status:string'], relationships: ['belongs to Brand', 'has many Order'] },
+      { tableName: 'Order', fields: ['id:string', 'items:array', 'totalAmount:number', 'status:string', 'buyerEmail:string'], relationships: ['has many MarketplaceService'] },
+      { tableName: 'Payment', fields: ['id:string', 'amount:number', 'gateway:string', 'status:string', 'type:string'], relationships: ['belongs to Order'] },
+      { tableName: 'Subscription', fields: ['id:string', 'plan:string', 'amount:number', 'status:string', 'brandId:string'], relationships: ['belongs to Brand'] },
+      { tableName: 'LoyaltyAccount', fields: ['id:string', 'userId:string', 'totalPoints:number', 'tier:string'], relationships: ['has many RewardOffer'] },
+    ];
+
+    return {
+      features,
+      crossPollination,
+      databaseSchema,
+      techStack: { frontend: ['React', 'Tailwind CSS', 'shadcn/ui'], backend: ['Base44 SDK', 'Deno Functions'], database: 'Base44 Entities' },
+      rolePermissions: {
+        roles: roles.map((r, i) => ({
+          name: r,
+          permissions: r === 'admin' ? ['manage_all', 'view_analytics', 'manage_users', 'manage_brands'] : r === 'artisan' ? ['manage_products', 'view_orders', 'respond_messages'] : ['browse_marketplace', 'place_orders', 'write_reviews'],
+          description: r === 'admin' ? 'Full platform access and ecosystem management' : r === 'artisan' ? 'Manage products, orders, and customer messages' : 'Browse, purchase, and review marketplace items',
+        })),
+      },
+    };
+  }
 
   if (isGenerating) {
     return (
