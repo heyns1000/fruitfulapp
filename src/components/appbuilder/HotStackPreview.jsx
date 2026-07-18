@@ -6,7 +6,8 @@ import {
   Zap, Shield, RotateCcw, Layers, Globe,
   Activity, Lock, Cpu, TrendingUp, Users,
   Package, Star, GitBranch, ArrowRight, CheckCircle2,
-  ChevronRight, Code2, Eye, LayoutDashboard, Sparkles, Rocket
+  ChevronRight, Code2, Eye, LayoutDashboard, Sparkles, Rocket,
+  Bell, Search
 } from 'lucide-react';
 import { toast } from 'sonner';
 import PageRenderer from './PageRenderer';
@@ -201,147 +202,131 @@ export default function HotStackPreview({ appData, selectedBrands, customization
       </div>
 
       {/* ══════════════════════════════════════
-          LIVE PREVIEW
+          LIVE PREVIEW — FULL SCREEN REAL APP
       ══════════════════════════════════════ */}
       {activeTab === 'visualise' && (
-        <div className="rounded-2xl overflow-hidden border border-stone-700/60 shadow-2xl"
-          style={{ boxShadow: `0 0 80px rgba(${primaryRgb},0.12)` }}>
+        <div className="fixed inset-0 z-[9998] flex flex-col" style={{ background: '#0a090e' }}>
 
-          {/* Browser chrome */}
-          <div className="flex items-center gap-3 px-4 py-2.5 border-b border-stone-800" style={{ background: '#0e0c11' }}>
-            <div className="flex gap-1.5">
-              <div className="w-3 h-3 rounded-full bg-red-500/80" />
-              <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-              <div className="w-3 h-3 rounded-full bg-green-500/80" />
-            </div>
-            <div className="flex-1 bg-stone-800/60 rounded-md px-3 py-1 text-xs text-stone-400 font-mono flex items-center gap-1.5">
-              <Lock className="w-2.5 h-2.5 text-green-400" />
-              app.{appData.appName?.toLowerCase().replace(/\s+/g, '-') || 'hotstack'}.faa.zone
-            </div>
-            <div className="flex items-center gap-1.5 text-[11px] font-mono" style={{ color: primary }}>
-              <span className="w-1.5 h-1.5 rounded-full animate-pulse inline-block" style={{ backgroundColor: primary }} /> LIVE
-            </div>
-          </div>
-
-          <div className="flex" style={{ minHeight: '900px', background: '#08070a' }}>
-
-            {/* ── Sidebar ── */}
-            <div className="w-64 shrink-0 flex flex-col border-r"
-              style={{ background: '#100e14', borderColor: `rgba(${primaryRgb},0.12)` }}>
-
-              {/* Logo */}
-              <div className="px-4 pt-5 pb-4 border-b" style={{ borderColor: `rgba(${primaryRgb},0.12)` }}>
-                <div className="flex items-center gap-2.5 mb-1">
-                  {logoUrl ? (
-                    <img src={logoUrl} alt="logo" className="w-9 h-9 rounded-xl object-cover" />
-                  ) : (
-                    <div className="w-8 h-8 rounded-xl flex items-center justify-center text-sm font-black text-black"
-                      style={{ background: `linear-gradient(135deg, ${primary}, ${accent})` }}>
-                      {appData.appName?.[0] || 'H'}
-                    </div>
-                  )}
-                  <div>
-                    <p className="text-white font-black text-[13px] leading-tight truncate max-w-[100px]">{appData.appName}</p>
-                    <p className="text-[10px] font-mono" style={{ color: accent }}>v2026.1</p>
+          {/* ── Top Navigation Bar ── */}
+          <header className="flex items-center justify-between px-5 py-3 border-b shrink-0"
+            style={{ background: '#0e0c12', borderColor: `rgba(${primaryRgb},0.12)` }}>
+            <div className="flex items-center gap-4">
+              <button onClick={onRebuild}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-stone-700 text-stone-400 hover:bg-stone-800 text-xs font-bold transition-all">
+                <RotateCcw className="w-3.5 h-3.5" /> Exit
+              </button>
+              <div className="flex items-center gap-2.5">
+                {logoUrl ? (
+                  <img src={logoUrl} alt="logo" className="w-8 h-8 rounded-lg object-cover" />
+                ) : (
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-black text-black"
+                    style={{ background: `linear-gradient(135deg, ${primary}, ${accent})` }}>
+                    {appData.appName?.[0] || 'H'}
                   </div>
+                )}
+                <div>
+                  <p className="text-white font-black text-sm leading-tight">{appData.appName}</p>
+                  <p className="text-[10px] font-mono" style={{ color: accent }}>{appData.tagline?.slice(0, 40)}</p>
                 </div>
-                <p className="text-[10px] leading-relaxed mt-2 text-stone-600 line-clamp-2">
-                  {appData.tagline?.slice(0, 55)}
-                </p>
               </div>
+            </div>
 
-              {/* Nav */}
-              <nav className="flex-1 p-2 space-y-0.5 overflow-auto">
-                <p className="text-[9px] font-black tracking-[0.18em] uppercase px-3 pt-2 pb-1.5 text-stone-700">Navigation</p>
+            {/* Center nav */}
+            <nav className="hidden md:flex items-center gap-1">
+              {appData.pages?.slice(0, 7).map((page, i) => {
+                const isActive = i === activePage;
+                return (
+                  <button key={i} onClick={() => setActivePage(i)}
+                    className="px-3 py-1.5 rounded-lg text-xs font-bold transition-all"
+                    style={isActive
+                      ? { background: primary, color: '#000' }
+                      : { color: 'rgba(255,255,255,0.4)' }
+                    }>
+                    {page.name}
+                  </button>
+                );
+              })}
+            </nav>
+
+            <div className="flex items-center gap-3">
+              <button onClick={() => toast.info('Search — live preview')} className="text-stone-500 hover:text-white transition-colors">
+                <Search className="w-4 h-4" />
+              </button>
+              <button onClick={() => toast.info('Notifications — live preview')} className="text-stone-500 hover:text-white transition-colors relative">
+                <Bell className="w-4 h-4" />
+                <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full" style={{ backgroundColor: primary }} />
+              </button>
+              <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-black text-black"
+                style={{ background: `linear-gradient(135deg, ${primary}, ${accent})` }}>
+                {(appData.userRoles?.[0] || 'A')[0].toUpperCase()}
+              </div>
+            </div>
+          </header>
+
+          {/* ── Body: Sidebar + Content ── */}
+          <div className="flex flex-1 overflow-hidden">
+
+            {/* Sidebar */}
+            <aside className="w-60 shrink-0 flex flex-col border-r hidden lg:flex"
+              style={{ background: '#0c0a10', borderColor: `rgba(${primaryRgb},0.1)` }}>
+              <div className="p-3">
+                <p className="text-[9px] font-black tracking-[0.18em] uppercase px-3 pb-2 text-stone-700">Pages</p>
                 {appData.pages?.slice(0, 12).map((page, i) => {
                   const Icon = PAGE_ICONS[i % PAGE_ICONS.length];
                   const isActive = i === activePage;
                   return (
                     <button key={i} onClick={() => setActivePage(i)}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all text-left group"
+                      className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-xs font-semibold transition-all text-left"
                       style={isActive
-                        ? { background: `linear-gradient(90deg, rgba(${primaryRgb},0.2), rgba(${primaryRgb},0.06))`, color: primary, borderLeft: `2px solid ${primary}` }
-                        : { color: 'rgba(255,255,255,0.35)' }
+                        ? { background: `linear-gradient(90deg, rgba(${primaryRgb},0.18), rgba(${primaryRgb},0.04))`, color: primary, borderLeft: `2px solid ${primary}` }
+                        : { color: 'rgba(255,255,255,0.4)' }
                       }>
                       <Icon className="w-3.5 h-3.5 shrink-0" style={isActive ? { color: primary } : {}} />
                       <span className="truncate">{page.name}</span>
                     </button>
                   );
                 })}
-              </nav>
+              </div>
 
-              {/* Ecosystem pills */}
-              <div className="p-2 border-t" style={{ borderColor: `rgba(${primaryRgb},0.1)` }}>
-                <p className="text-[9px] font-black tracking-[0.18em] uppercase px-2 pb-1.5 text-stone-700">Ecosystem</p>
-                {selectedBrands.slice(0, 5).map(b => {
+              <div className="mt-auto p-3 border-t" style={{ borderColor: `rgba(${primaryRgb},0.08)` }}>
+                <p className="text-[9px] font-black tracking-[0.18em] uppercase px-3 pb-2 text-stone-700">Ecosystem</p>
+                {selectedBrands.slice(0, 6).map(b => {
                   const sm = SECTOR_META[b.sector];
                   return (
-                    <div key={b.id} className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg mb-0.5"
-                      style={{ background: 'rgba(255,255,255,0.02)' }}>
-                      <span className="text-[11px]">{sm?.icon || '◆'}</span>
-                      <span className="text-[10px] font-bold truncate" style={{ color: sm?.accent || '#aaa' }}>{b.name}™</span>
+                    <div key={b.id} className="flex items-center gap-2 px-3 py-1.5 rounded-lg mb-0.5 hover:bg-white/[0.03] transition-colors cursor-pointer">
+                      <span className="text-xs">{sm?.icon || '◆'}</span>
+                      <span className="text-[11px] font-bold truncate" style={{ color: sm?.accent || '#aaa' }}>{b.name}™</span>
                     </div>
                   );
                 })}
-                {selectedBrands.length > 5 && (
-                  <p className="text-[9px] text-center py-1 text-stone-700">+{selectedBrands.length - 5} more</p>
+                {selectedBrands.length > 6 && (
+                  <p className="text-[9px] text-center py-1 text-stone-700">+{selectedBrands.length - 6} more</p>
                 )}
               </div>
-            </div>
+            </aside>
 
-            {/* ── Main area ── */}
-            <div className="flex-1 flex flex-col overflow-hidden" style={{ background: '#0d0b0f' }}>
+            {/* Main content */}
+            <main className="flex-1 overflow-auto" style={{ background: '#0a090e' }}>
+              <PageRenderer
+                page={currentPage}
+                appData={appData}
+                selectedBrands={selectedBrands}
+                primary={primary}
+                secondary={secondary}
+                accent={accent}
+                primaryRgb={primaryRgb}
+                accentRgb={accentRgb}
+              />
+            </main>
+          </div>
 
-              {/* Topbar */}
-              <div className="flex items-center justify-between px-6 py-3 border-b shrink-0"
-                style={{ background: '#110f15', borderColor: `rgba(${primaryRgb},0.08)` }}>
-                <div>
-                  <h2 className="text-white font-black text-sm">{currentPage?.name || 'Dashboard'}</h2>
-                  <p className="text-[10px] mt-0.5 text-stone-600 line-clamp-1">{currentPage?.description?.slice(0, 70)}</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-1 bg-stone-900 border border-stone-800 rounded-full px-2 py-1">
-                    {brandSectorAccents.slice(0, 4).map((c, i) => (
-                      <div key={i} className="w-2 h-2 rounded-full" style={{ backgroundColor: c }} />
-                    ))}
-                  </div>
-                  <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-black text-black"
-                    style={{ background: `linear-gradient(135deg, ${primary}, ${accent})` }}>
-                    {(appData.userRoles?.[0] || 'A')[0].toUpperCase()}
-                  </div>
-                  <span className="text-[10px] font-mono px-2 py-1 rounded-full border"
-                    style={{ borderColor: `rgba(${primaryRgb},0.4)`, color: primary, background: `rgba(${primaryRgb},0.08)` }}>
-                    {appData.userRoles?.[0] || 'admin'}
-                  </span>
-                </div>
-              </div>
-
-              {/* Scrollable content — renders REAL page content per selected page */}
-              <div className="flex-1 overflow-auto" style={{ background: '#0d0b0f' }}>
-                <PageRenderer
-                  page={currentPage}
-                  appData={appData}
-                  selectedBrands={selectedBrands}
-                  primary={primary}
-                  secondary={secondary}
-                  accent={accent}
-                  primaryRgb={primaryRgb}
-                  accentRgb={accentRgb}
-                />
-              </div>
-
-              {/* Status bar */}
-              <div className="flex items-center justify-between px-5 py-2 border-t text-[9px] font-mono text-stone-700 shrink-0"
-                style={{ borderColor: `rgba(${primaryRgb},0.06)`, background: '#0d0b0f' }}>
-                <div className="flex items-center gap-3">
-                  <span className="flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse inline-block" /> HotStack™ Runtime
-                  </span>
-                  <span>{appData.appType || 'webapp'} · {appData.techStack?.database || 'PostgreSQL'}</span>
-                </div>
-                <span style={{ color: primary }}>◉ FAA.ZONE™</span>
-              </div>
-            </div>
+          {/* Floating action bar */}
+          <div className="fixed bottom-5 right-5 z-[9999] flex gap-2">
+            <button onClick={() => setShowExporter(true)}
+              className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-black text-black shadow-2xl transition-all hover:scale-105 active:scale-95"
+              style={{ background: `linear-gradient(135deg, ${primary}, ${accent})`, boxShadow: `0 8px 32px rgba(${primaryRgb},0.4)` }}>
+              <Rocket className="w-4 h-4" /> Export Code
+            </button>
           </div>
         </div>
       )}
