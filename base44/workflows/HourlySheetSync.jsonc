@@ -1,0 +1,45 @@
+{
+  "name": "Hourly Sheet Sync",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 * * * *",
+      "one_time_date": null,
+      "timezone": "Africa/Johannesburg",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "hourly_sheet_sync",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "sync_sheet": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "scheduledSheetSync",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Sync Google Sheet",
+            "description": "Pull fresh financial metrics hourly"
+          }
+        }
+      }
+    ]
+  },
+  "description": "Every hour, pulls fresh financial allocation numbers and brand performance scores from the connected Google Sheet into brand records, so the analytics dashboard stays live."
+}

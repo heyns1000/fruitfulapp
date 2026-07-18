@@ -13,6 +13,8 @@ import DataExporter from '../components/data/DataExporter';
 import CompleteDataExporter from '../components/data/CompleteDataExporter';
 import BulkOperations from '../components/admin/BulkOperations';
 import BulkFinancialManager from '../components/admin/BulkFinancialManager';
+import BrandFinancialBulkEditor from '../components/admin/BrandFinancialBulkEditor';
+import AllocationKanban from '../components/admin/AllocationKanban';
 import BrandHealthAudit from '../components/admin/BrandHealthAudit';
 import ZeroWasteExporter from '../components/data/ZeroWasteExporter';
 import { Loader2 } from 'lucide-react';
@@ -371,6 +373,8 @@ export default function Dashboard() {
           </div>
 
           <TabsContent value="admin" className="space-y-6">
+            <AllocationKanban />
+            <BrandFinancialBulkEditor />
             <BulkFinancialManager />
             <BrandHealthAudit />
             <BulkOperations />

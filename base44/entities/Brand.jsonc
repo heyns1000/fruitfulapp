@@ -93,6 +93,38 @@
       "type": "boolean",
       "description": "True if metadata/description was AI-generated",
       "default": false
+    },
+    "allocationStatus": {
+      "type": "string",
+      "enum": [
+        "unallocated",
+        "pending",
+        "allocated",
+        "review",
+        "completed"
+      ],
+      "default": "unallocated",
+      "description": "Financial allocation workflow status (Kanban column)"
+    },
+    "financialAllocation": {
+      "type": "number",
+      "default": 0,
+      "description": "Current financial allocation amount"
+    },
+    "performanceScore": {
+      "type": "number",
+      "default": 0,
+      "description": "Brand performance score (0-100)"
+    },
+    "revenue": {
+      "type": "number",
+      "default": 0,
+      "description": "Current revenue figure"
+    },
+    "budget": {
+      "type": "number",
+      "default": 0,
+      "description": "Approved budget"
     }
   },
   "required": [

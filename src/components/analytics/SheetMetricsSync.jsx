@@ -53,6 +53,15 @@ export default function SheetMetricsSync({ onData }) {
       setConnected(true);
       if (onData) onData(res.data);
       localStorage.setItem(STORAGE_KEY, JSON.stringify({ sheetUrl, range }));
+      // Persist config so the hourly auto-sync workflow can read it
+      try {
+        const existing = await base44.entities.SheetSyncConfig.filter({ spreadsheetId });
+        if (existing && existing.length > 0) {
+          await base44.entities.SheetSyncConfig.update(existing[0].id, { range, enabled: true, lastSyncedAt: new Date().toISOString(), lastSyncStatus: 'success', lastSyncSummary: `Manual sync · ${res.data?.rows?.length || 0} rows` });
+        } else {
+          await base44.entities.SheetSyncConfig.create({ spreadsheetId, range, enabled: true, lastSyncedAt: new Date().toISOString(), lastSyncStatus: 'success', lastSyncSummary: `Manual sync · ${res.data?.rows?.length || 0} rows` });
+        }
+      } catch {}
     } catch (err) {
       setError(err?.message || 'Failed to sync sheet');
       setConnected(false);

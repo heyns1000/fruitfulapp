@@ -1,0 +1,46 @@
+{
+  "name": "SheetSyncConfig",
+  "type": "object",
+  "properties": {
+    "spreadsheetId": {
+      "type": "string",
+      "description": "Google Sheets spreadsheet ID to sync from"
+    },
+    "range": {
+      "type": "string",
+      "default": "A1:Z1000",
+      "description": "Cell range to read"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether hourly auto-sync is active"
+    },
+    "lastSyncedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO timestamp of the last successful sync"
+    },
+    "lastSyncStatus": {
+      "type": "string",
+      "enum": [
+        "success",
+        "failed",
+        "pending"
+      ],
+      "default": "pending"
+    },
+    "lastSyncSummary": {
+      "type": "string",
+      "description": "Human-readable summary of the last sync run"
+    },
+    "brandsUpdated": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of brands updated in the last sync"
+    }
+  },
+  "required": [
+    "spreadsheetId"
+  ]
+}
