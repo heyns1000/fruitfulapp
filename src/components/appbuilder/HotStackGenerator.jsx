@@ -65,29 +65,74 @@ export default function HotStackGenerator({ selectedBrands, vibePrompt, customiz
 
     try {
       const result = await base44.integrations.Core.InvokeLLM({
-        prompt: `You are HotStack™, an AI app builder. Generate a production-grade app blueprint as JSON.
+        model: 'gemini_3_flash',
+        prompt: `You are HotStack™, a world-class AI app builder like Base44, Replit, and Lovable. Generate a COMPLETE, PRODUCTION-GRADE app blueprint as JSON. The output will be rendered as a LIVE app — every piece of content must be real, specific, and detailed. NO placeholders, NO lorem ipsum, NO generic text.
 
 VIBE: "${vibePrompt || 'Build a full ecosystem app for the FAA.ZONE brands.'}"
 APP NAME: ${appName}
 TYPE: ${appType}
 ROLES: ${JSON.stringify(userRoles)}
-${hasCustomColors ? `BRAND COLORS (use these exact hex): primary=${customColors.primary} secondary=${customColors.secondary} accent=${customColors.accent}` : ''}
-${refFiles.length > 0 ? `REFERENCE FILES: ${refFiles.length} file(s) attached — incorporate their style.` : ''}
+${hasCustomColors ? `BRAND COLORS (MUST use exactly): primary=${customColors.primary} secondary=${customColors.secondary} accent=${customColors.accent}` : ''}
+${refFiles.length > 0 ? `REFERENCE FILES: ${refFiles.length} file(s) attached — analyze and incorporate their style.` : ''}
 
-BRANDS (${selectedBrands.length}):
+REAL BRANDS (${selectedBrands.length}):
 ${JSON.stringify(brandsSummary)}
 
-RULES:
-- Use every subnode from every brand somewhere in pages/features/content.
-- Reference brand metadata (layer, securityRating, activeNodes) where relevant.
-- 5-8 pages, each with layout + 3-6 contentBlocks (type, title, body, items with real data).
-- Layouts: dashboard|list|detail|form|landing|analytics|settings|split
-- Block types: hero|kpi_grid|card_grid|data_table|chart|form|timeline|cta|split_panel|stat_list|image_gallery|activity_feed
-- 6-10 features mapped to real brands. 4-8 cross-pollination pairs (synergyScore 60-95).
-- 4-7 database tables. Loyalty program if 3+ sectors. Role permissions for provided roles.
-- Sophisticated color palette (not generic blue/purple). No placeholders — real content only.
+═══ CONTENT REQUIREMENTS — THIS IS CRITICAL ═══
 
-Return ONLY the JSON object.`,
+GENERATE 6-8 PAGES. Every page MUST have 4-6 contentBlocks. Every block MUST have 6-12 items with REAL, SPECIFIC data.
+
+BLOCK TYPES & WHAT EACH MUST CONTAIN:
+
+1. "hero" — badge (short tagline), title (bold headline), body (2-sentence description), ctaLabel (button text)
+
+2. "kpi_grid" — 4 items, each with: label (metric name), value (REAL number like "12,847" or "$284K" or "94.2%"), sub (trend like "↑ 12% vs last month" or "3,201 active"), icon (one of: trending_up, users, package, dollar_sign, shopping_cart, eye, star, activity)
+
+3. "card_grid" — 6-9 items, each with: name (real product/brand/item name), description (1-sentence specific description), sector or category (real category), status (active/pending/featured), metric (real number like "234 orders" or "$12K revenue")
+
+4. "data_table" — 6-10 items (ROWS), each with 4-5 fields. Use real field names like: name, email, status, amount, date, orderId, sector, revenue. Fill EVERY field with REAL data (real names, real amounts like "$1,247", real statuses like "completed" or "pending", real dates like "2026-07-14").
+
+5. "chart" — 8-12 items, each with: label (month/category name like "Jan", "Feb" or brand name), value (real number like 842, 1203, 967). These render as bar charts.
+
+6. "activity_feed" — 6-10 items, each with: message (full sentence like "Sarah M. placed order #ORD-2847 for $1,247"), time (relative like "2m ago", "1h ago", "3d ago"), user (real-sounding name)
+
+7. "timeline" — 5-8 items, each with: title (event name), description (1 sentence), time (date or relative)
+
+8. "stat_list" — 6-8 items, each with: label (metric name), value (real number), sub (context like "of 500 target")
+
+9. "form" — 4-6 items, each with: label (field name like "Email Address" or "Brand Name"), type (text/email/number/select/textarea)
+
+10. "split_panel" — left side: title + body (paragraph). right side: 4-5 items with name + description.
+
+11. "image_gallery" — 6 items, each with: name (real item name), category (real category)
+
+12. "cta" — title (headline), body (1 sentence), items[0].label (button text)
+
+LAYOUT-TO-BLOCK MAPPING (follow this for each page):
+- "dashboard": kpi_grid + chart + data_table + activity_feed
+- "list": hero + card_grid + data_table
+- "detail": hero + split_panel + stat_list + card_grid
+- "landing": hero + card_grid + cta
+- "analytics": kpi_grid + chart + stat_list + data_table
+- "settings": form + split_panel
+- "form": form + split_panel
+- "split": split_panel + card_grid
+
+ALSO GENERATE:
+- 8-10 features: name, description (specific — what it does, not generic), relatedBrands (real brand names from the list)
+- 5-8 crossPollination: brand1, brand2 (real names), connectionType (supply_chain|data_share|co_brand|referral|bundle), feature (specific), synergyScore (60-95)
+- 5-7 databaseSchema: tableName, fields (array of "name:type" like "id:string", "created_at:date", "amount:number"), relationships (array)
+- techStack: frontend (array), backend (array), database (string)
+- rolePermissions: roles array, each with name, permissions (array of specific strings), description
+- loyaltyProgram (if 3+ sectors): programName, earnRate, tiers (array), crossBrandBenefits (array)
+
+EVERY string must be specific and real. Examples of GOOD content:
+- name: "Artisan Pottery Collection" (not "Product 1")
+- description: "Hand-thrown ceramic vessels from master potters in KwaZulu-Natal" (not "A product description")
+- value: "12,847" (not "123")
+- message: "Thandiwe N. completed order #ORD-9241 for R3,240 — Banimal Leather Tote" (not "New order received")
+
+Return ONLY the JSON object. Make it world-class.`,
         file_urls: refFiles.length > 0 ? refFiles : undefined,
         response_json_schema: {
           type: 'object',
@@ -105,7 +150,34 @@ Return ONLY the JSON object.`,
                 type: { type: 'string' },
                 title: { type: 'string' },
                 body: { type: 'string' },
-                items: { type: 'array', items: { type: 'object' } }
+                badge: { type: 'string' },
+                ctaLabel: { type: 'string' },
+                items: { type: 'array', items: { type: 'object', properties: {
+                  name: { type: 'string' },
+                  title: { type: 'string' },
+                  label: { type: 'string' },
+                  description: { type: 'string' },
+                  body: { type: 'string' },
+                  value: { type: 'string' },
+                  count: { type: 'string' },
+                  sub: { type: 'string' },
+                  trend: { type: 'string' },
+                  metric: { type: 'string' },
+                  sector: { type: 'string' },
+                  category: { type: 'string' },
+                  status: { type: 'string' },
+                  message: { type: 'string' },
+                  time: { type: 'string' },
+                  date: { type: 'string' },
+                  user: { type: 'string' },
+                  icon: { type: 'string' },
+                  type: { type: 'string' },
+                  amount: { type: 'string' },
+                  orderId: { type: 'string' },
+                  email: { type: 'string' },
+                  revenue: { type: 'string' },
+                  price: { type: 'string' },
+                } } }
               } } }
             } } },
             features: { type: 'array', items: { type: 'object', properties: { name: { type: 'string' }, description: { type: 'string' }, relatedBrands: { type: 'array', items: { type: 'string' } } } } },

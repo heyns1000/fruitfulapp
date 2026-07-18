@@ -92,15 +92,23 @@ function KpiGridBlock({ block, primary, accent, primaryRgb }) {
           const value = getItemField(item, 'value') || getItemField(item, 'count') || '—';
           const sub = getItemField(item, 'sub') || getItemField(item, 'trend') || '';
           const Icon = KPI_ICONS[i % KPI_ICONS.length];
+          const isUp = sub.includes('↑') || sub.includes('up') || sub.includes('+');
           return (
-            <div key={i} className="rounded-2xl p-5 border relative overflow-hidden"
+            <div key={i} className="rounded-2xl p-5 border relative overflow-hidden group hover:border-stone-600 transition-all"
               style={{ background: `rgba(${rgb},0.06)`, borderColor: `rgba(${rgb},0.2)` }}>
-              <div className="absolute top-3 right-3 opacity-15">
-                <Icon className="w-10 h-10" style={{ color }} />
+              <div className="absolute top-3 right-3 opacity-10 group-hover:opacity-20 transition-opacity">
+                <Icon className="w-12 h-12" style={{ color }} />
               </div>
-              <p className="font-black text-4xl leading-none" style={{ color }}>{value}</p>
-              <p className="text-white text-sm font-bold mt-3">{label}</p>
-              {sub && <p className="text-xs mt-1 text-stone-500">{sub}</p>}
+              <div className="relative">
+                <p className="font-black text-3xl leading-none" style={{ color }}>{value}</p>
+                <p className="text-white text-sm font-bold mt-3">{label}</p>
+                {sub && (
+                  <p className="text-xs mt-1.5 flex items-center gap-1" style={{ color: isUp ? '#34d399' : '#94a3b8' }}>
+                    {isUp && <TrendingUp className="w-3 h-3" />}
+                    {sub}
+                  </p>
+                )}
+              </div>
             </div>
           );
         })}
@@ -110,7 +118,7 @@ function KpiGridBlock({ block, primary, accent, primaryRgb }) {
 }
 
 function CardGridBlock({ block, primary, accent, primaryRgb, selectedBrands }) {
-  const items = block.items?.slice(0, 6) || [];
+  const items = block.items?.slice(0, 9) || [];
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
@@ -130,6 +138,8 @@ function CardGridBlock({ block, primary, accent, primaryRgb, selectedBrands }) {
           const name = getItemField(item, 'name') || getItemField(item, 'title');
           const desc = getItemField(item, 'description') || getItemField(item, 'body') || '';
           const tag = getItemField(item, 'sector') || getItemField(item, 'category') || getItemField(item, 'status');
+          const metric = getItemField(item, 'metric') || getItemField(item, 'value') || getItemField(item, 'count') || '';
+          const status = getItemField(item, 'status');
           const relatedBrand = findBrandForName(name, selectedBrands);
           const sm = SECTOR_META[relatedBrand?.sector] || SECTOR_META[tag?.toLowerCase?.()];
           const color = sm?.accent || primary;
@@ -142,16 +152,32 @@ function CardGridBlock({ block, primary, accent, primaryRgb, selectedBrands }) {
                   style={{ background: `rgba(${rgb},0.15)` }}>
                   {sm?.icon || '◆'}
                 </div>
-                <MoreHorizontal className="w-5 h-5 text-stone-600 group-hover:text-stone-400 transition-colors" />
+                <div className="flex items-center gap-1.5">
+                  {status && (
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                      style={{
+                        background: status === 'active' || status === 'featured' ? 'rgba(52,211,153,0.15)' : 'rgba(148,163,184,0.1)',
+                        color: status === 'active' || status === 'featured' ? '#34d399' : '#94a3b8'
+                      }}>
+                      {status}
+                    </span>
+                  )}
+                  <MoreHorizontal className="w-5 h-5 text-stone-600 group-hover:text-stone-400 transition-colors" />
+                </div>
               </div>
               <h4 className="text-white font-bold text-sm mb-1.5 leading-tight">{name}</h4>
               <p className="text-xs leading-relaxed text-stone-500 line-clamp-2 mb-3">{desc}</p>
-              {tag && (
-                <span className="inline-block text-xs font-semibold px-2.5 py-1 rounded-full"
-                  style={{ background: `rgba(${rgb},0.15)`, color }}>
-                  {tag}
-                </span>
-              )}
+              <div className="flex items-center justify-between pt-3 border-t" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
+                {tag && (
+                  <span className="inline-block text-xs font-semibold px-2.5 py-1 rounded-full"
+                    style={{ background: `rgba(${rgb},0.15)`, color }}>
+                    {tag}
+                  </span>
+                )}
+                {metric && (
+                  <span className="text-xs font-black" style={{ color }}>{metric}</span>
+                )}
+              </div>
             </div>
           );
         })}
@@ -161,8 +187,9 @@ function CardGridBlock({ block, primary, accent, primaryRgb, selectedBrands }) {
 }
 
 function DataTableBlock({ block, primary, accent, primaryRgb }) {
-  const items = block.items?.slice(0, 8) || [];
-  const cols = items[0] ? Object.keys(items[0]).slice(0, 4) : [];
+  const items = block.items?.slice(0, 10) || [];
+  const cols = items[0] ? Object.keys(items[0]).slice(0, 5) : [];
+  const colWidths = ['flex-1', 'w-32', 'w-28', 'w-24', 'w-24'];
   return (
     <div>
       {block.title && <p className="text-xs font-bold tracking-wider uppercase mb-4 text-stone-500">{block.title}</p>}
@@ -170,7 +197,7 @@ function DataTableBlock({ block, primary, accent, primaryRgb }) {
         <div className="flex items-center gap-4 px-5 py-3.5 border-b"
           style={{ background: `rgba(${primaryRgb},0.08)`, borderColor: `rgba(${primaryRgb},0.15)` }}>
           {cols.map((col, i) => (
-            <div key={i} className={`text-xs font-bold uppercase tracking-wider text-stone-400 ${i === 0 ? 'flex-1' : 'w-28'}`}>
+            <div key={i} className={`text-xs font-bold uppercase tracking-wider text-stone-400 ${colWidths[i] || 'w-24'}`}>
               {col}
             </div>
           ))}
@@ -180,13 +207,25 @@ function DataTableBlock({ block, primary, accent, primaryRgb }) {
             style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
             {cols.map((col, j) => {
               const val = getItemField(item, col);
+              const isStatus = col === 'status' || (typeof val === 'string' && ['active','pending','completed','featured','paused','shipped','delivered'].includes(val?.toLowerCase()));
+              const isAmount = col === 'amount' || col === 'revenue' || col === 'price' || (typeof val === 'string' && val?.includes('$')) || (typeof val === 'string' && val?.includes('R'));
               return (
-                <div key={j} className={`text-sm ${j === 0 ? 'flex-1 font-bold text-white' : 'w-28 text-stone-400 font-mono'}`}>
+                <div key={j} className={`text-sm ${colWidths[j] || 'w-24'} ${j === 0 ? 'font-bold text-white' : 'text-stone-400 font-mono'}`}>
                   {j === 0 ? (
                     <div className="flex items-center gap-2.5">
                       <div className="w-2 h-2 rounded-full" style={{ backgroundColor: primary }} />
                       {val}
                     </div>
+                  ) : isStatus ? (
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                      style={{
+                        background: val?.toLowerCase() === 'active' || val?.toLowerCase() === 'completed' || val?.toLowerCase() === 'delivered' ? 'rgba(52,211,153,0.15)' : val?.toLowerCase() === 'pending' ? 'rgba(245,158,11,0.15)' : 'rgba(148,163,184,0.1)',
+                        color: val?.toLowerCase() === 'active' || val?.toLowerCase() === 'completed' || val?.toLowerCase() === 'delivered' ? '#34d399' : val?.toLowerCase() === 'pending' ? '#f59e0b' : '#94a3b8'
+                      }}>
+                      {val}
+                    </span>
+                  ) : isAmount ? (
+                    <span className="font-black" style={{ color: primary }}>{val}</span>
                   ) : val}
                 </div>
               );
@@ -199,32 +238,38 @@ function DataTableBlock({ block, primary, accent, primaryRgb }) {
 }
 
 function ChartBlock({ block, primary, accent, primaryRgb, accentRgb }) {
-  const items = block.items?.slice(0, 10) || [];
+  const items = block.items?.slice(0, 12) || [];
   const maxVal = Math.max(...items.map(it => Number(getItemField(it, 'value') || getItemField(it, 'count') || 0)), 1);
   return (
     <div>
       {block.title && <p className="text-xs font-bold tracking-wider uppercase mb-4 text-stone-500">{block.title}</p>}
       <div className="rounded-2xl p-6 border" style={{ background: `rgba(${primaryRgb},0.05)`, borderColor: `rgba(${primaryRgb},0.15)` }}>
-        <div className="flex items-end justify-between gap-3 h-48 mb-4">
+        <div className="flex items-end justify-between gap-2 h-52 mb-4 relative">
+          {/* Y-axis grid lines */}
+          <div className="absolute inset-0 flex flex-col justify-between pointer-events-none">
+            {[0, 1, 2, 3].map(i => (
+              <div key={i} className="border-t border-dashed" style={{ borderColor: 'rgba(255,255,255,0.05)' }} />
+            ))}
+          </div>
           {items.map((item, i) => {
             const val = Number(getItemField(item, 'value') || getItemField(item, 'count') || (i + 1) * 12);
             const height = Math.max((val / maxVal) * 100, 4);
             const color = i % 2 === 0 ? primary : accent;
             return (
-              <div key={i} className="flex-1 flex flex-col items-center gap-2 group">
-                <div className="w-full rounded-t-lg transition-all hover:opacity-80 relative"
-                  style={{ height: `${height}%`, background: `linear-gradient(180deg, ${color}, ${color}80)` }}>
-                  <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity"
-                    style={{ color }}>{val}</span>
+              <div key={i} className="flex-1 flex flex-col items-center gap-2 group relative z-10">
+                <div className="w-full rounded-t-lg transition-all hover:opacity-80 relative cursor-pointer"
+                  style={{ height: `${height}%`, background: `linear-gradient(180deg, ${color}, ${color}40)` }}>
+                  <span className="absolute -top-7 left-1/2 -translate-x-1/2 text-xs font-black opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap px-2 py-1 rounded-md"
+                    style={{ color, background: 'rgba(0,0,0,0.8)' }}>{val}</span>
                 </div>
-                <span className="text-xs text-stone-500 font-mono truncate max-w-full">
-                  {getItemField(item, 'label')?.slice(0, 6) || getItemField(item, 'name')?.slice(0, 6) || `M${i + 1}`}
+                <span className="text-[10px] text-stone-500 font-mono truncate max-w-full">
+                  {getItemField(item, 'label')?.slice(0, 8) || getItemField(item, 'name')?.slice(0, 8) || `M${i + 1}`}
                 </span>
               </div>
             );
           })}
         </div>
-        {block.body && <p className="text-sm text-stone-500 leading-relaxed">{block.body}</p>}
+        {block.body && <p className="text-sm text-stone-500 leading-relaxed mt-3">{block.body}</p>}
       </div>
     </div>
   );
@@ -339,19 +384,23 @@ function StatListBlock({ block, primary, accent, primaryRgb }) {
 }
 
 function ActivityFeedBlock({ block, primary, accent, primaryRgb }) {
-  const items = block.items?.slice(0, 8) || [];
+  const items = block.items?.slice(0, 10) || [];
+  const avatarColors = [primary, accent, '#34d399', '#818cf8', '#f472b6', '#fbbf24'];
   return (
     <div>
       {block.title && <p className="text-xs font-bold tracking-wider uppercase mb-4 text-stone-500">{block.title}</p>}
-      <div className="space-y-2.5">
+      <div className="space-y-2">
         {items.map((item, i) => {
           const text = getItemField(item, 'message') || getItemField(item, 'title') || getItemField(item, 'description') || getItemField(item, 'body');
           const time = getItemField(item, 'time') || getItemField(item, 'date') || '';
+          const user = getItemField(item, 'user') || getItemField(item, 'name') || '';
+          const avatarColor = avatarColors[i % avatarColors.length];
+          const initials = user ? user.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase() : '••';
           return (
-            <div key={i} className="flex items-start gap-3 p-3.5 rounded-xl" style={{ background: 'rgba(255,255,255,0.03)' }}>
-              <div className="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
-                style={{ background: `rgba(${primaryRgb},0.12)` }}>
-                <Activity className="w-4 h-4" style={{ color: primary }} />
+            <div key={i} className="flex items-start gap-3 p-3.5 rounded-xl hover:bg-white/[0.05] transition-colors" style={{ background: 'rgba(255,255,255,0.03)' }}>
+              <div className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 text-xs font-black text-black"
+                style={{ background: avatarColor }}>
+                {initials}
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-stone-200 text-sm leading-relaxed">{text}</p>
