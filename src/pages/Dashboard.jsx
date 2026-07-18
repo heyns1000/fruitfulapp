@@ -12,6 +12,7 @@ import SectorGrid from '../components/sectors/SectorGrid';
 import DataExporter from '../components/data/DataExporter';
 import CompleteDataExporter from '../components/data/CompleteDataExporter';
 import BulkOperations from '../components/admin/BulkOperations';
+import BulkFinancialManager from '../components/admin/BulkFinancialManager';
 import BrandHealthAudit from '../components/admin/BrandHealthAudit';
 import ZeroWasteExporter from '../components/data/ZeroWasteExporter';
 import { Loader2 } from 'lucide-react';
@@ -167,15 +168,15 @@ const BORDER = '#00ff9930';
 
 function PageGrid({ pages }) {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
       {pages.map(({ href, emoji, label, bg }) => (
         <Link key={href} to={href} className="group block">
           <div
-            className="flex flex-col items-center justify-center gap-2 p-4 rounded-xl text-white text-center transition-all duration-200 hover:scale-105 hover:shadow-xl active:scale-95 cursor-pointer min-h-[88px]"
+            className="flex flex-col items-center justify-center gap-1.5 p-3 rounded-lg text-white text-center transition-all duration-200 hover:scale-[1.03] hover:shadow-lg active:scale-95 cursor-pointer min-h-[76px]"
             style={{ backgroundColor: bg }}
           >
-            <span className="text-3xl leading-none">{emoji}</span>
-            <span className="text-[11px] font-bold leading-tight tracking-wide">{label}</span>
+            <span className="text-2xl leading-none">{emoji}</span>
+            <span className="text-[11px] font-semibold leading-tight tracking-tight">{label}</span>
           </div>
         </Link>
       ))}
@@ -233,7 +234,7 @@ export default function Dashboard() {
 
       {/* ── MAIN HEADER ── */}
       <header className="relative overflow-hidden border-b border-[#00ff9920]" style={{ background: '#011f0e' }}>
-        <div className="container mx-auto px-6 py-7 relative z-10">
+        <div className="container mx-auto px-6 py-5 relative z-10">
           <div className="flex items-center gap-5">
             <img
               src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6953a072de46207f94f2b9d2/52acd159d_Chief_02_1753263376705.png"
@@ -242,10 +243,10 @@ export default function Dashboard() {
               style={{ filter: 'drop-shadow(0 0 10px #00ffc855)' }}
             />
             <div>
-              <h1 className="text-2xl sm:text-3xl font-black tracking-tight" style={{ color: '#00ffc8', textShadow: '0 0 12px #00ffcc66' }}>
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight" style={{ color: '#00ffc8', textShadow: '0 0 12px #00ffcc66' }}>
                 FAA.ZONE™
               </h1>
-              <p className="text-xs font-semibold mt-0.5" style={{ color: '#9dfcdc99' }}>
+              <p className="text-xs font-medium mt-0.5" style={{ color: '#9dfcdc99' }}>
                 Financial Allocation Architecture · Seeds of Appreciation · Live Grid
               </p>
             </div>
@@ -257,7 +258,7 @@ export default function Dashboard() {
         </div>
       </header>
 
-      <div className="container mx-auto px-4 sm:px-6 pb-12 relative z-10 space-y-8 pt-6">
+      <div className="container mx-auto px-4 sm:px-6 pb-10 relative z-10 space-y-5 pt-5">
 
         {/* ── SEEDWAVE CORE BRAND HEADER ── */}
         <header className="text-white shadow-xl rounded-2xl relative overflow-hidden border border-purple-500/30" style={{ background: 'linear-gradient(135deg, #2d1b69, #1e3a5f, #1a1a2e)' }}>
@@ -321,7 +322,7 @@ export default function Dashboard() {
 
           {/* Category tab strip */}
           <div className="overflow-x-auto border-b" style={{ borderColor: BORDER }}>
-            <div className="flex min-w-max px-4 gap-1 py-2">
+            <div className="flex min-w-max px-4 gap-1 py-1.5">
               {PAGE_GROUPS.map(group => (
                 <button
                   key={group.id}
@@ -370,6 +371,7 @@ export default function Dashboard() {
           </div>
 
           <TabsContent value="admin" className="space-y-6">
+            <BulkFinancialManager />
             <BrandHealthAudit />
             <BulkOperations />
             <ZeroWasteExporter />
@@ -390,7 +392,7 @@ export default function Dashboard() {
                     return (
                       <div key={sectorKey} className="border-b pb-4 last:border-b-0" style={{ borderColor: '#00ff9915' }}>
                         <h3 className="font-semibold text-sm mb-2" style={{ color: '#b5ffe5' }}>{sectorName}</h3>
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1.5">
                           {sectorBrands.map(brand => (
                             <div key={brand.id} className="rounded-lg p-2 text-xs" style={{ background: 'rgba(0,70,35,0.5)', border: '1px solid #00ff9920' }}>
                               <span className="font-bold" style={{ color: '#b5ffe5' }}>{brand.name}™</span>

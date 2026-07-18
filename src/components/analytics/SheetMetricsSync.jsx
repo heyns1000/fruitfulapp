@@ -8,7 +8,7 @@ import { Database, RefreshCw, Link2, TrendingUp } from 'lucide-react';
 
 const STORAGE_KEY = 'faa_sheet_sync_config';
 
-export default function SheetMetricsSync() {
+export default function SheetMetricsSync({ onData }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
@@ -51,6 +51,7 @@ export default function SheetMetricsSync() {
       const res = await base44.functions.invoke('syncSheetMetrics', { spreadsheetId, range });
       setData(res.data);
       setConnected(true);
+      if (onData) onData(res.data);
       localStorage.setItem(STORAGE_KEY, JSON.stringify({ sheetUrl, range }));
     } catch (err) {
       setError(err?.message || 'Failed to sync sheet');

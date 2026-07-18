@@ -10,9 +10,11 @@ import SupportMetrics from '../components/analytics/SupportMetrics';
 import AIInsights from '../components/analytics/AIInsights';
 import GlobalHeatmap from '../components/analytics/GlobalHeatmap';
 import SheetMetricsSync from '../components/analytics/SheetMetricsSync';
+import SheetGrowthCharts from '../components/analytics/SheetGrowthCharts';
 import { Database } from 'lucide-react';
 
 export default function Analytics() {
+  const [sheetData, setSheetData] = useState(null);
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 to-blue-50">
       <header className="bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-700 text-white py-8 shadow-xl mb-6">
@@ -131,8 +133,9 @@ export default function Analytics() {
             <SupportMetrics />
           </TabsContent>
 
-          <TabsContent value="sheetsync">
-            <SheetMetricsSync />
+          <TabsContent value="sheetsync" className="space-y-6">
+            <SheetMetricsSync onData={setSheetData} />
+            <SheetGrowthCharts data={sheetData} />
           </TabsContent>
         </Tabs>
       </div>
