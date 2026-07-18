@@ -9,6 +9,7 @@ import {
   ChevronRight, Code2, Eye, LayoutDashboard, Sparkles
 } from 'lucide-react';
 import { toast } from 'sonner';
+import PageRenderer from './PageRenderer';
 
 const SECTOR_META = {
   agriculture:      { icon: '🌱', accent: '#22c55e' },
@@ -333,168 +334,18 @@ export default function HotStackPreview({ appData, selectedBrands, onRebuild }) 
                 })}
               </div>
 
-              {/* Scrollable content */}
-              <div className="flex-1 overflow-auto px-5 py-5 space-y-6">
-
-                {/* Page sections */}
-                {currentPage?.sections?.length > 0 && (
-                  <div>
-                    <p className="text-[10px] font-black tracking-[0.18em] uppercase mb-3 text-stone-600">
-                      {currentPage.name} — Sections
-                    </p>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                      {currentPage.sections.map((section, i) => (
-                        <div key={i} className="flex items-center gap-2 px-3 py-2 rounded-lg border text-xs font-medium text-stone-300"
-                          style={{ background: `rgba(${primaryRgb},0.05)`, borderColor: `rgba(${primaryRgb},0.15)` }}>
-                          <div className="w-1 h-1 rounded-full shrink-0" style={{ backgroundColor: primary }} />
-                          {section}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Feature grid */}
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <p className="text-[10px] font-black tracking-[0.18em] uppercase text-stone-600">Key Features</p>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-full"
-                      style={{ background: `rgba(${primaryRgb},0.1)`, color: primary }}>
-                      {appData.features?.length || 0} total
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
-                    {appData.features?.slice(0, 6).map((f, idx) => {
-                      const relatedBrand = selectedBrands.find(b => f.relatedBrands?.includes(b.name));
-                      const sm = SECTOR_META[relatedBrand?.sector];
-                      const featureColor = sm?.accent || primary;
-                      const frgb = hexToRgb(featureColor);
-                      return (
-                        <div key={idx} className="rounded-xl p-4 border transition-all"
-                          style={{ background: `rgba(${frgb},0.04)`, borderColor: `rgba(${frgb},0.14)` }}>
-                          <div className="flex items-start gap-2.5 mb-2">
-                            <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 text-sm"
-                              style={{ background: `rgba(${frgb},0.14)` }}>
-                              {sm?.icon || '⚡'}
-                            </div>
-                            <h4 className="text-white font-black text-xs leading-tight">{f.name}</h4>
-                          </div>
-                          <p className="text-[10px] leading-relaxed mb-2 text-stone-500 line-clamp-2">{f.description}</p>
-                          <div className="flex flex-wrap gap-1">
-                            {f.relatedBrands?.slice(0, 2).map((b, i) => (
-                              <span key={i} className="text-[9px] font-bold px-1.5 py-0.5 rounded-full"
-                                style={{ background: `rgba(${frgb},0.15)`, color: featureColor }}>
-                                {b}™
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Cross-poll */}
-                {appData.crossPollination?.length > 0 && (
-                  <div>
-                    <p className="text-[10px] font-black tracking-[0.18em] uppercase mb-3 text-stone-600">
-                      Cross-Pollination — Live Synergies
-                    </p>
-                    <div className="space-y-2">
-                      {appData.crossPollination.slice(0, 5).map((cp, idx) => {
-                        const b1 = selectedBrands.find(b => b.name === cp.brand1);
-                        const b2 = selectedBrands.find(b => b.name === cp.brand2);
-                        const sm1 = SECTOR_META[b1?.sector];
-                        const sm2 = SECTOR_META[b2?.sector];
-                        const score = cp.synergyScore || 0;
-                        return (
-                          <div key={idx} className="flex items-center gap-3 rounded-xl px-4 py-3 border"
-                            style={{ background: '#110f14', borderColor: `rgba(${primaryRgb},0.1)` }}>
-                            <div className="flex items-center gap-1.5 shrink-0 min-w-[80px]">
-                              <span className="text-[10px]">{sm1?.icon || '◆'}</span>
-                              <span className="text-xs font-black truncate max-w-[60px]" style={{ color: sm1?.accent || primary }}>{cp.brand1}</span>
-                            </div>
-                            <div className="flex-1 flex items-center gap-2">
-                              <div className="flex-1 h-1 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.05)' }}>
-                                <div className="h-full rounded-full" style={{ width: `${score}%`, background: `linear-gradient(90deg, ${sm1?.accent || primary}, ${sm2?.accent || accent})` }} />
-                              </div>
-                              {score > 0 && (
-                                <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full shrink-0"
-                                  style={{ background: `rgba(${primaryRgb},0.15)`, color: primary }}>
-                                  {score}%
-                                </span>
-                              )}
-                            </div>
-                            <div className="flex items-center gap-1.5 shrink-0 min-w-[80px] justify-end">
-                              <span className="text-xs font-black truncate max-w-[60px]" style={{ color: sm2?.accent || accent }}>{cp.brand2}</span>
-                              <span className="text-[10px]">{sm2?.icon || '◆'}</span>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-
-                {/* Brand intelligence */}
-                <div>
-                  <p className="text-[10px] font-black tracking-[0.18em] uppercase mb-3 text-stone-600">Live Brand Intelligence</p>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2.5">
-                    {selectedBrands.slice(0, 8).map(b => {
-                      const sm = SECTOR_META[b.sector];
-                      const rgb = hexToRgb(sm?.accent || primary);
-                      const nodeCount = b.metadata?.activeNodes || b.subnodes?.length || 0;
-                      return (
-                        <div key={b.id} className="rounded-xl p-3 border relative overflow-hidden"
-                          style={{ background: `rgba(${rgb},0.04)`, borderColor: `rgba(${rgb},0.15)` }}>
-                          <div className="absolute top-2 right-2 text-xl opacity-10">{sm?.icon || '◆'}</div>
-                          <div className="flex items-center gap-1.5 mb-2">
-                            <span className="text-[11px]">{sm?.icon || '◆'}</span>
-                            <span className="font-black text-xs text-white truncate">{b.name}™</span>
-                          </div>
-                          {nodeCount > 0 && (
-                            <div className="flex items-center gap-1 mb-1">
-                              <Activity className="w-2.5 h-2.5 text-green-400 shrink-0" />
-                              <span className="text-[9px] font-mono text-green-400">{nodeCount} nodes</span>
-                            </div>
-                          )}
-                          <div className="flex flex-wrap gap-1 mt-1">
-                            {b.subnodes?.slice(0, 2).map((sn, i) => (
-                              <span key={i} className="inline-block text-[8px] px-1.5 py-0.5 rounded-full font-bold"
-                                style={{ background: `rgba(${rgb},0.12)`, color: sm?.accent || primary }}>
-                                {sn}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Loyalty program */}
-                {appData.loyaltyProgram?.programName && (
-                  <div className="rounded-xl p-5 border"
-                    style={{ background: `linear-gradient(135deg, rgba(${accentRgb},0.06), rgba(${primaryRgb},0.03))`, borderColor: `rgba(${accentRgb},0.18)` }}>
-                    <div className="flex items-center gap-2 mb-3">
-                      <Star className="w-4 h-4" style={{ color: accent }} />
-                      <h3 className="font-black text-sm text-white">{appData.loyaltyProgram.programName}</h3>
-                      <span className="text-[9px] px-2 py-0.5 rounded-full font-bold ml-auto"
-                        style={{ background: `rgba(${accentRgb},0.15)`, color: accent }}>ACTIVE</span>
-                    </div>
-                    <p className="text-[10px] mb-3 text-stone-500">
-                      Earn rate: <span className="font-bold text-white">{appData.loyaltyProgram.earnRate || '1pt per $1'}</span>
-                    </p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {appData.loyaltyProgram.tiers?.map((t, i) => (
-                        <span key={i} className="text-[9px] font-black px-2 py-1 rounded-full"
-                          style={{ background: `rgba(${accentRgb},0.12)`, color: accent }}>
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
+              {/* Scrollable content — renders REAL page content per selected page */}
+              <div className="flex-1 overflow-auto" style={{ background: '#0d0b0f' }}>
+                <PageRenderer
+                  page={currentPage}
+                  appData={appData}
+                  selectedBrands={selectedBrands}
+                  primary={primary}
+                  secondary={secondary}
+                  accent={accent}
+                  primaryRgb={primaryRgb}
+                  accentRgb={accentRgb}
+                />
               </div>
 
               {/* Status bar */}

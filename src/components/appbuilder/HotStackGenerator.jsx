@@ -58,7 +58,8 @@ export default function HotStackGenerator({ selectedBrands, vibePrompt, onGenera
 
     try {
       const result = await base44.integrations.Core.InvokeLLM({
-        prompt: `You are HotStack™, a 2026 AI vibe-coding app builder. Build REAL applications from actual ecosystem data.
+        model: 'claude_sonnet_4_6',
+        prompt: `You are HotStack™, a world-class 2026 AI vibe-coding app builder. Your output must be INDISTINGUISHABLE from a hand-crafted Base44, Replit, or Lovable app — production-grade, beautiful, fully functional.
 
 USER'S VIBE PROMPT:
 "${vibePrompt || 'Build a full ecosystem app for the FAA.ZONE brands.'}"
@@ -68,26 +69,58 @@ APP CONFIG:
 - Type: ${appType}
 - User Roles: ${JSON.stringify(userRoles)}
 
-REAL ECOSYSTEM BRANDS (${selectedBrands.length} brands — use ONLY this real data):
+REAL ECOSYSTEM BRANDS (${selectedBrands.length} brands — use ONLY this real data, never invent brands):
 ${JSON.stringify(brandsSummary, null, 2)}
 
-REQUIREMENTS:
-1. Use ONLY the real brand names, sectors, and subnodes provided
-2. Generate pages, features, and cross-pollination based on actual brand data
-3. Build a coherent app that directly addresses the user's vibe prompt
-4. Create a database schema that reflects real entity relationships
-5. The app should feel like Replit/Lovable/Base44 — functional, real, modern
-6. Include a loyalty system if brands span multiple sectors
-7. Generate role permissions based on brand types selected
+═══ WORLD-CLASS DESIGN REQUIREMENTS ═══
 
-Return production-grade architecture using ONLY the provided real ecosystem data.`,
+1. COHESIVE COLOR SYSTEM: Pick a sophisticated, modern palette (NOT generic blue/purple). Use hex codes. Primary should be bold but refined, secondary deep and rich, accent vibrant. Think Linear, Vercel, Stripe, Notion — not Bootstrap.
+
+2. EVERY PAGE MUST HAVE:
+   - A "layout" type: one of "dashboard" | "list" | "detail" | "form" | "landing" | "analytics" | "settings" | "split"
+   - "contentBlocks": an array of 3-6 blocks, each with { type, title, body, items }
+   - Block types: "hero" | "kpi_grid" | "card_grid" | "data_table" | "chart" | "form" | "timeline" | "cta" | "split_panel" | "stat_list" | "image_gallery" | "activity_feed"
+   - Each block's "items" should contain REAL content derived from the brand data (names, subnodes, sectors) — never lorem ipsum
+
+3. PAGE QUALITY: Generate 5-8 pages. Each page must feel like a real screen in a shipped product:
+   - Dashboard pages: KPI grid + chart + activity feed + data table
+   - List pages: searchable card grid with real items
+   - Detail pages: hero header + content blocks + related items
+   - Landing pages: hero CTA + feature grid + brand strip
+   - Analytics pages: chart blocks + metric cards + comparison table
+
+4. REAL DATA INTEGRATION: Every content block must reference actual brand names, subnodes, and sectors from the provided data. No placeholders.
+
+5. FEATURES: 6-10 features, each mapped to real brands with concrete descriptions of what the feature does.
+
+6. CROSS-POLLINATION: 4-8 real synergy pairs with connection types (supply_chain, data_share, co_brand, referral, bundle) and synergy scores 60-95.
+
+7. DATABASE: 4-7 tables with real fields (name:type format) and relationships.
+
+8. LOYALTY: If brands span 3+ sectors, include a loyalty program with tiers and earn rate.
+
+9. ROLE PERMISSIONS: Map permissions to the actual user roles provided.
+
+Return ONLY production-grade JSON. Every string must be polished, specific, and ready to render. This output will be rendered as a live app preview — it must look world-class.`,
         response_json_schema: {
           type: 'object',
           properties: {
             appName:     { type: 'string' },
             tagline:     { type: 'string' },
             colorScheme: { type: 'object', properties: { primary: { type: 'string' }, secondary: { type: 'string' }, accent: { type: 'string' } } },
-            pages: { type: 'array', items: { type: 'object', properties: { name: { type: 'string' }, route: { type: 'string' }, description: { type: 'string' }, sections: { type: 'array', items: { type: 'string' } } } } },
+            pages: { type: 'array', items: { type: 'object', properties: {
+              name: { type: 'string' },
+              route: { type: 'string' },
+              description: { type: 'string' },
+              layout: { type: 'string' },
+              sections: { type: 'array', items: { type: 'string' } },
+              contentBlocks: { type: 'array', items: { type: 'object', properties: {
+                type: { type: 'string' },
+                title: { type: 'string' },
+                body: { type: 'string' },
+                items: { type: 'array', items: { type: 'object' } }
+              } } }
+            } } },
             features: { type: 'array', items: { type: 'object', properties: { name: { type: 'string' }, description: { type: 'string' }, relatedBrands: { type: 'array', items: { type: 'string' } } } } },
             crossPollination: { type: 'array', items: { type: 'object', properties: { brand1: { type: 'string' }, brand2: { type: 'string' }, connectionType: { type: 'string' }, feature: { type: 'string' }, synergyScore: { type: 'number' } } } },
             databaseSchema: { type: 'array', items: { type: 'object', properties: { tableName: { type: 'string' }, fields: { type: 'array', items: { type: 'string' } }, relationships: { type: 'array', items: { type: 'string' } } } } },
