@@ -750,9 +750,11 @@ export default function PageRenderer({ page, appData, selectedBrands, primary, s
   }
 
   const ctx = { primary, secondary, accent, primaryRgb, accentRgb, selectedBrands, appData, onOpenDetail: setDetailItem };
-  const blocks = page.contentBlocks?.length > 0
+  const rawBlocks = page.contentBlocks?.length > 0
     ? page.contentBlocks
     : fallbackBlocks(page, appData, selectedBrands);
+  // Enrich blocks: ensure every block has enough items, padding from brand data if sparse
+  const blocks = rawBlocks.map(block => enrichBlock(block, selectedBrands, appData));
 
   return (
     <>
@@ -768,6 +770,72 @@ export default function PageRenderer({ page, appData, selectedBrands, primary, s
       <DetailModal item={detailItem} onClose={() => setDetailItem(null)} primary={primary} accent={accent} />
     </>
   );
+}
+
+// Enrich sparse blocks with real brand data so nothing looks empty
+function enrichBlock(block, selectedBrands, appData) {
+  if (!block || !block.type) return block;
+  const items = block.items || [];
+  const minItems = {
+    kpi_grid: 4, card_grid: 6, data_table: 6, chart: 8,
+    activity_feed: 6, timeline: 5, stat_list: 6, form: 4,
+    split_panel: 4, image_gallery: 6, cta: 1,
+  };
+  const min = minItems[block.type] || 4;
+  if (items.length >= min) return block;
+
+  const padCount = min - items.length;
+  const padded = [...items];
+
+  if (block.type === 'kpi_grid') {
+    const templates = [
+      { label: 'Active Brands', value: String(selectedBrands.length), sub: 'live' },
+      { label: 'Total Subnodes', value: String(selectedBrands.reduce((s, b) => s + (b.subnodes?.length || 0), 0)), sub: 'connected' },
+      { label: 'Sectors', value: String(new Set(selectedBrands.map(b => b.sector)).size), sub: 'cross-poll' },
+      { label: 'Features', value: String(appData.features?.length || 8), sub: 'generated' },
+    ];
+    for (let i = items.length; i < min && i < templates.length; i++) padded.push(templates[i]);
+  } else if (block.type === 'card_grid') {
+    const subnodes = selectedBrands.flatMap(b => (b.subnodes || []).map(s => ({ name: s, description: `Part of ${b.name}™ ecosystem`, sector: b.sector, status: 'active', metric: `${b.subnodes?.length || 0} nodes` })));
+    for (let i = items.length; i < min && i < subnodes.length; i++) padded.push(subnodes[i]);
+  } else if (block.type === 'activity_feed') {
+    const templates = selectedBrands.slice(0, padCount).map((b, i) => ({
+      message: `${b.name}™ synced · ${b.subnodes?.length || 0} subnodes active · sector: ${b.sector}`,
+      time: `${i + 1}h ago`,
+      user: 'System',
+    }));
+    padded.push(...templates.slice(0, padCount));
+  } else if (block.type === 'chart') {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    for (let i = items.length; i < min; i++) padded.push({ label: months[i % 12], value: 500 + Math.floor(Math.random() * 1500) });
+  } else if (block.type === 'data_table') {
+    const templates = selectedBrands.slice(0, padCount).map((b, i) => ({
+      name: b.name, email: `admin@${b.name.toLowerCase().replace(/[^a-z]/g, '')}.zone`,
+      status: i % 3 === 0 ? 'pending' : 'active', amount: `R${(1000 + i * 750).toLocaleString()}`, date: '2026-07-14',
+    }));
+    padded.push(...templates.slice(0, padCount));
+  } else if (block.type === 'stat_list') {
+    const templates = [
+      { label: 'Total Revenue', value: 'R2.4M', sub: 'this quarter' },
+      { label: 'Active Users', value: '8,421', sub: 'monthly' },
+      { label: 'Orders', value: '1,247', sub: 'this month' },
+      { label: 'Avg Order', value: 'R1,920', sub: 'per transaction' },
+      { label: 'Retention', value: '94.2%', sub: 'year over year' },
+      { label: 'NPS Score', value: '72', sub: 'of 100' },
+    ];
+    for (let i = items.length; i < min && i < templates.length; i++) padded.push(templates[i]);
+  } else if (block.type === 'timeline') {
+    const templates = [
+      { title: 'Ecosystem Launch', description: 'FAA.ZONE platform went live with initial brand cohort', time: 'Jan 2026' },
+      { title: 'First Cross-Pollination', description: 'Agriculture and fashion brands collaborated on heritage textiles', time: 'Mar 2026' },
+      { title: 'Marketplace Opening', description: 'Artisan marketplace opened to public buyers', time: 'May 2026' },
+      { title: 'Loyalty Program', description: 'Cross-brand rewards launched for ecosystem members', time: 'Jun 2026' },
+      { title: 'Analytics Dashboard', description: 'Real-time ecosystem metrics went live', time: 'Jul 2026' },
+    ];
+    for (let i = items.length; i < min && i < templates.length; i++) padded.push(templates[i]);
+  }
+
+  return { ...block, items: padded };
 }
 
 function fallbackBlocks(page, appData, selectedBrands) {

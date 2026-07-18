@@ -65,74 +65,61 @@ export default function HotStackGenerator({ selectedBrands, vibePrompt, customiz
 
     try {
       const result = await base44.integrations.Core.InvokeLLM({
-        model: 'gemini_3_flash',
-        prompt: `You are HotStack™, a world-class AI app builder like Base44, Replit, and Lovable. Generate a COMPLETE, PRODUCTION-GRADE app blueprint as JSON. The output will be rendered as a LIVE app — every piece of content must be real, specific, and detailed. NO placeholders, NO lorem ipsum, NO generic text.
+        model: 'claude_sonnet_4_6',
+        prompt: `You are HotStack™, an elite AI app builder. Generate a COMPLETE app blueprint as JSON that will render as a LIVE production app. Every field must contain REAL, SPECIFIC content — never empty, never generic, never placeholder.
 
 VIBE: "${vibePrompt || 'Build a full ecosystem app for the FAA.ZONE brands.'}"
 APP NAME: ${appName}
 TYPE: ${appType}
 ROLES: ${JSON.stringify(userRoles)}
-${hasCustomColors ? `BRAND COLORS (MUST use exactly): primary=${customColors.primary} secondary=${customColors.secondary} accent=${customColors.accent}` : ''}
-${refFiles.length > 0 ? `REFERENCE FILES: ${refFiles.length} file(s) attached — analyze and incorporate their style.` : ''}
+${hasCustomColors ? `BRAND COLORS (use exactly): primary=${customColors.primary} secondary=${customColors.secondary} accent=${customColors.accent}` : ''}
+${refFiles.length > 0 ? `REFERENCE FILES: ${refFiles.length} file(s) attached — incorporate their style.` : ''}
 
 REAL BRANDS (${selectedBrands.length}):
 ${JSON.stringify(brandsSummary)}
 
-═══ CONTENT REQUIREMENTS — THIS IS CRITICAL ═══
+═══ RULES ═══
+1. Generate 6 pages. Each page needs 4 contentBlocks. Each block needs 6-10 items.
+2. EVERY item must have real data — real names, real numbers, real descriptions.
+3. Use the brand names, sectors, and subnodes from the REAL BRANDS list above.
+4. Numbers should look real: "12,847" not "123", "$284K" not "$1", "94.2%" not "50%".
 
-GENERATE 6-8 PAGES. Every page MUST have 4-6 contentBlocks. Every block MUST have 6-12 items with REAL, SPECIFIC data.
+═══ BLOCK TYPES ═══
 
-BLOCK TYPES & WHAT EACH MUST CONTAIN:
+hero: { badge, title, body, ctaLabel }
+kpi_grid: items[{ label, value, sub }] — 4 items, value = real formatted number
+card_grid: items[{ name, description, sector, status, metric }] — 6-9 items
+data_table: items[{ name, email, status, amount, date }] — 6-10 rows, all fields filled
+chart: items[{ label, value }] — 8-12 items, value = integer
+activity_feed: items[{ message, time, user }] — 6-10 items, message = full sentence
+timeline: items[{ title, description, time }] — 5-8 items
+stat_list: items[{ label, value, sub }] — 6-8 items
+form: items[{ label, type }] — 4-6 items
+split_panel: { title, body, items[{ name, description }] } — 4-5 items
+cta: { title, body, items[{ label }] }
 
-1. "hero" — badge (short tagline), title (bold headline), body (2-sentence description), ctaLabel (button text)
+═══ PAGE LAYOUTS ═══
+Page 1 "Dashboard" (layout: dashboard): kpi_grid + chart + data_table + activity_feed
+Page 2 "Marketplace" (layout: list): hero + card_grid + data_table
+Page 3 "Analytics" (layout: analytics): kpi_grid + chart + stat_list + data_table
+Page 4 "Profiles" (layout: detail): hero + split_panel + stat_list + card_grid
+Page 5 "Settings" (layout: settings): form + split_panel
+Page 6 "Activity" (layout: dashboard): kpi_grid + activity_feed + timeline + card_grid
 
-2. "kpi_grid" — 4 items, each with: label (metric name), value (REAL number like "12,847" or "$284K" or "94.2%"), sub (trend like "↑ 12% vs last month" or "3,201 active"), icon (one of: trending_up, users, package, dollar_sign, shopping_cart, eye, star, activity)
+═══ ALSO GENERATE ═══
+features: 8 items [{ name, description, relatedBrands[] }]
+crossPollination: 6 items [{ brand1, brand2, connectionType, feature, synergyScore }]
+databaseSchema: 6 items [{ tableName, fields[], relationships[] }]
+techStack: { frontend[], backend[], database }
+rolePermissions: { roles[{ name, permissions[], description }] }
 
-3. "card_grid" — 6-9 items, each with: name (real product/brand/item name), description (1-sentence specific description), sector or category (real category), status (active/pending/featured), metric (real number like "234 orders" or "$12K revenue")
+GOOD examples:
+- name: "Artisan Pottery Collection" (NOT "Product 1")
+- description: "Hand-thrown ceramic vessels from master potters in KwaZulu-Natal" (NOT "A product")
+- value: "12,847" (NOT "123")
+- message: "Thandiwe N. completed order #ORD-9241 for R3,240" (NOT "New order")
 
-4. "data_table" — 6-10 items (ROWS), each with 4-5 fields. Use real field names like: name, email, status, amount, date, orderId, sector, revenue. Fill EVERY field with REAL data (real names, real amounts like "$1,247", real statuses like "completed" or "pending", real dates like "2026-07-14").
-
-5. "chart" — 8-12 items, each with: label (month/category name like "Jan", "Feb" or brand name), value (real number like 842, 1203, 967). These render as bar charts.
-
-6. "activity_feed" — 6-10 items, each with: message (full sentence like "Sarah M. placed order #ORD-2847 for $1,247"), time (relative like "2m ago", "1h ago", "3d ago"), user (real-sounding name)
-
-7. "timeline" — 5-8 items, each with: title (event name), description (1 sentence), time (date or relative)
-
-8. "stat_list" — 6-8 items, each with: label (metric name), value (real number), sub (context like "of 500 target")
-
-9. "form" — 4-6 items, each with: label (field name like "Email Address" or "Brand Name"), type (text/email/number/select/textarea)
-
-10. "split_panel" — left side: title + body (paragraph). right side: 4-5 items with name + description.
-
-11. "image_gallery" — 6 items, each with: name (real item name), category (real category)
-
-12. "cta" — title (headline), body (1 sentence), items[0].label (button text)
-
-LAYOUT-TO-BLOCK MAPPING (follow this for each page):
-- "dashboard": kpi_grid + chart + data_table + activity_feed
-- "list": hero + card_grid + data_table
-- "detail": hero + split_panel + stat_list + card_grid
-- "landing": hero + card_grid + cta
-- "analytics": kpi_grid + chart + stat_list + data_table
-- "settings": form + split_panel
-- "form": form + split_panel
-- "split": split_panel + card_grid
-
-ALSO GENERATE:
-- 8-10 features: name, description (specific — what it does, not generic), relatedBrands (real brand names from the list)
-- 5-8 crossPollination: brand1, brand2 (real names), connectionType (supply_chain|data_share|co_brand|referral|bundle), feature (specific), synergyScore (60-95)
-- 5-7 databaseSchema: tableName, fields (array of "name:type" like "id:string", "created_at:date", "amount:number"), relationships (array)
-- techStack: frontend (array), backend (array), database (string)
-- rolePermissions: roles array, each with name, permissions (array of specific strings), description
-- loyaltyProgram (if 3+ sectors): programName, earnRate, tiers (array), crossBrandBenefits (array)
-
-EVERY string must be specific and real. Examples of GOOD content:
-- name: "Artisan Pottery Collection" (not "Product 1")
-- description: "Hand-thrown ceramic vessels from master potters in KwaZulu-Natal" (not "A product description")
-- value: "12,847" (not "123")
-- message: "Thandiwe N. completed order #ORD-9241 for R3,240 — Banimal Leather Tote" (not "New order received")
-
-Return ONLY the JSON object. Make it world-class.`,
+Return ONLY valid JSON. Every field filled with real content.`,
         file_urls: refFiles.length > 0 ? refFiles : undefined,
         response_json_schema: {
           type: 'object',
