@@ -2,7 +2,8 @@ import React from 'react';
 import {
   Layers, Zap, GitBranch, Database, Activity, Star, TrendingUp,
   Users, Package, ArrowRight, CheckCircle2, Search, Bell, Plus,
-  Filter, MoreHorizontal, ChevronRight, Globe, Lock
+  Filter, MoreHorizontal, ChevronRight, Globe, Lock, Sparkles,
+  Calendar, DollarSign, ShoppingCart, Eye, MessageSquare, Clock
 } from 'lucide-react';
 
 const SECTOR_META = {
@@ -24,6 +25,8 @@ const SECTOR_META = {
   wildlife: { icon: '🦁', accent: '#84cc16' },
 };
 
+const KPI_ICONS = [TrendingUp, Users, Package, DollarSign, ShoppingCart, Eye, Star, Activity];
+
 function hexToRgb(hex) {
   if (!hex || hex.length < 7) return '249,115,22';
   const r = parseInt(hex.slice(1, 3), 16);
@@ -38,22 +41,34 @@ function getItemField(item, field) {
   return item[field] || item.title || item.name || item.label || '';
 }
 
-// ── Block renderers ──
+function findBrandForName(name, selectedBrands) {
+  if (!name || !selectedBrands) return null;
+  return selectedBrands.find(b => name.includes(b.name) || b.name.includes(name));
+}
 
-function HeroBlock({ block, primary, accent, primaryRgb }) {
+// ── Block renderers (production-grade sizing) ──
+
+function HeroBlock({ block, primary, accent, primaryRgb, accentRgb }) {
   return (
-    <div className="relative overflow-hidden rounded-2xl p-8"
-      style={{ background: `linear-gradient(135deg, rgba(${primaryRgb},0.15), rgba(${hexToRgb(accent)},0.08))` }}>
-      <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full blur-3xl opacity-20" style={{ backgroundColor: primary }} />
-      <div className="relative">
-        {block.title && <h2 className="text-2xl font-black text-white mb-2">{block.title}</h2>}
-        {block.body && <p className="text-stone-300 text-sm max-w-lg leading-relaxed mb-5">{block.body}</p>}
-        <div className="flex gap-2.5">
-          <button className="px-5 py-2.5 rounded-xl text-sm font-black text-black transition-all hover:opacity-90"
+    <div className="relative overflow-hidden rounded-3xl p-10"
+      style={{ background: `linear-gradient(135deg, rgba(${primaryRgb},0.18), rgba(${accentRgb},0.06))` }}>
+      <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full blur-3xl opacity-25" style={{ backgroundColor: primary }} />
+      <div className="absolute -bottom-20 -left-20 w-56 h-56 rounded-full blur-3xl opacity-15" style={{ backgroundColor: accent }} />
+      <div className="relative max-w-2xl">
+        {block.badge && (
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-4"
+            style={{ background: `rgba(${primaryRgb},0.15)`, color: primary }}>
+            <Sparkles className="w-3 h-3" /> {block.badge}
+          </span>
+        )}
+        {block.title && <h2 className="text-4xl font-black text-white mb-3 leading-tight">{block.title}</h2>}
+        {block.body && <p className="text-stone-300 text-base leading-relaxed mb-6 max-w-xl">{block.body}</p>}
+        <div className="flex gap-3">
+          <button className="px-6 py-3 rounded-xl text-sm font-bold text-black transition-all hover:opacity-90 shadow-lg"
             style={{ background: `linear-gradient(135deg, ${primary}, ${accent})` }}>
-            Get Started
+            {block.ctaLabel || 'Get Started'} <ArrowRight className="w-4 h-4 inline ml-1" />
           </button>
-          <button className="px-5 py-2.5 rounded-xl text-sm font-bold text-white border transition-all hover:bg-white/5"
+          <button className="px-6 py-3 rounded-xl text-sm font-bold text-white border transition-all hover:bg-white/5"
             style={{ borderColor: `rgba(${primaryRgb},0.4)` }}>
             Learn More
           </button>
@@ -68,23 +83,24 @@ function KpiGridBlock({ block, primary, accent, primaryRgb }) {
   const colors = [primary, accent, '#34d399', '#818cf8'];
   return (
     <div>
-      {block.title && <p className="text-[10px] font-black tracking-[0.18em] uppercase mb-3 text-stone-600">{block.title}</p>}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      {block.title && <p className="text-xs font-bold tracking-wider uppercase mb-4 text-stone-500">{block.title}</p>}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {items.map((item, i) => {
           const color = colors[i % colors.length];
           const rgb = hexToRgb(color);
           const label = getItemField(item, 'label') || getItemField(item, 'title');
           const value = getItemField(item, 'value') || getItemField(item, 'count') || '—';
           const sub = getItemField(item, 'sub') || getItemField(item, 'trend') || '';
+          const Icon = KPI_ICONS[i % KPI_ICONS.length];
           return (
-            <div key={i} className="rounded-xl p-4 border relative overflow-hidden"
-              style={{ background: `rgba(${rgb},0.05)`, borderColor: `rgba(${rgb},0.18)` }}>
-              <div className="absolute top-2 right-2 opacity-10">
-                <TrendingUp className="w-8 h-8" style={{ color }} />
+            <div key={i} className="rounded-2xl p-5 border relative overflow-hidden"
+              style={{ background: `rgba(${rgb},0.06)`, borderColor: `rgba(${rgb},0.2)` }}>
+              <div className="absolute top-3 right-3 opacity-15">
+                <Icon className="w-10 h-10" style={{ color }} />
               </div>
-              <p className="font-black text-3xl leading-none" style={{ color }}>{value}</p>
-              <p className="text-white text-xs font-bold mt-2">{label}</p>
-              {sub && <p className="text-[9px] mt-1 text-stone-600">{sub}</p>}
+              <p className="font-black text-4xl leading-none" style={{ color }}>{value}</p>
+              <p className="text-white text-sm font-bold mt-3">{label}</p>
+              {sub && <p className="text-xs mt-1 text-stone-500">{sub}</p>}
             </div>
           );
         })}
@@ -97,41 +113,41 @@ function CardGridBlock({ block, primary, accent, primaryRgb, selectedBrands }) {
   const items = block.items?.slice(0, 6) || [];
   return (
     <div>
-      <div className="flex items-center justify-between mb-3">
-        {block.title && <p className="text-[10px] font-black tracking-[0.18em] uppercase text-stone-600">{block.title}</p>}
-        <div className="flex gap-1.5">
-          <button className="text-[9px] font-bold px-2 py-1 rounded-lg border border-stone-700 text-stone-500 flex items-center gap-1">
-            <Filter className="w-2.5 h-2.5" /> Filter
+      <div className="flex items-center justify-between mb-4">
+        {block.title && <p className="text-xs font-bold tracking-wider uppercase text-stone-500">{block.title}</p>}
+        <div className="flex gap-2">
+          <button className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-stone-700 text-stone-400 flex items-center gap-1.5 hover:bg-stone-800 transition-colors">
+            <Filter className="w-3.5 h-3.5" /> Filter
           </button>
-          <button className="text-[9px] font-bold px-2 py-1 rounded-lg text-black flex items-center gap-1"
+          <button className="text-xs font-bold px-3 py-1.5 rounded-lg text-black flex items-center gap-1.5"
             style={{ background: primary }}>
-            <Plus className="w-2.5 h-2.5" /> New
+            <Plus className="w-3.5 h-3.5" /> New
           </button>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
         {items.map((item, i) => {
           const name = getItemField(item, 'name') || getItemField(item, 'title');
           const desc = getItemField(item, 'description') || getItemField(item, 'body') || '';
           const tag = getItemField(item, 'sector') || getItemField(item, 'category') || getItemField(item, 'status');
-          const relatedBrand = selectedBrands?.find(b => name?.includes(b.name) || b.name?.includes(name));
+          const relatedBrand = findBrandForName(name, selectedBrands);
           const sm = SECTOR_META[relatedBrand?.sector] || SECTOR_META[tag?.toLowerCase?.()];
           const color = sm?.accent || primary;
           const rgb = hexToRgb(color);
           return (
-            <div key={i} className="rounded-xl p-4 border transition-all hover:border-stone-600"
-              style={{ background: `rgba(${rgb},0.04)`, borderColor: `rgba(${rgb},0.14)` }}>
-              <div className="flex items-start justify-between mb-2.5">
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center text-sm shrink-0"
-                  style={{ background: `rgba(${rgb},0.14)` }}>
+            <div key={i} className="rounded-2xl p-5 border transition-all hover:border-stone-600 cursor-pointer group"
+              style={{ background: `rgba(${rgb},0.05)`, borderColor: `rgba(${rgb},0.15)` }}>
+              <div className="flex items-start justify-between mb-3">
+                <div className="w-11 h-11 rounded-xl flex items-center justify-center text-lg shrink-0"
+                  style={{ background: `rgba(${rgb},0.15)` }}>
                   {sm?.icon || '◆'}
                 </div>
-                <MoreHorizontal className="w-4 h-4 text-stone-700" />
+                <MoreHorizontal className="w-5 h-5 text-stone-600 group-hover:text-stone-400 transition-colors" />
               </div>
-              <h4 className="text-white font-black text-xs mb-1 leading-tight">{name}</h4>
-              <p className="text-[10px] leading-relaxed text-stone-500 line-clamp-2 mb-2">{desc}</p>
+              <h4 className="text-white font-bold text-sm mb-1.5 leading-tight">{name}</h4>
+              <p className="text-xs leading-relaxed text-stone-500 line-clamp-2 mb-3">{desc}</p>
               {tag && (
-                <span className="inline-block text-[9px] font-bold px-2 py-0.5 rounded-full"
+                <span className="inline-block text-xs font-semibold px-2.5 py-1 rounded-full"
                   style={{ background: `rgba(${rgb},0.15)`, color }}>
                   {tag}
                 </span>
@@ -145,30 +161,30 @@ function CardGridBlock({ block, primary, accent, primaryRgb, selectedBrands }) {
 }
 
 function DataTableBlock({ block, primary, accent, primaryRgb }) {
-  const items = block.items?.slice(0, 6) || [];
+  const items = block.items?.slice(0, 8) || [];
   const cols = items[0] ? Object.keys(items[0]).slice(0, 4) : [];
   return (
     <div>
-      {block.title && <p className="text-[10px] font-black tracking-[0.18em] uppercase mb-3 text-stone-600">{block.title}</p>}
-      <div className="rounded-xl border overflow-hidden" style={{ borderColor: `rgba(${primaryRgb},0.12)` }}>
-        <div className="flex items-center gap-3 px-4 py-2.5 border-b"
-          style={{ background: `rgba(${primaryRgb},0.06)`, borderColor: `rgba(${primaryRgb},0.12)` }}>
+      {block.title && <p className="text-xs font-bold tracking-wider uppercase mb-4 text-stone-500">{block.title}</p>}
+      <div className="rounded-2xl border overflow-hidden" style={{ borderColor: `rgba(${primaryRgb},0.15)` }}>
+        <div className="flex items-center gap-4 px-5 py-3.5 border-b"
+          style={{ background: `rgba(${primaryRgb},0.08)`, borderColor: `rgba(${primaryRgb},0.15)` }}>
           {cols.map((col, i) => (
-            <div key={i} className={`text-[9px] font-black uppercase tracking-wider text-stone-500 ${i === 0 ? 'flex-1' : 'w-20'}`}>
+            <div key={i} className={`text-xs font-bold uppercase tracking-wider text-stone-400 ${i === 0 ? 'flex-1' : 'w-28'}`}>
               {col}
             </div>
           ))}
         </div>
         {items.map((item, i) => (
-          <div key={i} className="flex items-center gap-3 px-4 py-2.5 border-b hover:bg-white/2 transition-colors"
-            style={{ borderColor: 'rgba(255,255,255,0.04)' }}>
+          <div key={i} className="flex items-center gap-4 px-5 py-3.5 border-b last:border-0 hover:bg-white/[0.03] transition-colors"
+            style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
             {cols.map((col, j) => {
               const val = getItemField(item, col);
               return (
-                <div key={j} className={`text-xs ${j === 0 ? 'flex-1 font-bold text-white' : 'w-20 text-stone-400 font-mono'}`}>
+                <div key={j} className={`text-sm ${j === 0 ? 'flex-1 font-bold text-white' : 'w-28 text-stone-400 font-mono'}`}>
                   {j === 0 ? (
-                    <div className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: primary }} />
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-2 h-2 rounded-full" style={{ backgroundColor: primary }} />
                       {val}
                     </div>
                   ) : val}
@@ -183,62 +199,64 @@ function DataTableBlock({ block, primary, accent, primaryRgb }) {
 }
 
 function ChartBlock({ block, primary, accent, primaryRgb, accentRgb }) {
-  const items = block.items?.slice(0, 8) || [];
+  const items = block.items?.slice(0, 10) || [];
   const maxVal = Math.max(...items.map(it => Number(getItemField(it, 'value') || getItemField(it, 'count') || 0)), 1);
   return (
     <div>
-      {block.title && <p className="text-[10px] font-black tracking-[0.18em] uppercase mb-3 text-stone-600">{block.title}</p>}
-      <div className="rounded-xl p-5 border" style={{ background: `rgba(${primaryRgb},0.04)`, borderColor: `rgba(${primaryRgb},0.14)` }}>
-        <div className="flex items-end justify-between gap-2 h-32 mb-3">
+      {block.title && <p className="text-xs font-bold tracking-wider uppercase mb-4 text-stone-500">{block.title}</p>}
+      <div className="rounded-2xl p-6 border" style={{ background: `rgba(${primaryRgb},0.05)`, borderColor: `rgba(${primaryRgb},0.15)` }}>
+        <div className="flex items-end justify-between gap-3 h-48 mb-4">
           {items.map((item, i) => {
             const val = Number(getItemField(item, 'value') || getItemField(item, 'count') || (i + 1) * 12);
             const height = Math.max((val / maxVal) * 100, 4);
             const color = i % 2 === 0 ? primary : accent;
             return (
-              <div key={i} className="flex-1 flex flex-col items-center gap-1.5 group">
-                <div className="w-full rounded-t-md transition-all hover:opacity-80 relative"
+              <div key={i} className="flex-1 flex flex-col items-center gap-2 group">
+                <div className="w-full rounded-t-lg transition-all hover:opacity-80 relative"
                   style={{ height: `${height}%`, background: `linear-gradient(180deg, ${color}, ${color}80)` }}>
-                  <span className="absolute -top-5 left-1/2 -translate-x-1/2 text-[8px] font-black opacity-0 group-hover:opacity-100 transition-opacity"
+                  <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity"
                     style={{ color }}>{val}</span>
                 </div>
-                <span className="text-[8px] text-stone-600 font-mono truncate max-w-full">
-                  {getItemField(item, 'label')?.slice(0, 4) || getItemField(item, 'name')?.slice(0, 4) || `M${i + 1}`}
+                <span className="text-xs text-stone-500 font-mono truncate max-w-full">
+                  {getItemField(item, 'label')?.slice(0, 6) || getItemField(item, 'name')?.slice(0, 6) || `M${i + 1}`}
                 </span>
               </div>
             );
           })}
         </div>
-        {block.body && <p className="text-[10px] text-stone-500 leading-relaxed">{block.body}</p>}
+        {block.body && <p className="text-sm text-stone-500 leading-relaxed">{block.body}</p>}
       </div>
     </div>
   );
 }
 
 function TimelineBlock({ block, primary, accent, primaryRgb }) {
-  const items = block.items?.slice(0, 6) || [];
+  const items = block.items?.slice(0, 8) || [];
   return (
     <div>
-      {block.title && <p className="text-[10px] font-black tracking-[0.18em] uppercase mb-3 text-stone-600">{block.title}</p>}
+      {block.title && <p className="text-xs font-bold tracking-wider uppercase mb-4 text-stone-500">{block.title}</p>}
       <div className="space-y-0">
         {items.map((item, i) => {
           const title = getItemField(item, 'title') || getItemField(item, 'name');
           const desc = getItemField(item, 'description') || getItemField(item, 'body') || '';
           const time = getItemField(item, 'time') || getItemField(item, 'date') || '';
           return (
-            <div key={i} className="flex gap-3 pb-4 relative">
+            <div key={i} className="flex gap-4 pb-6 relative">
               {i < items.length - 1 && (
-                <div className="absolute left-3 top-7 bottom-0 w-px" style={{ background: `rgba(${primaryRgb},0.15)` }} />
+                <div className="absolute left-4 top-9 bottom-0 w-px" style={{ background: `rgba(${primaryRgb},0.2)` }} />
               )}
-              <div className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 z-10 border-2"
+              <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 z-10 border-2"
                 style={{ background: '#0d0b0f', borderColor: primary }}>
-                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: primary }} />
+                <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: primary }} />
               </div>
-              <div className="flex-1 pt-0.5">
+              <div className="flex-1 pt-1">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-white font-bold text-xs">{title}</h4>
-                  {time && <span className="text-[9px] font-mono text-stone-600">{time}</span>}
+                  <h4 className="text-white font-bold text-sm">{title}</h4>
+                  {time && <span className="text-xs font-mono text-stone-500 flex items-center gap-1">
+                    <Clock className="w-3 h-3" /> {time}
+                  </span>}
                 </div>
-                {desc && <p className="text-[10px] text-stone-500 mt-0.5 leading-relaxed">{desc}</p>}
+                {desc && <p className="text-sm text-stone-500 mt-1 leading-relaxed">{desc}</p>}
               </div>
             </div>
           );
@@ -250,14 +268,14 @@ function TimelineBlock({ block, primary, accent, primaryRgb }) {
 
 function CtaBlock({ block, primary, accent, primaryRgb, accentRgb }) {
   return (
-    <div className="relative overflow-hidden rounded-2xl p-6 text-center"
-      style={{ background: `linear-gradient(135deg, rgba(${primaryRgb},0.12), rgba(${accentRgb},0.08))` }}>
-      <div className="absolute inset-0 opacity-[0.03]"
-        style={{ backgroundImage: `radial-gradient(circle at 2px 2px, ${primary} 1px, transparent 0)`, backgroundSize: '20px 20px' }} />
+    <div className="relative overflow-hidden rounded-3xl p-10 text-center"
+      style={{ background: `linear-gradient(135deg, rgba(${primaryRgb},0.15), rgba(${accentRgb},0.08))` }}>
+      <div className="absolute inset-0 opacity-[0.04]"
+        style={{ backgroundImage: `radial-gradient(circle at 2px 2px, ${primary} 1px, transparent 0)`, backgroundSize: '24px 24px' }} />
       <div className="relative">
-        {block.title && <h3 className="text-xl font-black text-white mb-2">{block.title}</h3>}
-        {block.body && <p className="text-stone-400 text-sm mb-4 max-w-md mx-auto">{block.body}</p>}
-        <button className="px-6 py-3 rounded-xl text-sm font-black text-black transition-all hover:opacity-90 inline-flex items-center gap-2"
+        {block.title && <h3 className="text-3xl font-black text-white mb-3">{block.title}</h3>}
+        {block.body && <p className="text-stone-400 text-base mb-6 max-w-lg mx-auto leading-relaxed">{block.body}</p>}
+        <button className="px-8 py-3.5 rounded-xl text-sm font-bold text-black transition-all hover:opacity-90 inline-flex items-center gap-2 shadow-lg"
           style={{ background: `linear-gradient(135deg, ${primary}, ${accent})` }}>
           {block.items?.[0]?.label || block.items?.[0]?.title || 'Get Started'} <ArrowRight className="w-4 h-4" />
         </button>
@@ -267,23 +285,23 @@ function CtaBlock({ block, primary, accent, primaryRgb, accentRgb }) {
 }
 
 function SplitPanelBlock({ block, primary, accent, primaryRgb, selectedBrands }) {
-  const items = block.items?.slice(0, 4) || [];
+  const items = block.items?.slice(0, 5) || [];
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-      <div className="rounded-xl p-5 border" style={{ background: `rgba(${primaryRgb},0.04)`, borderColor: `rgba(${primaryRgb},0.14)` }}>
-        {block.title && <h3 className="text-white font-black text-sm mb-3">{block.title}</h3>}
-        {block.body && <p className="text-stone-500 text-xs leading-relaxed">{block.body}</p>}
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+      <div className="rounded-2xl p-6 border" style={{ background: `rgba(${primaryRgb},0.05)`, borderColor: `rgba(${primaryRgb},0.15)` }}>
+        {block.title && <h3 className="text-white font-bold text-lg mb-3">{block.title}</h3>}
+        {block.body && <p className="text-stone-500 text-sm leading-relaxed">{block.body}</p>}
       </div>
-      <div className="rounded-xl p-5 border space-y-2" style={{ borderColor: `rgba(${primaryRgb},0.12)` }}>
+      <div className="rounded-2xl p-6 border space-y-3" style={{ borderColor: `rgba(${primaryRgb},0.15)` }}>
         {items.map((item, i) => {
           const name = getItemField(item, 'name') || getItemField(item, 'title');
           const desc = getItemField(item, 'description') || getItemField(item, 'body') || '';
           return (
-            <div key={i} className="flex items-center gap-2.5 p-2 rounded-lg" style={{ background: 'rgba(255,255,255,0.02)' }}>
-              <CheckCircle2 className="w-4 h-4 shrink-0" style={{ color: primary }} />
+            <div key={i} className="flex items-start gap-3 p-3 rounded-xl" style={{ background: 'rgba(255,255,255,0.03)' }}>
+              <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5" style={{ color: primary }} />
               <div>
-                <p className="text-white text-xs font-bold">{name}</p>
-                {desc && <p className="text-[10px] text-stone-600 leading-relaxed">{desc}</p>}
+                <p className="text-white text-sm font-bold">{name}</p>
+                {desc && <p className="text-xs text-stone-500 leading-relaxed mt-0.5">{desc}</p>}
               </div>
             </div>
           );
@@ -294,24 +312,24 @@ function SplitPanelBlock({ block, primary, accent, primaryRgb, selectedBrands })
 }
 
 function StatListBlock({ block, primary, accent, primaryRgb }) {
-  const items = block.items?.slice(0, 5) || [];
+  const items = block.items?.slice(0, 6) || [];
   return (
     <div>
-      {block.title && <p className="text-[10px] font-black tracking-[0.18em] uppercase mb-3 text-stone-600">{block.title}</p>}
-      <div className="rounded-xl border overflow-hidden" style={{ borderColor: `rgba(${primaryRgb},0.12)` }}>
+      {block.title && <p className="text-xs font-bold tracking-wider uppercase mb-4 text-stone-500">{block.title}</p>}
+      <div className="rounded-2xl border overflow-hidden" style={{ borderColor: `rgba(${primaryRgb},0.15)` }}>
         {items.map((item, i) => {
           const label = getItemField(item, 'label') || getItemField(item, 'name') || getItemField(item, 'title');
           const value = getItemField(item, 'value') || getItemField(item, 'count') || '—';
           const sub = getItemField(item, 'sub') || getItemField(item, 'trend') || '';
           return (
-            <div key={i} className="flex items-center justify-between px-4 py-3 border-b last:border-0 hover:bg-white/2 transition-colors"
-              style={{ borderColor: 'rgba(255,255,255,0.04)' }}>
-              <div className="flex items-center gap-2.5">
-                <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: primary }} />
-                <span className="text-white text-xs font-bold">{label}</span>
-                {sub && <span className="text-[9px] text-stone-600 font-mono">{sub}</span>}
+            <div key={i} className="flex items-center justify-between px-5 py-4 border-b last:border-0 hover:bg-white/[0.03] transition-colors"
+              style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: primary }} />
+                <span className="text-white text-sm font-bold">{label}</span>
+                {sub && <span className="text-xs text-stone-500 font-mono">{sub}</span>}
               </div>
-              <span className="font-black text-sm" style={{ color: primary }}>{value}</span>
+              <span className="font-black text-lg" style={{ color: primary }}>{value}</span>
             </div>
           );
         })}
@@ -321,23 +339,23 @@ function StatListBlock({ block, primary, accent, primaryRgb }) {
 }
 
 function ActivityFeedBlock({ block, primary, accent, primaryRgb }) {
-  const items = block.items?.slice(0, 6) || [];
+  const items = block.items?.slice(0, 8) || [];
   return (
     <div>
-      {block.title && <p className="text-[10px] font-black tracking-[0.18em] uppercase mb-3 text-stone-600">{block.title}</p>}
-      <div className="space-y-2">
+      {block.title && <p className="text-xs font-bold tracking-wider uppercase mb-4 text-stone-500">{block.title}</p>}
+      <div className="space-y-2.5">
         {items.map((item, i) => {
           const text = getItemField(item, 'message') || getItemField(item, 'title') || getItemField(item, 'description') || getItemField(item, 'body');
           const time = getItemField(item, 'time') || getItemField(item, 'date') || '';
           return (
-            <div key={i} className="flex items-start gap-2.5 p-2.5 rounded-lg" style={{ background: 'rgba(255,255,255,0.02)' }}>
-              <div className="w-6 h-6 rounded-full flex items-center justify-center shrink-0"
+            <div key={i} className="flex items-start gap-3 p-3.5 rounded-xl" style={{ background: 'rgba(255,255,255,0.03)' }}>
+              <div className="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
                 style={{ background: `rgba(${primaryRgb},0.12)` }}>
-                <Activity className="w-3 h-3" style={{ color: primary }} />
+                <Activity className="w-4 h-4" style={{ color: primary }} />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-stone-300 text-xs leading-relaxed">{text}</p>
-                {time && <p className="text-[9px] text-stone-700 font-mono mt-0.5">{time}</p>}
+                <p className="text-stone-200 text-sm leading-relaxed">{text}</p>
+                {time && <p className="text-xs text-stone-600 font-mono mt-1">{time}</p>}
               </div>
             </div>
           );
@@ -348,24 +366,24 @@ function ActivityFeedBlock({ block, primary, accent, primaryRgb }) {
 }
 
 function FormBlock({ block, primary, accent, primaryRgb }) {
-  const items = block.items?.slice(0, 4) || [];
+  const items = block.items?.slice(0, 5) || [];
   return (
     <div>
-      {block.title && <p className="text-[10px] font-black tracking-[0.18em] uppercase mb-3 text-stone-600">{block.title}</p>}
-      <div className="rounded-xl p-5 border space-y-3" style={{ borderColor: `rgba(${primaryRgb},0.14)`, background: `rgba(${primaryRgb},0.03)` }}>
+      {block.title && <p className="text-xs font-bold tracking-wider uppercase mb-4 text-stone-500">{block.title}</p>}
+      <div className="rounded-2xl p-6 border space-y-4 max-w-lg" style={{ borderColor: `rgba(${primaryRgb},0.15)`, background: `rgba(${primaryRgb},0.04)` }}>
         {items.map((item, i) => {
           const label = getItemField(item, 'label') || getItemField(item, 'name') || getItemField(item, 'title');
           return (
             <div key={i}>
-              <label className="text-[10px] font-black uppercase tracking-wider text-stone-500 mb-1.5 block">{label}</label>
-              <div className="px-3 py-2 rounded-lg border bg-stone-950 text-stone-600 text-xs"
-                style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+              <label className="text-xs font-bold uppercase tracking-wider text-stone-400 mb-2 block">{label}</label>
+              <div className="px-4 py-3 rounded-xl border bg-stone-950 text-stone-600 text-sm"
+                style={{ borderColor: 'rgba(255,255,255,0.08)' }}>
                 Enter {label?.toLowerCase()}…
               </div>
             </div>
           );
         })}
-        <button className="w-full py-2.5 rounded-lg text-sm font-black text-black transition-all hover:opacity-90"
+        <button className="w-full py-3.5 rounded-xl text-sm font-bold text-black transition-all hover:opacity-90"
           style={{ background: `linear-gradient(135deg, ${primary}, ${accent})` }}>
           Submit
         </button>
@@ -378,20 +396,20 @@ function ImageGalleryBlock({ block, primary, accent, primaryRgb, selectedBrands 
   const items = block.items?.slice(0, 6) || [];
   return (
     <div>
-      {block.title && <p className="text-[10px] font-black tracking-[0.18em] uppercase mb-3 text-stone-600">{block.title}</p>}
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+      {block.title && <p className="text-xs font-bold tracking-wider uppercase mb-4 text-stone-500">{block.title}</p>}
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
         {items.map((item, i) => {
           const name = getItemField(item, 'name') || getItemField(item, 'title');
-          const relatedBrand = selectedBrands?.find(b => name?.includes(b.name));
+          const relatedBrand = findBrandForName(name, selectedBrands);
           const sm = SECTOR_META[relatedBrand?.sector];
           const color = sm?.accent || primary;
           const rgb = hexToRgb(color);
           return (
-            <div key={i} className="aspect-video rounded-xl border relative overflow-hidden group cursor-pointer"
-              style={{ background: `linear-gradient(135deg, rgba(${rgb},0.15), rgba(${rgb},0.05))`, borderColor: `rgba(${rgb},0.2)` }}>
-              <div className="absolute inset-0 flex items-center justify-center text-3xl opacity-20">{sm?.icon || '🖼️'}</div>
-              <div className="absolute bottom-0 left-0 right-0 p-2.5 bg-gradient-to-t from-black/60 to-transparent">
-                <p className="text-white text-xs font-black truncate">{name}</p>
+            <div key={i} className="aspect-video rounded-2xl border relative overflow-hidden group cursor-pointer"
+              style={{ background: `linear-gradient(135deg, rgba(${rgb},0.2), rgba(${rgb},0.05))`, borderColor: `rgba(${rgb},0.25)` }}>
+              <div className="absolute inset-0 flex items-center justify-center text-5xl opacity-25">{sm?.icon || '🖼️'}</div>
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent">
+                <p className="text-white text-sm font-bold truncate">{name}</p>
               </div>
             </div>
           );
@@ -408,28 +426,27 @@ function renderBlock(block, ctx) {
   const type = (block.type || '').toLowerCase();
   const props = { block, ...ctx };
   switch (type) {
-    case 'hero':          return <HeroBlock {...props} />;
-    case 'kpi_grid':     return <KpiGridBlock {...props} />;
-    case 'card_grid':    return <CardGridBlock {...props} />;
-    case 'data_table':   return <DataTableBlock {...props} />;
-    case 'chart':        return <ChartBlock {...props} />;
-    case 'timeline':     return <TimelineBlock {...props} />;
-    case 'cta':          return <CtaBlock {...props} />;
-    case 'split_panel':  return <SplitPanelBlock {...props} />;
-    case 'stat_list':    return <StatListBlock {...props} />;
-    case 'activity_feed':return <ActivityFeedBlock {...props} />;
-    case 'form':         return <FormBlock {...props} />;
-    case 'image_gallery':return <ImageGalleryBlock {...props} />;
+    case 'hero':           return <HeroBlock {...props} />;
+    case 'kpi_grid':       return <KpiGridBlock {...props} />;
+    case 'card_grid':      return <CardGridBlock {...props} />;
+    case 'data_table':     return <DataTableBlock {...props} />;
+    case 'chart':          return <ChartBlock {...props} />;
+    case 'timeline':       return <TimelineBlock {...props} />;
+    case 'cta':            return <CtaBlock {...props} />;
+    case 'split_panel':    return <SplitPanelBlock {...props} />;
+    case 'stat_list':      return <StatListBlock {...props} />;
+    case 'activity_feed':  return <ActivityFeedBlock {...props} />;
+    case 'form':           return <FormBlock {...props} />;
+    case 'image_gallery':  return <ImageGalleryBlock {...props} />;
     default:
-      // Fallback: render as a generic content block
       return (
-        <div className="rounded-xl p-5 border" style={{ background: `rgba(${ctx.primaryRgb},0.04)`, borderColor: `rgba(${ctx.primaryRgb},0.14)` }}>
-          {block.title && <h3 className="text-white font-black text-sm mb-2">{block.title}</h3>}
-          {block.body && <p className="text-stone-500 text-xs leading-relaxed">{block.body}</p>}
+        <div className="rounded-2xl p-6 border" style={{ background: `rgba(${ctx.primaryRgb},0.05)`, borderColor: `rgba(${ctx.primaryRgb},0.15)` }}>
+          {block.title && <h3 className="text-white font-bold text-lg mb-2">{block.title}</h3>}
+          {block.body && <p className="text-stone-500 text-sm leading-relaxed">{block.body}</p>}
           {block.items?.length > 0 && (
-            <div className="grid grid-cols-2 gap-2 mt-3">
+            <div className="grid grid-cols-2 gap-3 mt-4">
               {block.items.slice(0, 4).map((item, i) => (
-                <div key={i} className="px-3 py-2 rounded-lg text-xs text-stone-300" style={{ background: 'rgba(255,255,255,0.03)' }}>
+                <div key={i} className="px-4 py-3 rounded-xl text-sm text-stone-300" style={{ background: 'rgba(255,255,255,0.04)' }}>
                   {getItemField(item, 'name') || getItemField(item, 'title') || getItemField(item, 'label') || 'Item'}
                 </div>
               ))}
@@ -455,7 +472,12 @@ export default function PageRenderer({ page, appData, selectedBrands, primary, s
     : fallbackBlocks(page, appData, selectedBrands);
 
   return (
-    <div className="px-5 py-5 space-y-6">
+    <div className="px-8 py-8 space-y-8 max-w-5xl">
+      {/* Page header */}
+      <div>
+        <h1 className="text-2xl font-black text-white">{page.name}</h1>
+        {page.description && <p className="text-stone-500 text-sm mt-1.5 max-w-2xl leading-relaxed">{page.description}</p>}
+      </div>
       {blocks.map((block, i) => (
         <div key={i}>{renderBlock(block, ctx)}</div>
       ))}
@@ -463,49 +485,57 @@ export default function PageRenderer({ page, appData, selectedBrands, primary, s
   );
 }
 
-// If the LLM didn't return contentBlocks, build them from the page data
+// If the LLM didn't return contentBlocks, build rich blocks from the page + app data
 function fallbackBlocks(page, appData, selectedBrands) {
   const blocks = [];
   const layout = (page.layout || '').toLowerCase();
+  const allSubnodes = selectedBrands.flatMap(b => (b.subnodes || []).map(s => ({ name: s, brand: b.name, sector: b.sector })));
 
   if (layout === 'landing' || layout === 'detail' || !layout) {
-    blocks.push({ type: 'hero', title: page.name, body: page.description });
+    blocks.push({
+      type: 'hero',
+      badge: 'Powered by FAA.ZONE™',
+      title: page.name,
+      body: page.description || `A world-class ${page.name} experience built on real ecosystem data from ${selectedBrands.length} brands.`,
+      ctaLabel: 'Explore Now',
+    });
   }
   if (layout === 'dashboard' || layout === 'analytics' || !layout) {
     blocks.push({
       type: 'kpi_grid',
       title: 'Overview',
       items: [
-        { label: 'Total Brands', value: selectedBrands.length, sub: 'integrated' },
+        { label: 'Active Brands', value: selectedBrands.length, sub: 'integrated' },
+        { label: 'Total Subnodes', value: allSubnodes.length, sub: 'live data' },
         { label: 'Pages', value: appData.pages?.length || 0, sub: 'generated' },
         { label: 'Features', value: appData.features?.length || 0, sub: 'active' },
-        { label: 'DB Tables', value: appData.databaseSchema?.length || 0, sub: 'schema' },
       ],
     });
   }
   blocks.push({
     type: 'card_grid',
-    title: page.sections?.length ? 'Page Sections' : 'Key Features',
-    items: (page.sections?.length ? page.sections : appData.features?.slice(0, 6) || []).map((s, i) => ({
+    title: page.sections?.length ? 'Page Sections' : 'Ecosystem Subnodes',
+    items: (page.sections?.length ? page.sections : allSubnodes.slice(0, 6)).map((s, i) => ({
       name: typeof s === 'string' ? s : s?.name,
-      description: typeof s === 'string' ? '' : s?.description,
+      description: typeof s === 'string' ? `Part of the ${allSubnodes[i]?.brand || 'ecosystem'} brand` : s?.description,
+      sector: typeof s === 'object' ? s?.sector : allSubnodes[i]?.sector,
     })),
   });
   if (appData.crossPollination?.length > 0) {
     blocks.push({
       type: 'chart',
-      title: 'Cross-Pollination Synergy',
+      title: 'Cross-Pollination Synergy Scores',
       items: appData.crossPollination.slice(0, 8).map(cp => ({
-        label: cp.brand1?.slice(0, 4),
+        label: `${(cp.brand1 || '').slice(0, 3)}→${(cp.brand2 || '').slice(0, 3)}`,
         value: cp.synergyScore || 70,
       })),
     });
   }
   blocks.push({
     type: 'activity_feed',
-    title: 'Recent Activity',
-    items: selectedBrands.slice(0, 5).map(b => ({
-      message: `${b.name}™ synced · ${b.subnodes?.length || 0} subnodes active`,
+    title: 'Live Ecosystem Activity',
+    items: selectedBrands.slice(0, 6).map(b => ({
+      message: `${b.name}™ synced · ${b.subnodes?.length || 0} subnodes active · ${b.metadata?.activeNodes || 0} nodes online`,
       time: '2h ago',
     })),
   });

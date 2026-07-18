@@ -220,10 +220,10 @@ export default function HotStackPreview({ appData, selectedBrands, onRebuild }) 
             </div>
           </div>
 
-          <div className="flex" style={{ minHeight: '760px', background: '#08070a' }}>
+          <div className="flex" style={{ minHeight: '900px', background: '#08070a' }}>
 
             {/* ── Sidebar ── */}
-            <div className="w-56 shrink-0 flex flex-col border-r"
+            <div className="w-64 shrink-0 flex flex-col border-r"
               style={{ background: '#100e14', borderColor: `rgba(${primaryRgb},0.12)` }}>
 
               {/* Logo */}
@@ -307,31 +307,6 @@ export default function HotStackPreview({ appData, selectedBrands, onRebuild }) 
                     {appData.userRoles?.[0] || 'admin'}
                   </span>
                 </div>
-              </div>
-
-              {/* KPI strip */}
-              <div className="grid grid-cols-4 gap-3 px-5 py-4 border-b shrink-0"
-                style={{ borderColor: `rgba(${primaryRgb},0.06)` }}>
-                {[
-                  { icon: Layers, label: 'Pages',    val: appData.pages?.length || 0,    sub: 'generated',  color: primary },
-                  { icon: Zap,    label: 'Features', val: appData.features?.length || 0, sub: 'active',     color: accent },
-                  { icon: GitBranch, label: 'Brands', val: selectedBrands.length,         sub: 'integrated', color: brandSectorAccents[0] || primary },
-                  { icon: Database,  label: 'Tables', val: appData.databaseSchema?.length || 0, sub: 'schema', color: brandSectorAccents[1] || accent },
-                ].map(k => {
-                  const Icon = k.icon;
-                  const rgb = hexToRgb(k.color);
-                  return (
-                    <div key={k.label} className="rounded-xl p-3 border relative overflow-hidden"
-                      style={{ background: `rgba(${rgb},0.05)`, borderColor: `rgba(${rgb},0.18)` }}>
-                      <div className="absolute top-2 right-2 opacity-8">
-                        <Icon className="w-7 h-7" style={{ color: k.color, opacity: 0.12 }} />
-                      </div>
-                      <p className="font-black text-2xl leading-none" style={{ color: k.color }}>{k.val}</p>
-                      <p className="text-white text-xs font-bold mt-1">{k.label}</p>
-                      <p className="text-[9px] mt-0.5 text-stone-600">{k.sub}</p>
-                    </div>
-                  );
-                })}
               </div>
 
               {/* Scrollable content — renders REAL page content per selected page */}
