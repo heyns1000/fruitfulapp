@@ -9,6 +9,8 @@ import LoyaltyMetrics from '../components/analytics/LoyaltyMetrics';
 import SupportMetrics from '../components/analytics/SupportMetrics';
 import AIInsights from '../components/analytics/AIInsights';
 import GlobalHeatmap from '../components/analytics/GlobalHeatmap';
+import SheetMetricsSync from '../components/analytics/SheetMetricsSync';
+import { Database } from 'lucide-react';
 
 export default function Analytics() {
   return (
@@ -103,6 +105,10 @@ export default function Analytics() {
               <Headphones className="w-4 h-4" />
               Support Tickets
             </TabsTrigger>
+            <TabsTrigger value="sheetsync" className="flex items-center gap-2">
+              <Database className="w-4 h-4" />
+              Live Sheet Sync
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="heatmap">
@@ -123,6 +129,10 @@ export default function Analytics() {
 
           <TabsContent value="support">
             <SupportMetrics />
+          </TabsContent>
+
+          <TabsContent value="sheetsync">
+            <SheetMetricsSync />
           </TabsContent>
         </Tabs>
       </div>
