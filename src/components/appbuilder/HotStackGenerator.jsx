@@ -40,8 +40,8 @@ export default function HotStackGenerator({ selectedBrands, vibePrompt, onGenera
   useEffect(() => {
     if (!isGenerating) return;
     const interval = setInterval(() => {
-      setLoadingStep(prev => (prev + 1) % LOADING_STEPS.length);
-    }, 1600);
+      setLoadingStep(prev => Math.min(prev + 1, LOADING_STEPS.length - 1));
+    }, 1400);
     return () => clearInterval(interval);
   }, [isGenerating]);
 
@@ -50,10 +50,17 @@ export default function HotStackGenerator({ selectedBrands, vibePrompt, onGenera
     setIsGenerating(true);
     setLoadingStep(0);
 
-    const brandsSummary = selectedBrands.slice(0, 10).map(b => ({
-      name: b.name, sector: b.sector,
-      description: (b.description || '').slice(0, 120),
-      subnodes: (b.subnodes || []).slice(0, 5),
+    // Send FULL brand data — every core field, every subnode, metadata, tags.
+    // No truncation. The AI must see and use ALL of it.
+    const brandsSummary = selectedBrands.map(b => ({
+      name: b.name,
+      sector: b.sector,
+      description: b.description || '',
+      subnodes: b.subnodes || [],
+      tags: b.tags || [],
+      metadata: b.metadata || {},
+      isSystemBrand: b.isSystemBrand,
+      aiGenerated: b.aiGenerated,
     }));
 
     try {
@@ -69,8 +76,15 @@ APP CONFIG:
 - Type: ${appType}
 - User Roles: ${JSON.stringify(userRoles)}
 
-REAL ECOSYSTEM BRANDS (${selectedBrands.length} brands — use ONLY this real data, never invent brands):
+REAL ECOSYSTEM BRANDS (${selectedBrands.length} brands — FULL DATA, use ONLY this, never invent brands):
 ${JSON.stringify(brandsSummary, null, 2)}
+
+CRITICAL DATA USAGE RULES:
+- You MUST use EVERY subnode from EVERY brand somewhere in the generated pages/features/content blocks.
+- You MUST reference brand metadata (layer, securityRating, activeNodes, vault, deploymentZone) where relevant.
+- You MUST use brand tags for categorization and filtering features.
+- Count the subnodes above and ensure ALL of them appear in the output — in page sections, feature descriptions, content block items, or database fields.
+- Do NOT skip, summarize, or omit any subnode. Each one is a real capability that must be reflected.
 
 ═══ WORLD-CLASS DESIGN REQUIREMENTS ═══
 
