@@ -67,20 +67,16 @@ export default function HotStackGenerator({ selectedBrands, vibePrompt, customiz
       // Lean LLM call — only pages + content blocks. Metadata generated locally to avoid timeout.
       const result = await base44.integrations.Core.InvokeLLM({
         model: 'gemini_3_flash',
-        prompt: `Generate an app blueprint as JSON. 3 pages, each with 2 content blocks. Use the real brand data below. Every field must have REAL specific content — real names, real numbers, real descriptions. No placeholders.
+        prompt: `Generate JSON for 2 pages, 1 block each. Real African brand data. Every field REAL and specific.
 
 VIBE: "${vibePrompt || 'Build a full ecosystem app for the FAA.ZONE brands.'}"
 APP NAME: ${appName}
-${hasCustomColors ? `COLORS: primary=${customColors.primary} accent=${customColors.accent}` : ''}
-
 BRANDS: ${JSON.stringify(brandsSummary)}
 
-Generate these 3 pages:
-1. "Dashboard" — blocks: kpi_grid (4 items: label/value/sub) + card_grid (6 items: name/description/sector/status/metric)
-2. "Marketplace" — blocks: hero (badge/title/body/ctaLabel) + data_table (6 items: name/email/status/amount/date)
-3. "Analytics" — blocks: chart (8 items: label/value integer) + stat_list (6 items: label/value/sub)
+Page 1 "Dashboard": kpi_grid with 4 items [{label, value, sub}] — real Rand amounts, real metrics
+Page 2 "Marketplace": hero with {badge, title, body, ctaLabel}
 
-Use real African names (Thandiwe, Sipho, Nomsa, Lerato, Zanele), real amounts (R3,240, R45,200), real product names from the brands. Return ONLY JSON.`,
+Use real African names, real amounts like R52,400. Return ONLY JSON.`,
         file_urls: refFiles.length > 0 ? refFiles : undefined,
         response_json_schema: {
           type: 'object',
@@ -89,9 +85,6 @@ Use real African names (Thandiwe, Sipho, Nomsa, Lerato, Zanele), real amounts (R
             colorScheme: { type: 'object', properties: { primary: { type: 'string' }, secondary: { type: 'string' }, accent: { type: 'string' } } },
             pages: { type: 'array', items: { type: 'object', properties: {
               name: { type: 'string' },
-              route: { type: 'string' },
-              description: { type: 'string' },
-              layout: { type: 'string' },
               contentBlocks: { type: 'array', items: { type: 'object', properties: {
                 type: { type: 'string' },
                 title: { type: 'string' },
@@ -99,11 +92,7 @@ Use real African names (Thandiwe, Sipho, Nomsa, Lerato, Zanele), real amounts (R
                 badge: { type: 'string' },
                 ctaLabel: { type: 'string' },
                 items: { type: 'array', items: { type: 'object', properties: {
-                  name: { type: 'string' }, label: { type: 'string' }, description: { type: 'string' },
-                  value: { type: 'string' }, sub: { type: 'string' }, metric: { type: 'string' },
-                  sector: { type: 'string' }, status: { type: 'string' }, message: { type: 'string' },
-                  time: { type: 'string' }, user: { type: 'string' }, amount: { type: 'string' },
-                  email: { type: 'string' }, date: { type: 'string' },
+                  label: { type: 'string' }, value: { type: 'string' }, sub: { type: 'string' }
                 } } }
               } } }
             } } }
@@ -121,9 +110,14 @@ Use real African names (Thandiwe, Sipho, Nomsa, Lerato, Zanele), real amounts (R
         ? { ...(result.colorScheme || {}), ...customColors }
         : result.colorScheme || { primary: '#f97316', secondary: '#1c1917', accent: '#f59e0b' };
 
+      // Supplement LLM pages with extra pages from brand data for a full app feel
+      const llmPages = result.pages || [];
+      const allPages = supplementPages(llmPages, selectedBrands, appName, userRoles);
+
       const finalResult = {
         ...result,
         appName,
+        pages: allPages,
         tagline: result.tagline || vibePrompt?.slice(0, 80) || `${appName} — powered by FAA.ZONE`,
         colorScheme,
         ...localMeta,
@@ -138,6 +132,56 @@ Use real African names (Thandiwe, Sipho, Nomsa, Lerato, Zanele), real amounts (R
       toast.error(`Generation failed: ${msg}. Try fewer brands.`, { duration: 6000 });
     }
   };
+
+  // Add extra pages from brand data so the app feels complete (LLM only generates 2 for speed)
+  function supplementPages(llmPages, brands, appName, roles) {
+    const pages = [...llmPages];
+    const existingNames = new Set(pages.map(p => p.name?.toLowerCase()));
+
+    const addPage = (name, route, layout, description, blocks) => {
+      if (!existingNames.has(name.toLowerCase())) {
+        pages.push({ name, route, description, layout, contentBlocks: blocks });
+        existingNames.add(name.toLowerCase());
+      }
+    };
+
+    // Analytics page
+    addPage('Analytics', '/analytics', 'analytics', 'Cross-brand performance metrics and ecosystem intelligence.', [
+      { type: 'kpi_grid', title: 'Key Metrics', items: [
+        { label: 'Total Revenue', value: 'R2.4M', sub: 'this quarter' },
+        { label: 'Active Users', value: '8,421', sub: 'monthly active' },
+        { label: 'Orders', value: '1,247', sub: 'this month' },
+        { label: 'Avg Order', value: 'R1,920', sub: 'per transaction' },
+      ]},
+      { type: 'chart', title: 'Monthly Revenue', items: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug'].map((m, i) => ({ label: m, value: 180 + Math.floor(Math.random() * 120) })) },
+      { type: 'stat_list', title: 'Ecosystem Stats', items: [
+        { label: 'Retention', value: '94.2%', sub: 'year over year' },
+        { label: 'NPS Score', value: '72', sub: 'of 100' },
+        { label: 'Growth', value: '+18.4%', sub: 'vs last quarter' },
+        { label: 'Churn', value: '2.1%', sub: 'monthly' },
+      ]},
+    ]);
+
+    // Profiles / Brands page
+    const allSubnodes = brands.flatMap(b => (b.subnodes || []).map(s => ({ name: s, brand: b.name, sector: b.sector })));
+    addPage('Brands', '/brands', 'detail', 'Explore the brands powering your ecosystem.', [
+      { type: 'hero', badge: 'Ecosystem', title: `${brands.length} Brands Connected`, body: `A curated network of ${brands.length} brands across ${new Set(brands.map(b => b.sector)).size} sectors, with ${allSubnodes.length} active subnodes.`, ctaLabel: 'Explore Brands' },
+      { type: 'card_grid', title: 'Brand Network', items: brands.slice(0, 8).map(b => ({ name: b.name, description: `${b.sector} sector · ${b.subnodes?.length || 0} subnodes`, sector: b.sector, status: 'active', metric: `${b.subnodes?.length || 0} nodes` })) },
+    ]);
+
+    // Settings page
+    addPage('Settings', '/settings', 'settings', 'Configure your ecosystem app preferences.', [
+      { type: 'form', title: 'App Settings', items: [
+        { label: 'App Name', type: 'text' },
+        { label: 'Primary Color', type: 'color' },
+        { label: 'Default Currency', type: 'select' },
+        { label: 'Enable Notifications', type: 'toggle' },
+      ]},
+      { type: 'split_panel', title: 'Role Permissions', body: 'Manage access levels for your team.', items: (roles || ['admin', 'user']).map(r => ({ name: r, description: r === 'admin' ? 'Full platform access' : 'Standard user access' })) },
+    ]);
+
+    return pages;
+  }
 
   // Generate features, crossPollination, databaseSchema, techStack, rolePermissions locally from brand data
   function generateLocalMetadata(brands, roles, name) {

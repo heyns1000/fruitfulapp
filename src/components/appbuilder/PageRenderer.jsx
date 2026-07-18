@@ -750,9 +750,16 @@ export default function PageRenderer({ page, appData, selectedBrands, primary, s
   }
 
   const ctx = { primary, secondary, accent, primaryRgb, accentRgb, selectedBrands, appData, onOpenDetail: setDetailItem };
-  const rawBlocks = page.contentBlocks?.length > 0
-    ? page.contentBlocks
+  let rawBlocks = page.contentBlocks?.length > 0
+    ? [...page.contentBlocks]
     : fallbackBlocks(page, appData, selectedBrands);
+  // Supplement thin pages (< 3 blocks) with fallback blocks so every page feels full
+  if (rawBlocks.length < 3) {
+    const extras = fallbackBlocks(page, appData, selectedBrands).filter(
+      fb => !rawBlocks.some(rb => rb.type === fb.type)
+    );
+    rawBlocks = [...rawBlocks, ...extras].slice(0, 4);
+  }
   // Enrich blocks: ensure every block has enough items, padding from brand data if sparse
   const blocks = rawBlocks.map(block => enrichBlock(block, selectedBrands, appData));
 
