@@ -22,7 +22,7 @@ const APP_TYPES = [
   { val: 'marketplace', label: '🏪 Marketplace' },
 ];
 
-export default function HotStackGenerator({ selectedBrands, vibePrompt, onGenerated, onBack }) {
+export default function HotStackGenerator({ selectedBrands, vibePrompt, customization, onGenerated, onBack }) {
   const [appName, setAppName] = useState('');
   const [appType, setAppType] = useState('webapp');
   const [userRoles, setUserRoles] = useState(['admin', 'user', 'artisan']);
@@ -63,6 +63,10 @@ export default function HotStackGenerator({ selectedBrands, vibePrompt, onGenera
       aiGenerated: b.aiGenerated,
     }));
 
+    const customColors = customization?.colors || {};
+    const hasCustomColors = customColors.primary || customColors.secondary || customColors.accent;
+    const refFiles = customization?.referenceFiles || [];
+
     try {
       const result = await base44.integrations.Core.InvokeLLM({
         model: 'claude_sonnet_4_6',
@@ -75,6 +79,15 @@ APP CONFIG:
 - Name: ${appName}
 - Type: ${appType}
 - User Roles: ${JSON.stringify(userRoles)}
+${hasCustomColors ? `
+USER'S CUSTOM BRAND COLORS (MUST use these exact hex values in colorScheme):
+- Primary: ${customColors.primary}
+- Secondary: ${customColors.secondary}
+- Accent: ${customColors.accent}
+` : ''}
+${refFiles.length > 0 ? `
+USER UPLOADED ${refFiles.length} REFERENCE FILE(S) — analyze the attached images/files and incorporate their style, layout, and content into your design.
+` : ''}
 
 REAL ECOSYSTEM BRANDS (${selectedBrands.length} brands — FULL DATA, use ONLY this, never invent brands):
 ${JSON.stringify(brandsSummary, null, 2)}
@@ -116,6 +129,7 @@ CRITICAL DATA USAGE RULES:
 9. ROLE PERMISSIONS: Map permissions to the actual user roles provided.
 
 Return ONLY production-grade JSON. Every string must be polished, specific, and ready to render. This output will be rendered as a live app preview — it must look world-class.`,
+        file_urls: refFiles.length > 0 ? refFiles : undefined,
         response_json_schema: {
           type: 'object',
           properties: {
@@ -146,7 +160,11 @@ Return ONLY production-grade JSON. Every string must be polished, specific, and 
       });
 
       setIsGenerating(false);
-      onGenerated({ ...result, appName, vibePrompt, appType, userRoles, selectedBrands, generatedAt: new Date().toISOString() });
+      // Override AI colors with user's custom colors if provided
+      const finalResult = hasCustomColors
+        ? { ...result, colorScheme: { ...result.colorScheme, ...customColors } }
+        : result;
+      onGenerated({ ...finalResult, appName, vibePrompt, appType, userRoles, selectedBrands, customization, generatedAt: new Date().toISOString() });
       toast.success('🔥 HotStack™ app generated!');
     } catch (err) {
       setIsGenerating(false);

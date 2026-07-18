@@ -67,7 +67,7 @@ const TABS = [
   { val: 'roles',     label: 'Roles',         icon: <Shield className="w-3.5 h-3.5" /> },
 ];
 
-export default function HotStackPreview({ appData, selectedBrands, onRebuild }) {
+export default function HotStackPreview({ appData, selectedBrands, customization, onRebuild }) {
   const [activePage, setActivePage] = useState(0);
   const [activeTab, setActiveTab] = useState('visualise');
 
@@ -76,6 +76,7 @@ export default function HotStackPreview({ appData, selectedBrands, onRebuild }) 
   const accent    = appData.colorScheme?.accent    || '#f59e0b';
   const primaryRgb = hexToRgb(primary);
   const accentRgb  = hexToRgb(accent);
+  const logoUrl = customization?.logoUrl;
 
   const brandSectorAccents = [...new Set(selectedBrands.map(b => SECTOR_META[b.sector]?.accent).filter(Boolean))];
 
@@ -229,10 +230,14 @@ export default function HotStackPreview({ appData, selectedBrands, onRebuild }) 
               {/* Logo */}
               <div className="px-4 pt-5 pb-4 border-b" style={{ borderColor: `rgba(${primaryRgb},0.12)` }}>
                 <div className="flex items-center gap-2.5 mb-1">
-                  <div className="w-8 h-8 rounded-xl flex items-center justify-center text-sm font-black text-black"
-                    style={{ background: `linear-gradient(135deg, ${primary}, ${accent})` }}>
-                    {appData.appName?.[0] || 'H'}
-                  </div>
+                  {logoUrl ? (
+                    <img src={logoUrl} alt="logo" className="w-9 h-9 rounded-xl object-cover" />
+                  ) : (
+                    <div className="w-8 h-8 rounded-xl flex items-center justify-center text-sm font-black text-black"
+                      style={{ background: `linear-gradient(135deg, ${primary}, ${accent})` }}>
+                      {appData.appName?.[0] || 'H'}
+                    </div>
+                  )}
                   <div>
                     <p className="text-white font-black text-[13px] leading-tight truncate max-w-[100px]">{appData.appName}</p>
                     <p className="text-[10px] font-mono" style={{ color: accent }}>v2026.1</p>

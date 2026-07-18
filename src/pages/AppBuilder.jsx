@@ -5,16 +5,18 @@ import { Loader2 } from 'lucide-react';
 import HotStackHeader from '../components/appbuilder/HotStackHeader';
 import HotStackPrompt from '../components/appbuilder/HotStackPrompt';
 import HotStackBrandStack from '../components/appbuilder/HotStackBrandStack';
+import HotStackCustomize from '../components/appbuilder/HotStackCustomize';
 import HotStackGenerator from '../components/appbuilder/HotStackGenerator';
 import HotStackPreview from '../components/appbuilder/HotStackPreview';
 
-// Flow: prompt → brands → generate → preview
-const STEPS = ['prompt', 'brands', 'generate', 'preview'];
+// Flow: prompt → brands → customize → generate → preview
+const STEPS = ['prompt', 'brands', 'customize', 'generate', 'preview'];
 
 export default function AppBuilder() {
   const [step, setStep] = useState('prompt');
   const [vibePrompt, setVibePrompt] = useState('');
   const [selectedBrands, setSelectedBrands] = useState([]);
+  const [customization, setCustomization] = useState({ logoUrl: '', colors: {}, referenceFiles: [] });
   const [generatedApp, setGeneratedApp] = useState(null);
 
   const { data: brands = [], isLoading } = useQuery({
@@ -51,22 +53,33 @@ export default function AppBuilder() {
             brands={brands}
             selectedBrands={selectedBrands}
             setSelectedBrands={setSelectedBrands}
-            onNext={() => setStep('generate')}
+            onNext={() => setStep('customize')}
             onBack={() => setStep('prompt')}
+          />
+        )}
+        {step === 'customize' && (
+          <HotStackCustomize
+            customization={customization}
+            setCustomization={setCustomization}
+            selectedBrands={selectedBrands}
+            onNext={() => setStep('generate')}
+            onBack={() => setStep('brands')}
           />
         )}
         {step === 'generate' && (
           <HotStackGenerator
             selectedBrands={selectedBrands}
             vibePrompt={vibePrompt}
+            customization={customization}
             onGenerated={(data) => { setGeneratedApp(data); setStep('preview'); }}
-            onBack={() => setStep('brands')}
+            onBack={() => setStep('customize')}
           />
         )}
         {step === 'preview' && generatedApp && (
           <HotStackPreview
             appData={generatedApp}
             selectedBrands={selectedBrands}
+            customization={customization}
             onRebuild={() => setStep('generate')}
           />
         )}

@@ -2,18 +2,20 @@ import React from 'react';
 import { ChevronRight } from 'lucide-react';
 
 const STEPS = [
-  { key: 'prompt',   label: 'Vibe',  icon: '✦' },
-  { key: 'brands',   label: 'Stack', icon: '⬡' },
-  { key: 'generate', label: 'Build', icon: '⚡' },
-  { key: 'preview',  label: 'Ship',  icon: '🚀' },
+  { key: 'prompt',    label: 'Vibe',      icon: '✦' },
+  { key: 'brands',    label: 'Stack',     icon: '⬡' },
+  { key: 'customize', label: 'Customize', icon: '🎨' },
+  { key: 'generate',  label: 'Build',      icon: '⚡' },
+  { key: 'preview',   label: 'Ship',       icon: '🚀' },
 ];
 
 export default function HotStackHeader({ step, setStep, selectedBrands, generatedApp }) {
   const canNavigate = (key) => {
-    if (key === 'prompt')   return true;
-    if (key === 'brands')   return true;
-    if (key === 'generate') return selectedBrands.length > 0;
-    if (key === 'preview')  return !!generatedApp;
+    if (key === 'prompt')     return true;
+    if (key === 'brands')     return true;
+    if (key === 'customize')  return selectedBrands.length > 0;
+    if (key === 'generate')   return selectedBrands.length > 0;
+    if (key === 'preview')    return !!generatedApp;
     return false;
   };
 
