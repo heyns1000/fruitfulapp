@@ -52,10 +52,40 @@ function seedFor(name) {
   }
 }
 
+/* ---- Persistence: large seeded catalogs stay in memory; transactional /
+   user-generated entities are mirrored to localStorage so they survive full
+   page reloads and the whole app behaves like one durable system. ---- */
+const PERSIST = new Set([
+  'Order', 'Payment', 'Subscription', 'SubscriptionBox', 'Review',
+  'Message', 'Wishlist', 'Service', 'Workflow', 'App', 'GeneratedApp',
+]);
+const LS_PREFIX = 'faa_fallback_';
+
+function loadPersisted(name) {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = window.localStorage.getItem(LS_PREFIX + name);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+function savePersisted(name) {
+  if (typeof window === 'undefined' || !PERSIST.has(name)) return;
+  try {
+    window.localStorage.setItem(LS_PREFIX + name, JSON.stringify(stores.get(name) || []));
+  } catch {
+    /* quota / privacy mode — fall back to in-memory only */
+  }
+}
+
 /* ---- In-memory entity store with a Base44-compatible surface ---- */
 const stores = new Map();
 function getStore(name) {
-  if (!stores.has(name)) stores.set(name, seedFor(name));
+  if (!stores.has(name)) {
+    const persisted = PERSIST.has(name) ? loadPersisted(name) : null;
+    stores.set(name, persisted || seedFor(name));
+  }
   return stores.get(name);
 }
 
@@ -97,12 +127,14 @@ function makeEntityApi(name) {
       await delay();
       const row = { id: uid(name.toLowerCase()), created_date: nowISO(), updated_date: nowISO(), ...data };
       getStore(name).unshift(row);
+      savePersisted(name);
       return row;
     },
     async bulkCreate(arr = []) {
       await delay();
       const rows = arr.map((data) => ({ id: uid(name.toLowerCase()), created_date: nowISO(), updated_date: nowISO(), ...data }));
       getStore(name).unshift(...rows);
+      savePersisted(name);
       return rows;
     },
     async update(id, data) {
@@ -111,6 +143,7 @@ function makeEntityApi(name) {
       const idx = store.findIndex((r) => r.id === id);
       if (idx === -1) return null;
       store[idx] = { ...store[idx], ...data, updated_date: nowISO() };
+      savePersisted(name);
       return store[idx];
     },
     async delete(id) {
@@ -118,6 +151,7 @@ function makeEntityApi(name) {
       const store = getStore(name);
       const idx = store.findIndex((r) => r.id === id);
       if (idx !== -1) store.splice(idx, 1);
+      savePersisted(name);
       return { success: true };
     },
     async schema() {
