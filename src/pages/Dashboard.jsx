@@ -17,6 +17,7 @@ import BrandFinancialBulkEditor from '../components/admin/BrandFinancialBulkEdit
 import AllocationKanban from '../components/admin/AllocationKanban';
 import BrandHealthAudit from '../components/admin/BrandHealthAudit';
 import ZeroWasteExporter from '../components/data/ZeroWasteExporter';
+import BlockVaultAdmin from '../components/blockvault/BlockVaultAdmin';
 import { Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -362,6 +363,7 @@ export default function Dashboard() {
             <div className="overflow-x-auto">
               <TabsList className="flex min-w-max gap-1 px-4 pb-3 h-auto bg-transparent">
                 <TabsTrigger value="admin" className="data-[state=active]:bg-emerald-700 data-[state=active]:text-white font-semibold text-slate-300 whitespace-nowrap">⚙️ Admin Panel</TabsTrigger>
+                <TabsTrigger value="blockvault" className="data-[state=active]:bg-emerald-700 data-[state=active]:text-white font-semibold text-slate-300 whitespace-nowrap">🔐 BlockVault</TabsTrigger>
                 <TabsTrigger value="collaborations" className="data-[state=active]:bg-emerald-700 data-[state=active]:text-white font-semibold text-slate-300 whitespace-nowrap">🤝 Collaborations</TabsTrigger>
                 {Object.entries(SECTORS).map(([key, label]) => (
                   <TabsTrigger key={key} value={key} className="data-[state=active]:bg-emerald-700 data-[state=active]:text-white text-sm font-medium text-slate-400 whitespace-nowrap">
@@ -410,6 +412,10 @@ export default function Dashboard() {
                 </div>
               )}
             </div>
+          </TabsContent>
+
+          <TabsContent value="blockvault" className="space-y-6">
+            <BlockVaultAdmin />
           </TabsContent>
 
           <TabsContent value="collaborations" className="space-y-6">
