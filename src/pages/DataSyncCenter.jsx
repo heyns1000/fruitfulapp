@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Badge } from '@/components/ui/badge';
 import { RefreshCw, CheckCircle, AlertCircle, Database, Package, CreditCard, BarChart2, Users, Zap } from 'lucide-react';
+import SessionEntityInventory from '@/components/data/SessionEntityInventory';
 
 // All data sources from the uploaded files
 const FAA_BRANDS_SEED = [
@@ -159,7 +160,7 @@ export default function DataSyncCenter() {
         <div className="max-w-6xl mx-auto flex items-center justify-between flex-wrap gap-4">
           <div>
             <h1 className="text-2xl font-black tracking-tight">🔄 Data Sync Center</h1>
-            <p className="text-teal-300 text-sm mt-1">FAA.Zone · Full Data Ingestion · VaultMesh Sync</p>
+            <p className="text-teal-300 text-sm mt-1">FAA.Zone · Live Data Ingestion · All Entity Domains</p>
           </div>
           <button onClick={syncAll} className="flex items-center gap-2 bg-teal-600 hover:bg-teal-500 text-white font-black px-5 py-2.5 rounded-xl transition-colors">
             <RefreshCw className="w-4 h-4" /> Sync All Sources
@@ -183,9 +184,12 @@ export default function DataSyncCenter() {
           ))}
         </div>
 
+        {/* Full Session Entity Inventory */}
+        <SessionEntityInventory />
+
         {/* Sync Sources */}
         <div className="space-y-4">
-          <h2 className="text-xs font-black uppercase tracking-widest text-gray-500">Data Sources</h2>
+          <h2 className="text-xs font-black uppercase tracking-widest text-gray-500">Seed Sync Sources</h2>
           {SYNC_SOURCES.map(src => {
             const c = colorMap[src.color];
             const state = syncState[src.id];
