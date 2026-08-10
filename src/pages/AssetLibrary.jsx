@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Upload, Image, Palette, Layers, Plus, Trash2, X, Check, Loader2 } from 'lucide-react';
+import { Upload, Image, Palette, Layers, Plus, Trash2, X, Check, Loader2, FileText, Sheet, File, Download } from 'lucide-react';
 import { toast } from 'sonner';
 
 const FOLDERS = [
@@ -26,7 +26,22 @@ const ASSET_TYPE_CONFIG = {
   logo: { label: 'Brand Logos', icon: Layers, color: 'text-purple-400' },
   product_photo: { label: 'Product Photos', icon: Image, color: 'text-amber-400' },
   color_palette: { label: 'Color Palettes', icon: Palette, color: 'text-teal-400' },
+  document: { label: 'Documents', icon: FileText, color: 'text-blue-400' },
+  spreadsheet: { label: 'Spreadsheets', icon: Sheet, color: 'text-green-400' },
+  pdf: { label: 'PDFs', icon: File, color: 'text-red-400' },
+  file: { label: 'Other Files', icon: File, color: 'text-gray-400' },
 };
+
+function FileIcon({ assetType }) {
+  const cfg = ASSET_TYPE_CONFIG[assetType] || ASSET_TYPE_CONFIG.file;
+  const Icon = cfg.icon;
+  return (
+    <div className="w-full h-32 rounded-lg mb-3 bg-black/30 flex flex-col items-center justify-center gap-2">
+      <Icon className={`w-12 h-12 ${cfg.color}`} />
+      <span className="text-xs text-white/30 uppercase tracking-wider">{cfg.label}</span>
+    </div>
+  );
+}
 
 function ColorPaletteForm({ onSave, onCancel }) {
   const [name, setName] = useState('');
@@ -189,6 +204,10 @@ export default function AssetLibrary() {
               className="bg-gradient-to-r from-teal-600 to-green-600 hover:from-teal-500 hover:to-green-500 text-white gap-1.5">
               <Plus className="w-4 h-4" /> Palette
             </Button>
+            <Button onClick={() => setAddType('file')}
+              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white gap-1.5">
+              <Plus className="w-4 h-4" /> Doc
+            </Button>
           </div>
         </div>
       </div>
@@ -234,10 +253,22 @@ export default function AssetLibrary() {
             {filtered.map(asset => (
               <Card key={asset.id} className="bg-white/4 border border-white/10 group relative">
                 <CardContent className="p-3">
-                  {asset.assetType !== 'color_palette' && asset.fileUrl && (
+                  {asset.assetType === 'color_palette' && asset.colorValues?.length > 0 && (
+                    <div className="flex h-10 rounded-lg overflow-hidden mb-3">
+                      {asset.colorValues.map((c, i) => (
+                        <div key={i} className="flex-1" style={{ backgroundColor: c.hex }} title={`${c.name} ${c.hex}`} />
+                      ))}
+                    </div>
+                  )}
+                  {['logo', 'product_photo'].includes(asset.assetType) && asset.fileUrl && (
                     <div className="w-full h-32 rounded-lg overflow-hidden mb-3 bg-black/30">
                       <img src={asset.fileUrl} alt={asset.name} className="w-full h-full object-contain" />
                     </div>
+                  )}
+                  {['document', 'spreadsheet', 'pdf', 'file'].includes(asset.assetType) && asset.fileUrl && (
+                    <a href={asset.fileUrl} target="_blank" rel="noopener noreferrer" className="block">
+                      <FileIcon assetType={asset.assetType} />
+                    </a>
                   )}
                   {asset.assetType === 'color_palette' && asset.colorValues?.length > 0 && (
                     <div className="flex h-10 rounded-lg overflow-hidden mb-3">
@@ -286,13 +317,13 @@ export default function AssetLibrary() {
               {addType === 'logo' && <Layers className="w-5 h-5 text-purple-400" />}
               {addType === 'product_photo' && <Image className="w-5 h-5 text-amber-400" />}
               {addType === 'color_palette' && <Palette className="w-5 h-5 text-teal-400" />}
-              Add {addType === 'logo' ? 'Logo' : addType === 'product_photo' ? 'Product Photo' : 'Color Palette'}
+              Add {addType === 'logo' ? 'Logo' : addType === 'product_photo' ? 'Product Photo' : addType === 'color_palette' ? 'Color Palette' : 'Document / File'}
             </DialogTitle>
           </DialogHeader>
           {addType === 'color_palette' ? (
             <ColorPaletteForm onSave={d => createMutation.mutate(d)} onCancel={() => setAddType(null)} />
           ) : addType && (
-            <UploadForm assetType={addType} onSave={d => createMutation.mutate(d)} onCancel={() => setAddType(null)} />
+            <UploadForm assetType={addType === 'file' ? 'file' : addType} onSave={d => createMutation.mutate(d)} onCancel={() => setAddType(null)} />
           )}
         </DialogContent>
       </Dialog>
