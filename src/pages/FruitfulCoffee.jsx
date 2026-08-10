@@ -4,6 +4,11 @@ import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, R
 import { Coffee, TrendingUp, Package, DollarSign, ShoppingBag, Truck, ChevronDown, ChevronUp } from 'lucide-react';
 import moment from 'moment';
 import SourcingProcurement from '@/components/coffee/SourcingProcurement';
+import { Link } from 'react-router-dom';
+
+// True landed = PI hardware ($31,500 × 17) + Afristar freight R58,510.50
+const FOB_ZAR = 31500 * 17; // 535,500
+const TRUE_LANDED = FOB_ZAR + 58510.50; // 594,010.50
 
 const BRAND_GREEN = '#4ECDC4';
 const BRAND_RED = '#E91E63';
@@ -94,6 +99,8 @@ export default function FruitfulCoffee() {
     { id: 'sourcing', label: '🌍 Sourcing & Procurement' },
   ];
 
+  const LANDED_DISPLAY = `R${TRUE_LANDED.toLocaleString('en-ZA', { minimumFractionDigits: 2 })}`;
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: `linear-gradient(135deg, ${BRAND_GREEN}22, ${BRAND_RED}11)` }}>
@@ -183,7 +190,22 @@ export default function FruitfulCoffee() {
               <StatCard icon={TrendingUp} label="Avg Monthly Revenue" value={`R${Math.round(avgMonthly).toLocaleString()}`} sub="22-month avg" color={BRAND_GREEN} />
               <StatCard icon={DollarSign} label="Total Net Profit" value={`R${Math.round(totalNet).toLocaleString()}`} sub="Incl. setup costs" color={BRAND_RED} />
               <StatCard icon={Coffee} label="Coffee Margin" value={`${coffeeMargin}%`} sub={`R${totalCupCost.toFixed(2)} BOM → R${coffeeSalePrice}`} color="#FF9800" />
-              <StatCard icon={Package} label="Kiosk Landed Cost" value={`R${shipping ? shipping.total_incl_vat_zar.toLocaleString() : '—'}`} sub="From Guangzhou, incl VAT" color="#9C27B0" />
+              <Link to="/KioskLandedCost" className="block hover:opacity-90 transition-opacity">
+                <div className="bg-white rounded-2xl p-5 shadow-md flex items-start gap-4 border-l-4 cursor-pointer" style={{ borderColor: '#9C27B0' }}>
+                  <div className="rounded-full p-3 shrink-0" style={{ backgroundColor: '#9C27B020' }}>
+                    <Package className="w-6 h-6" style={{ color: '#9C27B0' }} />
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Kiosk TRUE Landed Cost</p>
+                    <p className="text-xl font-bold text-gray-800">{LANDED_DISPLAY}</p>
+                    <p className="text-xs text-gray-400">Hardware + Freight · Guangzhou→JHB →</p>
+                    <div className="mt-1 flex gap-2 text-[10px]">
+                      <span className="px-2 py-0.5 rounded-full font-semibold" style={{ background: '#4ECDC420', color: '#4ECDC4' }}>FOB R535,500</span>
+                      <span className="px-2 py-0.5 rounded-full font-semibold" style={{ background: '#E91E6320', color: '#E91E63' }}>Freight R58,511</span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
             </div>
 
             {/* Profit Chart */}
