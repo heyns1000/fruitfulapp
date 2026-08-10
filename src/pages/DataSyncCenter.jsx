@@ -90,11 +90,11 @@ export default function DataSyncCenter() {
 
   const syncBrands = async () => {
     setSyncState(s => ({ ...s, brands: 'running' }));
-    addLog('Starting FAA brand node sync…', 'info');
+    addLog(`Reading live Brand records from DB… (${brands.length} found)`, 'info');
     const existing = new Set(brands.map(b => b.name));
     const toCreate = FAA_BRANDS_SEED.filter(b => !existing.has(b.name));
     if (toCreate.length === 0) {
-      addLog('All brand nodes already synced. No duplicates created.', 'success');
+      addLog(`✅ DB has ${brands.length} brands — all ${FAA_BRANDS_SEED.length} seed nodes already present. 0 new records needed.`, 'success');
       setSyncState(s => ({ ...s, brands: 'done' }));
       return;
     }
@@ -113,11 +113,11 @@ export default function DataSyncCenter() {
 
   const syncProducts = async () => {
     setSyncState(s => ({ ...s, products: 'running' }));
-    addLog('Starting marketplace products sync…', 'info');
+    addLog(`Reading live MarketplaceService records from DB… (${products.length} found)`, 'info');
     const existing = new Set(products.map(p => p.productCode));
     const toCreate = FAA_PRODUCTS_SEED.filter(p => !existing.has(p.productCode));
     if (toCreate.length === 0) {
-      addLog('All marketplace SKUs already synced. No duplicates created.', 'success');
+      addLog(`✅ DB has ${products.length} SKUs — all ${FAA_PRODUCTS_SEED.length} seed products already present. 0 new records needed.`, 'success');
       setSyncState(s => ({ ...s, products: 'done' }));
       return;
     }
