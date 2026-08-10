@@ -6,9 +6,9 @@ import moment from 'moment';
 import SourcingProcurement from '@/components/coffee/SourcingProcurement';
 import { Link } from 'react-router-dom';
 
-// True landed = PI hardware ($31,500 × 17) + Afristar freight R58,510.50
-const FOB_ZAR = 31500 * 17; // 535,500
-const TRUE_LANDED = FOB_ZAR + 58510.50; // 594,010.50
+// True unit landed = Unit hardware ($3,500 × 17) + Afristar freight R58,510.50
+const UNIT_FOB_ZAR = 3500 * 17; // 59,500
+const TRUE_UNIT_LANDED = UNIT_FOB_ZAR + 58510.50; // 118,010.50
 
 const BRAND_GREEN = '#4ECDC4';
 const BRAND_RED = '#E91E63';
@@ -99,7 +99,7 @@ export default function FruitfulCoffee() {
     { id: 'sourcing', label: '🌍 Sourcing & Procurement' },
   ];
 
-  const LANDED_DISPLAY = `R${TRUE_LANDED.toLocaleString('en-ZA', { minimumFractionDigits: 2 })}`;
+  const LANDED_DISPLAY = `R${TRUE_UNIT_LANDED.toLocaleString('en-ZA', { minimumFractionDigits: 2 })}`;
 
   if (loading) {
     return (
@@ -198,9 +198,9 @@ export default function FruitfulCoffee() {
                   <div>
                     <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Kiosk TRUE Landed Cost</p>
                     <p className="text-xl font-bold text-gray-800">{LANDED_DISPLAY}</p>
-                    <p className="text-xs text-gray-400">Hardware + Freight · Guangzhou→JHB →</p>
+                    <p className="text-xs text-gray-400">Unit Hardware + Freight · Guangzhou→JHB →</p>
                     <div className="mt-1 flex gap-2 text-[10px]">
-                      <span className="px-2 py-0.5 rounded-full font-semibold" style={{ background: '#4ECDC420', color: '#4ECDC4' }}>FOB R535,500</span>
+                      <span className="px-2 py-0.5 rounded-full font-semibold" style={{ background: '#4ECDC420', color: '#4ECDC4' }}>FOB R59,500</span>
                       <span className="px-2 py-0.5 rounded-full font-semibold" style={{ background: '#E91E6320', color: '#E91E63' }}>Freight R58,511</span>
                     </div>
                   </div>

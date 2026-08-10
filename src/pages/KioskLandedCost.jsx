@@ -30,13 +30,17 @@ const FREIGHT = {
   foreignUsd: 1016.02,
 };
 
-// FOB cost = EXW + EXW collection (EXWO line) = $570 already in freight estimate
-// True formula: FOB ZAR = PI total USD × ZAR rate
-const FOB_ZAR = PI.totalUsd * FREIGHT.usdZarRate; // 31500 × 17 = 535,500
-const TRUE_LANDED = FOB_ZAR + FREIGHT.totalInclVat;        // 535,500 + 58,510.50
+// ─── Single-Unit Amortized Basis ────────────────────────────────────────────
+// The R58,510.50 freight estimate applies to ONE unit, not the 9-unit bulk.
+// Unit Hardware (FOB ZAR) = $3,500 × 17 = R59,500
+// Unit Freight & Clearing = R58,510.50
+// True Unit Landed Cost = R59,500 + R58,510.50 = R118,010.50
+const UNIT_FOB_ZAR = PI.unitPriceUsd * FREIGHT.usdZarRate;   // 3,500 × 17 = 59,500
+const UNIT_FREIGHT = FREIGHT.totalInclVat;                   // 58,510.50
+const TRUE_UNIT_LANDED = UNIT_FOB_ZAR + UNIT_FREIGHT;        // 118,010.50
 
-const PER_UNIT_FOB = FOB_ZAR / PI.unitQty;
-const PER_UNIT_LANDED = TRUE_LANDED / PI.unitQty;
+// PI bulk total preserved as verifiable 9-unit source reference (not used in landed calc)
+const PI_BULK_ZAR = PI.totalUsd * FREIGHT.usdZarRate;        // 535,500
 
 const FREIGHT_CHARGES = [
   { code: 'EXWO', desc: 'Ex-Works Pickup Charges', usd: 570, zar: 9690, vat: 0 },
@@ -83,8 +87,8 @@ function KpiCard({ icon: Icon, label, value, sub, color }) {
 export default function KioskLandedCost() {
   const [showAll, setShowAll] = useState(false);
 
-  const pctFob = (FOB_ZAR / TRUE_LANDED * 100).toFixed(1);
-  const pctFreight = (FREIGHT.totalInclVat / TRUE_LANDED * 100).toFixed(1);
+  const pctFob = (UNIT_FOB_ZAR / TRUE_UNIT_LANDED * 100).toFixed(1);
+  const pctFreight = (UNIT_FREIGHT / TRUE_UNIT_LANDED * 100).toFixed(1);
 
   return (
     <div className="min-h-screen" style={{ background: 'linear-gradient(160deg, #f0fffe 0%, #fff5f8 100%)' }}>
@@ -129,12 +133,11 @@ export default function KioskLandedCost() {
           </div>
         </div>
 
-        {/* KPI Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <KpiCard icon={Globe} label="PI Hardware (FOB ZAR)" value={fmt(FOB_ZAR)} sub={`$${PI.totalUsd.toLocaleString()} USD × ${FREIGHT.usdZarRate} ZAR`} color={BRAND_GREEN} />
-          <KpiCard icon={Truck} label="Freight & Clearing" value={fmt(FREIGHT.totalInclVat, 2)} sub="Afristar · incl. VAT" color={BRAND_RED} />
-          <KpiCard icon={DollarSign} label="TRUE Landed Cost" value={fmt(TRUE_LANDED, 2)} sub={`${PI.unitQty} units · Guangzhou→JHB`} color="#FF9800" />
-          <KpiCard icon={Package} label="Per Unit Landed" value={fmt(PER_UNIT_LANDED, 2)} sub={`FOB/unit: ${fmt(PER_UNIT_FOB, 2)}`} color="#9C27B0" />
+        {/* KPI Grid — Single Unit Basis */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <KpiCard icon={Globe} label="Unit Hardware (FOB ZAR)" value={fmt(UNIT_FOB_ZAR)} sub={`$${PI.unitPriceUsd.toLocaleString()} USD × ${FREIGHT.usdZarRate} ZAR`} color={BRAND_GREEN} />
+          <KpiCard icon={Truck} label="Unit Freight & Clearing" value={fmt(UNIT_FREIGHT, 2)} sub="Afristar · 1 unit · incl. VAT" color={BRAND_RED} />
+          <KpiCard icon={DollarSign} label="TRUE Unit Landed Cost" value={fmt(TRUE_UNIT_LANDED, 2)} sub="1 Unit (Amortized) · Guangzhou→JHB" color="#FF9800" />
         </div>
 
         {/* Visual split bar */}
@@ -150,19 +153,19 @@ export default function KioskLandedCost() {
           </div>
           <div className="grid grid-cols-3 gap-4 text-center text-sm">
             <div>
-              <p className="text-xs text-gray-400 mb-1">Hardware FOB</p>
-              <p className="font-black text-xl" style={{ color: BRAND_GREEN }}>{fmt(FOB_ZAR)}</p>
+              <p className="text-xs text-gray-400 mb-1">Unit Hardware FOB</p>
+              <p className="font-black text-xl" style={{ color: BRAND_GREEN }}>{fmt(UNIT_FOB_ZAR)}</p>
               <p className="text-xs text-gray-400">{pctFob}% of total</p>
             </div>
             <div className="border-x border-gray-100">
-              <p className="text-xs text-gray-400 mb-1">Freight & Clearing</p>
-              <p className="font-black text-xl" style={{ color: BRAND_RED }}>{fmt(FREIGHT.totalInclVat, 2)}</p>
+              <p className="text-xs text-gray-400 mb-1">Unit Freight & Clearing</p>
+              <p className="font-black text-xl" style={{ color: BRAND_RED }}>{fmt(UNIT_FREIGHT, 2)}</p>
               <p className="text-xs text-gray-400">{pctFreight}% of total</p>
             </div>
             <div>
-              <p className="text-xs text-gray-400 mb-1">TRUE Landed Total</p>
-              <p className="font-black text-2xl" style={{ color: '#FF9800' }}>{fmt(TRUE_LANDED, 2)}</p>
-              <p className="text-xs text-gray-400">100% — JHB delivered</p>
+              <p className="text-xs text-gray-400 mb-1">TRUE Unit Landed</p>
+              <p className="font-black text-2xl" style={{ color: '#FF9800' }}>{fmt(TRUE_UNIT_LANDED, 2)}</p>
+              <p className="text-xs text-gray-400">100% — 1 Unit · JHB</p>
             </div>
           </div>
         </div>
@@ -195,8 +198,8 @@ export default function KioskLandedCost() {
             <p className="text-xs text-emerald-600">{PI.description}</p>
           </div>
           <div className="mt-3 flex items-center justify-between bg-gray-900 rounded-xl px-5 py-3">
-            <span className="text-gray-300 text-sm font-semibold">PI Total (ZAR @ {FREIGHT.usdZarRate})</span>
-            <span className="text-2xl font-black" style={{ color: BRAND_GREEN }}>{fmt(FOB_ZAR)}</span>
+            <span className="text-gray-300 text-sm font-semibold">PI Bulk Total — {PI.unitQty} units (ZAR @ {FREIGHT.usdZarRate}) · source reference</span>
+            <span className="text-2xl font-black" style={{ color: BRAND_GREEN }}>{fmt(PI_BULK_ZAR)}</span>
           </div>
         </div>
 
@@ -280,28 +283,25 @@ export default function KioskLandedCost() {
         <div className="rounded-2xl p-6 shadow-lg text-white" style={{ background: `linear-gradient(135deg, ${BRAND_DARK} 0%, #1a3a2a 100%)` }}>
           <h3 className="text-lg font-black mb-5 flex items-center gap-2">
             <TrendingUp className="w-5 h-5" style={{ color: BRAND_GREEN }} />
-            True Landed Cost Summary — {PI.unitQty} Kiosk Units
+            True Landed Cost Summary — 1 Unit (Amortized)
           </h3>
           <div className="space-y-2 text-sm font-mono mb-5">
             <div className="flex justify-between items-center py-2 border-b border-white/10">
-              <span className="text-gray-300">PI Hardware FOB (${PI.totalUsd.toLocaleString()} USD × {FREIGHT.usdZarRate})</span>
-              <span className="font-bold text-xl" style={{ color: BRAND_GREEN }}>{fmt(FOB_ZAR)}</span>
+              <span className="text-gray-300">Unit Hardware FOB (${PI.unitPriceUsd.toLocaleString()} USD × {FREIGHT.usdZarRate})</span>
+              <span className="font-bold text-xl" style={{ color: BRAND_GREEN }}>{fmt(UNIT_FOB_ZAR)}</span>
             </div>
             <div className="flex justify-between items-center py-2 border-b border-white/10">
-              <span className="text-gray-300">Freight & Clearing Incl. VAT (Afristar {FREIGHT.quoteNo})</span>
-              <span className="font-bold text-xl" style={{ color: '#ff6b9d' }}>{fmt(FREIGHT.totalInclVat, 2)}</span>
+              <span className="text-gray-300">Unit Freight & Clearing Incl. VAT (Afristar {FREIGHT.quoteNo})</span>
+              <span className="font-bold text-xl" style={{ color: '#ff6b9d' }}>{fmt(UNIT_FREIGHT, 2)}</span>
             </div>
             <div className="flex justify-between items-center py-3 bg-white/10 rounded-xl px-4 mt-2">
-              <span className="font-black text-white text-base">TRUE LANDED COST (JHB)</span>
-              <span className="font-black text-2xl" style={{ color: '#FF9800' }}>{fmt(TRUE_LANDED, 2)}</span>
-            </div>
-            <div className="flex justify-between items-center py-2 px-4 text-gray-400">
-              <span>Per Unit Landed</span>
-              <span className="font-bold text-white">{fmt(PER_UNIT_LANDED, 2)} / unit</span>
+              <span className="font-black text-white text-base">TRUE UNIT LANDED COST (JHB)</span>
+              <span className="font-black text-2xl" style={{ color: '#FF9800' }}>{fmt(TRUE_UNIT_LANDED, 2)}</span>
             </div>
           </div>
           <p className="text-xs text-gray-500">
-            Note: PI EXW charges ($570 EXWO) are captured within the Afristar freight estimate and are not double-counted.
+            Single-unit amortized basis. The R58,510.50 Afristar freight estimate applies to one unit;
+            the 9-unit PI bulk total ($31,500 / R{PI_BULK_ZAR.toLocaleString('en-ZA')}) is preserved in the PI table above as the verifiable source reference only.
             ZAR/USD rate applied: {FREIGHT.usdZarRate}.
           </p>
         </div>
