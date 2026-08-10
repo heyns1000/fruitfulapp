@@ -147,6 +147,7 @@ const PAGE_GROUPS = [
     id: 'infrastructure',
     label: '🔐 Infrastructure',
     pages: [
+      { href: '/BlockVault',     emoji: '🔐', label: 'BlockVault Core', bg: '#00b37a' },
       { href: '/VaultMesh',      emoji: '🔐', label: 'VaultMesh™',     bg: '#059669' },
       { href: '/Payments',       emoji: '💳', label: 'Payments',       bg: '#2563eb' },
       { href: '/AppBuilder',     emoji: '🏗️', label: 'App Builder',    bg: '#6d28d9' },
