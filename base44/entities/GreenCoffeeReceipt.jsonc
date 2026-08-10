@@ -1,0 +1,111 @@
+{
+  "name": "GreenCoffeeReceipt",
+  "type": "object",
+  "properties": {
+    "lotReference": {
+      "type": "string",
+      "description": "Unique lot / shipment reference number"
+    },
+    "supplierName": {
+      "type": "string",
+      "description": "Linked supplier name (e.g. Nonda Coffee, Royal Pacific Harvest)"
+    },
+    "origin": {
+      "type": "string",
+      "description": "Country / region of origin"
+    },
+    "quantityKg": {
+      "type": "number",
+      "description": "Received green coffee quantity in kilograms"
+    },
+    "moistureContent": {
+      "type": "number",
+      "description": "Moisture content percentage \u2014 hard cap validation 9.0 to 12.0. Reject outside range."
+    },
+    "scaCuppingScore": {
+      "type": "number",
+      "description": "SCA cupping score \u2014 baseline 80.0, premium 83+"
+    },
+    "primaryDefects": {
+      "type": "object",
+      "properties": {
+        "fullBlack": {
+          "type": "boolean",
+          "description": "Full black defect detected \u2014 reject"
+        },
+        "fullSour": {
+          "type": "boolean",
+          "description": "Full sour defect detected \u2014 reject"
+        },
+        "fungus": {
+          "type": "boolean",
+          "description": "Fungus / mold detected \u2014 reject"
+        },
+        "severeInsectDamage": {
+          "type": "boolean",
+          "description": "Severe insect damage \u2014 reject"
+        },
+        "rejected": {
+          "type": "boolean",
+          "description": "Overall QC rejection flag"
+        }
+      },
+      "description": "Defect matrix \u2014 must reject full black, full sour, fungus, severe insect damage"
+    },
+    "cMarketPrice": {
+      "type": "number",
+      "description": "New York C-Market (KC) futures price at contract (USD/lb)"
+    },
+    "originDifferential": {
+      "type": "number",
+      "description": "Origin differential above/below C-Market (USD/lb)"
+    },
+    "finalPrice": {
+      "type": "number",
+      "description": "Final procurement price = C-Market + Origin Differential (USD/lb)"
+    },
+    "hedgedZarUsdRate": {
+      "type": "number",
+      "description": "ZAR/USD rate locked at PI issuance \u2014 isolates BOM from 45-60 day transit volatility"
+    },
+    "etaJohannesburg": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Estimated arrival date in Johannesburg (updated by Algrano vessel/customs webhooks)"
+    },
+    "vesselDepartureDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Vessel departure timestamp from origin port"
+    },
+    "customsClearedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Customs clearance timestamp at port of discharge"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "contracted",
+        "in-transit",
+        "customs-cleared",
+        "received",
+        "qc-rejected"
+      ],
+      "default": "contracted",
+      "description": "Procurement lifecycle status"
+    },
+    "cropsterLotId": {
+      "type": "string",
+      "description": "Linked Cropster ERP lot ID for inventory drawdown tracking"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "lotReference",
+    "supplierName",
+    "origin"
+  ]
+}

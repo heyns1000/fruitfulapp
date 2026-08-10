@@ -1,0 +1,105 @@
+{
+  "name": "SupplierProfile",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Supplier / exporter legal or trading name"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "Direct Origin Exporter",
+        "Localized Importer",
+        "B2B Platform"
+      ],
+      "description": "Procurement tier classification"
+    },
+    "origin": {
+      "type": "string",
+      "description": "Country / region of green coffee origin"
+    },
+    "originRegions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Specific growing regions (e.g. Bugisu, Rwenzori, Mt. Elgon)"
+    },
+    "location": {
+      "type": "string",
+      "description": "Primary physical location (city, country)"
+    },
+    "flag": {
+      "type": "string",
+      "description": "Emoji flag for UI rendering"
+    },
+    "color": {
+      "type": "string",
+      "description": "Hex color for UI theming"
+    },
+    "role": {
+      "type": "string",
+      "description": "Procurement role label (e.g. Primary Origin Volume)"
+    },
+    "websites": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Supplier website URLs"
+    },
+    "emails": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Contact email addresses"
+    },
+    "phones": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Contact phone numbers (international format)"
+    },
+    "capacity": {
+      "type": "string",
+      "description": "Operational capacity (e.g. 5,000+ bags/year, 40 MT/day)"
+    },
+    "certifications": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Certifications (Organic, UTZ, Rainforest Alliance, etc.)"
+    },
+    "terms": {
+      "type": "string",
+      "description": "Incoterms / purchase terms (FOB, CIF, DDP, Direct Local Purchase)"
+    },
+    "moistureRange": {
+      "type": "string",
+      "description": "Acceptable moisture content range (e.g. 9.0% - 12.0%)"
+    },
+    "minCuppingScore": {
+      "type": "number",
+      "description": "Minimum SCA cupping score baseline (default 80.0)"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Operational notes / procurement strategy"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this supplier is currently active in the procurement network"
+    }
+  },
+  "required": [
+    "name",
+    "type",
+    "origin",
+    "location"
+  ]
+}
