@@ -1,12 +1,12 @@
 {
-  "name": "Hourly Sheet Sync",
+  "name": "Daily Sheet Sync",
   "trigger": {
     "condition": null,
     "config": {
       "trigger_type": "scheduled",
       "events": [],
       "schedule_mode": "recurring",
-      "cron_expression": "0 * * * *",
+      "cron_expression": "0 2 * * *",
       "one_time_date": null,
       "timezone": "Africa/Johannesburg",
       "interval_value": null,
@@ -20,8 +20,8 @@
   "definition": {
     "document": {
       "dsl": "1.0.0",
-      "name": "hourly_sheet_sync",
-      "version": "1.0",
+      "name": "daily_sheet_sync",
+      "version": "2.0",
       "namespace": "base44"
     },
     "do": [
@@ -35,11 +35,11 @@
           "then": "end",
           "x-base44": {
             "title": "Sync Google Sheet",
-            "description": "Pull fresh financial metrics hourly"
+            "description": "Daily 2 AM sync: Brands, Coffee, Food Menu, BlockVault"
           }
         }
       }
     ]
   },
-  "description": "Every hour, pulls fresh financial allocation numbers and brand performance scores from the connected Google Sheet into brand records, so the analytics dashboard stays live."
+  "description": "Every day at 2 AM (Johannesburg), discovers all tabs in the configured Google Sheet and syncs them into the matching entities \u2014 Brand financials, CoffeeCostInput, FoodMenuItem, and BarcodeMapping \u2014 so the Fruitful Coffee and BlockVault dashboards stay current without manual refresh."
 }
