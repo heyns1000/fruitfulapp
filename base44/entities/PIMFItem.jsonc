@@ -1,0 +1,86 @@
+{
+  "name": "PIMFItem",
+  "type": "object",
+  "properties": {
+    "Code": {
+      "type": "string",
+      "description": "Item code"
+    },
+    "Description": {
+      "type": "string"
+    },
+    "Category": {
+      "type": "string"
+    },
+    "Active": {
+      "type": "boolean",
+      "default": true
+    },
+    "Unit": {
+      "type": "string"
+    },
+    "Price Inclusive": {
+      "type": "string"
+    },
+    "Price Exclusive": {
+      "type": "string"
+    },
+    "Physical": {
+      "type": "boolean"
+    },
+    "Cost": {
+      "type": "number"
+    },
+    "Quantity": {
+      "type": "number"
+    },
+    "Tax Type Sales": {
+      "type": "string"
+    },
+    "Tax Type Purchases": {
+      "type": "string"
+    },
+    "Text User Field 1": {
+      "type": "string"
+    },
+    "Text User Field 2": {
+      "type": "string"
+    },
+    "Text User Field 3": {
+      "type": "string"
+    },
+    "Numeric User Field 1": {
+      "type": "number"
+    },
+    "Numeric User Field 2": {
+      "type": "number"
+    },
+    "Numeric User Field 3": {
+      "type": "number"
+    },
+    "Date User Field 1": {
+      "type": "string",
+      "format": "date"
+    },
+    "Date User Field 2": {
+      "type": "string",
+      "format": "date"
+    },
+    "Date User Field 3": {
+      "type": "string",
+      "format": "date"
+    },
+    "Yes/No User Field 1": {
+      "type": "boolean"
+    },
+    "Yes/No User Field 2": {
+      "type": "boolean"
+    },
+    "Yes/No User Field 3": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "Code"
+  ]
+}

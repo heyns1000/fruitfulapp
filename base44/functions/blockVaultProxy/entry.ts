@@ -1,6 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.38';
 
-const BASE = 'https://savvy-block-vault-sync.base44.app/api/entities';
+const BASE = 'https://blockboxvault.base44.app/api/entities';
 
 Deno.serve(async (req) => {
   try {

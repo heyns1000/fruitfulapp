@@ -1,0 +1,55 @@
+{
+  "name": "ChangeRequest",
+  "type": "object",
+  "properties": {
+    "resource": {
+      "type": "string",
+      "enum": [
+        "items",
+        "barcodes",
+        "directory",
+        "packaging"
+      ]
+    },
+    "operation": {
+      "type": "string",
+      "enum": [
+        "create",
+        "update",
+        "delete"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "correction_required"
+      ],
+      "default": "pending"
+    },
+    "record_id": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "payload": {
+      "type": "object"
+    },
+    "validation_flags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "review_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "resource",
+    "operation"
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "name": "BarcodeMapping",
+  "type": "object",
+  "properties": {
+    "Item Code": {
+      "type": "string"
+    },
+    "SKU": {
+      "type": "string"
+    },
+    "Barcode": {
+      "type": "string"
+    },
+    "Barcode Type": {
+      "type": "string"
+    },
+    "Material": {
+      "type": "string"
+    },
+    "Range": {
+      "type": "string"
+    },
+    "Category (Sage)": {
+      "type": "string"
+    },
+    "Unit (Sage)": {
+      "type": "string"
+    },
+    "Density (DV)": {
+      "type": "number"
+    },
+    "Product Type": {
+      "type": "string"
+    },
+    "Model Base": {
+      "type": "string"
+    },
+    "Model Name": {
+      "type": "string"
+    },
+    "Alias / Market Name": {
+      "type": "string"
+    },
+    "Profile / Size (W x D x D)": {
+      "type": "string"
+    },
+    "Face Width (mm)": {
+      "type": "number"
+    },
+    "Length": {
+      "type": "string"
+    },
+    "Range Base": {
+      "type": "string"
+    },
+    "Pack Size": {
+      "type": "number"
+    },
+    "Packs per Box": {
+      "type": "number"
+    },
+    "Lengths per Box": {
+      "type": "number"
+    },
+    "MOQ": {
+      "type": "string"
+    },
+    "Top Seller": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "string"
+    },
+    "Status": {
+      "type": "string"
+    },
+    "Carton Size (mm)": {
+      "type": "string"
+    },
+    "Notes": {
+      "type": "string"
+    },
+    "PACKAGING BAND TABLE (2m lengths)": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "SKU"
+  ]
+}

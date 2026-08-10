@@ -1,0 +1,47 @@
+{
+  "name": "DirectoryEntry",
+  "type": "object",
+  "properties": {
+    "entity_name": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "province": {
+      "type": "string"
+    },
+    "town": {
+      "type": "string"
+    },
+    "sector": {
+      "type": "string"
+    },
+    "contact_name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "routing_code": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive"
+      ],
+      "default": "active"
+    }
+  },
+  "required": [
+    "entity_name",
+    "country",
+    "province",
+    "town"
+  ]
+}

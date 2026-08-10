@@ -1,0 +1,148 @@
+{
+  "name": "SageCostRow",
+  "type": "object",
+  "properties": {
+    "section": {
+      "type": "string",
+      "enum": [
+        "1",
+        "2",
+        "3",
+        "5"
+      ]
+    },
+    "eps_code": {
+      "type": "string"
+    },
+    "sku": {
+      "type": "string"
+    },
+    "profile_name": {
+      "type": "string"
+    },
+    "profile_group": {
+      "type": "string"
+    },
+    "profile_dimensions": {
+      "type": "string"
+    },
+    "length_m": {
+      "type": "number"
+    },
+    "material_grade": {
+      "type": "string"
+    },
+    "block_cost_ex_vat": {
+      "type": "number"
+    },
+    "lengths_per_block": {
+      "type": "number"
+    },
+    "working_divider": {
+      "type": "number"
+    },
+    "lengths_per_pack": {
+      "type": "number"
+    },
+    "packs_per_carton": {
+      "type": "number"
+    },
+    "lengths_per_carton": {
+      "type": "number"
+    },
+    "cartons_per_pallet": {
+      "type": "number"
+    },
+    "blocks_per_pallet": {
+      "type": "number"
+    },
+    "carton_dimensions": {
+      "type": "string"
+    },
+    "carton_weight_kg": {
+      "type": "number"
+    },
+    "pallet_gross_weight_kg": {
+      "type": "number"
+    },
+    "blockbox_weight_kg": {
+      "type": "number"
+    },
+    "blockbox_pallet_weight_kg": {
+      "type": "number"
+    },
+    "source_sku_base": {
+      "type": "string"
+    },
+    "unit_price_a": {
+      "type": "number"
+    },
+    "unit_price_b": {
+      "type": "number"
+    },
+    "unit_weight_a": {
+      "type": "number"
+    },
+    "unit_weight_b": {
+      "type": "number"
+    },
+    "description": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "unit": {
+      "type": "string"
+    },
+    "level": {
+      "type": "string"
+    },
+    "active": {
+      "type": "boolean"
+    },
+    "lengths_per_uom": {
+      "type": "number"
+    },
+    "cost_excl_vat": {
+      "type": "number"
+    },
+    "cost_per_length": {
+      "type": "number"
+    },
+    "weight_kg": {
+      "type": "number"
+    },
+    "dimensions": {
+      "type": "string"
+    },
+    "unit_cost_tier_a": {
+      "type": "number"
+    },
+    "unit_cost_tier_b": {
+      "type": "number"
+    },
+    "pack_cost": {
+      "type": "number"
+    },
+    "carton_cost": {
+      "type": "number"
+    },
+    "pallet_cost": {
+      "type": "number"
+    },
+    "blockbox_cost": {
+      "type": "number"
+    },
+    "tier": {
+      "type": "string"
+    },
+    "price_exclusive": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "section",
+    "eps_code"
+  ]
+}

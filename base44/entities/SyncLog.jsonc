@@ -1,0 +1,34 @@
+{
+  "name": "SyncLog",
+  "type": "object",
+  "properties": {
+    "client_name": {
+      "type": "string"
+    },
+    "direction": {
+      "type": "string",
+      "enum": [
+        "pull",
+        "push"
+      ]
+    },
+    "resource": {
+      "type": "string"
+    },
+    "record_count": {
+      "type": "number",
+      "default": 0
+    },
+    "status": {
+      "type": "string"
+    },
+    "details": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "client_name",
+    "direction",
+    "resource"
+  ]
+}

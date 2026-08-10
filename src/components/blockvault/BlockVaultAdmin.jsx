@@ -25,14 +25,9 @@ export default function BlockVaultAdmin() {
     queryFn: async () => {
       setError(null);
       try {
-        const res = await base44.functions.invoke('blockVaultProxy', {
-          entity: activeEntity,
-          operation: 'list',
-          limit: PAGE_SIZE,
-          skip: page * PAGE_SIZE,
-          sort_by: '-updated_date',
-        });
-        return res.data || [];
+        const Entity = base44.entities[activeEntity];
+        if (!Entity) throw new Error(`Entity ${activeEntity} not found`);
+        return await Entity.list('-updated_date', PAGE_SIZE);
       } catch (err) {
         const msg = err?.response?.data?.error || err.message;
         setError(msg);
@@ -51,19 +46,19 @@ export default function BlockVaultAdmin() {
     : records;
 
   const createMutation = useMutation({
-    mutationFn: async (data) => base44.functions.invoke('blockVaultProxy', { entity: activeEntity, operation: 'create', data }),
+    mutationFn: async (data) => base44.entities[activeEntity].create(data),
     onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['blockvault', activeEntity] }); setShowForm(false); },
     onError: (err) => setError(err?.response?.data?.error || err.message),
   });
 
   const updateMutation = useMutation({
-    mutationFn: async ({ id, data }) => base44.functions.invoke('blockVaultProxy', { entity: activeEntity, operation: 'update', id, data }),
+    mutationFn: async ({ id, data }) => base44.entities[activeEntity].update(id, data),
     onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['blockvault', activeEntity] }); setShowForm(false); },
     onError: (err) => setError(err?.response?.data?.error || err.message),
   });
 
   const deleteMutation = useMutation({
-    mutationFn: async (id) => base44.functions.invoke('blockVaultProxy', { entity: activeEntity, operation: 'delete', id }),
+    mutationFn: async (id) => base44.entities[activeEntity].delete(id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['blockvault', activeEntity] }),
     onError: (err) => setError(err?.response?.data?.error || err.message),
   });

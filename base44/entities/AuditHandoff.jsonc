@@ -1,0 +1,15 @@
+{
+  "name": "AuditHandoff",
+  "type": "object",
+  "properties": {
+    "ITEM MASTER - AUDIT & HANDOFF": {
+      "type": "string"
+    },
+    "col_1": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "ITEM MASTER - AUDIT & HANDOFF"
+  ]
+}

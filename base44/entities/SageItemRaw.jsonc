@@ -1,0 +1,120 @@
+{
+  "name": "SageItemRaw",
+  "type": "object",
+  "properties": {
+    "row_index": {
+      "type": "number"
+    },
+    "col_0": {
+      "type": "string"
+    },
+    "col_1": {
+      "type": "string"
+    },
+    "col_2": {
+      "type": "string"
+    },
+    "col_3": {
+      "type": "string"
+    },
+    "col_4": {
+      "type": "string"
+    },
+    "col_5": {
+      "type": "string"
+    },
+    "col_6": {
+      "type": "string"
+    },
+    "col_7": {
+      "type": "string"
+    },
+    "col_8": {
+      "type": "string"
+    },
+    "col_9": {
+      "type": "string"
+    },
+    "col_10": {
+      "type": "string"
+    },
+    "col_11": {
+      "type": "string"
+    },
+    "col_12": {
+      "type": "string"
+    },
+    "col_13": {
+      "type": "string"
+    },
+    "col_14": {
+      "type": "string"
+    },
+    "col_15": {
+      "type": "string"
+    },
+    "col_16": {
+      "type": "string"
+    },
+    "col_17": {
+      "type": "string"
+    },
+    "col_18": {
+      "type": "string"
+    },
+    "col_19": {
+      "type": "string"
+    },
+    "col_20": {
+      "type": "string"
+    },
+    "col_21": {
+      "type": "string"
+    },
+    "col_22": {
+      "type": "string"
+    },
+    "col_23": {
+      "type": "string"
+    },
+    "col_24": {
+      "type": "string"
+    },
+    "col_25": {
+      "type": "string"
+    },
+    "col_26": {
+      "type": "string"
+    },
+    "col_27": {
+      "type": "string"
+    },
+    "col_28": {
+      "type": "string"
+    },
+    "col_29": {
+      "type": "string"
+    },
+    "col_30": {
+      "type": "string"
+    },
+    "col_31": {
+      "type": "string"
+    },
+    "col_32": {
+      "type": "string"
+    },
+    "col_33": {
+      "type": "string"
+    },
+    "col_34": {
+      "type": "string"
+    },
+    "col_35": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "row_index"
+  ]
+}

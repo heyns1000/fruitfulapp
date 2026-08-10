@@ -1,0 +1,40 @@
+{
+  "name": "PackagingAsset",
+  "type": "object",
+  "properties": {
+    "item_code": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "asset_url": {
+      "type": "string"
+    },
+    "asset_type": {
+      "type": "string",
+      "enum": [
+        "hero",
+        "label",
+        "packaging",
+        "reference"
+      ]
+    },
+    "style_notes": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "approved",
+        "retired"
+      ],
+      "default": "draft"
+    }
+  },
+  "required": [
+    "name",
+    "asset_url"
+  ]
+}
