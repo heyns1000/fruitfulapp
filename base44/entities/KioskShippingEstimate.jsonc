@@ -1,0 +1,92 @@
+{
+  "name": "KioskShippingEstimate",
+  "type": "object",
+  "properties": {
+    "quote_no": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string"
+    },
+    "shipper": {
+      "type": "string"
+    },
+    "consignee": {
+      "type": "string"
+    },
+    "port_of_loading": {
+      "type": "string"
+    },
+    "port_of_destination": {
+      "type": "string"
+    },
+    "final_destination": {
+      "type": "string"
+    },
+    "commodity": {
+      "type": "string"
+    },
+    "inco_terms": {
+      "type": "string"
+    },
+    "no_of_packages": {
+      "type": "number"
+    },
+    "gross_mass_kg": {
+      "type": "number"
+    },
+    "volumetric_wt": {
+      "type": "number"
+    },
+    "chargeable_wt": {
+      "type": "number"
+    },
+    "usd_zar_rate": {
+      "type": "number"
+    },
+    "subtotal_excl_vat_zar": {
+      "type": "number"
+    },
+    "vat_zar": {
+      "type": "number"
+    },
+    "total_incl_vat_zar": {
+      "type": "number"
+    },
+    "charges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "vat_code": {
+            "type": "string"
+          },
+          "foreign_amount_usd": {
+            "type": "number"
+          },
+          "local_amount_excl_zar": {
+            "type": "number"
+          },
+          "vat_zar": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "pi_supplier": {
+      "type": "string"
+    },
+    "pi_reference": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "quote_no"
+  ]
+}

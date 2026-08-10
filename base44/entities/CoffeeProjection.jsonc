@@ -1,0 +1,32 @@
+{
+  "name": "CoffeeProjection",
+  "type": "object",
+  "properties": {
+    "month": {
+      "type": "string",
+      "description": "ISO date string for projection month"
+    },
+    "cups_to_sell": {
+      "type": "number"
+    },
+    "coffee_profit": {
+      "type": "number"
+    },
+    "recurring_costs": {
+      "type": "number"
+    },
+    "once_off_costs": {
+      "type": "number"
+    },
+    "net_profit": {
+      "type": "number"
+    },
+    "scenario": {
+      "type": "string",
+      "default": "base"
+    }
+  },
+  "required": [
+    "month"
+  ]
+}

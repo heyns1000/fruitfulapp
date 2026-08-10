@@ -67,6 +67,7 @@ const PAGE_GROUPS = [
       { href: '/GrandMashadlelaCollection', emoji: '🎩', label: 'Grand Mashadlela',      bg: '#b45309' },
       { href: '/HomemartListing',           emoji: '🏠', label: 'Homemart',              bg: '#9a3412' },
       { href: '/FruitfulKiosk',             emoji: '☕', label: 'Fruitful Kiosk',        bg: '#78350f' },
+      { href: '/FruitfulCoffee',            emoji: '🥤', label: 'Coffee Engine',         bg: '#E91E63' },
       { href: '/ShananaCheckout',           emoji: '🐘', label: 'Shanana™',             bg: '#064e3b' },
       { href: '/Checkout',                  emoji: '💰', label: 'Checkout',              bg: '#065f46' },
     ]
@@ -365,6 +366,7 @@ export default function Dashboard() {
               <TabsList className="flex min-w-max gap-1 px-4 pb-3 h-auto bg-transparent">
                 <TabsTrigger value="admin" className="data-[state=active]:bg-emerald-700 data-[state=active]:text-white font-semibold text-slate-300 whitespace-nowrap">⚙️ Admin Panel</TabsTrigger>
                 <TabsTrigger value="blockvault" className="data-[state=active]:bg-emerald-700 data-[state=active]:text-white font-semibold text-slate-300 whitespace-nowrap">🔐 BlockVault</TabsTrigger>
+                <TabsTrigger value="fruitfulcoffee" className="data-[state=active]:bg-pink-600 data-[state=active]:text-white font-semibold text-slate-300 whitespace-nowrap">☕ Fruitful Coffee</TabsTrigger>
                 <TabsTrigger value="collaborations" className="data-[state=active]:bg-emerald-700 data-[state=active]:text-white font-semibold text-slate-300 whitespace-nowrap">🤝 Collaborations</TabsTrigger>
                 {Object.entries(SECTORS).map(([key, label]) => (
                   <TabsTrigger key={key} value={key} className="data-[state=active]:bg-emerald-700 data-[state=active]:text-white text-sm font-medium text-slate-400 whitespace-nowrap">
@@ -417,6 +419,27 @@ export default function Dashboard() {
 
           <TabsContent value="blockvault" className="space-y-6">
             <BlockVaultAdmin />
+          </TabsContent>
+
+          <TabsContent value="fruitfulcoffee" className="space-y-4">
+            <div className="rounded-xl border overflow-hidden" style={{ background: 'rgba(0,30,15,0.7)', borderColor: '#E91E6330' }}>
+              <div className="p-6 flex flex-col md:flex-row items-center gap-6">
+                <img src="https://media.base44.com/images/public/6953a072de46207f94f2b9d2/4be882485_PHOTO-2023-06-19-06-55-454_1754425495817.jpg" alt="Kiosk" className="w-32 h-32 object-cover rounded-xl shadow-lg" />
+                <div className="flex-1">
+                  <h2 className="text-2xl font-black text-white mb-1">☕ Fruitful Coffee — Kiosk Costing Engine</h2>
+                  <p className="text-sm text-gray-300 mb-4">Full BOM costing, monthly profit projections (22 months), food menu pricing & Guangzhou→Johannesburg kiosk shipping estimate (R58,510 incl. VAT).</p>
+                  <div className="flex flex-wrap gap-3 text-xs font-semibold mb-4">
+                    <span className="px-3 py-1 rounded-full bg-pink-600/30 text-pink-300 border border-pink-500/30">R14.16 BOM per cup</span>
+                    <span className="px-3 py-1 rounded-full bg-teal-600/30 text-teal-300 border border-teal-500/30">64.6% coffee margin</span>
+                    <span className="px-3 py-1 rounded-full bg-purple-600/30 text-purple-300 border border-purple-500/30">~R20k/mo net profit</span>
+                    <span className="px-3 py-1 rounded-full bg-orange-600/30 text-orange-300 border border-orange-500/30">R58,510 landed kiosk</span>
+                  </div>
+                  <Link to="/FruitfulCoffee" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-white text-sm transition-all hover:opacity-90" style={{ background: 'linear-gradient(135deg, #E91E63, #4ECDC4)' }}>
+                    ☕ Open Fruitful Coffee Dashboard →
+                  </Link>
+                </div>
+              </div>
+            </div>
           </TabsContent>
 
           <TabsContent value="collaborations" className="space-y-6">

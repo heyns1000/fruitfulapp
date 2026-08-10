@@ -1,0 +1,39 @@
+{
+  "name": "FoodMenuItem",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "price_ex_vat": {
+      "type": "number"
+    },
+    "vat": {
+      "type": "number"
+    },
+    "price_incl_vat": {
+      "type": "number"
+    },
+    "markup_pct": {
+      "type": "number"
+    },
+    "markup_rand": {
+      "type": "number"
+    },
+    "final_price": {
+      "type": "number"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "food",
+        "coffee",
+        "beverage"
+      ]
+    }
+  },
+  "required": [
+    "name",
+    "final_price"
+  ]
+}

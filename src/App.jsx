@@ -25,6 +25,7 @@ import LegalDocuments from './pages/LegalDocuments'
 import BanimalLoopCheckout from './pages/BanimalLoopCheckout'
 import MarketplaceBlueprint from './pages/MarketplaceBlueprint'
 import BlockVault from './pages/BlockVault'
+import FruitfulCoffee from './pages/FruitfulCoffee'
 import SubscriptionShop from './pages/SubscriptionShop'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
@@ -104,6 +105,7 @@ const AuthenticatedApp = () => {
       <Route path="/BanimalLoopCheckout" element={<BanimalLoopCheckout />} />
       <Route path="/MarketplaceBlueprint" element={<LayoutWrapper currentPageName="MarketplaceBlueprint"><MarketplaceBlueprint /></LayoutWrapper>} />
       <Route path="/BlockVault" element={<LayoutWrapper currentPageName="BlockVault"><BlockVault /></LayoutWrapper>} />
+      <Route path="/FruitfulCoffee" element={<LayoutWrapper currentPageName="FruitfulCoffee"><FruitfulCoffee /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

@@ -1,0 +1,31 @@
+{
+  "name": "CoffeeCostInput",
+  "type": "object",
+  "properties": {
+    "category": {
+      "type": "string",
+      "description": "e.g. Budget, Coffee, Food, Recurring, Once-off"
+    },
+    "label": {
+      "type": "string",
+      "description": "Row label / variable name"
+    },
+    "value": {
+      "type": "number"
+    },
+    "unit": {
+      "type": "string"
+    },
+    "sheet": {
+      "type": "string",
+      "description": "Source sheet name"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "label",
+    "sheet"
+  ]
+}
