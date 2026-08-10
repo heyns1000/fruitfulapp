@@ -4,6 +4,8 @@ import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, R
 import { Coffee, TrendingUp, Package, DollarSign, ShoppingBag, Truck, ChevronDown, ChevronUp } from 'lucide-react';
 import moment from 'moment';
 import SourcingProcurement from '@/components/coffee/SourcingProcurement';
+import SupplierPerformanceDashboard from '@/components/coffee/SupplierPerformanceDashboard';
+import LandedCostComparisonChart from '@/components/coffee/LandedCostComparisonChart';
 import CoffeeSubNav from '@/components/coffee/CoffeeSubNav';
 import { Link, useSearchParams } from 'react-router-dom';
 
@@ -109,6 +111,7 @@ export default function FruitfulCoffee() {
     { id: 'costing', label: '💰 Costing Engine' },
     { id: 'menu', label: '🥐 Menu & Pricing' },
     { id: 'shipping', label: '🚢 Kiosk Logistics' },
+    { id: 'suppliers', label: '📊 Supplier Metrics' },
     { id: 'sourcing', label: '🌍 Sourcing & Procurement' },
   ];
 
@@ -255,6 +258,9 @@ export default function FruitfulCoffee() {
               </div>
               <p className="text-xs text-gray-400 mt-3 text-center">Fruitful Coffee Kiosk — Teal & Red brand colours, self-service touchscreen unit</p>
             </div>
+
+            {/* True Landed vs Estimate Comparison Chart */}
+            <LandedCostComparisonChart />
           </div>
         )}
 
@@ -501,6 +507,9 @@ export default function FruitfulCoffee() {
             </div>
           </div>
         )}
+
+        {/* SUPPLIER METRICS TAB */}
+        {activeTab === 'suppliers' && <SupplierPerformanceDashboard />}
 
         {/* SOURCING & PROCUREMENT TAB */}
         {activeTab === 'sourcing' && <SourcingProcurement />}
