@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { Coffee, TrendingUp, Package, DollarSign, ShoppingBag, Truck, ChevronDown, ChevronUp } from 'lucide-react';
 import moment from 'moment';
+import SourcingProcurement from '@/components/coffee/SourcingProcurement';
 
 const BRAND_GREEN = '#4ECDC4';
 const BRAND_RED = '#E91E63';
@@ -90,6 +91,7 @@ export default function FruitfulCoffee() {
     { id: 'costing', label: '💰 Costing Engine' },
     { id: 'menu', label: '🥐 Menu & Pricing' },
     { id: 'shipping', label: '🚢 Kiosk Logistics' },
+    { id: 'sourcing', label: '🌍 Sourcing & Procurement' },
   ];
 
   if (loading) {
@@ -461,6 +463,9 @@ export default function FruitfulCoffee() {
             </div>
           </div>
         )}
+
+        {/* SOURCING & PROCUREMENT TAB */}
+        {activeTab === 'sourcing' && <SourcingProcurement />}
       </div>
     </div>
   );
