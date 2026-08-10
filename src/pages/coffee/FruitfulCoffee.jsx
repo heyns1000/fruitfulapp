@@ -4,7 +4,8 @@ import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, R
 import { Coffee, TrendingUp, Package, DollarSign, ShoppingBag, Truck, ChevronDown, ChevronUp } from 'lucide-react';
 import moment from 'moment';
 import SourcingProcurement from '@/components/coffee/SourcingProcurement';
-import { Link } from 'react-router-dom';
+import CoffeeSubNav from '@/components/coffee/CoffeeSubNav';
+import { Link, useSearchParams } from 'react-router-dom';
 
 // True unit landed = Unit hardware ($3,500 × 17) + Afristar freight R58,510.50
 const UNIT_FOB_ZAR = 3500 * 17; // 59,500
@@ -50,13 +51,20 @@ function ShippingChargeRow({ charge }) {
 }
 
 export default function FruitfulCoffee() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [projections, setProjections] = useState([]);
   const [costInputs, setCostInputs] = useState([]);
   const [menuItems, setMenuItems] = useState([]);
   const [shipping, setShipping] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState(searchParams.get('tab') || 'overview');
   const [showAllCharges, setShowAllCharges] = useState(false);
+
+  // Sync tab from URL (CoffeeSubNav navigation)
+  useEffect(() => {
+    const tab = searchParams.get('tab');
+    if (tab && tab !== activeTab) setActiveTab(tab);
+  }, [searchParams]);
 
   useEffect(() => {
     const load = async () => {
@@ -74,6 +82,11 @@ export default function FruitfulCoffee() {
     };
     load();
   }, []);
+
+  const handleTabChange = (tabId) => {
+    setActiveTab(tabId);
+    setSearchParams({ tab: tabId });
+  };
 
   const bomCosts = costInputs.filter(c => c.category === 'Coffee BOM');
   const totalCupCost = bomCosts.find(c => c.label.includes('Total cost'))?.value || 14.16;
@@ -162,14 +175,17 @@ export default function FruitfulCoffee() {
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
+      {/* Persistent Coffee Sub-Navigation — route-level switching, no page reloads */}
+      <CoffeeSubNav />
+
+      {/* Granular in-page tabs */}
+      <div className="sticky top-[52px] z-20 bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex gap-1 overflow-x-auto">
             {tabs.map(t => (
               <button
                 key={t.id}
-                onClick={() => setActiveTab(t.id)}
+                onClick={() => handleTabChange(t.id)}
                 className={`px-5 py-4 text-sm font-semibold whitespace-nowrap border-b-2 transition-all ${activeTab === t.id ? 'border-current text-current' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
                 style={activeTab === t.id ? { borderColor: BRAND_RED, color: BRAND_RED } : {}}
               >

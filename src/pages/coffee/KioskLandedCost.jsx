@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { base44 } from '@/api/base44Client';
+import React, { useState } from 'react';
 import { Package, Truck, DollarSign, TrendingUp, FileText, Globe } from 'lucide-react';
+import CoffeeSubNav from '@/components/coffee/CoffeeSubNav';
 
 const BRAND_GREEN = '#4ECDC4';
 const BRAND_RED = '#E91E63';
@@ -112,6 +112,9 @@ export default function KioskLandedCost() {
           </p>
         </div>
       </div>
+
+      {/* Persistent Coffee Sub-Navigation */}
+      <CoffeeSubNav />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-6">
 

@@ -4,6 +4,7 @@ import { Menu, X } from 'lucide-react';
 
 const NAV_LINKS = [
   { href: '/Dashboard',                 label: 'Dashboard' },
+  { href: '/FruitfulCoffee',            label: '☕ Fruitful Coffee' },
   { href: '/Marketplace',               label: 'Marketplace' },
   { href: '/Gallery',                   label: 'Gallery' },
   { href: '/CollaborationSuite',        label: 'Collaboration' },

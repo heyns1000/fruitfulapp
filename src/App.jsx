@@ -25,8 +25,8 @@ import LegalDocuments from './pages/LegalDocuments'
 import BanimalLoopCheckout from './pages/BanimalLoopCheckout'
 import MarketplaceBlueprint from './pages/MarketplaceBlueprint'
 import BlockVault from './pages/BlockVault'
-import FruitfulCoffee from './pages/FruitfulCoffee'
-import KioskLandedCost from './pages/KioskLandedCost'
+import FruitfulCoffee from './pages/coffee/FruitfulCoffee'
+import KioskLandedCost from './pages/coffee/KioskLandedCost'
 import SubscriptionShop from './pages/SubscriptionShop'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
