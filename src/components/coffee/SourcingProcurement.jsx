@@ -1,5 +1,6 @@
 import React from 'react';
 import { Globe, ShieldCheck, TrendingUp, Layers, Anchor, Ship, MapPin } from 'lucide-react';
+import SupplierMasterDirectory from './SupplierMasterDirectory';
 
 const BRAND_GREEN = '#4ECDC4';
 const BRAND_RED = '#E91E63';
@@ -77,6 +78,9 @@ export default function SourcingProcurement() {
           ))}
         </div>
       </div>
+
+      {/* 0. Supplier Master Directory — ingested from database */}
+      <SupplierMasterDirectory />
 
       {/* 1. Procurement & Contracting */}
       <div className="bg-white rounded-2xl p-6 shadow-md">
