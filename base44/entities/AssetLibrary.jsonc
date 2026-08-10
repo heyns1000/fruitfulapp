@@ -15,6 +15,21 @@
       ],
       "description": "Type of asset"
     },
+    "folder": {
+      "type": "string",
+      "enum": [
+        "commerce",
+        "banimal",
+        "artisan",
+        "subscriptions",
+        "brands",
+        "creative",
+        "infrastructure",
+        "branding"
+      ],
+      "default": "brands",
+      "description": "Folder category matching Dashboard navigation tabs"
+    },
     "brandId": {
       "type": "string",
       "description": "Associated brand ID"
