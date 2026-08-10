@@ -83,7 +83,7 @@ export default function BlockVaultAdmin() {
       <div className="rounded-xl border p-4" style={{ background: 'rgba(0,30,15,0.7)', borderColor: '#00ff9920' }}>
         <h2 className="text-lg font-black" style={{ color: '#00ffc8' }}>🔐 BlockVault Core Admin</h2>
         <p className="text-xs mt-1" style={{ color: '#9dfcdc60' }}>
-          Full CRUD for all SKUs, items, barcodes, cost rows & more · synced from savvy-block-vault-sync.base44.app
+          Full CRUD for all SKUs, items, barcodes, cost rows & more · local entity database
         </p>
       </div>
 

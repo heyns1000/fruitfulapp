@@ -189,7 +189,7 @@ function PageGrid({ pages }) {
 
 export default function Dashboard() {
   const [activePageTab, setActivePageTab] = useState('commerce');
-  const [activeSectorTab, setActiveSectorTab] = useState('admin');
+  const [activeSectorTab, setActiveSectorTab] = useState('blockvault');
   const queryClient = useQueryClient();
 
   const { data: brands = [], isLoading } = useQuery({
