@@ -25,7 +25,7 @@ export default function Layout({ children, currentPageName }) {
         <ShananaCheckoutPanel />
         <TreatyMonitor />
 
-        <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-teal-50 to-green-50">
+        <div className="min-h-screen" style={{ background: 'var(--brand-background)' }}>
           {/* Global banner + nav */}
           <GlobalNavBar />
 
@@ -39,8 +39,8 @@ export default function Layout({ children, currentPageName }) {
             <div className="fixed top-4 left-4 z-[9999]">
               <button
                 onClick={goBack}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-full text-white text-sm font-semibold shadow-lg hover:opacity-90 active:scale-95 transition-all"
-                style={{ background: '#18241C' }}
+                className="bn-outline"
+                style={{ minHeight: '40px', padding: '0 20px' }}
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span className="hidden sm:inline">Back</span>

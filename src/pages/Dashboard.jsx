@@ -21,6 +21,8 @@ import BlockVaultAdmin from '../components/blockvault/BlockVaultAdmin';
 import { Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+const BANIMAL_LOGO = 'https://media.base44.com/images/public/workspaces/691b9e0c3e8a5d73f58ef8e3/brands/74c726a6d_brand_upload_logo.png';
+
 const SECTORS = {
   agriculture: '🌱 Agriculture & Biotech',
   fsf: '🥦 Food, Soil & Farming',
@@ -61,127 +63,128 @@ const PAGE_GROUPS = [
     id: 'commerce',
     label: '🛍️ Commerce',
     pages: [
-      { href: '/Marketplace',               emoji: '🛍️', label: 'Marketplace',          bg: '#7c3aed' },
-      { href: '/ArtisanShop',               emoji: '🎨', label: 'Artisan Shop',          bg: '#db2777' },
-      { href: '/SubscriptionShop',          emoji: '🛒', label: 'Subscription Shop',     bg: '#e11d48' },
-      { href: '/GrandMashadlelaCollection', emoji: '🎩', label: 'Grand Mashadlela',      bg: '#b45309' },
-      { href: '/HomemartListing',           emoji: '🏠', label: 'Homemart',              bg: '#9a3412' },
-      { href: '/FruitfulKiosk',             emoji: '☕', label: 'Fruitful Kiosk',        bg: '#78350f' },
-      { href: '/FruitfulCoffee',            emoji: '🥤', label: 'Coffee Engine',         bg: '#E91E63' },
-      { href: '/ShananaCheckout',           emoji: '🐘', label: 'Shanana™',             bg: '#064e3b' },
-      { href: '/Checkout',                  emoji: '💰', label: 'Checkout',              bg: '#065f46' },
+      { href: '/Marketplace',               emoji: '🛍️', label: 'Marketplace',          tone: 'teal' },
+      { href: '/ArtisanShop',               emoji: '🎨', label: 'Artisan Shop',          tone: 'pink' },
+      { href: '/SubscriptionShop',          emoji: '🛒', label: 'Subscription Shop',     tone: 'teal' },
+      { href: '/GrandMashadlelaCollection', emoji: '🎩', label: 'Grand Mashadlela',      tone: 'pink' },
+      { href: '/HomemartListing',           emoji: '🏠', label: 'Homemart',              tone: 'teal' },
+      { href: '/FruitfulKiosk',             emoji: '☕', label: 'Fruitful Kiosk',        tone: 'pink' },
+      { href: '/FruitfulCoffee',            emoji: '🥤', label: 'Coffee Engine',         tone: 'pink' },
+      { href: '/ShananaCheckout',           emoji: '🐘', label: 'Shanana™',             tone: 'teal' },
+      { href: '/Checkout',                  emoji: '💰', label: 'Checkout',              tone: 'teal' },
     ]
   },
   {
     id: 'banimal',
     label: '🐾 Banimal',
     pages: [
-      { href: '/Banimal',          emoji: '🐾', label: 'Banimal™ Orchestrator', bg: '#ea580c' },
-      { href: '/BanimalDashboard', emoji: '🦁', label: 'Banimal Dashboard',     bg: '#dc2626' },
-      { href: '/BanimalStore',     emoji: '👶', label: 'Banimal Store',         bg: '#c2410c' },
-      { href: '/BanimalAdmin',     emoji: '⚙️', label: 'Banimal Admin',         bg: '#7c2d12' },
+      { href: '/Banimal',          emoji: '🐾', label: 'Banimal™ Orchestrator', tone: 'pink' },
+      { href: '/BanimalDashboard', emoji: '🦁', label: 'Banimal Dashboard',     tone: 'teal' },
+      { href: '/BanimalStore',     emoji: '👶', label: 'Banimal Store',         tone: 'pink' },
+      { href: '/BanimalAdmin',     emoji: '⚙️', label: 'Banimal Admin',         tone: 'teal' },
     ]
   },
   {
     id: 'artisan',
     label: '🖌️ Artisan',
     pages: [
-      { href: '/ArtisanDashboard',  emoji: '🖌️', label: 'My Artisan Shop',      bg: '#c026d3' },
-      { href: '/ArtisanFinancials', emoji: '💰', label: 'Artisan Financials',    bg: '#16a34a' },
-      { href: '/ArtisanProfile',    emoji: '👤', label: 'Artisan Profile',       bg: '#7e22ce' },
-      { href: '/Gallery',           emoji: '🎭', label: 'Gallery',              bg: '#86198f' },
+      { href: '/ArtisanDashboard',  emoji: '🖌️', label: 'My Artisan Shop',      tone: 'pink' },
+      { href: '/ArtisanFinancials', emoji: '💰', label: 'Artisan Financials',    tone: 'teal' },
+      { href: '/ArtisanProfile',    emoji: '👤', label: 'Artisan Profile',       tone: 'pink' },
+      { href: '/Gallery',           emoji: '🎭', label: 'Gallery',              tone: 'teal' },
     ]
   },
   {
     id: 'orders',
     label: '📦 Orders',
     pages: [
-      { href: '/OrderHistory',     emoji: '📦', label: 'Order History',    bg: '#c2410c' },
-      { href: '/OrderDashboard',   emoji: '🚚', label: 'Order Dashboard',  bg: '#b91c1c' },
-      { href: '/OrderFulfillment', emoji: '📋', label: 'Fulfillment',      bg: '#475569' },
-      { href: '/Messages',         emoji: '💬', label: 'Messages',         bg: '#1d4ed8' },
-      { href: '/Wishlist',         emoji: '❤️', label: 'Wishlist',         bg: '#be185d' },
+      { href: '/OrderHistory',     emoji: '📦', label: 'Order History',    tone: 'teal' },
+      { href: '/OrderDashboard',   emoji: '🚚', label: 'Order Dashboard',  tone: 'pink' },
+      { href: '/OrderFulfillment', emoji: '📋', label: 'Fulfillment',      tone: 'teal' },
+      { href: '/Messages',         emoji: '💬', label: 'Messages',         tone: 'pink' },
+      { href: '/Wishlist',         emoji: '❤️', label: 'Wishlist',         tone: 'teal' },
     ]
   },
   {
     id: 'subscriptions',
     label: '💎 Subscriptions',
     pages: [
-      { href: '/MySubscriptions',  emoji: '💎', label: 'My Plans',         bg: '#65a30d' },
-      { href: '/SubscriptionBoxes',emoji: '🎁', label: 'Sub Boxes',        bg: '#7e22ce' },
-      { href: '/LoyaltyProgram',   emoji: '🏆', label: 'Loyalty Program',  bg: '#ca8a04' },
+      { href: '/MySubscriptions',  emoji: '💎', label: 'My Plans',         tone: 'teal' },
+      { href: '/SubscriptionBoxes',emoji: '🎁', label: 'Sub Boxes',        tone: 'pink' },
+      { href: '/LoyaltyProgram',   emoji: '🏆', label: 'Loyalty Program',  tone: 'teal' },
     ]
   },
   {
     id: 'intelligence',
     label: '📊 Intelligence',
     pages: [
-      { href: '/Analytics',          emoji: '📊', label: 'Analytics',         bg: '#0891b2' },
-      { href: '/SectorAnalytics',    emoji: '📈', label: 'Sector Analytics',  bg: '#0369a1' },
-      { href: '/MarketIntelligence', emoji: '🧠', label: 'Market Intel',      bg: '#3730a3' },
-      { href: '/DiscoveryEngine',    emoji: '🔍', label: 'Discovery Engine',  bg: '#0f766e' },
-      { href: '/PulseTradeAnalytics',emoji: '⚡', label: 'PulseTrade',        bg: '#78350f' },
-      { href: '/CareGrainsMap',      emoji: '🖤', label: 'Care Grains Map',   bg: '#1c1917' },
+      { href: '/Analytics',          emoji: '📊', label: 'Analytics',         tone: 'teal' },
+      { href: '/SectorAnalytics',    emoji: '📈', label: 'Sector Analytics',  tone: 'pink' },
+      { href: '/MarketIntelligence', emoji: '🧠', label: 'Market Intel',      tone: 'teal' },
+      { href: '/DiscoveryEngine',    emoji: '🔍', label: 'Discovery Engine',  tone: 'pink' },
+      { href: '/PulseTradeAnalytics',emoji: '⚡', label: 'PulseTrade',        tone: 'teal' },
+      { href: '/CareGrainsMap',      emoji: '🖤', label: 'Care Grains Map',   tone: 'pink' },
     ]
   },
   {
     id: 'brands',
     label: '🌿 Brands & Ecosystem',
     pages: [
-      { href: '/BrandOnboarding',   emoji: '🏢', label: 'Onboard Brand',    bg: '#075985' },
-      { href: '/BrandNodeExplorer', emoji: '🌿', label: 'Brand Explorer',   bg: '#134e4a' },
-      { href: '/EcosystemExplorer', emoji: '🌐', label: 'Ecosystem',        bg: '#0d9488' },
-      { href: '/GlobalBrandMap',    emoji: '🗺️', label: 'Global Brand Map', bg: '#047857' },
-      { href: '/CollaborationSuite',emoji: '🤝', label: 'Collab Suite',     bg: '#4f46e5' },
+      { href: '/BrandOnboarding',   emoji: '🏢', label: 'Onboard Brand',    tone: 'teal' },
+      { href: '/BrandNodeExplorer', emoji: '🌿', label: 'Brand Explorer',   tone: 'pink' },
+      { href: '/EcosystemExplorer', emoji: '🌐', label: 'Ecosystem',        tone: 'teal' },
+      { href: '/GlobalBrandMap',    emoji: '🗺️', label: 'Global Brand Map', tone: 'pink' },
+      { href: '/CollaborationSuite',emoji: '🤝', label: 'Collab Suite',     tone: 'teal' },
     ]
   },
   {
     id: 'creative',
     label: '🎬 Creative',
     pages: [
-      { href: '/ContentGenerator',  emoji: '✍️', label: 'AI Content',       bg: '#5b21b6' },
-      { href: '/VideoScriptStudio', emoji: '🎬', label: 'Video Studio',     bg: '#991b1b' },
-      { href: '/AssetLibrary',      emoji: '🖼️', label: 'Asset Library',    bg: '#92400e' },
+      { href: '/ContentGenerator',  emoji: '✍️', label: 'AI Content',       tone: 'pink' },
+      { href: '/VideoScriptStudio', emoji: '🎬', label: 'Video Studio',     tone: 'teal' },
+      { href: '/AssetLibrary',      emoji: '🖼️', label: 'Asset Library',    tone: 'pink' },
     ]
   },
   {
     id: 'infrastructure',
     label: '🔐 Infrastructure',
     pages: [
-      { href: '/BlockVault',     emoji: '🔐', label: 'BlockVault Core', bg: '#00b37a' },
-      { href: '/VaultMesh',      emoji: '🔐', label: 'VaultMesh™',     bg: '#059669' },
-      { href: '/Payments',       emoji: '💳', label: 'Payments',       bg: '#2563eb' },
-      { href: '/AppBuilder',     emoji: '🏗️', label: 'App Builder',    bg: '#6d28d9' },
-      { href: '/AutomationEngine',emoji: '⚡', label: 'Automation',    bg: '#0e7490' },
+      { href: '/BlockVault',     emoji: '🔐', label: 'BlockVault Core', tone: 'teal' },
+      { href: '/VaultMesh',      emoji: '🔐', label: 'VaultMesh™',     tone: 'pink' },
+      { href: '/Payments',       emoji: '💳', label: 'Payments',       tone: 'teal' },
+      { href: '/AppBuilder',     emoji: '🏗️', label: 'App Builder',    tone: 'pink' },
+      { href: '/AutomationEngine',emoji: '⚡', label: 'Automation',    tone: 'teal' },
     ]
   },
   {
     id: 'admin',
     label: '🛡️ Admin',
     pages: [
-      { href: '/AdminSeedwave', emoji: '🛡️', label: 'Seedwave Admin', bg: '#334155' },
-      { href: '/SectorAdminHub',emoji: '⚙️', label: 'Sector Hub',     bg: '#374151' },
-      { href: '/DataSyncCenter',emoji: '🔄', label: 'Data Sync',      bg: '#1f2937' },
-      { href: '/CSVImport',     emoji: '📤', label: 'CSV Import',     bg: '#0f766e' },
+      { href: '/AdminSeedwave', emoji: '🛡️', label: 'Seedwave Admin', tone: 'pink' },
+      { href: '/SectorAdminHub',emoji: '⚙️', label: 'Sector Hub',     tone: 'teal' },
+      { href: '/DataSyncCenter',emoji: '🔄', label: 'Data Sync',      tone: 'pink' },
+      { href: '/CSVImport',     emoji: '📤', label: 'CSV Import',     tone: 'teal' },
     ]
   },
 ];
 
-const NAV_BG = 'rgba(0,20,10,0.85)';
-const CARD_BG = 'rgba(0,40,20,0.7)';
-const BORDER = '#00ff9930';
-
 function PageGrid({ pages }) {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
-      {pages.map(({ href, emoji, label, bg }) => (
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+      {pages.map(({ href, emoji, label, tone }) => (
         <Link key={href} to={href} className="group block">
           <div
-            className="flex flex-col items-center justify-center gap-1.5 p-3 rounded-lg text-white text-center transition-all duration-200 hover:scale-[1.03] hover:shadow-lg active:scale-95 cursor-pointer min-h-[76px]"
-            style={{ backgroundColor: bg }}
+            className="flex flex-col items-center justify-center gap-2 p-4 text-center transition-all duration-200 hover:-translate-y-0.5 cursor-pointer min-h-[88px]"
+            style={{
+              borderRadius: 'var(--brand-radius-md)',
+              background: tone === 'teal' ? 'var(--brand-secondary)' : 'var(--brand-campaign-pink)',
+              color: 'var(--brand-on-primary)',
+              boxShadow: 'var(--brand-shadow-sm)',
+            }}
           >
             <span className="text-2xl leading-none">{emoji}</span>
-            <span className="text-[11px] font-semibold leading-tight tracking-tight">{label}</span>
+            <span className="text-xs font-semibold leading-tight">{label}</span>
           </div>
         </Link>
       ))}
@@ -226,85 +229,79 @@ export default function Dashboard() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
+      <div className="flex items-center justify-center min-h-screen" style={{ background: 'var(--brand-background)' }}>
+        <Loader2 className="w-8 h-8 animate-spin" style={{ color: 'var(--brand-primary)' }} />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#001a0f] via-[#012b19] to-[#001a0f] relative overflow-hidden">
-      {/* Subtle dot-grid background */}
-      <div className="fixed inset-0 pointer-events-none opacity-[0.06]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #00ff99 1px, transparent 0)', backgroundSize: '32px 32px' }} />
+    <div className="min-h-screen relative overflow-hidden" style={{ background: 'var(--brand-background)' }}>
 
-      {/* ── MAIN HEADER ── */}
-      <header className="relative overflow-hidden border-b border-[#00ff9920]" style={{ background: '#011f0e' }}>
-        <div className="container mx-auto px-6 py-5 relative z-10">
-          <div className="flex items-center gap-5">
-            <img
-              src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6953a072de46207f94f2b9d2/52acd159d_Chief_02_1753263376705.png"
-              alt="FAA Chief"
-              className="w-14 h-14 object-contain rounded-xl"
-              style={{ filter: 'drop-shadow(0 0 10px #00ffc855)' }}
-            />
-            <div>
-              <h1 className="text-xl sm:text-2xl font-bold tracking-tight" style={{ color: '#00ffc8', textShadow: '0 0 12px #00ffcc66' }}>
-                FAA.ZONE™
+      <div className="container mx-auto px-4 sm:px-6 pb-10 relative z-10 space-y-6 pt-6">
+
+        {/* ── HERO HEADER — warm paper, serif heading ── */}
+        <header className="bn-surface overflow-hidden" style={{ borderRadius: 'var(--brand-radius-lg)' }}>
+          <div className="flex flex-col md:flex-row items-center gap-6 p-6 md:p-8">
+            <div className="flex-1">
+              <span className="bn-tag-subtle mb-3">Soft essentials</span>
+              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-2" style={{ color: 'var(--brand-ink-brown)' }}>
+                Banimal
               </h1>
-              <p className="text-xs font-medium mt-0.5" style={{ color: '#9dfcdc99' }}>
-                Financial Allocation Architecture · Seeds of Appreciation · Live Grid
+              <p className="text-base max-w-xl mb-5" style={{ color: 'var(--brand-muted-foreground)' }}>
+                Thoughtful essentials for soft beginnings. A gentle, considered platform for brands, commerce and operations — made to be lived in and loved long.
               </p>
+              <div className="flex flex-wrap gap-3">
+                <Link to="/Marketplace" className="bn-primary">
+                  Browse softly
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </Link>
+                <Link to="/BanimalDashboard" className="bn-outline">
+                  See essentials
+                </Link>
+              </div>
             </div>
-            <div className="ml-auto hidden sm:flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-xs font-bold" style={{ color: '#00ff9980' }}>Pulse Grid Active</span>
+            <div className="shrink-0">
+              <img src={BANIMAL_LOGO} alt="Banimal logo" className="w-32 h-32 md:w-40 md:h-40 object-contain" />
             </div>
           </div>
-        </div>
-      </header>
+        </header>
 
-      <div className="container mx-auto px-4 sm:px-6 pb-10 relative z-10 space-y-5 pt-5">
-
-        {/* ── SEEDWAVE CORE BRAND HEADER ── */}
-        <header className="text-white shadow-xl rounded-2xl relative overflow-hidden border border-purple-500/30" style={{ background: 'linear-gradient(135deg, #2d1b69, #1e3a5f, #1a1a2e)' }}>
-          <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #a855f7 1px, transparent 0)', backgroundSize: '28px 28px' }} />
-          <div className="absolute top-0 right-0 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute right-5 top-1/2 -translate-y-1/2 opacity-20">
-            <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6953a072de46207f94f2b9d2/4540be9bd_Monster_01_1753263376704.png" alt="" className="w-24 h-24 object-contain" />
-          </div>
+        {/* ── SEEDWAVE CORE BRAND HEADER — teal color block ── */}
+        <header className="bn-section-teal relative overflow-hidden" style={{ borderRadius: 'var(--brand-radius-lg)', boxShadow: 'var(--brand-shadow)' }}>
           <div className="px-6 pt-6 pb-3 relative z-10">
-            <p className="text-purple-400 text-xs font-bold tracking-[0.3em] uppercase mb-2">✦ Seedwave™ Admin Portal</p>
+            <span className="bn-tag-ghost mb-2">Seedwave™ Admin Portal</span>
             {coreBrand ? (
               <>
-                <div className="flex items-baseline gap-3 flex-wrap mb-1">
-                  <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight" style={{ fontFamily: 'Georgia, serif' }}>
+                <div className="flex items-baseline gap-3 flex-wrap mb-1 mt-3">
+                  <h2 className="text-3xl sm:text-4xl font-bold tracking-tight" style={{ color: 'var(--brand-on-primary)' }}>
                     {coreBrand.name}™
                   </h2>
                   {coreBrand.sector && (
-                    <span className="text-purple-300 text-sm font-semibold capitalize">{SECTORS[coreBrand.sector] || coreBrand.sector}</span>
+                    <span className="text-sm font-semibold capitalize" style={{ color: 'rgba(255,255,255,0.85)' }}>{SECTORS[coreBrand.sector] || coreBrand.sector}</span>
                   )}
                   {coreBrand.isSystemBrand && (
-                    <span className="text-[10px] bg-purple-600/40 border border-purple-500/50 text-purple-200 rounded-full px-2 py-0.5 font-bold uppercase tracking-wider">Core Brand</span>
+                    <span className="bn-tag-ghost">Core Brand</span>
                   )}
                 </div>
                 {coreBrand.description && (
-                  <p className="text-purple-200/60 text-sm max-w-2xl line-clamp-1">{coreBrand.description}</p>
+                  <p className="text-sm max-w-2xl line-clamp-1" style={{ color: 'rgba(255,255,255,0.75)' }}>{coreBrand.description}</p>
                 )}
                 {coreSubnodes.length > 0 && (
-                  <p className="text-purple-400/60 text-xs mt-1">{coreSubnodes.length} subnodes active</p>
+                  <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.65)' }}>{coreSubnodes.length} subnodes active</p>
                 )}
               </>
             ) : (
-              <h2 className="text-3xl font-black text-white">🦁 Seedwave™ Core</h2>
+              <h2 className="text-3xl font-bold mt-3" style={{ color: 'var(--brand-on-primary)' }}>🦁 Seedwave™ Core</h2>
             )}
           </div>
           {coreSubnodes.length > 0 && (
-            <div className="overflow-hidden border-t border-purple-500/20 relative" style={{ height: '38px' }}>
+            <div className="overflow-hidden border-t relative" style={{ height: '38px', borderColor: 'rgba(255,255,255,0.2)' }}>
               <style>{`@keyframes marqueeScroll{0%{transform:translateX(0)}100%{transform:translateX(-33.333%)}}`}</style>
               <div className="flex items-center gap-10 absolute top-0 bottom-0 whitespace-nowrap" style={{ animation: 'marqueeScroll 35s linear infinite' }}>
                 {[...coreSubnodes, ...coreSubnodes, ...coreSubnodes].map((node, i) => (
-                  <span key={i} className="text-xs font-bold text-purple-300/80 flex items-center gap-2 shrink-0">
-                    <span className="text-purple-500 text-[10px]">✦</span>{node}
+                  <span key={i} className="text-xs font-bold flex items-center gap-2 shrink-0" style={{ color: 'rgba(255,255,255,0.8)' }}>
+                    <span className="text-[10px]">✦</span>{node}
                   </span>
                 ))}
               </div>
@@ -319,23 +316,24 @@ export default function Dashboard() {
         {/* ═══════════════════════════════════════════════════════════════
             PAGE NAVIGATION — tabbed by category
         ═══════════════════════════════════════════════════════════════ */}
-        <div className="rounded-2xl shadow-xl border overflow-hidden" style={{ background: CARD_BG, borderColor: BORDER }}>
+        <div className="bn-surface overflow-hidden">
           <div className="px-5 pt-5 pb-3">
-            <p className="text-[10px] font-black uppercase tracking-[0.35em] mb-1" style={{ color: '#00ffc8' }}>✦ Platform Navigation</p>
-            <p className="text-xs" style={{ color: '#9dfcdc60' }}>{PAGE_GROUPS.reduce((s, g) => s + g.pages.length, 0)} pages across {PAGE_GROUPS.length} categories</p>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] mb-1" style={{ color: 'var(--brand-primary)' }}>Platform Navigation</p>
+            <p className="text-sm" style={{ color: 'var(--brand-muted-foreground)' }}>{PAGE_GROUPS.reduce((s, g) => s + g.pages.length, 0)} pages across {PAGE_GROUPS.length} categories</p>
           </div>
 
           {/* Category tab strip */}
-          <div className="overflow-x-auto border-b" style={{ borderColor: BORDER }}>
-            <div className="flex min-w-max px-4 gap-1 py-1.5">
+          <div className="overflow-x-auto border-b" style={{ borderColor: 'var(--brand-soft-border)' }}>
+            <div className="flex min-w-max px-4 gap-1 py-2">
               {PAGE_GROUPS.map(group => (
                 <button
                   key={group.id}
                   onClick={() => setActivePageTab(group.id)}
-                  className="px-4 py-2 rounded-lg text-sm font-bold whitespace-nowrap transition-all"
+                  className="px-4 py-2 text-sm font-semibold whitespace-nowrap transition-all"
                   style={{
-                    background: activePageTab === group.id ? '#00b37a' : 'transparent',
-                    color: activePageTab === group.id ? '#fff' : '#9dfcdc99',
+                    borderRadius: 'var(--brand-radius-full)',
+                    background: activePageTab === group.id ? 'var(--brand-primary)' : 'transparent',
+                    color: activePageTab === group.id ? 'var(--brand-on-primary)' : 'var(--brand-muted-foreground)',
                   }}
                 >
                   {group.label}
@@ -358,18 +356,18 @@ export default function Dashboard() {
             SECTOR / ADMIN TABS (brands by sector)
         ═══════════════════════════════════════════════════════════════ */}
         <Tabs value={activeSectorTab} onValueChange={setActiveSectorTab} className="space-y-4">
-          <div className="rounded-xl border overflow-hidden" style={{ background: NAV_BG, borderColor: BORDER }}>
+          <div className="bn-surface overflow-hidden">
             <div className="px-4 pt-4 pb-2">
-              <p className="text-[10px] font-black uppercase tracking-[0.3em]" style={{ color: '#00ffc8' }}>✦ Brand & Sector Management</p>
+              <p className="text-xs font-bold uppercase tracking-[0.2em]" style={{ color: 'var(--brand-primary)' }}>Brand & Sector Management</p>
             </div>
             <div className="overflow-x-auto">
               <TabsList className="flex min-w-max gap-1 px-4 pb-3 h-auto bg-transparent">
-                <TabsTrigger value="admin" className="data-[state=active]:bg-emerald-700 data-[state=active]:text-white font-semibold text-slate-300 whitespace-nowrap">⚙️ Admin Panel</TabsTrigger>
-                <TabsTrigger value="blockvault" className="data-[state=active]:bg-emerald-700 data-[state=active]:text-white font-semibold text-slate-300 whitespace-nowrap">🔐 BlockVault</TabsTrigger>
-                <TabsTrigger value="fruitfulcoffee" className="data-[state=active]:bg-pink-600 data-[state=active]:text-white font-semibold text-slate-300 whitespace-nowrap">☕ Fruitful Coffee</TabsTrigger>
-                <TabsTrigger value="collaborations" className="data-[state=active]:bg-emerald-700 data-[state=active]:text-white font-semibold text-slate-300 whitespace-nowrap">🤝 Collaborations</TabsTrigger>
+                <TabsTrigger value="admin" className="font-semibold whitespace-nowrap" style={{ borderRadius: 'var(--brand-radius-full)' }}>⚙️ Admin Panel</TabsTrigger>
+                <TabsTrigger value="blockvault" className="font-semibold whitespace-nowrap" style={{ borderRadius: 'var(--brand-radius-full)' }}>🔐 BlockVault</TabsTrigger>
+                <TabsTrigger value="fruitfulcoffee" className="font-semibold whitespace-nowrap" style={{ borderRadius: 'var(--brand-radius-full)' }}>☕ Fruitful Coffee</TabsTrigger>
+                <TabsTrigger value="collaborations" className="font-semibold whitespace-nowrap" style={{ borderRadius: 'var(--brand-radius-full)' }}>🤝 Collaborations</TabsTrigger>
                 {Object.entries(SECTORS).map(([key, label]) => (
-                  <TabsTrigger key={key} value={key} className="data-[state=active]:bg-emerald-700 data-[state=active]:text-white text-sm font-medium text-slate-400 whitespace-nowrap">
+                  <TabsTrigger key={key} value={key} className="text-sm font-medium whitespace-nowrap" style={{ borderRadius: 'var(--brand-radius-full)' }}>
                     {label}
                   </TabsTrigger>
                 ))}
@@ -389,23 +387,23 @@ export default function Dashboard() {
             <DataSeeder />
             <AdminPanel onBrandAdded={handleBrandAdded} />
             <BrandManager />
-            <div className="rounded-xl border p-6" style={{ background: 'rgba(0,30,15,0.7)', borderColor: '#00ff9920' }}>
-              <h2 className="text-lg font-black mb-4" style={{ color: '#00ffc8' }}>📊 All Brands Overview</h2>
+            <div className="bn-surface p-6">
+              <h2 className="text-lg font-bold mb-4" style={{ color: 'var(--brand-ink-brown)' }}>All Brands Overview</h2>
               {brands.length === 0 ? (
-                <p style={{ color: '#9dfcdc60' }}>No brands yet. Add via admin panel above.</p>
+                <p style={{ color: 'var(--brand-muted-foreground)' }}>No brands yet. Add via admin panel above.</p>
               ) : (
                 <div className="space-y-4">
                   {Object.entries(SECTORS).map(([sectorKey, sectorName]) => {
                     const sectorBrands = getBrandsBySector(sectorKey);
                     if (sectorBrands.length === 0) return null;
                     return (
-                      <div key={sectorKey} className="border-b pb-4 last:border-b-0" style={{ borderColor: '#00ff9915' }}>
-                        <h3 className="font-semibold text-sm mb-2" style={{ color: '#b5ffe5' }}>{sectorName}</h3>
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1.5">
+                      <div key={sectorKey} className="border-b pb-4 last:border-b-0" style={{ borderColor: 'var(--brand-soft-border)' }}>
+                        <h3 className="font-semibold text-sm mb-2" style={{ color: 'var(--brand-primary)' }}>{sectorName}</h3>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
                           {sectorBrands.map(brand => (
-                            <div key={brand.id} className="rounded-lg p-2 text-xs" style={{ background: 'rgba(0,70,35,0.5)', border: '1px solid #00ff9920' }}>
-                              <span className="font-bold" style={{ color: '#b5ffe5' }}>{brand.name}™</span>
-                              <div className="mt-0.5" style={{ color: '#9dfcdc60' }}>{brand.subnodes?.length || 0} subnodes</div>
+                            <div key={brand.id} className="p-2.5 text-xs" style={{ borderRadius: 'var(--brand-radius-sm)', background: 'var(--brand-warm-cream)', border: '1px solid var(--brand-soft-border)' }}>
+                              <span className="font-bold" style={{ color: 'var(--brand-ink-brown)' }}>{brand.name}™</span>
+                              <div className="mt-0.5" style={{ color: 'var(--brand-muted-foreground)' }}>{brand.subnodes?.length || 0} subnodes</div>
                             </div>
                           ))}
                         </div>
@@ -422,20 +420,21 @@ export default function Dashboard() {
           </TabsContent>
 
           <TabsContent value="fruitfulcoffee" className="space-y-4">
-            <div className="rounded-xl border overflow-hidden" style={{ background: 'rgba(0,30,15,0.7)', borderColor: '#E91E6330' }}>
+            <div className="bn-surface overflow-hidden">
               <div className="p-6 flex flex-col md:flex-row items-center gap-6">
-                <img src="https://media.base44.com/images/public/6953a072de46207f94f2b9d2/4be882485_PHOTO-2023-06-19-06-55-454_1754425495817.jpg" alt="Kiosk" className="w-32 h-32 object-cover rounded-xl shadow-lg" />
+                <img src="https://media.base44.com/images/public/6953a072de46207f94f2b9d2/4be882485_PHOTO-2023-06-19-06-55-454_1754425495817.jpg" alt="Kiosk" className="w-32 h-32 object-cover" style={{ borderRadius: 'var(--brand-radius-md)' }} />
                 <div className="flex-1">
-                  <h2 className="text-2xl font-black text-white mb-1">☕ Fruitful Coffee — Kiosk Costing Engine</h2>
-                  <p className="text-sm text-gray-300 mb-4">Full BOM costing, monthly profit projections (22 months), food menu pricing & Guangzhou→Johannesburg kiosk shipping estimate (R58,510 incl. VAT).</p>
-                  <div className="flex flex-wrap gap-3 text-xs font-semibold mb-4">
-                    <span className="px-3 py-1 rounded-full bg-pink-600/30 text-pink-300 border border-pink-500/30">R14.16 BOM per cup</span>
-                    <span className="px-3 py-1 rounded-full bg-teal-600/30 text-teal-300 border border-teal-500/30">64.6% coffee margin</span>
-                    <span className="px-3 py-1 rounded-full bg-purple-600/30 text-purple-300 border border-purple-500/30">~R20k/mo net profit</span>
-                    <span className="px-3 py-1 rounded-full bg-orange-600/30 text-orange-300 border border-orange-500/30">R58,510 landed kiosk</span>
+                  <h2 className="text-2xl font-bold mb-1" style={{ color: 'var(--brand-ink-brown)' }}>☕ Fruitful Coffee — Kiosk Costing Engine</h2>
+                  <p className="text-sm mb-4" style={{ color: 'var(--brand-muted-foreground)' }}>Full BOM costing, monthly profit projections (22 months), food menu pricing & Guangzhou→Johannesburg kiosk shipping estimate (R58,510 incl. VAT).</p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <span className="bn-tag-subtle">R14.16 BOM per cup</span>
+                    <span className="bn-tag-subtle">64.6% coffee margin</span>
+                    <span className="bn-tag-subtle">~R20k/mo net profit</span>
+                    <span className="bn-tag-subtle">R58,510 landed kiosk</span>
                   </div>
-                  <Link to="/FruitfulCoffee" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-white text-sm transition-all hover:opacity-90" style={{ background: 'linear-gradient(135deg, #E91E63, #4ECDC4)' }}>
-                    ☕ Open Fruitful Coffee Dashboard →
+                  <Link to="/FruitfulCoffee" className="bn-primary">
+                    Open Coffee Dashboard
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
                   </Link>
                 </div>
               </div>
@@ -448,13 +447,13 @@ export default function Dashboard() {
 
           {Object.entries(SECTORS).map(([sectorKey, sectorName]) => (
             <TabsContent key={sectorKey} value={sectorKey}>
-              <div className="rounded-xl border p-6" style={{ background: 'rgba(0,30,15,0.7)', borderColor: '#00ff9920' }}>
+              <div className="bn-surface p-6">
                 <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-xl font-black" style={{ color: '#00ffc8' }}>{sectorName}</h2>
-                  <span className="text-xs font-bold px-3 py-1 rounded-full" style={{ background: 'rgba(0,255,160,0.1)', color: '#00ff99' }}>{getBrandsBySector(sectorKey).length} brands</span>
+                  <h2 className="text-xl font-bold" style={{ color: 'var(--brand-ink-brown)' }}>{sectorName}</h2>
+                  <span className="bn-tag-subtle">{getBrandsBySector(sectorKey).length} brands</span>
                 </div>
                 {getBrandsBySector(sectorKey).length === 0 ? (
-                  <p className="text-center py-8 text-sm" style={{ color: '#9dfcdc50' }}>No brands in this sector yet.</p>
+                  <p className="text-center py-8 text-sm" style={{ color: 'var(--brand-muted-foreground)' }}>No brands in this sector yet.</p>
                 ) : (
                   <SectorGrid brands={getBrandsBySector(sectorKey)} sectorKey={sectorKey} sectorName={sectorName} />
                 )}
@@ -464,10 +463,13 @@ export default function Dashboard() {
         </Tabs>
       </div>
 
-      {/* Footer */}
-      <footer className="border-t py-6 mt-8 text-center" style={{ background: '#012b19', borderColor: '#00ff9920', color: '#9dfcdc' }}>
-        <p className="text-xs">🛡️ Powered by HSOMNI9000 · FAA.Zone Grid Protocol · ScrollGrid · PulseTrade Certified · TreatyMesh Validated</p>
-        <p className="text-xs mt-1" style={{ color: '#9dfcdc60' }}>© 2026 Fruitful Holdings (Pty) Ltd · Seeds of Appreciation · Glyphs Pulse Every 9s</p>
+      {/* Footer — warm, brand voice */}
+      <footer className="border-t py-8 mt-8" style={{ background: 'var(--brand-warm-paper)', borderColor: 'var(--brand-soft-border)' }}>
+        <div className="container mx-auto px-6 text-center">
+          <img src={BANIMAL_LOGO} alt="Banimal" className="h-8 w-auto object-contain mx-auto mb-3" />
+          <p className="text-sm font-medium" style={{ color: 'var(--brand-ink-brown)' }}>Thoughtful essentials for soft beginnings.</p>
+          <p className="text-xs mt-1" style={{ color: 'var(--brand-muted-foreground)' }}>© 2026 Fruitful Holdings (Pty) Ltd · Seeds of Appreciation</p>
+        </div>
       </footer>
     </div>
   );

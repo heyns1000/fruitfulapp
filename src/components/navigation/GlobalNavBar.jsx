@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
+const BANIMAL_LOGO = 'https://media.base44.com/images/public/workspaces/691b9e0c3e8a5d73f58ef8e3/brands/74c726a6d_brand_upload_logo.png';
+
 const NAV_LINKS = [
   { href: '/Dashboard',                 label: 'Dashboard' },
   { href: '/FruitfulCoffee',            label: '☕ Fruitful Coffee' },
@@ -52,75 +54,69 @@ export default function GlobalNavBar() {
 
   return (
     <>
-      {/* Banner */}
-      <a href="/BanimalDashboard" className="block w-full overflow-hidden" style={{ background: '#a89080', height: '80px' }}>
-        <img
-          src="https://media.base44.com/images/public/6953a072de46207f94f2b9d2/1f1c5f1b0_banner_copy.png"
-          alt="Fruitful™ — BUY ARTISAN. CREATE APPS. EAT PANCAKES."
-          className="w-full h-full object-cover object-center"
-        />
-      </a>
+      {/* Brand announcement bar — pink color block */}
+      <div className="bn-section-pink w-full">
+        <div className="container mx-auto px-4 py-2.5 flex items-center justify-center gap-3">
+          <span className="bn-tag-highlight">New</span>
+          <p className="text-sm font-medium" style={{ color: 'var(--brand-on-primary)' }}>
+            Thoughtful essentials for soft beginnings — explore the Banimal collection
+          </p>
+        </div>
+      </div>
 
-      {/* Nav bar */}
-      <div className="sticky top-0 z-[9990]">
-        <nav className="bg-white shadow-md border-b-2 border-teal-200">
-          <div className="container mx-auto px-4 py-3">
-            <div className="flex items-center justify-between">
-              {/* Logo */}
-              <Link to="/Dashboard" className="flex items-center gap-2 shrink-0">
-                <img
-                  src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6953a072de46207f94f2b9d2/52acd159d_Chief_02_1753263376705.png"
-                  alt="FAA.ZONE"
-                  className="w-10 h-10 object-contain"
-                />
-                <span className="text-xl font-bold text-teal-900 hidden sm:block">FAA.ZONE™</span>
-              </Link>
+      {/* Nav bar — warm off-white */}
+      <div className="sticky top-0 z-[9990]" style={{ background: 'var(--brand-warm-paper)', borderBottom: '1px solid var(--brand-soft-border)' }}>
+        <nav className="container mx-auto px-4 py-3">
+          <div className="flex items-center justify-between gap-4">
+            {/* Logo */}
+            <Link to="/Dashboard" className="flex items-center gap-2.5 shrink-0">
+              <img src={BANIMAL_LOGO} alt="Banimal logo" className="h-10 w-auto object-contain" />
+            </Link>
 
-              {/* Desktop links */}
-              <div className="hidden lg:flex items-center gap-1 flex-wrap justify-end">
+            {/* Desktop links */}
+            <div className="hidden lg:flex items-center gap-1 flex-wrap justify-end">
+              {NAV_LINKS.map(({ href, label }) => (
+                <Link
+                  key={href}
+                  to={href}
+                  className="bn-nav px-2.5 py-1.5"
+                  aria-current={currentPath === href ? 'page' : undefined}
+                >
+                  {label}
+                </Link>
+              ))}
+            </div>
+
+            {/* Mobile hamburger */}
+            <div className="flex items-center gap-2 lg:hidden">
+              <button
+                onClick={() => setMobileOpen(o => !o)}
+                aria-label="Menu"
+                className="bn-icon"
+              >
+                {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile menu */}
+          {mobileOpen && (
+            <div className="lg:hidden mt-3 pt-3" style={{ borderTop: '1px solid var(--brand-soft-border)' }}>
+              <div className="flex flex-wrap gap-1">
                 {NAV_LINKS.map(({ href, label }) => (
-                  <Link key={href} to={href}>
-                    <button
-                      className="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors whitespace-nowrap"
-                      style={currentPath === href
-                        ? { background: '#0d9488', color: '#fff' }
-                        : { color: '#0f766e' }
-                      }
-                      onMouseEnter={e => { if (currentPath !== href) e.currentTarget.style.background = '#f0fdfa'; }}
-                      onMouseLeave={e => { if (currentPath !== href) e.currentTarget.style.background = 'transparent'; }}
-                    >
-                      {label}
-                    </button>
+                  <Link
+                    key={href}
+                    to={href}
+                    onClick={() => setMobileOpen(false)}
+                    className="bn-nav px-2.5 py-1.5"
+                    aria-current={currentPath === href ? 'page' : undefined}
+                  >
+                    {label}
                   </Link>
                 ))}
               </div>
-
-              {/* Mobile hamburger */}
-              <div className="flex items-center gap-2 lg:hidden">
-                <button
-                  onClick={() => setMobileOpen(o => !o)}
-                  className="p-2 rounded-lg text-teal-700 hover:bg-teal-50 transition-colors"
-                >
-                  {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-                </button>
-              </div>
             </div>
-
-            {/* Mobile menu */}
-            {mobileOpen && (
-              <div className="lg:hidden mt-3 pb-2 border-t border-teal-100 pt-3">
-                <div className="flex flex-wrap gap-1">
-                  {NAV_LINKS.map(({ href, label }) => (
-                    <Link key={href} to={href} onClick={() => setMobileOpen(false)}>
-                      <button className="px-3 py-1.5 rounded-lg text-sm font-medium text-teal-700 hover:bg-teal-50 transition-colors whitespace-nowrap">
-                        {label}
-                      </button>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
+          )}
         </nav>
       </div>
     </>
