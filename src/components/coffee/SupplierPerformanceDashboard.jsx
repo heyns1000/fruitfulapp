@@ -130,13 +130,18 @@ export default function SupplierPerformanceDashboard() {
 
   useEffect(() => {
     const load = async () => {
-      const [supps, recs] = await Promise.all([
-        base44.entities.SupplierProfile.list('name', 20),
-        base44.entities.GreenCoffeeReceipt.list('-created_date', 50),
-      ]);
-      setSuppliers(supps);
-      setReceipts(recs);
-      setLoading(false);
+      try {
+        const [supps, recs] = await Promise.all([
+          base44.entities.SupplierProfile.list('name', 20),
+          base44.entities.GreenCoffeeReceipt.list('-created_date', 50),
+        ]);
+        setSuppliers(supps);
+        setReceipts(recs);
+      } catch (err) {
+        console.error('Failed to load supplier data:', err);
+      } finally {
+        setLoading(false);
+      }
     };
     load();
   }, []);
