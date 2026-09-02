@@ -23,7 +23,12 @@ export default function HomemartStockSync() {
 
   useEffect(() => {
     const checkStock = async () => {
-      const items = await getSpreadsheetStockLevels();
+      let items;
+      try {
+        items = await getSpreadsheetStockLevels();
+      } catch (err) {
+        return; // backend unavailable — skip this poll cycle
+      }
       for (const item of items) {
         if (item.unlimited || item.available === null) continue;
         if (item.available < LOW_STOCK_THRESHOLD && !alerted.current.has(item.id)) {
