@@ -1,0 +1,32 @@
+{
+  "previewPort": 3000,
+  "healthPath": "/",
+  "startCommand": "docker compose -f docker-compose.base44.yml up -d",
+  "secrets": [
+    {
+      "name": "VITE_BASE44_APP_ID",
+      "description": "Base44 app id (from the Base44 Builder app settings). Sent as the X-App-Id header on backend calls.",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "VITE_BASE44_APP_BASE_URL",
+      "description": "Base44 hosted backend URL. The vite plugin proxies /api -> this URL so the SPA can reach the backend. Without it the app renders but loads no data.",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "VITE_BASE44_FUNCTIONS_VERSION",
+      "description": "Base44 backend functions version (from the Base44 Builder).",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "VITE_PAYSTACK_PUBLIC_KEY",
+      "description": "Paystack public key (pk_...) for the Paystack checkout integration. Only needed for payment screens.",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "VITE_PAYPAL_CLIENT_ID",
+      "description": "PayPal client id for the Shanana checkout. Only needed for the PayPal payment screen.",
+      "requiredAtBoot": false
+    }
+  ]
+}
