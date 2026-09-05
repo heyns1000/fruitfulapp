@@ -1,0 +1,65 @@
+{
+  "name": "ScrollLicense",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "License name"
+    },
+    "licenseId": {
+      "type": "string",
+      "description": "License ID (e.g. CN-0401)"
+    },
+    "region": {
+      "type": "string",
+      "description": "License region (Global, Local, Regional, Enterprise)"
+    },
+    "royalty": {
+      "type": "string",
+      "description": "Royalty rate (e.g. 6%, 10%)"
+    },
+    "activationDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "claimStatus": {
+      "type": "string",
+      "enum": [
+        "Enabled",
+        "Pending Sync",
+        "Disabled"
+      ],
+      "default": "Pending Sync"
+    },
+    "verified": {
+      "type": "boolean",
+      "default": false
+    },
+    "editorLink": {
+      "type": "string",
+      "description": "Link to editor workspace"
+    },
+    "agreementName": {
+      "type": "string",
+      "description": "Associated royalty agreement name"
+    },
+    "agreementStatus": {
+      "type": "string",
+      "enum": [
+        "Signed",
+        "Pending Signature",
+        "Not Initiated"
+      ],
+      "default": "Not Initiated"
+    },
+    "agreementDescription": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "licenseId",
+    "region",
+    "royalty"
+  ]
+}

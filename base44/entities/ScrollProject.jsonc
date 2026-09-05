@@ -1,0 +1,71 @@
+{
+  "name": "ScrollProject",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Project name"
+    },
+    "projectId": {
+      "type": "string",
+      "description": "Internal project ID (e.g. CN-1001)"
+    },
+    "template": {
+      "type": "string",
+      "description": "Template name used"
+    },
+    "description": {
+      "type": "string"
+    },
+    "region": {
+      "type": "string",
+      "enum": [
+        "Global",
+        "Local",
+        "Street Scroll",
+        "Global Stream",
+        "Local Distribution",
+        "Event Capture"
+      ],
+      "default": "Global"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "live",
+        "pending",
+        "draft",
+        "error"
+      ],
+      "default": "draft"
+    },
+    "royalty": {
+      "type": "string",
+      "description": "Royalty rate (e.g. 6.0%, 10%, N/A)"
+    },
+    "claimEnabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "ClaimRoot auto-license enabled"
+    },
+    "htmlCode": {
+      "type": "string",
+      "description": "HTML content of the scroll"
+    },
+    "cssCode": {
+      "type": "string"
+    },
+    "jsCode": {
+      "type": "string"
+    },
+    "lastActivity": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "name",
+    "status",
+    "region"
+  ]
+}

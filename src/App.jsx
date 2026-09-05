@@ -30,6 +30,8 @@ import KioskLandedCost from './pages/coffee/KioskLandedCost'
 import SubscriptionShop from './pages/SubscriptionShop'
 import BaobabTree from './pages/BaobabTree'
 import BushPortal from './pages/BushPortal'
+import HotStack from './pages/HotStack'
+import CodeNestDashboard from './pages/CodeNestDashboard'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
@@ -112,6 +114,8 @@ const AuthenticatedApp = () => {
       <Route path="/KioskLandedCost" element={<LayoutWrapper currentPageName="KioskLandedCost"><KioskLandedCost /></LayoutWrapper>} />
       <Route path="/BaobabTree" element={<LayoutWrapper currentPageName="BaobabTree"><BaobabTree /></LayoutWrapper>} />
       <Route path="/BushPortal" element={<LayoutWrapper currentPageName="BushPortal"><BushPortal /></LayoutWrapper>} />
+      <Route path="/HotStack" element={<HotStack />} />
+      <Route path="/CodeNestDashboard" element={<CodeNestDashboard />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
