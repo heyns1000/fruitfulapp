@@ -96,6 +96,7 @@ export default function BanimalDashboard() {
     { id: 'portals', label: '🌍 Portals' },
     { id: 'financials', label: '📊 Financials' },
     { id: 'company', label: '🏢 Company' },
+    { id: 'docs', label: '📖 Developer Docs' },
   ];
 
   return (
@@ -392,6 +393,244 @@ export default function BanimalDashboard() {
               </div>
               <p className="text-xs text-slate-500 mt-3">93+ repos · GitHub: heyns1000/faa.zone</p>
             </div>
+          </div>
+        )}
+
+        {/* DEVELOPER DOCS — PR #32 README */}
+        {activeTab === 'docs' && (
+          <div className="space-y-8">
+
+            {/* Kiosk Photo Gallery */}
+            <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
+              <SectionTitle>Fruitful Kiosk — Shock Launch 2026 · Factory Photos</SectionTitle>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                {[
+                  'https://media.base44.com/images/public/6953a072de46207f94f2b9d2/22b51f349_Fruitful_portal_2026-08-24at022445.jpeg',
+                  'https://media.base44.com/images/public/6953a072de46207f94f2b9d2/5457a1474_Fruitful_portal_fotos12026-08-27at100649.jpeg',
+                  'https://media.base44.com/images/public/6953a072de46207f94f2b9d2/816b6bbdd_Fruitful_portal_fotos22026-08-27at100651.jpeg',
+                  'https://media.base44.com/images/public/6953a072de46207f94f2b9d2/78337016a_Fruitful_portal_fotos32026-08-27at100652.jpeg',
+                  'https://media.base44.com/images/public/6953a072de46207f94f2b9d2/a91b76289_Fruitful_portal_fotos42026-08-27at100651.jpeg',
+                  'https://media.base44.com/images/public/6953a072de46207f94f2b9d2/2965cd7d5_Fruitful_portal_front2026-08-24at022433.jpeg',
+                ].map((src, i) => (
+                  <a key={i} href={src} target="_blank" rel="noopener noreferrer">
+                    <img src={src} alt={`Kiosk photo ${i + 1}`} className="w-full h-44 object-cover rounded-lg border border-slate-600 hover:border-teal-500 transition-colors" />
+                  </a>
+                ))}
+              </div>
+              <div className="flex gap-3 mt-4">
+                <img src="https://media.base44.com/images/public/6953a072de46207f94f2b9d2/2127434d4_fruitful_windowcling_with_foxicon1.png" alt="Window cling" className="h-28 rounded-lg border border-slate-600 object-contain bg-slate-900 p-2" />
+                <img src="https://media.base44.com/images/public/6953a072de46207f94f2b9d2/755dec0df_samfox_icon_gemini_dynamic1.png" alt="Sam Fox icon" className="h-28 rounded-lg border border-slate-600 object-contain bg-white p-2" />
+              </div>
+            </div>
+
+            {/* PR #32 README Header */}
+            <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-teal-700 rounded-xl p-6">
+              <div className="flex items-start justify-between flex-wrap gap-4">
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-[0.4em] text-teal-400 mb-1">GitHub · heyns1000/banimal · Pull Request #32</p>
+                  <h1 className="text-2xl font-black text-white mb-2">Banimal Ecosystem Connector × WordPress × Elementor</h1>
+                  <p className="text-slate-400 text-sm max-w-2xl">Beginner-to-production README: turns the Banimal Ecosystem Connector WordPress plugin into a fully Elementor-aware website app with Brand Hero widgets, Product Grid, secure REST API, AI-enabled controls, lead routing, and brand governance.</p>
+                </div>
+                <a href="https://github.com/heyns1000/banimal/pull/32" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-teal-600 hover:bg-teal-500 text-white text-sm font-bold px-4 py-2 rounded-lg transition-colors whitespace-nowrap">
+                  View PR #32 →
+                </a>
+              </div>
+            </div>
+
+            {/* 5 Milestones */}
+            <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
+              <SectionTitle>Build Milestones</SectionTitle>
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+                {[
+                  { num: 1, title: 'Safe Visual Proof', items: ['Elementor dependency check', 'Banimal category', 'Brand Hero widget', 'Responsive controls'], color: 'text-teal-400 border-teal-700' },
+                  { num: 2, title: 'Product Experience', items: ['Product Grid widget', 'WooCommerce query', 'Category filter controls', 'Responsive card layout'], color: 'text-emerald-400 border-emerald-700' },
+                  { num: 3, title: 'Controlled Integration', items: ['Protected REST routes', 'Worker Client (HMAC-SHA256)', 'Admin diagnostics', 'API health checks'], color: 'text-blue-400 border-blue-700' },
+                  { num: 4, title: 'Leads & Operations', items: ['Lead Router form action', 'CRM pipeline routing', 'PII-minimised logging', 'Failure monitoring'], color: 'text-purple-400 border-purple-700' },
+                  { num: 5, title: 'AI Authoring', items: ['AI-enabled copy fields', 'Server-side AI endpoint', 'Output schema validation', 'Human approval workflow'], color: 'text-amber-400 border-amber-700' },
+                ].map(m => (
+                  <div key={m.num} className={`bg-slate-900 border rounded-xl p-4 ${m.color.split(' ')[1]}`}>
+                    <p className={`text-xs font-black uppercase tracking-wider mb-1 ${m.color.split(' ')[0]}`}>Milestone {m.num}</p>
+                    <p className="text-sm font-bold text-white mb-3">{m.title}</p>
+                    <ul className="space-y-1">
+                      {m.items.map(item => (
+                        <li key={item} className="flex items-start gap-1.5 text-xs text-slate-400">
+                          <span className={`mt-0.5 ${m.color.split(' ')[0]}`}>✦</span>{item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Plugin Folder Structure */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
+                <SectionTitle>Plugin Folder Structure</SectionTitle>
+                <pre className="text-xs text-teal-300 font-mono leading-relaxed overflow-x-auto bg-slate-950 rounded-lg p-4">{`wordpress-plugin/banimal-ecosystem-connector/
+├── banimal-ecosystem-connector.php
+├── uninstall.php
+├── includes/
+│   ├── class-plugin.php
+│   ├── class-settings.php
+│   ├── class-worker-client.php
+│   ├── class-woocommerce-bridge.php
+│   ├── class-brand-guide.php
+│   ├── class-rest-api.php           ← create
+│   ├── class-elementor-integration.php ← create
+│   ├── class-elementor-assets.php   ← create
+│   ├── class-elementor-widget-banimal-brand-hero.php
+│   ├── class-elementor-widget-banimal-product-grid.php
+│   └── class-elementor-form-action-banimal-lead.php
+├── assets/
+│   ├── js/
+│   │   ├── elementor-editor.js
+│   │   └── elementor-frontend.js
+│   └── css/
+│       └── elementor-editor.css
+└── languages/`}</pre>
+              </div>
+
+              <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
+                <SectionTitle>Security Checklist</SectionTitle>
+                <div className="space-y-2">
+                  {[
+                    'Secrets in server env vars only — never Elementor controls',
+                    'No secrets in Git history, DevTools, HTML source, or JS files',
+                    'All REST routes have explicit permission_callback',
+                    'Every incoming value sanitised (sanitize_key, sanitize_text_field)',
+                    'All HTML output escaped (esc_html, esc_attr, esc_url, wp_kses_post)',
+                    'Worker API calls use signed HMAC-SHA256 server-to-server requests',
+                    'External HTTP requests have timeouts and error handling',
+                    'Form actions strip secrets on Elementor export (on_export())',
+                    'Rate limits on expensive AI generation endpoints',
+                    'AI output reviewed by a human before publication',
+                    'Staging tests documented and passed before production deploy',
+                    'Rollback version available with tested restore path',
+                  ].map(item => (
+                    <div key={item} className="flex items-start gap-2 text-xs text-slate-300">
+                      <span className="text-emerald-400 mt-0.5 flex-shrink-0">☑</span>
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Key Widgets */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                {
+                  title: 'Brand Hero Widget',
+                  icon: '🦁',
+                  file: 'class-elementor-widget-banimal-brand-hero.php',
+                  controls: ['Brand ID (text + dynamic)', 'Eyebrow (text + AI)', 'Headline (textarea + AI)', 'Description (WYSIWYG + AI)', 'Button Text + URL', 'Background & Text Colour', 'Responsive Padding'],
+                  color: 'border-teal-700',
+                },
+                {
+                  title: 'Product Grid Widget',
+                  icon: '🛒',
+                  file: 'class-elementor-widget-banimal-product-grid.php',
+                  controls: ['Products per page (1–24)', 'Desktop columns (2/3/4)', 'WooCommerce category slug', 'CSS custom property columns', 'Read-only — display only', 'Responsive 2-col mobile'],
+                  color: 'border-emerald-700',
+                },
+                {
+                  title: 'Lead Router Form Action',
+                  icon: '📬',
+                  file: 'class-elementor-form-action-banimal-lead.php',
+                  controls: ['Brand ID', 'Lead Type (general/quote/wholesale/support)', 'CRM Pipeline slug', 'All fields sanitised', 'Secrets stripped on export (on_export)', 'Requires Elementor Pro'],
+                  color: 'border-purple-700',
+                },
+              ].map(w => (
+                <div key={w.title} className={`bg-slate-800 border rounded-xl p-5 ${w.color}`}>
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-2xl">{w.icon}</span>
+                    <div>
+                      <p className="font-bold text-white text-sm">{w.title}</p>
+                      <p className="text-[10px] font-mono text-slate-500">{w.file}</p>
+                    </div>
+                  </div>
+                  <ul className="space-y-1">
+                    {w.controls.map(c => (
+                      <li key={c} className="text-xs text-slate-400 flex items-start gap-1.5">
+                        <span className="text-slate-600 mt-0.5">·</span>{c}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            {/* Secure Worker Pattern */}
+            <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
+              <SectionTitle>Secure Worker Client Pattern (HMAC-SHA256)</SectionTitle>
+              <pre className="text-xs text-amber-300 font-mono leading-relaxed overflow-x-auto bg-slate-950 rounded-lg p-4">{`// class-worker-client.php — server-side ONLY
+$payload   = wp_json_encode(['brand_id' => $brand_id, 'brief' => $brief]);
+$timestamp = time();
+$signature = hash_hmac('sha256', $timestamp . '.' . $payload, BANIMAL_WORKER_SECRET);
+
+$response  = wp_remote_post($base_url . '/v1/generate/hero', [
+    'timeout' => 20,
+    'headers' => [
+        'Content-Type'       => 'application/json',
+        'X-Banimal-Timestamp' => (string) $timestamp,
+        'X-Banimal-Signature' => $signature,
+    ],
+    'body' => $payload,
+]);
+
+// Store secret in wp-config.php — NEVER in Elementor controls or Git
+// define( 'BANIMAL_WORKER_SECRET', 'replace-with-a-long-random-server-secret' );`}</pre>
+            </div>
+
+            {/* AI Contract */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
+                <SectionTitle>Recommended Banimal AI Contract</SectionTitle>
+                <pre className="text-xs text-green-300 font-mono leading-relaxed overflow-x-auto bg-slate-950 rounded-lg p-4">{`{
+  "brand_id": "banimal",
+  "task": "hero_copy",
+  "brief": "Launch a premium natural dog-food range.",
+  "constraints": {
+    "locale": "en-ZA",
+    "tone": ["clear", "humane", "confident"],
+    "forbidden_claims": ["cures disease"],
+    "max_headline_words": 10
+  }
+}
+
+// Expected response schema:
+{
+  "eyebrow": "NATURAL NUTRITION",
+  "title": "Food made for the life they love.",
+  "description": "Nutritionally considered meals.",
+  "button_text": "Shop the Range"
+}`}</pre>
+              </div>
+              <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
+                <SectionTitle>Definition of Done</SectionTitle>
+                <div className="space-y-2">
+                  {[
+                    'Plugin activates safely with and without Elementor',
+                    'Banimal widgets visible in Elementor Banimal category',
+                    'Every output escaped, every input sanitised',
+                    'Protected API routes reject unauthorised visitors',
+                    'All secrets server-side and excluded from exports',
+                    'Product Grid works with real WooCommerce products',
+                    'Lead action sends a confirmed test submission end-to-end',
+                    'AI is constrained, reviewed, never receives secrets',
+                    'Staging tests documented and passed',
+                    'Rollback version available',
+                  ].map(item => (
+                    <div key={item} className="flex items-start gap-2 text-xs text-slate-300">
+                      <span className="text-teal-400 mt-0.5 flex-shrink-0">✓</span>
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
           </div>
         )}
 
