@@ -32,6 +32,7 @@ import BaobabTree from './pages/BaobabTree'
 import BushPortal from './pages/BushPortal'
 import HotStack from './pages/HotStack'
 import CodeNestDashboard from './pages/CodeNestDashboard'
+import FruitfulWordPressDocs from './pages/FruitfulWordPressDocs'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
@@ -116,6 +117,7 @@ const AuthenticatedApp = () => {
       <Route path="/BushPortal" element={<LayoutWrapper currentPageName="BushPortal"><BushPortal /></LayoutWrapper>} />
       <Route path="/HotStack" element={<HotStack />} />
       <Route path="/CodeNestDashboard" element={<CodeNestDashboard />} />
+      <Route path="/FruitfulWordPressDocs" element={<FruitfulWordPressDocs />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

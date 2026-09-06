@@ -153,6 +153,7 @@ const PAGE_GROUPS = [
       { href: '/Payments',       emoji: '💳', label: 'Payments',       bg: '#2563eb' },
       { href: '/AppBuilder',     emoji: '🏗️', label: 'App Builder',    bg: '#6d28d9' },
       { href: '/AutomationEngine',emoji: '⚡', label: 'Automation',    bg: '#0e7490' },
+      { href: '/FruitfulWordPressDocs', emoji: '📖', label: 'WP + Elementor',  bg: '#0d9488' },
     ]
   },
   {
