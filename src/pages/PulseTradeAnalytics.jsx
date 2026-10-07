@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { base44 } from '@/api/base44Client';
+import { useQuery } from '@tanstack/react-query';
 import {
   LineChart, Line, BarChart, Bar, AreaChart, Area,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
@@ -8,6 +10,34 @@ import BackButton from '../components/navigation/BackButton';
 import { Zap, Activity, TrendingUp, CheckCircle } from 'lucide-react';
 
 const GRAIN = 0.01;
+const SUCCESS_STATUSES = ['success', 'paid', 'confirmed', 'completed', 'succeeded'];
+
+// Build real PulseTrade cycle points from verified PaymentTransaction / Order records.
+// Returns null when there is nothing real so the simulation fallback stays in control.
+function buildCyclesFromRecords(records) {
+  if (!Array.isArray(records) || records.length === 0) return null;
+  // Records arrive newest-first; render oldest → newest.
+  const ordered = [...records].reverse();
+  return ordered.map((r, i) => {
+    const usd = Number(r.amount ?? r.totalAmount ?? 0) || 0;
+    const status = String(r.status ?? r.paymentStatus ?? '').toLowerCase();
+    const ok = SUCCESS_STATUSES.includes(status);
+    const grains = Math.round(usd / GRAIN);
+    const careGrains = Math.round(grains * 0.15);
+    const latencyMs = Number(r.metadata?.latencyMs ?? r.latencyMs ?? 0) || 0;
+    return {
+      cycle: `P${i + 1}`,
+      txVelocity: 1,
+      totalGrains: grains,
+      careGrains,
+      bizGrains: grains - careGrains,
+      syncSuccess: ok ? 100 : 0,
+      syncFailed: ok ? 0 : 100,
+      usd,
+      latencyMs,
+    };
+  });
+}
 const COLORS = ['#667eea', '#48bb78', '#ed8936', '#e53e3e', '#764ba2'];
 
 // ── Simulated real-time PulseTrade data generator ──
@@ -55,9 +85,43 @@ function StatCard({ icon: Icon, label, value, sub, color }) {
 export default function PulseTradeAnalytics() {
   const [data, setData] = useState(INITIAL_DATA);
   const [live, setLive] = useState(true);
+  const [hasReal, setHasReal] = useState(false);
   const cycleRef = useRef(INITIAL_DATA.length + 1);
   const [pulseMs, setPulseMs] = useState(0);
   const startRef = useRef(Date.now());
+
+  // Real transaction source: prefer PaymentTransaction, fall back to Order, each
+  // guarded so a missing entity / empty result never throws.
+  const { data: realTx = [] } = useQuery({
+    queryKey: ['pulsetrade-real-tx'],
+    queryFn: async () => {
+      let rows = [];
+      try {
+        rows = await base44.entities.PaymentTransaction.list('-created_date', 100);
+      } catch {
+        rows = [];
+      }
+      if (!Array.isArray(rows) || rows.length === 0) {
+        try {
+          rows = await base44.entities.Order.list('-created_date', 100);
+        } catch {
+          rows = [];
+        }
+      }
+      return Array.isArray(rows) ? rows : [];
+    },
+  });
+
+  // When real records exist, seed the charts with them and stop the simulation.
+  // Otherwise INITIAL_DATA + the 9s simulation tick remain as the fallback.
+  useEffect(() => {
+    const real = buildCyclesFromRecords(realTx);
+    if (real && real.length > 0) {
+      setData(real.slice(-30));
+      setHasReal(true);
+      setLive(false);
+    }
+  }, [realTx]);
 
   useEffect(() => {
     const tickId = setInterval(() => {
@@ -68,18 +132,21 @@ export default function PulseTradeAnalytics() {
   }, []);
 
   useEffect(() => {
-    if (!live) return;
+    // Simulation tick is a fallback only — never runs once real data is loaded.
+    if (!live || hasReal) return;
     const id = setInterval(() => {
       const newPoint = generateCycle(cycleRef.current++);
       setData(prev => [...prev.slice(-29), newPoint]);
     }, 9000);
     return () => clearInterval(id);
-  }, [live]);
+  }, [live, hasReal]);
 
-  const latest = data[data.length - 1];
-  const avgSync = Math.round(data.reduce((s, d) => s + d.syncSuccess, 0) / data.length);
-  const totalTx = data.reduce((s, d) => s + d.txVelocity, 0);
-  const totalGrains = data.reduce((s, d) => s + d.totalGrains, 0);
+  const latest = data[data.length - 1] || {};
+  const avgSync = data.length
+    ? Math.round(data.reduce((s, d) => s + (d.syncSuccess || 0), 0) / data.length)
+    : 0;
+  const totalTx = data.reduce((s, d) => s + (d.txVelocity || 0), 0);
+  const totalGrains = data.reduce((s, d) => s + (d.totalGrains || 0), 0);
   const pulseProgress = pulseMs / 9000;
 
   return (
@@ -94,6 +161,9 @@ export default function PulseTradeAnalytics() {
             <h1 style={{ fontSize: '32px', fontWeight: 900, margin: 0 }}>PulseTrade™ Analytics</h1>
           </div>
           <p style={{ opacity: 0.85, margin: 0, fontSize: '14px' }}>Real-time transaction velocity · grain distribution · 9-second sync monitoring</p>
+          <p style={{ opacity: 0.7, margin: '4px 0 0', fontSize: '11px', fontWeight: 600, letterSpacing: '0.5px' }}>
+            {hasReal ? '● REAL DATA — live PaymentTransaction / Order feed' : '○ SIMULATION — awaiting live transaction feed'}
+          </p>
 
           {/* Live pulse bar */}
           <div style={{ marginTop: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -120,7 +190,7 @@ export default function PulseTradeAnalytics() {
           <StatCard icon={Activity} label="Avg Sync Success" value={`${avgSync}%`} sub="Target: ≥90%" color="#48bb78" />
           <StatCard icon={Zap} label="Total TX (session)" value={totalTx.toLocaleString()} sub={`${data.length} cycles`} color="#667eea" />
           <StatCard icon={TrendingUp} label="Total Grains" value={totalGrains.toLocaleString()} sub={`$${(totalGrains * GRAIN).toFixed(2)} USD`} color="#ed8936" />
-          <StatCard icon={CheckCircle} label="Latest Latency" value={`${(latest.latencyMs / 1000).toFixed(2)}s`} sub="Target: <9s" color={latest.latencyMs < 9000 ? '#48bb78' : '#e53e3e'} />
+          <StatCard icon={CheckCircle} label="Latest Latency" value={`${(((latest.latencyMs || 0)) / 1000).toFixed(2)}s`} sub="Target: <9s" color={(latest.latencyMs || 0) < 9000 ? '#48bb78' : '#e53e3e'} />
         </div>
 
         {/* Charts grid */}

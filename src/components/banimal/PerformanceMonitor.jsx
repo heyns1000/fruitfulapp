@@ -1,24 +1,55 @@
 import React, { useState } from 'react';
+import { base44 } from '@/api/base44Client';
+import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { TrendingUp, TrendingDown, Activity, Zap } from 'lucide-react';
 
-export default function PerformanceMonitor({ brands }) {
+export default function PerformanceMonitor({ brands = [] }) {
   const [timePeriod, setTimePeriod] = useState('7d');
 
-  const topPerformers = brands
+  // Real daily time-series from the Metrics entity. Guarded: any failure or empty
+  // result leaves the existing placeholder values as a guaranteed fallback.
+  const { data: metrics = [] } = useQuery({
+    queryKey: ['performance-metrics-daily'],
+    queryFn: async () => {
+      try {
+        const rows = await base44.entities.Metrics.list('-timestamp', 7);
+        return Array.isArray(rows) ? rows : [];
+      } catch {
+        return [];
+      }
+    },
+  });
+
+  // KEEP: real per-brand aggregate (unchanged).
+  const topPerformers = [...brands]
     .sort((a, b) => (b.metadata?.activeNodes || 0) - (a.metadata?.activeNodes || 0))
     .slice(0, 5);
 
-  const performanceData = Array.from({ length: 7 }, (_, i) => ({
+  // Existing placeholder 7-day array — retained as the fallback.
+  const fallbackPerformanceData = Array.from({ length: 7 }, (_, i) => ({
     day: `Day ${i + 1}`,
     nodes: Math.floor(Math.random() * 5000) + 1000,
     syncs: Math.floor(Math.random() * 200) + 50,
     requests: Math.floor(Math.random() * 10000) + 2000
   }));
 
+  // Prefer real Metrics daily data when present; otherwise keep the fallback array.
+  const performanceData = metrics.length > 0
+    ? [...metrics].reverse().map((m, i) => ({
+        day: m.timestamp
+          ? new Date(m.timestamp).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
+          : `Day ${i + 1}`,
+        nodes: m.activeNodes ?? 0,
+        syncs: m.syncLogs ?? 0,
+        requests: m.signalZones ?? m.scrollGridIndex ?? 0
+      }))
+    : fallbackPerformanceData;
+
+  // KEEP: real per-sector aggregate (unchanged).
   const sectorPerformance = brands.reduce((acc, brand) => {
     const sector = brand.sector;
     if (!acc[sector]) {
@@ -31,10 +62,17 @@ export default function PerformanceMonitor({ brands }) {
 
   const sectorData = Object.values(sectorPerformance).slice(0, 6);
 
+  // Derive real aggregates from Metrics where available, else keep the hardcoded
+  // placeholder values (|| fallback also covers all-zero metric rows).
+  const metricsAvgPerformance = metrics.length > 0
+    ? Math.round(metrics.reduce((s, m) => s + (m.scrollGridIndex || 0), 0) / metrics.length)
+    : 0;
+  const metricsTotalSyncs = metrics.reduce((s, m) => s + (m.syncLogs || 0), 0);
+
   const overallMetrics = {
     totalNodes: brands.reduce((sum, b) => sum + (b.metadata?.activeNodes || 0), 0),
-    avgPerformance: 87,
-    totalSyncs: 1247,
+    avgPerformance: metricsAvgPerformance || 87,
+    totalSyncs: metricsTotalSyncs || 1247,
     uptime: 99.8
   };
 
