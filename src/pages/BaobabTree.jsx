@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { base44 } from '@/api/base44Client';
+import { useQuery } from '@tanstack/react-query';
 
 const WATERMARK = '© 2024–2026 Fruitful Holdings (Pty) Ltd · GC7:FSP2021121654:4400302974:VM9s:BL1501:GHOST7CHAIN:FAA13713';
 
@@ -30,8 +32,61 @@ const EPISODES = [
   { id: 6, title: 'Kalahari Voices', host: 'Kagiso S.', location: 'Gaborone', genre: 'Culture', duration: '33min', listeners: 2100 },
 ];
 
+// Defensive mappers so a partial real record can never blank out an existing card.
+function mapHouse(r, i) {
+  return {
+    id: r.id ?? r.record_id ?? `house-${i}`,
+    name: r.name ?? 'Tree House',
+    country: r.country ?? r.region ?? '—',
+    status: r.status ?? 'Active',
+    capacity: Number(r.capacity ?? 0) || 0,
+    trees: Number(r.trees ?? 0) || 0,
+    podcasters: Array.isArray(r.podcasters) ? r.podcasters : [],
+  };
+}
+function mapEpisode(r, i) {
+  return {
+    id: r.id ?? r.record_id ?? `ep-${i}`,
+    title: r.title ?? 'Episode',
+    host: r.host ?? '—',
+    location: r.location ?? '—',
+    genre: r.genre ?? '—',
+    duration: r.duration ?? '—',
+    listeners: Number(r.listeners ?? 0) || 0,
+  };
+}
+
 export default function BaobabTree() {
   const [activeTab, setActiveTab] = useState('home');
+
+  // Optional real-data upgrade path. No TreeHouse / Episode entity exists today, so
+  // both queries are fully guarded and the hardcoded arrays remain the fallback.
+  const { data: realHouses = [] } = useQuery({
+    queryKey: ['baobab-treehouses'],
+    queryFn: async () => {
+      try {
+        const rows = await base44.entities.TreeHouse.list('-created_date', 100);
+        return Array.isArray(rows) ? rows : [];
+      } catch {
+        return [];
+      }
+    },
+  });
+  const { data: realEpisodes = [] } = useQuery({
+    queryKey: ['baobab-episodes'],
+    queryFn: async () => {
+      try {
+        const rows = await base44.entities.Episode.list('-created_date', 100);
+        return Array.isArray(rows) ? rows : [];
+      } catch {
+        return [];
+      }
+    },
+  });
+
+  const treeHouses = realHouses.length > 0 ? realHouses.map(mapHouse) : TREE_HOUSES;
+  const episodes = realEpisodes.length > 0 ? realEpisodes.map(mapEpisode) : EPISODES;
+
   const [terminalOutput, setTerminalOutput] = useState([
     '> BaobabTree™ GLYPH-TAP CONSOLE v2.1',
     '> SOVEREIGN LINK: ESTABLISHED',
@@ -65,7 +120,7 @@ export default function BaobabTree() {
     setTerminalInput('');
   };
 
-  const filteredHouses = TREE_HOUSES.filter(h =>
+  const filteredHouses = treeHouses.filter(h =>
     h.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     h.country.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -267,7 +322,7 @@ export default function BaobabTree() {
                 />
                 <select style={{ padding: '10px 16px', borderRadius: 8, border: '1px solid #ddd', fontSize: 13, background: '#fff' }}>
                   <option>All Locations</option>
-                  {TREE_HOUSES.map(h => <option key={h.id}>{h.country}</option>)}
+                  {treeHouses.map(h => <option key={h.id}>{h.country}</option>)}
                 </select>
                 <select style={{ padding: '10px 16px', borderRadius: 8, border: '1px solid #ddd', fontSize: 13, background: '#fff' }}>
                   <option>All Genres</option>
@@ -275,7 +330,7 @@ export default function BaobabTree() {
                 </select>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}>
-                {EPISODES.map(ep => (
+                {episodes.map(ep => (
                   <div key={ep.id} style={{ background: '#fff', borderRadius: 12, padding: 20, boxShadow: '0 1px 4px rgba(0,0,0,0.08)', display: 'flex', gap: 16 }}>
                     <button style={{ width: 48, height: 48, borderRadius: '50%', background: '#1a3c2e', color: '#c8922a', border: 'none', fontSize: 18, cursor: 'pointer', flexShrink: 0 }}>▶</button>
                     <div style={{ flex: 1 }}>

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { base44 } from '@/api/base44Client';
+import { useQuery } from '@tanstack/react-query';
 import { MapContainer, TileLayer, CircleMarker, Popup, Tooltip } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import BackButton from '../components/navigation/BackButton';
@@ -111,14 +113,51 @@ function StatCard({ icon: Icon, label, value, color }) {
   );
 }
 
+// Map an optional real care-project record onto the hardcoded project shape, filling
+// every field defensively so a partial record can never blank out the UI.
+function mapProject(r, i) {
+  return {
+    id: r.id ?? r.record_id ?? `care-${i}`,
+    name: r.name ?? r.title ?? 'Care Project',
+    region: r.region ?? r.country ?? '—',
+    lat: Number(r.lat ?? r.latitude ?? 0) || 0,
+    lng: Number(r.lng ?? r.longitude ?? 0) || 0,
+    careUSD: Number(r.careUSD ?? r.careUsd ?? r.amountUSD ?? 0) || 0,
+    grains: Number(r.grains ?? 0) || Math.round((Number(r.careUSD ?? 0) || 0) / 0.01),
+    milestone: r.milestone ?? r.status ?? '—',
+    status: r.status ?? 'active',
+    animals: Number(r.animals ?? 0) || 0,
+    hectares: Number(r.hectares ?? 0) || 0,
+    impact: r.impact ?? r.description ?? '—',
+    color: r.color ?? '#48bb78',
+    fundedPct: Number(r.fundedPct ?? r.funded ?? 0) || 0,
+  };
+}
+
 export default function CareGrainsMap() {
   const [selected, setSelected] = useState(null);
   const [filter, setFilter] = useState('all');
 
-  const totalCare = PROJECTS.reduce((s, p) => s + p.careUSD, 0);
-  const totalAnimals = PROJECTS.reduce((s, p) => s + p.animals, 0);
-  const totalHectares = PROJECTS.reduce((s, p) => s + p.hectares, 0);
-  const filtered = filter === 'all' ? PROJECTS : PROJECTS.filter(p => p.status === filter);
+  // Optional real-data upgrade path. No such entity exists today, so the query is
+  // fully guarded and the hardcoded PROJECTS array remains the guaranteed fallback.
+  const { data: realProjects = [] } = useQuery({
+    queryKey: ['care-grains-projects'],
+    queryFn: async () => {
+      try {
+        const rows = await base44.entities.CareProject.list('-created_date', 100);
+        return Array.isArray(rows) ? rows : [];
+      } catch {
+        return [];
+      }
+    },
+  });
+
+  const projects = realProjects.length > 0 ? realProjects.map(mapProject) : PROJECTS;
+
+  const totalCare = projects.reduce((s, p) => s + p.careUSD, 0);
+  const totalAnimals = projects.reduce((s, p) => s + p.animals, 0);
+  const totalHectares = projects.reduce((s, p) => s + p.hectares, 0);
+  const filtered = filter === 'all' ? projects : projects.filter(p => p.status === filter);
 
   return (
     <div style={{ minHeight: '100vh', background: '#f0f4ff', fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif' }}>
@@ -143,7 +182,7 @@ export default function CareGrainsMap() {
         {/* Stats */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: '14px', margin: '16px 0 24px' }}>
           <StatCard icon={Heart} label="Total Care Deployed" value={`$${totalCare.toLocaleString()}`} color="#48bb78" />
-          <StatCard icon={Globe} label="Active Projects" value={PROJECTS.length} color="#667eea" />
+          <StatCard icon={Globe} label="Active Projects" value={projects.length} color="#667eea" />
           <StatCard icon={Zap} label="Animals Protected" value={totalAnimals.toLocaleString()} color="#ed8936" />
           <StatCard icon={TrendingUp} label="Hectares Secured" value={`${totalHectares.toLocaleString()} ha`} color="#e53e3e" />
         </div>

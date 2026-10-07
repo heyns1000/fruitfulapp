@@ -45,11 +45,28 @@ export default function BrandSnapshot({ brand, sectorKey, sectorName }) {
     return intros[Math.floor(Math.random() * intros.length)];
   };
 
+  // Prefer real brand fields (props only, no network fetch). Each falls back to the
+  // original random/placeholder expression so the panel can only gain real data.
+  const realNodeExpansion =
+    brand.metadata?.activeNodes ??
+    brand.activeNodes ??
+    brand.nodeCount ??
+    (brand.subnodes?.length || undefined);
+  const nodeExpansion = realNodeExpansion ?? (Math.ceil(Math.random() * 50) + 10);
+
+  const realPricing = brand.pricing || brand.price || {};
+  const starterPrice = realPricing.starter ?? realPricing.starterNode ?? realPricing.monthly;
+  const proPrice = realPricing.pro ?? realPricing.proGrid;
+  const starterCost =
+    starterPrice != null ? `FCU ${starterPrice}/mo` : `FCU ${Math.round(Math.random() * 50 + 50)}/mo`;
+  const proCost =
+    proPrice != null ? `FCU ${proPrice}/mo` : `FCU ${Math.round(Math.random() * 200 + 150)}/mo`;
+
   const features = [
     `Direct integration with FAA 🧾 Professional Services Mesh.`,
     `Advanced data sync with ${brand.subnodes?.[0] || 'core nodes'}.`,
     `Real-time compliance validation via VaultLink™ (${sectorKey} specific).`,
-    `Scalable architecture for x${Math.ceil(Math.random() * 50) + 10} node expansion.`,
+    `Scalable architecture for x${nodeExpansion} node expansion.`,
     `Predictive analytics module for ${brand.name} performance.`,
     `API access for seamless interoperability.`,
     ...brand.subnodes?.slice(0, 3).map(node => `Subnode: ${node}`) || []
@@ -58,13 +75,13 @@ export default function BrandSnapshot({ brand, sectorKey, sectorName }) {
   const pricingTiers = [
     {
       name: 'Starter Node',
-      cost: `FCU ${Math.round(Math.random() * 50 + 50)}/mo`,
+      cost: starterCost,
       description: 'Ideal for small teams and pilot projects.',
       benefits: ['Essential features', 'Basic data sync', 'Community support']
     },
     {
       name: 'Pro Grid',
-      cost: `FCU ${Math.round(Math.random() * 200 + 150)}/mo`,
+      cost: proCost,
       description: 'For growing firms needing advanced capabilities.',
       benefits: ['Advanced features', 'High-volume data processing', 'Priority support', 'Expanded analytics']
     },
