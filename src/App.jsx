@@ -33,6 +33,8 @@ import BushPortal from './pages/BushPortal'
 import HotStack from './pages/HotStack'
 import CodeNestDashboard from './pages/CodeNestDashboard'
 import FruitfulWordPressDocs from './pages/FruitfulWordPressDocs'
+import About from './pages/About';
+import Contact from './pages/Contact';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
@@ -118,6 +120,8 @@ const AuthenticatedApp = () => {
       <Route path="/HotStack" element={<HotStack />} />
       <Route path="/CodeNestDashboard" element={<CodeNestDashboard />} />
       <Route path="/FruitfulWordPressDocs" element={<FruitfulWordPressDocs />} />
+      <Route path="/About" element={<LayoutWrapper currentPageName="About"><About /></LayoutWrapper>} />
+      <Route path="/Contact" element={<LayoutWrapper currentPageName="Contact"><Contact /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

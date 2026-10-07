@@ -44,6 +44,8 @@ const NAV_LINKS = [
   { href: '/SectorAdminHub',            label: '⚙️ Sector Hub' },
   { href: '/DataSyncCenter',            label: '🔄 Data Sync' },
   { href: '/BlockBox',                  label: '📦 Block Box' },
+  { href: '/About',                     label: 'ℹ️ About' },
+  { href: '/Contact',                   label: '✉️ Contact' },
 ];
 
 export default function GlobalNavBar() {
