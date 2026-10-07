@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { ShoppingBag, Truck, CreditCard, Sparkles, CheckCircle, Loader2, MessageCircle, ChevronRight, Lock, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -13,7 +13,33 @@ const STEPS = ['Cart', 'Shipping', 'Payment', 'Confirm'];
 
 export default function BanimalLoopCheckout() {
   const [step, setStep] = useState(0);
+  // Prefer real Banimal products from the MarketplaceService entity; the hardcoded
+  // BANIMAL_PRODUCTS array remains the guaranteed fallback when none are present.
+  const [products, setProducts] = useState(BANIMAL_PRODUCTS);
   const [cart, setCart] = useState([BANIMAL_PRODUCTS[0]]);
+
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      try {
+        const all = await base44.entities.MarketplaceService.list('-created_date', 200);
+        const mapped = (all || [])
+          .filter((s) => s.status === 'active' && /banimal/i.test(`${s.brandId || ''} ${s.brandName || ''}`))
+          .map((s) => ({
+            id: s.id,
+            name: s.serviceName,
+            price: s.pricing?.ZAR ?? s.pricing?.USD ?? 0,
+            currency: s.pricing?.ZAR != null ? 'ZAR' : (s.currency || 'ZAR'),
+            description: s.description || '',
+            image: '🐾',
+          }));
+        if (active && mapped.length > 0) setProducts(mapped);
+      } catch {
+        // Keep the hardcoded BANIMAL_PRODUCTS fallback on any error.
+      }
+    })();
+    return () => { active = false; };
+  }, []);
   const [shipping, setShipping] = useState({ name: '', address: '', city: '', province: '', postalCode: '', email: '', phone: '' });
   const [paymentMethod, setPaymentMethod] = useState('paystack');
   const [aiQuestion, setAiQuestion] = useState('');
@@ -147,7 +173,7 @@ export default function BanimalLoopCheckout() {
             <div className="bg-[#2a2a2e] border border-[#3a3a3e] rounded-2xl p-6">
               <h3 className="text-base font-bold mb-4 text-slate-300">Available Products</h3>
               <div className="space-y-2">
-                {BANIMAL_PRODUCTS.filter(p => !cart.find(c => c.id === p.id)).map(p => (
+                {products.filter(p => !cart.find(c => c.id === p.id)).map(p => (
                   <div key={p.id} className="flex items-center justify-between bg-[#1a1a1c] rounded-xl p-4 border border-[#3a3a3e]">
                     <div className="flex items-center gap-3">
                       <span className="text-2xl">{p.image}</span>

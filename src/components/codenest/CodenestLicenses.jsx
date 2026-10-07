@@ -22,6 +22,18 @@ export default function CodenestLicenses() {
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['scrollLicenses'] }); toast.success('License created!'); setNewLicense({ name: '', licenseId: '', region: 'Global', royalty: '6%', activationDate: '' }); },
   });
 
+  // Prefer real royalty agreements carried on ScrollLicense records; fall back to
+  // the hardcoded ROYALTY_AGREEMENTS catalog whenever none are present.
+  const realAgreements = licenses
+    .filter((l) => l.agreementName)
+    .map((l) => ({
+      id: l.id,
+      name: l.agreementName,
+      status: l.agreementStatus || 'Pending Signature',
+      description: l.agreementDescription || '',
+    }));
+  const agreements = realAgreements.length > 0 ? realAgreements : ROYALTY_AGREEMENTS;
+
   const handleSimplify = async (agreement, btn) => {
     btn.disabled = true;
     try {
@@ -78,7 +90,7 @@ export default function CodenestLicenses() {
       <div className="bg-[#2a2a2e] rounded-xl p-6 border border-[#3a3a3e]">
         <h3 className="text-xl font-bold text-[#B8860B] mb-4">Royalty License Agreements</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {ROYALTY_AGREEMENTS.map((ag) => (
+          {agreements.map((ag) => (
             <div key={ag.id} className="bg-[#1a1a1c] rounded-lg p-4 border border-[#3a3a3e]">
               <h4 className="font-bold text-white mb-1">{ag.name}</h4>
               <p className="text-xs text-gray-400 mb-2">{ag.description}</p>
