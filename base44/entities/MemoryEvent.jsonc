@@ -1,0 +1,147 @@
+{
+  "name": "MemoryEvent",
+  "type": "object",
+  "properties": {
+    "record_id": {
+      "type": "string",
+      "description": "Immutable record identifier, e.g. waterplant-20261007-0001"
+    },
+    "root_id": {
+      "type": "string",
+      "default": "origin-gorilla",
+      "description": "Immutable root authority this droplet descends from"
+    },
+    "parent_id": {
+      "type": "string",
+      "description": "Previous record this droplet descends from. Corrections point at the record they correct."
+    },
+    "sequence": {
+      "type": "number",
+      "description": "Monotonic append position within the lineage"
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "prompt",
+        "intake",
+        "claim",
+        "decision",
+        "correction",
+        "output",
+        "release"
+      ],
+      "default": "prompt"
+    },
+    "stage": {
+      "type": "string",
+      "enum": [
+        "origin",
+        "captured",
+        "preserved",
+        "extension",
+        "projection"
+      ],
+      "default": "captured",
+      "description": "Waterfall stage: origin, captured prompt, preserved record, linked extension, approved projection"
+    },
+    "relation": {
+      "type": "string",
+      "enum": [
+        "captured_from",
+        "preserved_as",
+        "extends",
+        "supports",
+        "contradicts",
+        "reconciles_with",
+        "supersedes",
+        "approved_from",
+        "projected_from",
+        "mapped_to_project",
+        "released_to"
+      ],
+      "default": "extends",
+      "description": "Typed edge between this record and its parent"
+    },
+    "title": {
+      "type": "string",
+      "description": "Short human label for the droplet"
+    },
+    "content": {
+      "type": "string",
+      "description": "Append-only event body"
+    },
+    "captured_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "captured_by": {
+      "type": "string",
+      "enum": [
+        "agent",
+        "user",
+        "system"
+      ],
+      "default": "user"
+    },
+    "source_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "File paths, URLs, commit SHAs or message ids evidencing the record"
+    },
+    "content_hash": {
+      "type": "string",
+      "description": "SHA-256 of the exact captured body"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "captured",
+        "evidenced",
+        "reviewed",
+        "approved",
+        "released",
+        "superseded"
+      ],
+      "default": "captured"
+    },
+    "reviewer": {
+      "type": "string"
+    },
+    "approval_scope": {
+      "type": "string",
+      "description": "Explicit scope granted for this record, if any"
+    },
+    "conflict_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "downstream_receipts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "placeholders": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Detected control placeholders such as TBC or REQUIRES_APPROVAL"
+    },
+    "external_write": {
+      "type": "boolean",
+      "default": false,
+      "description": "Always false. This surface records governance; it never performs an external write."
+    }
+  },
+  "required": [
+    "record_id",
+    "title",
+    "event_type",
+    "stage"
+  ]
+}

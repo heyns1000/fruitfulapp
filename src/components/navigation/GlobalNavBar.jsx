@@ -46,6 +46,7 @@ const NAV_LINKS = [
   { href: '/BlockBox',                  label: '📦 Block Box' },
   { href: '/About',                     label: 'ℹ️ About' },
   { href: '/Contact',                   label: '✉️ Contact' },
+  { href: '/WaterfallMemory',           label: '💧 Waterfall Memory' },
 ];
 
 export default function GlobalNavBar() {

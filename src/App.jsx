@@ -35,6 +35,7 @@ import CodeNestDashboard from './pages/CodeNestDashboard'
 import FruitfulWordPressDocs from './pages/FruitfulWordPressDocs'
 import About from './pages/About';
 import Contact from './pages/Contact';
+import WaterfallMemory from './pages/WaterfallMemory';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
@@ -122,6 +123,7 @@ const AuthenticatedApp = () => {
       <Route path="/FruitfulWordPressDocs" element={<FruitfulWordPressDocs />} />
       <Route path="/About" element={<LayoutWrapper currentPageName="About"><About /></LayoutWrapper>} />
       <Route path="/Contact" element={<LayoutWrapper currentPageName="Contact"><Contact /></LayoutWrapper>} />
+      <Route path="/WaterfallMemory" element={<LayoutWrapper currentPageName="WaterfallMemory"><WaterfallMemory /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
