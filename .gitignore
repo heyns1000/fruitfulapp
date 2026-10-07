@@ -1,6 +1,8 @@
 #env
 .env
 .env.*
+# Base44 sandbox env defaults (non-secret placeholders, needed by docker-compose.base44.yml)
+!.env.base44-defaults
 
 # Logs
 logs

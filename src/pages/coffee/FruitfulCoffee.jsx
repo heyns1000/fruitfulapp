@@ -70,17 +70,22 @@ export default function FruitfulCoffee() {
 
   useEffect(() => {
     const load = async () => {
-      const [proj, costs, menu, ship] = await Promise.all([
-        base44.entities.CoffeeProjection.list('-month', 50),
-        base44.entities.CoffeeCostInput.list('category', 100),
-        base44.entities.FoodMenuItem.list('name', 20),
-        base44.entities.KioskShippingEstimate.list('-created_date', 1),
-      ]);
-      setProjections(proj.sort((a, b) => a.month.localeCompare(b.month)));
-      setCostInputs(costs);
-      setMenuItems(menu);
-      setShipping(ship[0] || null);
-      setLoading(false);
+      try {
+        const [proj, costs, menu, ship] = await Promise.all([
+          base44.entities.CoffeeProjection.list('-month', 50),
+          base44.entities.CoffeeCostInput.list('category', 100),
+          base44.entities.FoodMenuItem.list('name', 20),
+          base44.entities.KioskShippingEstimate.list('-created_date', 1),
+        ]);
+        setProjections(proj.sort((a, b) => a.month.localeCompare(b.month)));
+        setCostInputs(costs);
+        setMenuItems(menu);
+        setShipping(ship[0] || null);
+      } catch (e) {
+        console.error('Coffee data load failed', e);
+      } finally {
+        setLoading(false);
+      }
     };
     load();
   }, []);

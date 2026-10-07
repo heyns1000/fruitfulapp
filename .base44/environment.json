@@ -1,0 +1,17 @@
+{
+  "previewPort": 3000,
+  "healthPath": "/",
+  "startCommand": "docker compose -f docker-compose.base44.yml up -d",
+  "secrets": [
+    {
+      "name": "VITE_BASE44_APP_ID",
+      "description": "Base44 app id (from the Base44 Builder app settings), sent as the X-App-Id header. Defaults to the app's own id in .env.base44-defaults.",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "VITE_BASE44_APP_BASE_URL",
+      "description": "Base44 backend base URL; the vite plugin proxies /api -> this URL. Left unset so the preview renders (the app's login is not embeddable — X-Frame-Options: DENY). Set to https://app.base44.com to wire the live backend, which shows an in-preview login and loads real data.",
+      "requiredAtBoot": false
+    }
+  ]
+}
