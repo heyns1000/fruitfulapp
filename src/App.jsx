@@ -36,7 +36,8 @@ import FruitfulWordPressDocs from './pages/FruitfulWordPressDocs'
 import About from './pages/About';
 import Contact from './pages/Contact';
 import WaterfallMemory from './pages/WaterfallMemory';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import OAuthConsent from './pages/OAuthConsent';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
@@ -130,6 +131,20 @@ const AuthenticatedApp = () => {
 };
 
 
+// The OAuth consent page must sit outside the auth gate: it handles the
+// signed-out case itself and needs the ctx context preserved in returnTo.
+const AppShell = () => {
+  const location = useLocation();
+  if (location.pathname === '/oauth/consent') {
+    return (
+      <Routes>
+        <Route path="/oauth/consent" element={<OAuthConsent />} />
+      </Routes>
+    );
+  }
+  return <AuthenticatedApp />;
+};
+
 function App() {
 
   return (
@@ -137,7 +152,7 @@ function App() {
       <QueryClientProvider client={queryClientInstance}>
         <Router>
           <NavigationTracker />
-          <AuthenticatedApp />
+          <AppShell />
         </Router>
         <Toaster />
       </QueryClientProvider>
