@@ -36,6 +36,7 @@ import FruitfulWordPressDocs from './pages/FruitfulWordPressDocs'
 import About from './pages/About';
 import Contact from './pages/Contact';
 import WaterfallMemory from './pages/WaterfallMemory';
+import TakealotApi from './pages/TakealotApi';
 import OAuthConsent from './pages/OAuthConsent';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
@@ -125,6 +126,7 @@ const AuthenticatedApp = () => {
       <Route path="/About" element={<LayoutWrapper currentPageName="About"><About /></LayoutWrapper>} />
       <Route path="/Contact" element={<LayoutWrapper currentPageName="Contact"><Contact /></LayoutWrapper>} />
       <Route path="/WaterfallMemory" element={<LayoutWrapper currentPageName="WaterfallMemory"><WaterfallMemory /></LayoutWrapper>} />
+      <Route path="/TakealotApi" element={<LayoutWrapper currentPageName="TakealotApi"><TakealotApi /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

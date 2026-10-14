@@ -43,6 +43,7 @@ const NAV_LINKS = [
   { href: '/AdminSeedwave',             label: '🛡️ Seedwave Admin' },
   { href: '/SectorAdminHub',            label: '⚙️ Sector Hub' },
   { href: '/DataSyncCenter',            label: '🔄 Data Sync' },
+  { href: '/TakealotApi',               label: '🔌 API Integrations' },
   { href: '/BlockBox',                  label: '📦 Block Box' },
   { href: '/About',                     label: 'ℹ️ About' },
   { href: '/Contact',                   label: '✉️ Contact' },
