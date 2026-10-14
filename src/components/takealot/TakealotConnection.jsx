@@ -1,7 +1,7 @@
 import React from 'react';
-import { KeyRound, Ban, ExternalLink, ShieldCheck } from 'lucide-react';
+import { KeyRound, Ban, ExternalLink, ShieldCheck, UserCheck } from 'lucide-react';
 import ServerAccessNotice from './ServerAccessNotice';
-import { TAKEALOT_API, RATE_LIMIT_HEADERS, TAKEALOT_RULES } from '@/lib/takealotReference';
+import { TAKEALOT_API, INTEGRATOR, RATE_LIMIT_HEADERS, TAKEALOT_RULES } from '@/lib/takealotReference';
 
 const CARD = 'bg-white rounded-2xl border border-slate-200 p-6 shadow-sm';
 const LABEL = 'text-[10px] font-bold uppercase tracking-widest text-slate-500';
@@ -31,14 +31,6 @@ export default function TakealotConnection() {
           <Row label="Base URL" value={TAKEALOT_API.baseUrl} mono />
           <Row label="Auth header" value={TAKEALOT_API.authHeader} mono />
           <Row label="Test environment" value="None — every call is live" />
-          <a
-            href={TAKEALOT_API.docsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-teal-700 hover:text-teal-900"
-          >
-            Endpoint documentation <ExternalLink className="w-3.5 h-3.5" />
-          </a>
         </div>
 
         <div className={CARD}>
@@ -59,6 +51,31 @@ export default function TakealotConnection() {
             <Ban className="w-4 h-4 shrink-0 mt-0.5" />
             <span>There is no sandbox, so verifying the connection and every offer write act on the live seller account.</span>
           </div>
+        </div>
+      </div>
+
+      <div className={`${CARD} flex flex-wrap items-start justify-between gap-6`}>
+        <div>
+          <div className="flex items-center gap-2 mb-2">
+            <UserCheck className="w-5 h-5 text-teal-600" />
+            <h2 className="font-bold text-slate-900">Integrator declaration</h2>
+          </div>
+          <p className="text-sm text-slate-600 leading-relaxed max-w-2xl">
+            Takealot asks which integrator operates the account. This integration is built and run in-house, so the app
+            itself is declared rather than a third-party integrator — the portal shows &ldquo;You are currently not using
+            an integrator&rdquo; until that name is entered.
+          </p>
+        </div>
+        <div className="min-w-[240px] space-y-2">
+          <Row label="Integrator name" value={INTEGRATOR.name} />
+          <a
+            href={TAKEALOT_API.docsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 pt-1 text-sm font-semibold text-teal-700 hover:text-teal-900"
+          >
+            Endpoint documentation <ExternalLink className="w-3.5 h-3.5" />
+          </a>
         </div>
       </div>
 

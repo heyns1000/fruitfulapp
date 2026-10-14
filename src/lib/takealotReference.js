@@ -12,6 +12,12 @@ export const TAKEALOT_API = {
   sandbox: false,
 };
 
+// Declared to Takealot under Seller API -> Third Party API Integrator Details.
+// This integration is built and operated in-house, so the app itself is the integrator.
+export const INTEGRATOR = {
+  name: 'Fruitful Shops (in-house)',
+};
+
 // Registered under Seller API -> Webhooks in the Takealot Seller Portal.
 export const WEBHOOK_ENDPOINT = 'https://fruitfulapp.base44.app/functions/takealotWebhook';
 
