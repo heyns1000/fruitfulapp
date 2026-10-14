@@ -1,0 +1,64 @@
+{
+  "name": "TakealotSale",
+  "type": "object",
+  "properties": {
+    "order_id": {
+      "type": "string"
+    },
+    "order_item_id": {
+      "type": "string"
+    },
+    "offer_id": {
+      "type": "string"
+    },
+    "sku": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "quantity": {
+      "type": "number"
+    },
+    "selling_price": {
+      "type": "number"
+    },
+    "sale_status": {
+      "type": "string",
+      "description": "Sale lifecycle status. 'Shipped to Customer' is final unless the sale is later returned."
+    },
+    "sale_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ship_by_date": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "order_id"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

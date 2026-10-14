@@ -1,0 +1,71 @@
+{
+  "name": "TakealotOffer",
+  "type": "object",
+  "properties": {
+    "offer_id": {
+      "type": "string",
+      "description": "Takealot primary offer key. Prefer this over SKU when updating an offer."
+    },
+    "sku": {
+      "type": "string"
+    },
+    "gtin": {
+      "type": "string",
+      "description": "Manufacturer barcode, used to match the product to Takealot's catalogue"
+    },
+    "title": {
+      "type": "string"
+    },
+    "selling_price": {
+      "type": "number"
+    },
+    "rrp": {
+      "type": "number",
+      "description": "Recommended retail price"
+    },
+    "leadtime_days": {
+      "type": "number"
+    },
+    "leadtime_stock_on_hand": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "description": "Offer status as returned by Takealot, e.g. buyable, not_buyable, disabled"
+    },
+    "source": {
+      "type": "string",
+      "default": "api",
+      "description": "How this record last arrived: api, batch or webhook"
+    },
+    "synced_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "offer_id"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

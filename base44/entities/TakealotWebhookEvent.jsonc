@@ -1,0 +1,58 @@
+{
+  "name": "TakealotWebhookEvent",
+  "type": "object",
+  "properties": {
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "offer_update",
+        "offer_creation",
+        "batch_completed",
+        "new_leadtime_order",
+        "new_dropship_order",
+        "sale_status_changed"
+      ]
+    },
+    "payload": {
+      "type": "object",
+      "description": "Complete webhook payload as received. The payload is the most up-to-date record for the event."
+    },
+    "summary": {
+      "type": "string",
+      "description": "Short human-readable label, e.g. the order or offer the event concerns"
+    },
+    "received_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "processed": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "event_type"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

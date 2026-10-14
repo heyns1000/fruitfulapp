@@ -1,0 +1,73 @@
+{
+  "name": "TakealotBatch",
+  "type": "object",
+  "properties": {
+    "batch_id": {
+      "type": "string",
+      "description": "Batch identifier returned by Takealot when the batch is created"
+    },
+    "batch_type": {
+      "type": "string",
+      "enum": [
+        "offer_create",
+        "offer_update"
+      ],
+      "description": "Batch purpose. A batch carrying a new GTIN creates that offer for the seller."
+    },
+    "update_count": {
+      "type": "number",
+      "description": "Number of offer updates in the batch. Maximum 10000 per batch."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "submitted",
+        "processing",
+        "completed",
+        "failed"
+      ],
+      "default": "draft",
+      "description": "Completion is confirmed by the Batch Completed webhook, not by polling the batch status endpoint"
+    },
+    "submitted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "error_count": {
+      "type": "number"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "batch_type"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

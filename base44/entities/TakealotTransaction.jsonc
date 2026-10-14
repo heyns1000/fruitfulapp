@@ -1,0 +1,57 @@
+{
+  "name": "TakealotTransaction",
+  "type": "object",
+  "properties": {
+    "transaction_id": {
+      "type": "string"
+    },
+    "order_id": {
+      "type": "string"
+    },
+    "transaction_type": {
+      "type": "string",
+      "description": "Transaction classification as returned by Takealot, e.g. sale, fee, refund, reversal"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "fee": {
+      "type": "number"
+    },
+    "net_amount": {
+      "type": "number"
+    },
+    "transaction_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "description": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "transaction_id"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
