@@ -2,6 +2,16 @@ import React from 'react';
 import { API_KEYS_INDEX } from '@/lib/codenestData';
 import { AlertTriangle } from 'lucide-react';
 
+// Mask any displayed value to a short prefix + bullets so a full credential is
+// never rendered. Placeholders ("•••• (set VITE_…)") and the server-managed
+// status label are already safe and are shown verbatim.
+const maskValue = (value) => {
+  if (typeof value !== 'string') return value;
+  if (value.startsWith('•') || value.includes('Managed server-side')) return value;
+  if (value.length <= 4) return value;
+  return `${value.slice(0, 4)}••••`;
+};
+
 export default function CodenestApiKeys() {
   return (
     <div className="bg-[#2a2a2e] rounded-xl p-6 border border-[#3a3a3e]">
@@ -29,7 +39,7 @@ export default function CodenestApiKeys() {
                   <span className="font-semibold text-gray-200">{k.service}</span>
                   {k.context && <div className="text-xs text-gray-500">{k.context}</div>}
                 </td>
-                <td className="py-2 px-3"><code className="text-xs text-gray-300 font-mono break-all">{k.key}</code></td>
+                <td className="py-2 px-3"><code className="text-xs text-gray-300 font-mono break-all">{maskValue(k.key)}</code></td>
                 <td className="py-2 px-3 text-xs text-gray-400">{k.locations.join(', ')}</td>
               </tr>
             ))}

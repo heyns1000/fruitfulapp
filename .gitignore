@@ -1,6 +1,8 @@
 #env
+# Ignore local secret env files precisely (not a broad .env*), so the
+# committed .env.example template of VITE_* vars stays tracked.
 .env
-.env.*
+.env.local
 
 # Logs
 logs
