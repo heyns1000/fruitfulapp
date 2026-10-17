@@ -105,16 +105,25 @@ export const TEMPLATES = [
   { name: "Video Showcase Portal", description: "Showcase high-definition video content with integrated metadata and streaming optimization.", icon: "Video", type: "video" },
 ];
 
+// API key index for the CodeNest dashboard panel.
+// Client-safe / publishable identifiers are sourced from Vite env vars (VITE_*)
+// with a masked placeholder fallback, so the panel always renders a value even
+// when the env var is unset. Backend-only secrets (Xero client secret, Xero
+// webhook key, Gemini) are NEVER embedded in client source — they are managed
+// server-side and surfaced here only as a non-sensitive status label.
+const KEY_ENV = import.meta.env;
+const SERVER_MANAGED = 'Managed server-side — not exposed';
+
 export const API_KEYS_INDEX = [
-  { service: "PayPal (SDK)", key: "BAAGdPecRsf6...XknZoar6Q", context: "Client-side SDK", locations: ["Various checkout scrolls"] },
-  { service: "PayPal (Hosted Button)", key: "EMWGPGHNN8Y8E", context: "Starter Package", locations: ["HotStack", "Various landing pages"] },
-  { service: "PayPal (Hosted Button)", key: "QGU3ZUQCMD49Q", context: "Pro Package", locations: ["HotStack", "Larger brand sites"] },
-  { service: "PayPal (Hosted Button)", key: "9C88S44F93M5J", context: "Enterprise Package", locations: ["HotStack", "Enterprise solutions"] },
-  { service: "Google Maps", key: "AIzaSyBPG8dG...5Wj5Ab80", context: "Maps JavaScript API", locations: ["Location-based microsites"] },
-  { service: "Gemini AI", key: "AIzaSyBGSDZA...pWx9MrufxXE", context: "Generative AI", locations: ["AI-powered insights scrolls", "Baobab Terminal"] },
-  { service: "Xero (Client ID)", key: "81B3573D...DAD565B", context: "OAuth 2.0", locations: ["Accounting/payroll integration scrolls"] },
-  { service: "Xero (Client Secret)", key: "FIaJGmsa...P1U6Smaq", context: "OAuth 2.0 — BACKEND ONLY", locations: ["Accounting/payroll integration scrolls"] },
-  { service: "Xero (Webhook Key)", key: "2fd5LQV0...0igw==", context: "Webhook verification — BACKEND ONLY", locations: ["Xero webhook configurations"] },
+  { service: "PayPal (SDK)", key: KEY_ENV.VITE_PAYPAL_CLIENT_ID || '•••• (set VITE_PAYPAL_CLIENT_ID)', context: "Client-side SDK", locations: ["Various checkout scrolls"] },
+  { service: "PayPal (Hosted Button)", key: KEY_ENV.VITE_PAYPAL_BUTTON_STARTER || '•••• (set VITE_PAYPAL_BUTTON_STARTER)', context: "Starter Package", locations: ["HotStack", "Various landing pages"] },
+  { service: "PayPal (Hosted Button)", key: KEY_ENV.VITE_PAYPAL_BUTTON_PRO || '•••• (set VITE_PAYPAL_BUTTON_PRO)', context: "Pro Package", locations: ["HotStack", "Larger brand sites"] },
+  { service: "PayPal (Hosted Button)", key: KEY_ENV.VITE_PAYPAL_BUTTON_ENTERPRISE || '•••• (set VITE_PAYPAL_BUTTON_ENTERPRISE)', context: "Enterprise Package", locations: ["HotStack", "Enterprise solutions"] },
+  { service: "Google Maps", key: KEY_ENV.VITE_GOOGLE_MAPS_KEY || '•••• (set VITE_GOOGLE_MAPS_KEY)', context: "Maps JavaScript API", locations: ["Location-based microsites"] },
+  { service: "Gemini AI", key: SERVER_MANAGED, context: "Generative AI — BACKEND ONLY", locations: ["AI-powered insights scrolls", "Baobab Terminal"] },
+  { service: "Xero (Client ID)", key: KEY_ENV.VITE_XERO_CLIENT_ID || '•••• (set VITE_XERO_CLIENT_ID)', context: "OAuth 2.0", locations: ["Accounting/payroll integration scrolls"] },
+  { service: "Xero (Client Secret)", key: SERVER_MANAGED, context: "OAuth 2.0 — BACKEND ONLY", locations: ["Accounting/payroll integration scrolls"] },
+  { service: "Xero (Webhook Key)", key: SERVER_MANAGED, context: "Webhook verification — BACKEND ONLY", locations: ["Xero webhook configurations"] },
 ];
 
 export const COMPANY_DATA = {
